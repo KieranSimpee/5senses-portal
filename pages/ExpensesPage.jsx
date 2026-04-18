@@ -6,14 +6,14 @@ const EMPTY_FORM = {
   date: "", vendor: "", notes: "", status: "Pending", payment_method: "Bank Transfer"
 };
 
-const CATEGORY_COLORS = {
-  "Office": "#4f8ef7", "Salaries": "#9c27b0", "MPF": "#00897b",
-  "Marketing": "#f4511e", "Professional Fees": "#1565c0",
-  "Government Fees": "#6d4c41", "Travel": "#f9a825",
-  "Utilities": "#558b2f", "Software": "#0288d1", "Other": "#757575"
-};
+const CAT_COLORS = ["#8b7fd4","#a89ee0","#6c5ce7","#b8aee8","#5a4fa8","#9b93c9","#c4bdf0","#7b6fc4","#d4cff5","#4a3f9a"];
 
-export default function ExpensesPage() {
+export default function ExpensesPage({ brand = {} }) {
+  const P = {
+    purple: "#8b7fd4", purpleLight: "#b8aee8", purplePale: "#f0edfb",
+    purpleDark: "#5a4fa8", text: "#2d2847", textMuted: "#9b93c9", bg: "#f7f5ff", ...brand
+  };
+
   const [expenses, setExpenses] = useState([]);
   const [filter, setFilter] = useState("All");
   const [showForm, setShowForm] = useState(false);
@@ -32,7 +32,7 @@ export default function ExpensesPage() {
 
   const categories = ["All", ...new Set(expenses.map(e => e.category).filter(Boolean))];
   const filtered = filter === "All" ? expenses : expenses.filter(e => e.category === filter);
-  const totalHKD = filtered.filter(e => e.currency === "HKD").reduce((sum, e) => sum + (parseFloat(e.amount) || 0), 0);
+  const totalHKD = filtered.filter(e => e.currency === "HKD").reduce((s, e) => s + (parseFloat(e.amount) || 0), 0);
 
   function openAdd() { setForm({ ...EMPTY_FORM, date: new Date().toISOString().split("T")[0] }); setEditing(null); setShowForm(true); }
   function openEdit(item) { setForm({ ...item }); setEditing(item.id); setShowForm(true); }
@@ -48,81 +48,82 @@ export default function ExpensesPage() {
     if (confirm("Delete this expense?")) { await Expense.delete(id); loadExpenses(); }
   }
 
+  const inputStyle = { width: "100%", padding: "9px 12px", borderRadius: 8, border: `1.5px solid ${P.purpleLight}`, fontSize: 14, boxSizing: "border-box", outline: "none", fontFamily: "inherit", color: P.text };
+
   return (
-    <div style={{ padding: 32 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+    <div style={{ padding: 36 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700, color: "#1a1f2e" }}>💰 Expenses</h1>
-          <p style={{ margin: "4px 0 0", color: "#7b8db0", fontSize: 14 }}>Track all company expenditure</p>
+          <h1 style={{ margin: 0, fontSize: 22, fontWeight: 700, color: P.text, letterSpacing: "0.04em" }}>💰 Expenses</h1>
+          <p style={{ margin: "5px 0 0", color: P.textMuted, fontSize: 13, letterSpacing: "0.05em" }}>TRACK ALL COMPANY EXPENDITURE</p>
         </div>
-        <button onClick={openAdd} style={{ background: "#4f8ef7", color: "#fff", border: "none", borderRadius: 8, padding: "10px 20px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>+ Add Expense</button>
+        <button onClick={openAdd} style={{ background: P.purple, color: "#fff", border: "none", borderRadius: 10, padding: "10px 22px", fontSize: 13, fontWeight: 600, cursor: "pointer", letterSpacing: "0.06em" }}>+ ADD EXPENSE</button>
       </div>
 
-      {/* Summary Card */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 24 }}>
+      {/* Summary Cards */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 26 }}>
         {[
-          { label: "Total (HKD)", value: `HK$${totalHKD.toLocaleString()}`, color: "#4f8ef7" },
-          { label: "Total Entries", value: filtered.length, color: "#9c27b0" },
-          { label: "Categories", value: categories.length - 1, color: "#00897b" },
-        ].map(c => (
-          <div key={c.label} style={{ background: "#fff", borderRadius: 12, padding: "20px 24px", boxShadow: "0 2px 8px rgba(0,0,0,0.07)", borderLeft: `4px solid ${c.color}` }}>
-            <div style={{ fontSize: 22, fontWeight: 700, color: c.color }}>{c.value}</div>
-            <div style={{ fontSize: 13, color: "#7b8db0", marginTop: 4 }}>{c.label}</div>
+          { label: "Total (HKD)", value: `HK$${totalHKD.toLocaleString()}` },
+          { label: "Total Entries", value: filtered.length },
+          { label: "Categories", value: categories.length - 1 },
+        ].map((c, i) => (
+          <div key={c.label} style={{ background: "#fff", borderRadius: 14, padding: "20px 24px", boxShadow: "0 2px 12px rgba(139,127,212,0.1)", borderTop: `4px solid ${CAT_COLORS[i]}` }}>
+            <div style={{ fontSize: 24, fontWeight: 700, color: CAT_COLORS[i] }}>{c.value}</div>
+            <div style={{ fontSize: 12, color: P.textMuted, marginTop: 5, letterSpacing: "0.07em", textTransform: "uppercase" }}>{c.label}</div>
           </div>
         ))}
       </div>
 
-      {/* Filter */}
+      {/* Filters */}
       <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
         {categories.map(cat => (
           <button key={cat} onClick={() => setFilter(cat)} style={{
-            padding: "6px 14px", borderRadius: 20, border: "none", cursor: "pointer", fontSize: 13,
-            background: filter === cat ? "#1a1f2e" : "#fff",
-            color: filter === cat ? "#fff" : "#555",
-            boxShadow: "0 1px 4px rgba(0,0,0,0.08)"
+            padding: "6px 16px", borderRadius: 20, border: `1.5px solid ${filter === cat ? P.purple : "#e0dcf5"}`,
+            cursor: "pointer", fontSize: 12, background: filter === cat ? P.purple : "#fff",
+            color: filter === cat ? "#fff" : P.textMuted, fontWeight: filter === cat ? 600 : 400,
+            letterSpacing: "0.05em", transition: "all 0.2s"
           }}>{cat}</button>
         ))}
       </div>
 
       {/* List */}
-      {loading ? <div style={{ textAlign: "center", padding: 40, color: "#aaa" }}>Loading...</div> : (
+      {loading ? <div style={{ textAlign: "center", padding: 60, color: P.textMuted }}>Loading...</div> : (
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {filtered.map(exp => (
-            <div key={exp.id} style={{ background: "#fff", borderRadius: 12, padding: "16px 20px", boxShadow: "0 2px 6px rgba(0,0,0,0.06)", display: "flex", alignItems: "center", gap: 16 }}>
-              <div style={{ width: 10, height: 10, borderRadius: "50%", background: CATEGORY_COLORS[exp.category] || "#ccc", flexShrink: 0 }} />
+          {filtered.map((exp, i) => (
+            <div key={exp.id} style={{ background: "#fff", borderRadius: 12, padding: "16px 22px", boxShadow: "0 2px 8px rgba(139,127,212,0.08)", display: "flex", alignItems: "center", gap: 16 }}>
+              <div style={{ width: 10, height: 10, borderRadius: "50%", background: CAT_COLORS[i % CAT_COLORS.length], flexShrink: 0 }} />
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 600, color: "#1a1f2e", fontSize: 14 }}>{exp.title}</div>
-                <div style={{ fontSize: 12, color: "#9aa3b2", marginTop: 2 }}>{exp.vendor} · {exp.date} · {exp.payment_method}</div>
+                <div style={{ fontWeight: 600, color: P.text, fontSize: 14 }}>{exp.title}</div>
+                <div style={{ fontSize: 11, color: P.textMuted, marginTop: 2, letterSpacing: "0.03em" }}>{exp.vendor} · {exp.date} · {exp.payment_method}</div>
               </div>
-              <div style={{ fontSize: 13, color: "#555" }}>{exp.category}</div>
-              <div style={{ fontWeight: 700, color: "#1a1f2e", fontSize: 16, minWidth: 100, textAlign: "right" }}>
+              <div style={{ fontSize: 11, color: P.textMuted, letterSpacing: "0.05em" }}>{exp.category}</div>
+              <div style={{ fontWeight: 700, color: P.purpleDark, fontSize: 15, minWidth: 110, textAlign: "right" }}>
                 {exp.currency} {parseFloat(exp.amount || 0).toLocaleString()}
               </div>
               <div style={{ display: "flex", gap: 8 }}>
-                <button onClick={() => openEdit(exp)} style={{ background: "none", border: "none", cursor: "pointer", color: "#4f8ef7", fontSize: 13 }}>Edit</button>
-                <button onClick={() => handleDelete(exp.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#e53935", fontSize: 13 }}>Delete</button>
+                <button onClick={() => openEdit(exp)} style={{ background: "none", border: "none", cursor: "pointer", color: P.purple, fontSize: 12, fontWeight: 600 }}>Edit</button>
+                <button onClick={() => handleDelete(exp.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#e05c5c", fontSize: 12, fontWeight: 600 }}>Delete</button>
               </div>
             </div>
           ))}
-          {filtered.length === 0 && <div style={{ textAlign: "center", padding: 40, color: "#aaa" }}>No expenses yet. Add one!</div>}
+          {filtered.length === 0 && <div style={{ textAlign: "center", padding: 60, color: P.textMuted }}>No expenses yet — add your first one!</div>}
         </div>
       )}
 
       {/* Modal */}
       {showForm && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100 }}>
-          <div style={{ background: "#fff", borderRadius: 16, padding: 32, width: 480, maxHeight: "80vh", overflowY: "auto", boxShadow: "0 8px 32px rgba(0,0,0,0.2)" }}>
-            <h2 style={{ margin: "0 0 20px", fontSize: 18 }}>{editing ? "Edit" : "Add"} Expense</h2>
+        <div style={{ position: "fixed", inset: 0, background: "rgba(45,40,71,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100 }}>
+          <div style={{ background: "#fff", borderRadius: 18, padding: 36, width: 480, maxHeight: "82vh", overflowY: "auto", boxShadow: "0 12px 40px rgba(139,127,212,0.25)" }}>
+            <h2 style={{ margin: "0 0 22px", fontSize: 17, color: P.text, letterSpacing: "0.06em" }}>{editing ? "EDIT" : "ADD"} EXPENSE</h2>
             {[
               { label: "Title", key: "title", type: "text" },
               { label: "Amount", key: "amount", type: "number" },
               { label: "Date", key: "date", type: "date" },
               { label: "Vendor", key: "vendor", type: "text" },
             ].map(f => (
-              <div key={f.key} style={{ marginBottom: 14 }}>
-                <label style={{ display: "block", fontSize: 13, color: "#555", marginBottom: 4 }}>{f.label}</label>
-                <input type={f.type} value={form[f.key] || ""} onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                  style={{ width: "100%", padding: "8px 12px", borderRadius: 8, border: "1px solid #dde2ec", fontSize: 14, boxSizing: "border-box" }} />
+              <div key={f.key} style={{ marginBottom: 16 }}>
+                <label style={{ display: "block", fontSize: 11, color: P.textMuted, marginBottom: 5, letterSpacing: "0.08em", textTransform: "uppercase" }}>{f.label}</label>
+                <input type={f.type} value={form[f.key] || ""} onChange={e => setForm({ ...form, [f.key]: e.target.value })} style={inputStyle} />
               </div>
             ))}
             {[
@@ -131,22 +132,20 @@ export default function ExpensesPage() {
               { label: "Payment Method", key: "payment_method", options: ["Cash", "Bank Transfer", "Credit Card", "Cheque", "Other"] },
               { label: "Status", key: "status", options: ["Pending", "Approved", "Rejected", "Reimbursed"] },
             ].map(f => (
-              <div key={f.key} style={{ marginBottom: 14 }}>
-                <label style={{ display: "block", fontSize: 13, color: "#555", marginBottom: 4 }}>{f.label}</label>
-                <select value={form[f.key] || ""} onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                  style={{ width: "100%", padding: "8px 12px", borderRadius: 8, border: "1px solid #dde2ec", fontSize: 14 }}>
+              <div key={f.key} style={{ marginBottom: 16 }}>
+                <label style={{ display: "block", fontSize: 11, color: P.textMuted, marginBottom: 5, letterSpacing: "0.08em", textTransform: "uppercase" }}>{f.label}</label>
+                <select value={form[f.key] || ""} onChange={e => setForm({ ...form, [f.key]: e.target.value })} style={inputStyle}>
                   {f.options.map(o => <option key={o}>{o}</option>)}
                 </select>
               </div>
             ))}
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ display: "block", fontSize: 13, color: "#555", marginBottom: 4 }}>Notes</label>
-              <textarea value={form.notes || ""} onChange={e => setForm({ ...form, notes: e.target.value })}
-                rows={2} style={{ width: "100%", padding: "8px 12px", borderRadius: 8, border: "1px solid #dde2ec", fontSize: 14, boxSizing: "border-box" }} />
+            <div style={{ marginBottom: 22 }}>
+              <label style={{ display: "block", fontSize: 11, color: P.textMuted, marginBottom: 5, letterSpacing: "0.08em", textTransform: "uppercase" }}>Notes</label>
+              <textarea value={form.notes || ""} onChange={e => setForm({ ...form, notes: e.target.value })} rows={2} style={{ ...inputStyle, resize: "vertical" }} />
             </div>
             <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
-              <button onClick={() => setShowForm(false)} style={{ padding: "9px 20px", borderRadius: 8, border: "1px solid #dde2ec", background: "#fff", cursor: "pointer", fontSize: 14 }}>Cancel</button>
-              <button onClick={handleSave} style={{ padding: "9px 20px", borderRadius: 8, border: "none", background: "#4f8ef7", color: "#fff", cursor: "pointer", fontSize: 14, fontWeight: 600 }}>Save</button>
+              <button onClick={() => setShowForm(false)} style={{ padding: "10px 22px", borderRadius: 10, border: `1.5px solid ${P.purpleLight}`, background: "#fff", cursor: "pointer", fontSize: 13, color: P.textMuted }}>Cancel</button>
+              <button onClick={handleSave} style={{ padding: "10px 22px", borderRadius: 10, border: "none", background: P.purple, color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 700, letterSpacing: "0.06em" }}>SAVE</button>
             </div>
           </div>
         </div>

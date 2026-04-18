@@ -11,52 +11,81 @@ const NAV_ITEMS = [
   { id: "notes", label: "Notes", icon: "📝" },
 ];
 
+// Brand colours extracted from logo
+const BRAND = {
+  purple: "#8b7fd4",
+  purpleLight: "#b8aee8",
+  purplePale: "#f0edfb",
+  purpleDark: "#5a4fa8",
+  sidebar: "#2d2847",
+  sidebarActive: "#3d3660",
+  sidebarBorder: "#3d3660",
+  text: "#2d2847",
+  textMuted: "#9b93c9",
+  bg: "#f7f5ff",
+};
+
+function Logo() {
+  return (
+    <div style={{ padding: "0 20px 24px", borderBottom: `1px solid ${BRAND.sidebarBorder}` }}>
+      {/* Tree icon SVG matching the logo */}
+      <svg width="36" height="40" viewBox="0 0 60 70" fill="none" style={{ display: "block", marginBottom: 10 }}>
+        <circle cx="30" cy="26" r="22" stroke="#a89ee0" strokeWidth="2.5" fill="none"/>
+        <line x1="30" y1="48" x2="30" y2="68" stroke="#a89ee0" strokeWidth="2.5"/>
+        <line x1="30" y1="26" x2="30" y2="10" stroke="#a89ee0" strokeWidth="2.5"/>
+        <line x1="30" y1="32" x2="18" y2="22" stroke="#a89ee0" strokeWidth="2.5"/>
+        <line x1="30" y1="28" x2="42" y2="20" stroke="#a89ee0" strokeWidth="2.5"/>
+      </svg>
+      <div style={{ color: "#fff", fontWeight: 700, fontSize: 15, letterSpacing: "0.18em", fontFamily: "'Inter', sans-serif" }}>SIMPLEX-ITY</div>
+      <div style={{ color: BRAND.textMuted, fontSize: 9, marginTop: 4, letterSpacing: "0.12em", textTransform: "uppercase" }}>One Stop Asian Beauty</div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [activePage, setActivePage] = useState("compliance");
 
   return (
-    <div style={{ display: "flex", height: "100vh", fontFamily: "'Inter', sans-serif", background: "#f4f6fb" }}>
+    <div style={{ display: "flex", height: "100vh", fontFamily: "'Inter', sans-serif", background: BRAND.bg }}>
       {/* Sidebar */}
       <div style={{
-        width: 220, background: "#1a1f2e", display: "flex", flexDirection: "column",
-        padding: "24px 0", boxShadow: "2px 0 8px rgba(0,0,0,0.15)", flexShrink: 0
+        width: 230, background: BRAND.sidebar, display: "flex", flexDirection: "column",
+        padding: "28px 0", boxShadow: "2px 0 12px rgba(45,40,71,0.18)", flexShrink: 0
       }}>
-        <div style={{ padding: "0 20px 28px", borderBottom: "1px solid #2d3448" }}>
-          <div style={{ color: "#fff", fontWeight: 700, fontSize: 18 }}>SIMPLEX-ITY</div>
-          <div style={{ color: "#7b8db0", fontSize: 12, marginTop: 4 }}>Company Tracker</div>
-        </div>
-        <nav style={{ marginTop: 16, flex: 1 }}>
+        <Logo />
+        <nav style={{ marginTop: 20, flex: 1 }}>
           {NAV_ITEMS.map(item => (
             <button
               key={item.id}
               onClick={() => setActivePage(item.id)}
               style={{
                 display: "flex", alignItems: "center", gap: 12,
-                width: "100%", padding: "12px 20px", border: "none", cursor: "pointer",
-                background: activePage === item.id ? "#2d3448" : "transparent",
-                color: activePage === item.id ? "#fff" : "#7b8db0",
-                fontSize: 14, fontWeight: activePage === item.id ? 600 : 400,
-                borderLeft: activePage === item.id ? "3px solid #4f8ef7" : "3px solid transparent",
+                width: "100%", padding: "13px 22px", border: "none", cursor: "pointer",
+                background: activePage === item.id ? BRAND.sidebarActive : "transparent",
+                color: activePage === item.id ? "#fff" : BRAND.textMuted,
+                fontSize: 13, fontWeight: activePage === item.id ? 600 : 400,
+                letterSpacing: "0.04em",
+                borderLeft: activePage === item.id ? `3px solid ${BRAND.purple}` : "3px solid transparent",
                 transition: "all 0.2s"
               }}
             >
-              <span style={{ fontSize: 18 }}>{item.icon}</span>
+              <span style={{ fontSize: 17 }}>{item.icon}</span>
               {item.label}
             </button>
           ))}
         </nav>
-        <div style={{ padding: "16px 20px", borderTop: "1px solid #2d3448" }}>
-          <div style={{ color: "#7b8db0", fontSize: 11 }}>Admin</div>
-          <div style={{ color: "#4f8ef7", fontSize: 12, marginTop: 2 }}>Kieran · SIMPLEX-ITY</div>
+        <div style={{ padding: "16px 22px", borderTop: `1px solid ${BRAND.sidebarBorder}` }}>
+          <div style={{ color: BRAND.textMuted, fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" }}>Admin</div>
+          <div style={{ color: BRAND.purpleLight, fontSize: 12, marginTop: 3, fontWeight: 600 }}>Kieran · SIMPLEX-ITY</div>
         </div>
       </div>
 
       {/* Main Content */}
       <div style={{ flex: 1, overflow: "auto" }}>
-        {activePage === "compliance" && <CompliancePage />}
-        {activePage === "expenses" && <ExpensesPage />}
-        {activePage === "projects" && <ProjectsPage />}
-        {activePage === "notes" && <NotesPage />}
+        {activePage === "compliance" && <CompliancePage brand={BRAND} />}
+        {activePage === "expenses" && <ExpensesPage brand={BRAND} />}
+        {activePage === "projects" && <ProjectsPage brand={BRAND} />}
+        {activePage === "notes" && <NotesPage brand={BRAND} />}
       </div>
     </div>
   );
