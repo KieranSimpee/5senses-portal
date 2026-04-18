@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Business Registration",
+        "Annual Return",
+        "Profits Tax",
+        "Audit",
+        "MPF",
+        "IRD Filing",
+        "Company Secretary",
+        "Other"
+      ]
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Upcoming",
+        "In Progress",
+        "Completed",
+        "Overdue"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "reminder_days_before": {
+      "type": "number"
+    },
+    "recurrence": {
+      "type": "string",
+      "enum": [
+        "One-time",
+        "Annual",
+        "Quarterly",
+        "Monthly"
+      ]
+    },
+    "assigned_to": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [],
+  "name": "ComplianceItem"
+}

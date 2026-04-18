@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "enum": [
+        "HKD",
+        "USD",
+        "CNY",
+        "EUR",
+        "GBP"
+      ]
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Office",
+        "Salaries",
+        "MPF",
+        "Marketing",
+        "Professional Fees",
+        "Government Fees",
+        "Travel",
+        "Utilities",
+        "Software",
+        "Other"
+      ]
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "vendor": {
+      "type": "string"
+    },
+    "receipt_url": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Approved",
+        "Rejected",
+        "Reimbursed"
+      ]
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "Cash",
+        "Bank Transfer",
+        "Credit Card",
+        "Cheque",
+        "Other"
+      ]
+    }
+  },
+  "required": [],
+  "name": "Expense"
+}

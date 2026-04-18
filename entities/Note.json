@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "WhatsApp",
+        "App",
+        "Email",
+        "Other"
+      ]
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "compliance_item_id": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pinned": {
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "name": "Note"
+}
