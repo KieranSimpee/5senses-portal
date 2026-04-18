@@ -1,0 +1,21 @@
+{
+  "app_id": "69e2eed0ce65610a4e7693bc",
+  "slug": "simpee-app-4e7693bc",
+  "pages": {
+    "CompliancePage": {
+      "title": "CompliancePage"
+    },
+    "ExpensesPage": {
+      "title": "ExpensesPage"
+    },
+    "NotesPage": {
+      "title": "NotesPage"
+    },
+    "ProjectsPage": {
+      "title": "ProjectsPage"
+    },
+    "Home": {
+      "title": "Home"
+    }
+  }
+}
