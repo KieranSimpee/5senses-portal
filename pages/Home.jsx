@@ -3,15 +3,16 @@ import CompliancePage from "./CompliancePage";
 import ExpensesPage from "./ExpensesPage";
 import ProjectsPage from "./ProjectsPage";
 import NotesPage from "./NotesPage";
+import DocumentsPage from "./DocumentsPage";
 
 const NAV_ITEMS = [
   { id: "compliance", label: "Compliance", icon: "🛡️" },
   { id: "expenses", label: "Expenses", icon: "💰" },
   { id: "projects", label: "Projects", icon: "📁" },
   { id: "notes", label: "Notes", icon: "📝" },
+  { id: "documents", label: "Documents", icon: "🔒" },
 ];
 
-// Brand colours extracted from logo
 const BRAND = {
   purple: "#8b7fd4",
   purpleLight: "#b8aee8",
@@ -28,7 +29,6 @@ const BRAND = {
 function Logo() {
   return (
     <div style={{ padding: "0 20px 24px", borderBottom: `1px solid ${BRAND.sidebarBorder}` }}>
-      {/* Tree icon SVG matching the logo */}
       <svg width="36" height="40" viewBox="0 0 60 70" fill="none" style={{ display: "block", marginBottom: 10 }}>
         <circle cx="30" cy="26" r="22" stroke="#a89ee0" strokeWidth="2.5" fill="none"/>
         <line x1="30" y1="48" x2="30" y2="68" stroke="#a89ee0" strokeWidth="2.5"/>
@@ -71,6 +71,9 @@ export default function Home() {
             >
               <span style={{ fontSize: 17 }}>{item.icon}</span>
               {item.label}
+              {item.id === "documents" && (
+                <span style={{ marginLeft: "auto", fontSize: 9, background: BRAND.purple, color: "#fff", padding: "2px 6px", borderRadius: 6, letterSpacing: "0.05em" }}>VAULT</span>
+              )}
             </button>
           ))}
         </nav>
@@ -86,6 +89,7 @@ export default function Home() {
         {activePage === "expenses" && <ExpensesPage brand={BRAND} />}
         {activePage === "projects" && <ProjectsPage brand={BRAND} />}
         {activePage === "notes" && <NotesPage brand={BRAND} />}
+        {activePage === "documents" && <DocumentsPage brand={BRAND} />}
       </div>
     </div>
   );

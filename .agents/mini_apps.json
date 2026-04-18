@@ -16,6 +16,9 @@
     },
     "NotesPage": {
       "title": "NotesPage"
+    },
+    "DocumentsPage": {
+      "title": "DocumentsPage"
     }
   }
 }

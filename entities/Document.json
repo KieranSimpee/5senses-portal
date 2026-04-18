@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Business Registration",
+        "Bank Documents",
+        "Licences",
+        "Audit & Tax",
+        "Contracts",
+        "Company Secretary",
+        "MPF",
+        "Insurance",
+        "Other"
+      ]
+    },
+    "file_url": {
+      "type": "string"
+    },
+    "file_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "expiry_date": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "is_confidential": {
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "name": "Document"
+}
