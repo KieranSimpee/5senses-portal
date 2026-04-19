@@ -1,0 +1,48 @@
+{
+    "date": "Sunday, 19 Apr 2026",
+    "budget": "HK$50,000",
+    "total_scanned": 47,
+    "new_today": 2,
+    "price_drops": 1,
+    "properties": [
+        {
+            "name": "Waiga Mansion",
+            "district": "Happy Valley",
+            "price": "HK$48,000",
+            "beds": 3,
+            "baths": 2,
+            "size": "1,097 SF",
+            "carpark": true,
+            "source": "OKAY.com",
+            "updated": "13 Apr 2026",
+            "badge": "NEW TODAY",
+            "url": "https://www.okay.com/en/property-search/rent/happy-valley/price-40000-50000-hkd"
+        },
+        {
+            "name": "Blessings Garden Ph.2",
+            "district": "Mid-Levels West",
+            "price": "HK$42,000",
+            "beds": 3,
+            "baths": 2,
+            "size": "797 SF",
+            "carpark": true,
+            "source": "OKAY.com",
+            "updated": "17 Apr 2026",
+            "badge": "BEST VALUE",
+            "url": "https://www.okay.com/en/property-search/rent/mid-levels-west/price-40000-50000-hkd"
+        },
+        {
+            "name": "Green Lane Court",
+            "district": "Happy Valley",
+            "price": "HK$43,800",
+            "beds": 3,
+            "baths": 2,
+            "size": "1,131 SF",
+            "carpark": true,
+            "source": "OKAY.com",
+            "updated": "16 Apr 2026",
+            "badge": "PRICE DROP",
+            "url": "https://www.okay.com/en/property-search/rent/happy-valley/price-40000-50000-hkd"
+        }
+    ]
+}
