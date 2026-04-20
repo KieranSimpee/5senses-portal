@@ -3,12 +3,14 @@ import CompliancePage from "./pages/CompliancePage";
 import ExpensesPage from "./pages/ExpensesPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import NotesPage from "./pages/NotesPage";
+import PropertyPage from "./pages/PropertyPage";
 
 const NAV_ITEMS = [
   { id: "compliance", label: "Compliance", icon: "🛡️" },
   { id: "expenses", label: "Expenses", icon: "💰" },
   { id: "projects", label: "Projects", icon: "📁" },
   { id: "notes", label: "Notes", icon: "📝" },
+  { id: "property", label: "Property", icon: "🏠" },
 ];
 
 export default function App() {
@@ -36,18 +38,24 @@ export default function App() {
                 background: activePage === item.id ? "#2d3448" : "transparent",
                 color: activePage === item.id ? "#fff" : "#7b8db0",
                 fontSize: 14, fontWeight: activePage === item.id ? 600 : 400,
-                borderLeft: activePage === item.id ? "3px solid #4f8ef7" : "3px solid transparent",
+                borderLeft: activePage === item.id ? "3px solid #8b7fd4" : "3px solid transparent",
                 transition: "all 0.2s"
               }}
             >
               <span style={{ fontSize: 18 }}>{item.icon}</span>
               {item.label}
+              {item.id === "property" && (
+                <span style={{
+                  marginLeft: "auto", background: "#27AE60", color: "#fff",
+                  borderRadius: 10, fontSize: 10, fontWeight: 700, padding: "1px 7px"
+                }}>NEW</span>
+              )}
             </button>
           ))}
         </nav>
         <div style={{ padding: "16px 20px", borderTop: "1px solid #2d3448" }}>
           <div style={{ color: "#7b8db0", fontSize: 11 }}>Logged in as Admin</div>
-          <div style={{ color: "#4f8ef7", fontSize: 12, marginTop: 2 }}>Kieran · SIMPLEX-ITY</div>
+          <div style={{ color: "#8b7fd4", fontSize: 12, marginTop: 2 }}>Kieran · SIMPLEX-ITY</div>
         </div>
       </div>
 
@@ -57,6 +65,7 @@ export default function App() {
         {activePage === "expenses" && <ExpensesPage />}
         {activePage === "projects" && <ProjectsPage />}
         {activePage === "notes" && <NotesPage />}
+        {activePage === "property" && <PropertyPage />}
       </div>
     </div>
   );
