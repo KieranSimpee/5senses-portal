@@ -2,23 +2,26 @@
   "app_id": "69e2eed0ce65610a4e7693bc",
   "slug": "simpee-app-4e7693bc",
   "pages": {
-    "Home": {
-      "title": "Home"
-    },
     "CompliancePage": {
       "title": "CompliancePage"
+    },
+    "DocumentsPage": {
+      "title": "DocumentsPage"
     },
     "ExpensesPage": {
       "title": "ExpensesPage"
     },
-    "ProjectsPage": {
-      "title": "ProjectsPage"
+    "Home": {
+      "title": "Home"
     },
     "NotesPage": {
       "title": "NotesPage"
     },
-    "DocumentsPage": {
-      "title": "DocumentsPage"
+    "ProjectsPage": {
+      "title": "ProjectsPage"
+    },
+    "PropertyPage": {
+      "title": "PropertyPage"
     }
   }
 }
