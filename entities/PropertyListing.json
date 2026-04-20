@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "properties": {
+    "listing_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "price_hkd": {
+      "type": "number"
+    },
+    "district": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "beds": {
+      "type": "string"
+    },
+    "baths": {
+      "type": "string"
+    },
+    "size_sf": {
+      "type": "string"
+    },
+    "floor": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "source_url": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "agent": {
+      "type": "string"
+    },
+    "carpark": {
+      "type": "boolean"
+    },
+    "fetched_date": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [],
+  "name": "PropertyListing"
+}
