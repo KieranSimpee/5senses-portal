@@ -14,7 +14,7 @@
       "type": "string",
       "enum": [
         "Trial",
-        "Basic",
+        "Essential",
         "Professional",
         "Enterprise"
       ]
