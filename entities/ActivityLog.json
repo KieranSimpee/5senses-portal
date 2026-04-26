@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string"
+    },
+    "area": {
+      "type": "string",
+      "enum": [
+        "Brands",
+        "Influencers",
+        "Campaigns",
+        "Calendar",
+        "Revenue",
+        "Build Tracker",
+        "Documents",
+        "General"
+      ]
+    },
+    "action": {
+      "type": "string"
+    },
+    "detail": {
+      "type": "string"
+    },
+    "related_id": {
+      "type": "string"
+    },
+    "related_name": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "ActivityLog"
+}

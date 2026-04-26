@@ -7,14 +7,15 @@
     "category": {
       "type": "string",
       "enum": [
-        "Business Registration",
-        "Bank Documents",
-        "Licences",
-        "Audit & Tax",
-        "Contracts",
-        "Company Secretary",
-        "MPF",
-        "Insurance",
+        "Brand Deck",
+        "Influencer Deck",
+        "Core Values",
+        "Contract",
+        "Campaign Brief",
+        "Report",
+        "Design Asset",
+        "Legal",
+        "Finance",
         "Other"
       ]
     },
@@ -24,10 +25,10 @@
     "file_name": {
       "type": "string"
     },
-    "description": {
+    "file_type": {
       "type": "string"
     },
-    "expiry_date": {
+    "description": {
       "type": "string"
     },
     "tags": {
@@ -36,7 +37,13 @@
         "type": "string"
       }
     },
-    "is_confidential": {
+    "related_to": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "is_pinned": {
       "type": "boolean"
     }
   },
