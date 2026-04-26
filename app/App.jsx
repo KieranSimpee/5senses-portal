@@ -5,6 +5,7 @@ import InfluencersPage from "./pages/InfluencersPage";
 import CampaignsPage from "./pages/CampaignsPage";
 import CalendarPage from "./pages/CalendarPage";
 import RevenuePage from "./pages/RevenuePage";
+import BuildTrackerPage from "./pages/BuildTrackerPage";
 
 const NAV = [
   { id: "dashboard", label: "Dashboard", icon: "📊" },
@@ -13,9 +14,9 @@ const NAV = [
   { id: "campaigns", label: "Campaigns", icon: "🚀" },
   { id: "calendar", label: "Calendar", icon: "📅" },
   { id: "revenue", label: "Revenue", icon: "💰" },
+  { id: "build", label: "Build Tracker", icon: "🏗️", divider: true },
 ];
 
-const BRAND_COLOR = "#7C3AED";
 const BRAND_DARK = "#1a0533";
 
 export default function App() {
@@ -42,18 +43,21 @@ export default function App() {
         {/* Nav */}
         <nav style={{ marginTop: 16, flex: 1 }}>
           {NAV.map(item => (
-            <button key={item.id} onClick={() => setPage(item.id)} style={{
-              display: "flex", alignItems: "center", gap: 12,
-              width: "100%", padding: "11px 24px", border: "none", cursor: "pointer",
-              background: page === item.id ? "rgba(124,58,237,0.25)" : "transparent",
-              color: page === item.id ? "#c4b5fd" : "#94a3b8",
-              fontSize: 13.5, fontWeight: page === item.id ? 600 : 400,
-              borderLeft: page === item.id ? "3px solid #7C3AED" : "3px solid transparent",
-              transition: "all 0.15s", textAlign: "left"
-            }}>
-              <span style={{ fontSize: 16 }}>{item.icon}</span>
-              {item.label}
-            </button>
+            <div key={item.id}>
+              {item.divider && <div style={{ height: 1, background: "rgba(255,255,255,0.08)", margin: "8px 0" }} />}
+              <button onClick={() => setPage(item.id)} style={{
+                display: "flex", alignItems: "center", gap: 12,
+                width: "100%", padding: "11px 24px", border: "none", cursor: "pointer",
+                background: page === item.id ? "rgba(124,58,237,0.25)" : "transparent",
+                color: page === item.id ? "#c4b5fd" : "#94a3b8",
+                fontSize: 13.5, fontWeight: page === item.id ? 600 : 400,
+                borderLeft: page === item.id ? "3px solid #7C3AED" : "3px solid transparent",
+                transition: "all 0.15s", textAlign: "left"
+              }}>
+                <span style={{ fontSize: 16 }}>{item.icon}</span>
+                {item.label}
+              </button>
+            </div>
           ))}
         </nav>
 
@@ -72,6 +76,7 @@ export default function App() {
         {page === "campaigns" && <CampaignsPage />}
         {page === "calendar" && <CalendarPage />}
         {page === "revenue" && <RevenuePage />}
+        {page === "build" && <BuildTrackerPage />}
       </div>
     </div>
   );

@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string"
+    },
+    "project_name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "In Progress",
+        "Done",
+        "Blocked"
+      ]
+    },
+    "order": {
+      "type": "number"
+    },
+    "due_date": {
+      "type": "string"
+    },
+    "reminder_sent": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "BuildCheckpoint"
+}
