@@ -1,71 +1,77 @@
 import { useState } from "react";
-import CompliancePage from "./pages/CompliancePage";
-import ExpensesPage from "./pages/ExpensesPage";
-import ProjectsPage from "./pages/ProjectsPage";
-import NotesPage from "./pages/NotesPage";
-import PropertyPage from "./pages/PropertyPage";
+import Dashboard from "./pages/Dashboard";
+import BrandsPage from "./pages/BrandsPage";
+import InfluencersPage from "./pages/InfluencersPage";
+import CampaignsPage from "./pages/CampaignsPage";
+import CalendarPage from "./pages/CalendarPage";
+import RevenuePage from "./pages/RevenuePage";
 
-const NAV_ITEMS = [
-  { id: "compliance", label: "Compliance", icon: "🛡️" },
-  { id: "expenses", label: "Expenses", icon: "💰" },
-  { id: "projects", label: "Projects", icon: "📁" },
-  { id: "notes", label: "Notes", icon: "📝" },
-  { id: "property", label: "Property", icon: "🏠" },
+const NAV = [
+  { id: "dashboard", label: "Dashboard", icon: "📊" },
+  { id: "brands", label: "Brands", icon: "🏢" },
+  { id: "influencers", label: "Influencers", icon: "⭐" },
+  { id: "campaigns", label: "Campaigns", icon: "🚀" },
+  { id: "calendar", label: "Calendar", icon: "📅" },
+  { id: "revenue", label: "Revenue", icon: "💰" },
 ];
 
+const BRAND_COLOR = "#7C3AED";
+const BRAND_DARK = "#1a0533";
+
 export default function App() {
-  const [activePage, setActivePage] = useState("compliance");
+  const [page, setPage] = useState("dashboard");
 
   return (
-    <div style={{ display: "flex", height: "100vh", fontFamily: "'Inter', sans-serif", background: "#f4f6fb" }}>
+    <div style={{ display: "flex", height: "100vh", fontFamily: "'Inter', sans-serif", background: "#f5f3ff" }}>
       {/* Sidebar */}
       <div style={{
-        width: 220, background: "#1a1f2e", display: "flex", flexDirection: "column",
-        padding: "24px 0", boxShadow: "2px 0 8px rgba(0,0,0,0.15)"
+        width: 230, background: BRAND_DARK, display: "flex", flexDirection: "column",
+        padding: "0 0 24px", boxShadow: "3px 0 16px rgba(124,58,237,0.15)"
       }}>
-        <div style={{ padding: "0 20px 28px", borderBottom: "1px solid #2d3448" }}>
-          <div style={{ color: "#fff", fontWeight: 700, fontSize: 18 }}>SIMPLEX-ITY</div>
-          <div style={{ color: "#7b8db0", fontSize: 12, marginTop: 4 }}>Company Tracker</div>
+        {/* Logo */}
+        <div style={{ padding: "28px 24px 24px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, #7C3AED, #a855f7)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>✨</div>
+            <div>
+              <div style={{ color: "#fff", fontWeight: 800, fontSize: 15, letterSpacing: 0.5 }}>SIMPLEX-ITY</div>
+              <div style={{ color: "#a78bfa", fontSize: 10, marginTop: 1 }}>Control Tower</div>
+            </div>
+          </div>
         </div>
+
+        {/* Nav */}
         <nav style={{ marginTop: 16, flex: 1 }}>
-          {NAV_ITEMS.map(item => (
-            <button
-              key={item.id}
-              onClick={() => setActivePage(item.id)}
-              style={{
-                display: "flex", alignItems: "center", gap: 12,
-                width: "100%", padding: "12px 20px", border: "none", cursor: "pointer",
-                background: activePage === item.id ? "#2d3448" : "transparent",
-                color: activePage === item.id ? "#fff" : "#7b8db0",
-                fontSize: 14, fontWeight: activePage === item.id ? 600 : 400,
-                borderLeft: activePage === item.id ? "3px solid #8b7fd4" : "3px solid transparent",
-                transition: "all 0.2s"
-              }}
-            >
-              <span style={{ fontSize: 18 }}>{item.icon}</span>
+          {NAV.map(item => (
+            <button key={item.id} onClick={() => setPage(item.id)} style={{
+              display: "flex", alignItems: "center", gap: 12,
+              width: "100%", padding: "11px 24px", border: "none", cursor: "pointer",
+              background: page === item.id ? "rgba(124,58,237,0.25)" : "transparent",
+              color: page === item.id ? "#c4b5fd" : "#94a3b8",
+              fontSize: 13.5, fontWeight: page === item.id ? 600 : 400,
+              borderLeft: page === item.id ? "3px solid #7C3AED" : "3px solid transparent",
+              transition: "all 0.15s", textAlign: "left"
+            }}>
+              <span style={{ fontSize: 16 }}>{item.icon}</span>
               {item.label}
-              {item.id === "property" && (
-                <span style={{
-                  marginLeft: "auto", background: "#27AE60", color: "#fff",
-                  borderRadius: 10, fontSize: 10, fontWeight: 700, padding: "1px 7px"
-                }}>NEW</span>
-              )}
             </button>
           ))}
         </nav>
-        <div style={{ padding: "16px 20px", borderTop: "1px solid #2d3448" }}>
-          <div style={{ color: "#7b8db0", fontSize: 11 }}>Logged in as Admin</div>
-          <div style={{ color: "#8b7fd4", fontSize: 12, marginTop: 2 }}>Kieran · SIMPLEX-ITY</div>
+
+        {/* Footer */}
+        <div style={{ padding: "16px 24px", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+          <div style={{ color: "#64748b", fontSize: 11 }}>Logged in as</div>
+          <div style={{ color: "#a78bfa", fontSize: 12, fontWeight: 600, marginTop: 2 }}>Kieran · Admin</div>
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Main */}
       <div style={{ flex: 1, overflow: "auto" }}>
-        {activePage === "compliance" && <CompliancePage />}
-        {activePage === "expenses" && <ExpensesPage />}
-        {activePage === "projects" && <ProjectsPage />}
-        {activePage === "notes" && <NotesPage />}
-        {activePage === "property" && <PropertyPage />}
+        {page === "dashboard" && <Dashboard setPage={setPage} />}
+        {page === "brands" && <BrandsPage />}
+        {page === "influencers" && <InfluencersPage />}
+        {page === "campaigns" && <CampaignsPage />}
+        {page === "calendar" && <CalendarPage />}
+        {page === "revenue" && <RevenuePage />}
       </div>
     </div>
   );

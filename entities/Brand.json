@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "contact_name": {
+      "type": "string"
+    },
+    "contact_email": {
+      "type": "string"
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "Trial",
+        "Basic",
+        "Professional",
+        "Enterprise"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Pending",
+        "Inactive",
+        "Churned"
+      ]
+    },
+    "membership_fee": {
+      "type": "number"
+    },
+    "category": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "tint_integrated": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "Brand"
+}

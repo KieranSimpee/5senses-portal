@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Live Stream",
+        "Blog Post",
+        "Brand Onboarding",
+        "Campaign Review",
+        "AI Certification",
+        "Other"
+      ]
+    },
+    "campaign_id": {
+      "type": "string"
+    },
+    "campaign_title": {
+      "type": "string"
+    },
+    "influencer_id": {
+      "type": "string"
+    },
+    "influencer_name": {
+      "type": "string"
+    },
+    "brand_name": {
+      "type": "string"
+    },
+    "due_date": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Scheduled",
+        "Completed",
+        "Late",
+        "Missed"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "CalendarEvent"
+}

@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "campaign_id": {
+      "type": "string"
+    },
+    "campaign_title": {
+      "type": "string"
+    },
+    "influencer_id": {
+      "type": "string"
+    },
+    "influencer_name": {
+      "type": "string"
+    },
+    "live_count_required": {
+      "type": "number"
+    },
+    "live_count_done": {
+      "type": "number"
+    },
+    "blog_count_required": {
+      "type": "number"
+    },
+    "blog_count_done": {
+      "type": "number"
+    },
+    "commission_earned": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Assigned",
+        "In Progress",
+        "Completed",
+        "Defaulted"
+      ]
+    },
+    "reliability_impact": {
+      "type": "number"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "CampaignInfluencer"
+}

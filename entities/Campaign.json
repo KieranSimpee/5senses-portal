@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "brand_id": {
+      "type": "string"
+    },
+    "brand_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Planning",
+        "Active",
+        "Completed",
+        "Cancelled"
+      ]
+    },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "Phase 1 - Trial",
+        "Phase 2 - Growth"
+      ]
+    },
+    "start_date": {
+      "type": "string"
+    },
+    "end_date": {
+      "type": "string"
+    },
+    "trial_price": {
+      "type": "number"
+    },
+    "discount_pct": {
+      "type": "number"
+    },
+    "target_influencers": {
+      "type": "number"
+    },
+    "total_revenue": {
+      "type": "number"
+    },
+    "platform_commission": {
+      "type": "number"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "Campaign"
+}
