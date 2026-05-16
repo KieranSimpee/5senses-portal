@@ -1,43 +1,27 @@
-SNDK LIVE PRICE MONITOR - AUTOMATION STATUS
-Last Updated: Saturday May 16, 2026 20:33 HKT
+SNDK LIVE PRICE MONITOR STATUS
+==============================
+Last Updated: Saturday May 16, 2026, 21:18 HKT
+Automation: SNDK Live Price Monitor + Big Lot Alert
 
-MARKET STATUS: CLOSED (Weekends)
-Current time: Saturday 8:33 PM HKT
-Last available data: Friday May 15, 4:00 PM EDT (May 15, 4:00 AM HKT May 16)
+MARKET STATUS: CLOSED (Weekend)
 
-SNDK Friday Close Data (May 15):
-- Close: $1,407.61
-- Open: $1,321.00
-- Day high: $1,426.38
-- Day low: $1,315.75
-- Previous close: $1,382.72
-- Day change: +$24.89 (+1.80%)
+Latest Available Data (Friday May 15, 4:00 PM EDT):
+- Current Price: $1,407.61
+- Previous Close: $1,382.72
+- Day Change: +$24.89 (+1.80%)
+- Day Range: $1,315.75 - $1,426.38
 - Volume: 14,010,682 shares
-- ADV (10-day): 17M shares
+- ADV: 17M shares
 
-MONITORING SCHEDULE:
-- Next check: Monday May 18, 2026, 9:30 AM EDT = Monday May 18, 9:30 PM HKT
-- Check interval: Every 15 minutes during US market hours (9:30 AM - 4:00 PM EDT)
-- Check days: Monday - Friday only
+NEXT MONITORING WINDOW:
+- Market Opens: Monday May 18, 9:30 AM EDT
+- HKT Equivalent: Monday May 19, 9:30 PM HKT (or Sunday May 18, 9:30 PM local)
+- Automation will resume 15-minute checks at market open
 
-AUTOMATION STATUS: ✅ ACTIVE (paused for weekend, resumes Monday 9:30 AM EST)
-Last 24h runs: 102 successful checks (through Friday)
-Tonight run: Checked market status - confirmed CLOSED until Monday
+BASELINE FOR NEXT WEEK:
+- Starting Price: $1,407.61
+- Direction: Will be established on first Monday check
+- Support Levels: $1,405, $1,362, $1,340, $1,300
+- Resistance Levels: $1,450, $1,500, $1,550, $1,600
 
-BASELINE FOR NEXT CYCLE (Monday May 18):
-- Starting price: $1,407.61 (Friday close)
-- First 15-min check: Monday 9:30 AM EDT
-- Will establish direction on first Monday check
-- Previous check price: Will be set on first Monday check
-
-ALERT TRIGGERS CONFIGURED:
-✅ BIG LOT ($2M+ in first 5 mins OR >6.25M pace = >25M full day)
-✅ KEY LEVEL ($1,405 touch either direction)
-✅ DANGER ($1,362, $1,340, $1,300 breaks)
-✅ BREAKOUT ($1,450, $1,500, $1,550, $1,600)
-✅ REVERSAL (direction flip from previous check)
-✅ OPTIONS FLOW (unusual call activity)
-✅ LEVEL 2 SIGNAL (large bid stacks)
-
-SUPPORT LEVELS: $1,300, $1,340, $1,362, $1,405
-RESISTANCE LEVELS: $1,450, $1,500, $1,550, $1,600
+Monitoring Paused Until Monday 9:30 AM EDT
