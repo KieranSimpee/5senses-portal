@@ -1,28 +1,18 @@
-SNDK LIVE PRICE MONITOR - BASELINE DATA
-========================================
-Date: May 16, 2026 02:18 HKT (Saturday early morning)
-US Market Status: CLOSED (reopens Monday May 18)
+SNDK Live Price Monitor Baseline
+Started: May 16, 2026, 19:48 HKT (Saturday evening)
+Market Status: CLOSED
 
-Last known price (May 15 Thursday):
-Current: $1,413.77
-Open: $1,321.00
-High: $1,426.38
-Low: $1,315.75
-Volume: 10,568,474 shares
-Change: +$31.05 (+2.25% from prev close $1,382.72)
-
-Reference prices for alerts:
-- Support levels: $1,300, $1,340, $1,362, $1,405
-- Resistance levels: $1,450, $1,500, $1,550, $1,600
+Last Available Market Data (Friday May 15, 4:00 PM EDT):
+- Closing price: $1,407.61
 - Previous close: $1,382.72
-- ADV: 17,000,000 shares
+- Day change: +$24.89 (+1.80%)
+- Volume: 13,726,328 shares
+- ADV: 17,715,855 shares
 
-BIG LOT thresholds:
-- First 5 mins > 2M shares = immediate alert
-- Volume pace > 6.25M in first hour = suggests >25M full day = BIG LOT signal
+Setup:
+- Direction baseline: UPTREND (closed up +1.80%)
+- Support levels: $1,405, $1,362, $1,340, $1,300
+- Resistance levels: $1,450, $1,500, $1,550, $1,600
+- Alert triggers: Active
 
-Next check: Monday May 18 at market open (9:30am EST = 9:30pm HKT Sunday)
-Monitor frequency: Every 15 minutes during US market hours (9:30am-4pm EST)
-
-Baseline price: $1,413.77
-Status: WAITING FOR MONDAY MARKET OPEN
+Next monitoring check: Monday May 18, 9:30am EST (= Sunday 9:30pm HKT / Monday 9:30am HKT local)
