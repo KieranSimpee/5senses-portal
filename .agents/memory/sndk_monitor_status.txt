@@ -1,39 +1,40 @@
-SNDK Live Price Monitor Status
-Date: Saturday, May 16, 2026 18:33 HKT (6:33am EST Saturday)
+SNDK LIVE PRICE MONITOR - AUTOMATION STATUS
+Last Updated: Saturday May 16, 2026 18:48 HKT
 
-Market Status: CLOSED - After-hours only
-Last Update: Friday May 15, 2026 7:59pm EDT (after-hours)
-Next Monitoring Window: Monday May 18, 2026 at 9:30am EST = 9:30pm HKT Sunday
+MARKET STATUS: CLOSED
+Current time: Saturday evening (after hours)
+Last available data: Friday May 15, 4:00 PM EDT = Friday May 15, 4:00 AM HKT (May 16)
 
-Latest Data (Friday May 15):
-Regular Session:
+SNDK Friday Close Data:
 - Close: $1,407.61
 - Open: $1,321.00
-- High: $1,426.38
-- Low: $1,315.75
-- Day change: +$24.89 (+1.80%) from previous close of $1,382.72
+- Day high: $1,426.38
+- Day low: $1,315.75
+- Previous close: $1,382.72
+- Day change: +$24.89 (+1.80%)
 - Volume: 14,010,682 shares
-- ADV: 17.61M
+- ADV (10-day): 17M shares
 
-After-hours (7:59pm EDT):
-- After-hours price: $1,380.93
-- After-hours change: -$26.68 (-1.90%)
-- After-hours volume: 440.89K
+MONITORING SCHEDULE:
+- Next check: Monday May 18, 2026, 9:30 AM EDT = Monday May 18, 9:30 PM HKT
+- Check interval: Every 15 minutes during US market hours (9:30 AM - 4:00 PM EDT)
+- Check days: Monday - Friday only
 
-Baseline for Monday: $1,407.61 (Friday regular close)
-Previous direction: Not yet established (will set on first Monday check)
+AUTOMATION STATUS: ✅ ACTIVE (paused for weekend)
+Last 24h runs: 102 successful checks
+Status: Ready for Monday market open
 
-Alert triggers configured:
-✅ BIG LOT (>2M shares first 5 mins OR >6.25M pace = 25M+ full day)
-✅ KEY LEVEL ($1,405 - touched Friday at $1,407.61)
-✅ DANGER (breaks $1,362, $1,340, $1,300)
+BASELINE FOR NEXT CYCLE:
+- Starting price: $1,407.61
+- Previous check: None (fresh start Monday)
+- Direction: TBD (will establish on first check)
+- Baseline time: Monday 9:30 AM EDT
+
+ALERT TRIGGERS CONFIGURED:
+✅ BIG LOT ($2M+ in first 5 mins OR >6.25M pace)
+✅ KEY LEVEL ($1,405 touch either direction)
+✅ DANGER ($1,362, $1,340, $1,300 breaks)
 ✅ BREAKOUT ($1,450, $1,500, $1,550, $1,600)
-✅ REVERSAL (direction flip from previous check)
+✅ REVERSAL (direction flip)
 ✅ OPTIONS FLOW (unusual call activity)
-✅ LEVEL 2 SIGNAL (large bid/ask stacks)
-
-After-hours insight: Light volume, slight weakness (-1.90%) from regular close but holding above $1,380.
-Ready to resume active 15-min monitoring Monday 9:30am EST.
-
-News signal: Appaloosa Management (David Tepper) disclosed new stake in SNDK as of March 31, 2026. 
-Heavy institutional interest, calls leading puts, moderate bullish options activity.
+✅ LEVEL 2 SIGNAL (large bid stacks)
