@@ -1,25 +1,27 @@
 SNDK Live Price Monitor Status
-Date: Saturday, May 16, 2026 17:03 HKT (5:03am EST Saturday)
+Date: Saturday, May 16, 2026 18:33 HKT (6:33am EST Saturday)
 
-Market Status: CLOSED - After-hours only (no regular trading Saturday)
+Market Status: CLOSED - After-hours only
 Last Update: Friday May 15, 2026 7:59pm EDT (after-hours)
 Next Monitoring Window: Monday May 18, 2026 at 9:30am EST = 9:30pm HKT Sunday
 
-Latest Data (Friday May 15 after-hours, 7:59pm EDT):
-- After-hours price: $1,380.93
-- Regular close: $1,407.61
-- After-hours change: -$26.68 (-1.90%)
+Latest Data (Friday May 15):
+Regular Session:
+- Close: $1,407.61
 - Open: $1,321.00
 - High: $1,426.38
 - Low: $1,315.75
-- Previous close: $1,382.72
-- Day change (regular): +$24.89 (+1.80%)
-- Regular Volume: 12,332,588
+- Day change: +$24.89 (+1.80%) from previous close of $1,382.72
+- Volume: 14,010,682 shares
 - ADV: 17.61M
-- After-hours Volume: 440.89K
+
+After-hours (7:59pm EDT):
+- After-hours price: $1,380.93
+- After-hours change: -$26.68 (-1.90%)
+- After-hours volume: 440.89K
 
 Baseline for Monday: $1,407.61 (Friday regular close)
-Direction to establish: Will set on first check Monday 9:30am EST
+Previous direction: Not yet established (will set on first Monday check)
 
 Alert triggers configured:
 ✅ BIG LOT (>2M shares first 5 mins OR >6.25M pace = 25M+ full day)
@@ -30,5 +32,8 @@ Alert triggers configured:
 ✅ OPTIONS FLOW (unusual call activity)
 ✅ LEVEL 2 SIGNAL (large bid/ask stacks)
 
-After-hours note: Light volume, slight weakness (-1.90%) but holding above key support levels.
-Ready to resume active monitoring Monday 9:30am EST.
+After-hours insight: Light volume, slight weakness (-1.90%) from regular close but holding above $1,380.
+Ready to resume active 15-min monitoring Monday 9:30am EST.
+
+News signal: Appaloosa Management (David Tepper) disclosed new stake in SNDK as of March 31, 2026. 
+Heavy institutional interest, calls leading puts, moderate bullish options activity.
