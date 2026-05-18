@@ -1,43 +1,47 @@
 SNDK LIVE PRICE MONITOR STATUS
 ==============================
-Last Updated: Tuesday May 19, 2026, 02:01 HKT (2:01 AM EDT May 20 / 2:01 PM EDT May 19)
+Last Updated: Tuesday May 19, 2026, 03:00 HKT (3:00 AM EDT May 20 / 3:00 PM EDT May 19)
 Automation: SNDK Live Price Monitor + Big Lot Alert
 Session: ACTIVE - Monitoring 15-min cycles
 
 MARKET STATUS: OPEN (US market trading)
 
-CURRENT SESSION DATA (as of 02:01 HKT May 19):
-- Last Known Price: $1,297.48 (from 01:16 HKT check)
-- Time Since Last Check: 45 minutes
-- Previous Check Price: $1,325.00 (May 18, 22:05 HKT)
-- Current Day Change: -$110.13 (-7.82%)
-- Previous Close: $1,407.61 (May 18)
-- Open (May 19): $1,433.72
-- Intraday Swing: -$136.24 (-9.5%)
-- Day Range: $1,293.00 - $1,440.00
-- Last Recorded Volume: 8,809,009 shares (50% of ADV)
+CURRENT CHECK (03:00 HKT May 19):
+- Current Price: $1,292.37
+- Previous Check: $1,297.48 (02:01 HKT)
+- 15-min Change: -$5.11 (-0.39%)
+- Direction: 📉 DOWN (continuing decline)
+- Day Change: -8.19% from $1,407.61 previous close
+- Volume: 10,695,525 shares (61% of ADV 17.57M)
+- Day Range: $1,277.33 - $1,440.00
+- Open (May 19): $1,431.67
+- Intraday Swing: -$139.30 (-9.7%)
+- Time Since Check: 59 minutes
 
 CRITICAL STATUS: DANGER ⚠️ CONTINUES
-- Price holding below $1,300 critical support (last check: $1,297.48)
-- 7.82% intraday decline continues
-- Day low: $1,293.00 — potential further breakdown risk
-- Institutional distribution phase active
+- Price still holding BELOW $1,300 critical support
+- Approaching day low of $1,277.33 (risk of further breakdown)
+- 8.19% intraday decline continues
+- Institutional distribution phase — heavy selling pressure
 
-SUPPORT LEVELS:
-- $1,300 (BROKEN - critical)
-- $1,280, $1,250, $1,200 (next supports)
-- $1,293 (current day low)
+SUPPORT LEVELS (WATCH):
+- $1,277.33 (current day low - CRITICAL)
+- $1,250 (next major support)
+- $1,200 (secondary support)
+- $1,300 (broken - was key level)
 
 RESISTANCE LEVELS:
-- $1,350, $1,400, $1,450
+- $1,350 (immediate)
+- $1,400, $1,450 (elevated resistance)
 
 VOLUME ANALYSIS:
-- Last reading: 8.8M shares
+- Current: 10.7M shares traded
 - ADV: 17.57M shares
-- Volume pace suggests heavy selling pressure continues
+- Volume pace: 61% of ADV after ~6 hours of trading
+- Suggests continued selling pressure — no recovery bounce yet
 
 NEXT SCHEDULED CHECK:
-- Time: 02:16 HKT (15 min from now)
-- Continue monitoring for: Stabilization above $1,300, further breakdown toward $1,293, reversal signals, volume changes
+- Time: 03:15 HKT (15 min from now)
+- Watch for: Stabilization above $1,280, potential bottom reversal, volume changes
 
-AUTOMATION STATUS: RUNNING - Next check scheduled in 15 minutes
+AUTOMATION STATUS: RUNNING - Next check at 03:15 HKT
