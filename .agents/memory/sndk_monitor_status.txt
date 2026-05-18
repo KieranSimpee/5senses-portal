@@ -1,39 +1,35 @@
 SNDK LIVE PRICE MONITOR STATUS
 ==============================
-Last Updated: Monday May 18, 2026, 21:15 HKT (9:15 AM EDT)
+Last Updated: Monday May 18, 2026, 21:46 HKT (9:46 AM EDT)
 Automation: SNDK Live Price Monitor + Big Lot Alert
 
-MARKET STATUS: PRE-MARKET (Official open: 9:30 AM EDT = 21:30 HKT)
+MARKET STATUS: OPEN (9:30 AM EDT = 21:30 HKT)
 
-Latest Data (Monday May 18, 9:16 AM EDT / 21:16 HKT):
-- Current Price: $1,435.60
-- Previous Check (6:00 AM EDT): $1,412.00
-- 15-min Change: +$23.60 (+1.67%)
+Latest Data (Monday May 18, 9:46 AM EDT / 21:46 HKT):
+- Current Price: $1,374.09 (estimated from 9:45-9:48 AM EST tick data)
+- Pre-market High: $1,435.60 (9:15 AM EDT)
 - May 15 Close: $1,407.61
-- Day Change: +$27.99 (+1.99%)
-- Pre-market Time: 9:16 AM EDT
-- Volume: Pre-market (official open in 44 minutes)
+- Day Change: -$33.52 (-2.38%)
+- 15-min Change from pre-market: -$61.51 (-4.28%)
+- Market Open Price (est): ~$1,370-$1,375
+- Volume: Building (first 16 minutes)
 - ADV: 17M shares
 
-BASELINE FOR MARKET OPEN:
-- Baseline Price: $1,407.61 (May 15 close)
-- Current Pre-market: $1,435.60 (+1.99%)
-- Direction: 📈 UP (strong pre-market momentum)
-- Support Levels: $1,405, $1,362, $1,340, $1,300
-- Resistance Levels: $1,450, $1,500, $1,550, $1,600
+OPENING SESSION SUMMARY:
+- Direction: 📉 DOWN (gap down from pre-market high)
+- Assessment: PULLBACK after strong pre-market. Institutional accumulation in pre-market did not hold at open.
+- Key Level: $1,362 support now approaching
+- Risk Level: Watch for breakdown below $1,340
 
-PREMARKET SUMMARY (9:16 AM EDT):
-- Price: $1,435.60 (+1.99% from May 15 close)
-- Status: STRONG BULLISH - Institutional accumulation evident
-- MU correlation: POSITIVE
-- Bid/Ask: Tight spreads, healthy depth
-- Assessment: Confidence building for opening bell
+BASELINE FOR TRACKING:
+- Baseline Price: $1,374.09 (market open ~9:46 AM EDT)
+- Previous Pre-market: $1,435.60 (+1.99%)
+- Support Levels: $1,362, $1,340, $1,300
+- Resistance Levels: $1,405, $1,450, $1,500
 
 NEXT CHECK:
-- Time: 21:30 HKT (9:30 AM EDT) - MARKET OPEN
-- Will begin 15-minute interval monitoring from market open
-- Watching for: Big Lot entry signal, $1,405+ key level confirmation, breakout to $1,450
+- Time: 22:01 HKT (10:01 AM EDT) - First 15-minute interval complete
+- Will continue 15-minute monitoring every 15 minutes
+- Watching for: Stabilization, support hold at $1,362, reversal
 
-Last Alert Sent: 21:15 HKT - STRONG BULLISH PREMARKET UPDATE
-
-Monitoring Resumed - Monday May 18
+Last Alert Sent: 21:46 HKT - MARKET OPEN ALERT
