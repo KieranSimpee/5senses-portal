@@ -1,32 +1,39 @@
 SNDK LIVE PRICE MONITOR STATUS
 ==============================
-Last Updated: Monday May 18, 2026, 06:00 AM EDT (18:00 HKT)
+Last Updated: Monday May 18, 2026, 21:15 HKT (9:15 AM EDT)
 Automation: SNDK Live Price Monitor + Big Lot Alert
 
-MARKET STATUS: PRE-MARKET (Official open: 9:30 AM EDT)
+MARKET STATUS: PRE-MARKET (Official open: 9:30 AM EDT = 21:30 HKT)
 
-Latest Data (Monday May 18, 6:00:54 AM EDT):
-- Current Price: $1,412.00
-- Previous Close (May 15): $1,407.61
-- Pre-market Change: +$4.39 (+0.31%)
-- Pre-market Time: 6:00:54 AM EDT
-- Volume: Pre-market building
+Latest Data (Monday May 18, 9:16 AM EDT / 21:16 HKT):
+- Current Price: $1,435.60
+- Previous Check (6:00 AM EDT): $1,412.00
+- 15-min Change: +$23.60 (+1.67%)
+- May 15 Close: $1,407.61
+- Day Change: +$27.99 (+1.99%)
+- Pre-market Time: 9:16 AM EDT
+- Volume: Pre-market (official open in 44 minutes)
 - ADV: 17M shares
 
-BASELINE ESTABLISHED:
-- Starting Price: $1,407.61
-- Direction: Will be confirmed on first regular market check post-9:30 AM EDT
+BASELINE FOR MARKET OPEN:
+- Baseline Price: $1,407.61 (May 15 close)
+- Current Pre-market: $1,435.60 (+1.99%)
+- Direction: 📈 UP (strong pre-market momentum)
 - Support Levels: $1,405, $1,362, $1,340, $1,300
 - Resistance Levels: $1,450, $1,500, $1,550, $1,600
 
-PREMARKET SUMMARY (6:00 AM EDT):
-- Price: $1,412.00 (+0.31%)
-- Bid: $1,406.15
-- Ask: $1,405.19
-- Status: Slight upward bias in premarket, MU correlation supporting
+PREMARKET SUMMARY (9:16 AM EDT):
+- Price: $1,435.60 (+1.99% from May 15 close)
+- Status: STRONG BULLISH - Institutional accumulation evident
+- MU correlation: POSITIVE
+- Bid/Ask: Tight spreads, healthy depth
+- Assessment: Confidence building for opening bell
 
 NEXT CHECK:
-- Time: 6:15 AM EDT (or when market opens 9:30 AM EDT, whichever comes first)
-- Will resume 15-minute interval checks once market officially opens
+- Time: 21:30 HKT (9:30 AM EDT) - MARKET OPEN
+- Will begin 15-minute interval monitoring from market open
+- Watching for: Big Lot entry signal, $1,405+ key level confirmation, breakout to $1,450
+
+Last Alert Sent: 21:15 HKT - STRONG BULLISH PREMARKET UPDATE
 
 Monitoring Resumed - Monday May 18
