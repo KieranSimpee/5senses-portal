@@ -1,31 +1,42 @@
-SNDK Live Price Monitor — May 18, 2026
+SNDK Live Price Monitor — Tuesday May 19, 2026
 ===============================================
 
-MONITORING SESSION: May 18, 2026
-Start time: 22:45 HKT Sunday (= 10:46 AM EDT Monday)
-Baseline price: $1,320.39
-Baseline time: 11:16 AM EDT
-Previous close: $1,407.61 (May 17)
+MONITORING SESSION: Tuesday May 19, 2026
+Current time: 02:45 HKT (2:45 PM EDT May 19)
+Previous close: $1,407.61 (May 18)
 
 ADV: 17M shares
-Support levels: $1,300, $1,340, $1,362, $1,405
-Resistance levels: $1,450, $1,500, $1,550, $1,600
+Support levels: $1,280, $1,250, $1,200 (updated after $1,300 break)
+Resistance levels: $1,350, $1,400, $1,450
 
 ===============================================
-CHECK #1: 21:48 HKT (9:48 AM EDT Monday May 18)
+CHECK: 02:45 HKT (2:45 PM EDT Tuesday May 19)
 ===============================================
-Current price: $1,365.00
-15-min change from last check: +$44.61 (+3.38%)
-Direction: 📈 UP
-Day change: -$42.61 (-3.03%) from previous close
-Volume: 14M+ shares
-Signal: NORMAL
+Current price: $1,284.71
+15-min change from last check: -$12.77 (-0.98%)
+Direction: 📉 DOWN
+Day change: -$122.90 (-8.73%) from previous close
+Day range: $1,277.33 (LOW) - $1,440.00 (HIGH) 
+Open: $1,431.67
+Volume: 10.2M shares (60% of ADV)
+Signal: DANGER ⚠️
 
-Notes: 
-- Recovering well from gap down opening at ~$1,380
-- Bounced strongly from $1,315.75 low (+$49.25 recovery)
-- Volume appears normal, no big lot signals
-- Need to reclaim $1,407 to neutralize gap
+CRITICAL ALERTS:
+- SNDK broke $1,280 support level (day low: $1,277.33)
+- Intraday collapse: -$147 from open (-10.3%)
+- Institutional distribution continues heavy
+- Next support: $1,250, $1,200
 
-Last alert sent: 21:48 HKT
-Next check scheduled: 22:03 HKT (10:03 AM EDT)
+TECHNICAL STATUS:
+- Stock opened strong at $1,431.67 but immediately sold off
+- Failed to hold any support levels ($1,405, $1,362, $1,340, $1,300)
+- Systematic selling pressure all day
+- Volume: 10.2M shares at 2:45pm EDT (normal pace but with heavy selling bias)
+
+NEWS:
+- Multiple reports citing "AI fears" and memory sector headwinds
+- Micron (MU) proxy also down -7.66% today
+- SanDisk-specific pressure on May 20 catalyst expectations
+
+Last alert sent: 02:45 HKT
+Next check scheduled: 03:00 HKT (3:00 PM EDT)
