@@ -1,27 +1,32 @@
 SNDK LIVE PRICE MONITOR STATUS
 ==============================
-Last Updated: Saturday May 16, 2026, 21:18 HKT
+Last Updated: Monday May 18, 2026, 06:00 AM EDT (18:00 HKT)
 Automation: SNDK Live Price Monitor + Big Lot Alert
 
-MARKET STATUS: CLOSED (Weekend)
+MARKET STATUS: PRE-MARKET (Official open: 9:30 AM EDT)
 
-Latest Available Data (Friday May 15, 4:00 PM EDT):
-- Current Price: $1,407.61
-- Previous Close: $1,382.72
-- Day Change: +$24.89 (+1.80%)
-- Day Range: $1,315.75 - $1,426.38
-- Volume: 14,010,682 shares
+Latest Data (Monday May 18, 6:00:54 AM EDT):
+- Current Price: $1,412.00
+- Previous Close (May 15): $1,407.61
+- Pre-market Change: +$4.39 (+0.31%)
+- Pre-market Time: 6:00:54 AM EDT
+- Volume: Pre-market building
 - ADV: 17M shares
 
-NEXT MONITORING WINDOW:
-- Market Opens: Monday May 18, 9:30 AM EDT
-- HKT Equivalent: Monday May 19, 9:30 PM HKT (or Sunday May 18, 9:30 PM local)
-- Automation will resume 15-minute checks at market open
-
-BASELINE FOR NEXT WEEK:
+BASELINE ESTABLISHED:
 - Starting Price: $1,407.61
-- Direction: Will be established on first Monday check
+- Direction: Will be confirmed on first regular market check post-9:30 AM EDT
 - Support Levels: $1,405, $1,362, $1,340, $1,300
 - Resistance Levels: $1,450, $1,500, $1,550, $1,600
 
-Monitoring Paused Until Monday 9:30 AM EDT
+PREMARKET SUMMARY (6:00 AM EDT):
+- Price: $1,412.00 (+0.31%)
+- Bid: $1,406.15
+- Ask: $1,405.19
+- Status: Slight upward bias in premarket, MU correlation supporting
+
+NEXT CHECK:
+- Time: 6:15 AM EDT (or when market opens 9:30 AM EDT, whichever comes first)
+- Will resume 15-minute interval checks once market officially opens
+
+Monitoring Resumed - Monday May 18
