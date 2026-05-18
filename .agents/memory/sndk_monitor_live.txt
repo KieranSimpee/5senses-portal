@@ -1,27 +1,31 @@
 SNDK Live Price Monitor — May 18, 2026
 ===============================================
 
-MONITORING START: May 18, 2026, 23:16 HKT (11:16 AM EDT)
-Previous close: $1,407.61 (May 17)
+MONITORING SESSION: May 18, 2026
+Start time: 22:45 HKT Sunday (= 10:46 AM EDT Monday)
 Baseline price: $1,320.39
 Baseline time: 11:16 AM EDT
-Direction: UNKNOWN (first check)
+Previous close: $1,407.61 (May 17)
 
 ADV: 17M shares
-Support levels: $1,405, $1,362, $1,340, $1,300
+Support levels: $1,300, $1,340, $1,362, $1,405
 Resistance levels: $1,450, $1,500, $1,550, $1,600
 
-Alert triggers:
-✅ BIG LOT (>2M first 5min OR >6.25M pace)
-✅ KEY LEVEL ($1,405)
-✅ DANGER ($1,362, $1,340, $1,300)
-✅ BREAKOUT ($1,450, $1,500, $1,550, $1,600)
-✅ REVERSAL (direction flip)
-✅ OPTIONS FLOW
-✅ LEVEL 2 SIGNAL
+===============================================
+CHECK #1: 21:48 HKT (9:48 AM EDT Monday May 18)
+===============================================
+Current price: $1,365.00
+15-min change from last check: +$44.61 (+3.38%)
+Direction: 📈 UP
+Day change: -$42.61 (-3.03%) from previous close
+Volume: 14M+ shares
+Signal: NORMAL
 
-Last check: 11:16 AM EDT / 23:16 HKT May 18
-Last price: $1,320.39
-Change from close: -$87.22 (-6.19%)
+Notes: 
+- Recovering well from gap down opening at ~$1,380
+- Bounced strongly from $1,315.75 low (+$49.25 recovery)
+- Volume appears normal, no big lot signals
+- Need to reclaim $1,407 to neutralize gap
 
-Volume check: Still loading...
+Last alert sent: 21:48 HKT
+Next check scheduled: 22:03 HKT (10:03 AM EDT)
