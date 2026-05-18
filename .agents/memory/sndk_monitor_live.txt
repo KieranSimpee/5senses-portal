@@ -2,41 +2,42 @@ SNDK Live Price Monitor — Tuesday May 19, 2026
 ===============================================
 
 MONITORING SESSION: Tuesday May 19, 2026
-Current time: 02:45 HKT (2:45 PM EDT May 19)
+Current time: 03:30 HKT (3:30 PM EDT May 19)
 Previous close: $1,407.61 (May 18)
 
 ADV: 17M shares
-Support levels: $1,280, $1,250, $1,200 (updated after $1,300 break)
+Support levels: $1,280, $1,250, $1,200 (updated after break)
 Resistance levels: $1,350, $1,400, $1,450
 
 ===============================================
-CHECK: 02:45 HKT (2:45 PM EDT Tuesday May 19)
+CHECK: 03:30 HKT (3:30 PM EDT Tuesday May 19)
 ===============================================
-Current price: $1,284.71
-15-min change from last check: -$12.77 (-0.98%)
-Direction: 📉 DOWN
-Day change: -$122.90 (-8.73%) from previous close
+Current price: $1,307.88
+15-min change from last check: +$23.17 (+1.80%)
+Direction: 📈 UP (REVERSAL from previous DOWN trend)
+Day change: -$99.73 (-7.09%) from previous close
 Day range: $1,277.33 (LOW) - $1,440.00 (HIGH) 
 Open: $1,431.67
-Volume: 10.2M shares (60% of ADV)
-Signal: DANGER ⚠️
+Volume: 11.6M shares (68% of ADV)
+Signal: 🔄 REVERSAL
 
 CRITICAL ALERTS:
-- SNDK broke $1,280 support level (day low: $1,277.33)
-- Intraday collapse: -$147 from open (-10.3%)
-- Institutional distribution continues heavy
-- Next support: $1,250, $1,200
+- REVERSAL DETECTED: Stock bouncing UP after 2+ hours of selling pressure
+- Recovered from day low of $1,277.33 (off by +$30.55 or +2.39%)
+- Price holding near key support level $1,300-$1,310
+- Volume picking up: 11.6M shares traded (normal for 3:30pm EDT)
 
 TECHNICAL STATUS:
-- Stock opened strong at $1,431.67 but immediately sold off
-- Failed to hold any support levels ($1,405, $1,362, $1,340, $1,300)
-- Systematic selling pressure all day
-- Volume: 10.2M shares at 2:45pm EDT (normal pace but with heavy selling bias)
+- Stock opened at $1,431.67, fell to $1,277.33, now bouncing to $1,307.88
+- Intraday range: $153.67 (10.8% swing)
+- Buyers stepping in at support levels
+- Support holding: $1,277 (day low not broken further)
+- Next resistance test: $1,350, $1,400
 
-NEWS:
-- Multiple reports citing "AI fears" and memory sector headwinds
-- Micron (MU) proxy also down -7.66% today
-- SanDisk-specific pressure on May 20 catalyst expectations
+CONTEXT:
+- Micron (MU) proxy: Down -7.66% today (memory sector weakness)
+- Institutional sellers exhausted? Or consolidating before next move?
+- Watch if can hold $1,300+ or test $1,250 support
 
-Last alert sent: 02:45 HKT
-Next check scheduled: 03:00 HKT (3:00 PM EDT)
+Last alert sent: 03:30 HKT
+Next check scheduled: 03:45 HKT (3:45 PM EDT)
