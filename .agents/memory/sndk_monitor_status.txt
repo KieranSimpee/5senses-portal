@@ -1,35 +1,43 @@
 SNDK LIVE PRICE MONITOR STATUS
 ==============================
-Last Updated: Monday May 18, 2026, 21:46 HKT (9:46 AM EDT)
+Last Updated: Monday May 18, 2026, 22:05 HKT (10:05 AM EDT)
 Automation: SNDK Live Price Monitor + Big Lot Alert
 
 MARKET STATUS: OPEN (9:30 AM EDT = 21:30 HKT)
 
-Latest Data (Monday May 18, 9:46 AM EDT / 21:46 HKT):
-- Current Price: $1,374.09 (estimated from 9:45-9:48 AM EST tick data)
+Latest Data (Monday May 18, 10:05 AM EDT / 22:05 HKT):
+- Current Price: $1,325.00
+- Previous Check (22:01 HKT): $1,331.51
 - Pre-market High: $1,435.60 (9:15 AM EDT)
 - May 15 Close: $1,407.61
-- Day Change: -$33.52 (-2.38%)
-- 15-min Change from pre-market: -$61.51 (-4.28%)
-- Market Open Price (est): ~$1,370-$1,375
-- Volume: Building (first 16 minutes)
-- ADV: 17M shares
+- 15-min Change: -$6.51 (-0.49%)
+- Day Change: -$82.61 (-5.87%)
+- Volume: 3,227,801 shares (ADV 17M)
+- Status: CONSOLIDATING LOSS — Below $1,340 danger level
 
-OPENING SESSION SUMMARY:
-- Direction: 📉 DOWN (gap down from pre-market high)
-- Assessment: PULLBACK after strong pre-market. Institutional accumulation in pre-market did not hold at open.
-- Key Level: $1,362 support now approaching
-- Risk Level: Watch for breakdown below $1,340
+ALERT LEVEL: DANGER ⚠️ CONFIRMED
+- Price now $15 BELOW the $1,340 critical support
+- Continuous downward pressure since market open
+- Pre-market accumulation ($1,435.60 high) completely reversed at open
+- Next critical level: $1,300
+
+MARKET ASSESSMENT:
+- Gap-down open from pre-market high of $1,435.60 (-$110.60 swing, -7.6%)
+- Institutional buyers stepped in pre-market but sellers dominated at open
+- Sharp morning decline suggests profit-taking or negative news catalyst
+- Volume is SLOW — only 3.2M in 35 minutes (would need 6.25M for 25M+ full day)
+- Low volume on sell-off suggests weak conviction, possible bounce formation
 
 BASELINE FOR TRACKING:
-- Baseline Price: $1,374.09 (market open ~9:46 AM EDT)
-- Previous Pre-market: $1,435.60 (+1.99%)
-- Support Levels: $1,362, $1,340, $1,300
-- Resistance Levels: $1,405, $1,450, $1,500
+- Starting Price (Market Open): ~$1,370-$1,375
+- Support Levels: $1,362 (already broken), $1,340 (BROKEN), $1,300 (next critical)
+- Resistance Levels: $1,350, $1,405, $1,450, $1,500
+- ADV: 17M shares
+- Current Volume Pace: ~3.2M in first 35 minutes (annualizes to ~14M if pace holds)
 
 NEXT CHECK:
-- Time: 22:01 HKT (10:01 AM EDT) - First 15-minute interval complete
-- Will continue 15-minute monitoring every 15 minutes
-- Watching for: Stabilization, support hold at $1,362, reversal
+- Time: 22:20 HKT (10:20 AM EDT)
+- Continue 15-minute monitoring
+- Watch for: Stabilization above $1,325, breakdown toward $1,300, volume surge, reversal
 
-Last Alert Sent: 21:46 HKT - MARKET OPEN ALERT
+Last Alert Sent: 22:05 HKT - DANGER LEVEL ALERT (Below $1,340)
