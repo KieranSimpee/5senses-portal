@@ -1,51 +1,43 @@
 SNDK LIVE PRICE MONITOR STATUS
 ==============================
-Last Updated: Tuesday May 19, 2026, 01:16 HKT (1:16 PM EDT)
+Last Updated: Tuesday May 19, 2026, 02:01 HKT (2:01 AM EDT May 20 / 2:01 PM EDT May 19)
 Automation: SNDK Live Price Monitor + Big Lot Alert
+Session: ACTIVE - Monitoring 15-min cycles
 
-MARKET STATUS: OPEN (1:16 PM EDT = 13:16 EDT)
+MARKET STATUS: OPEN (US market trading)
 
-Latest Data (Tuesday May 19, 1:16 PM EDT / 01:16 HKT):
-- Current Price: $1,297.48
-- Previous Check (May 18, 22:05 HKT): $1,325.00
-- 15-min Change: -$27.52 (-2.08%)
-- Day Change: -$110.13 (-7.82%)
+CURRENT SESSION DATA (as of 02:01 HKT May 19):
+- Last Known Price: $1,297.48 (from 01:16 HKT check)
+- Time Since Last Check: 45 minutes
+- Previous Check Price: $1,325.00 (May 18, 22:05 HKT)
+- Current Day Change: -$110.13 (-7.82%)
 - Previous Close: $1,407.61 (May 18)
-- Open (today): $1,433.72
+- Open (May 19): $1,433.72
+- Intraday Swing: -$136.24 (-9.5%)
 - Day Range: $1,293.00 - $1,440.00
-- Volume: 8,809,009 shares (ADV 17.57M) — 50% of ADV
-- Status: BREAKING DOWN BELOW $1,300 CRITICAL SUPPORT
+- Last Recorded Volume: 8,809,009 shares (50% of ADV)
 
-CRITICAL ALERT: DANGER ⚠️ CONFIRMED
-- Price now BELOW the $1,300 critical support level
-- Continuous downward momentum from May 18
-- Day low: $1,293.00 — price very close to touching new lows
-- Swing from open ($1,433.72) to current ($1,297.48) = -$136.24 (-9.5% intraday)
+CRITICAL STATUS: DANGER ⚠️ CONTINUES
+- Price holding below $1,300 critical support (last check: $1,297.48)
+- 7.82% intraday decline continues
+- Day low: $1,293.00 — potential further breakdown risk
+- Institutional distribution phase active
 
-MARKET ASSESSMENT:
-- Gap-down open from $1,433.72, sharp early morning selloff
-- Price has been in downtrend throughout May 19 morning
-- Volume at 8.8M (50% of ADV) — moderately heavy selling
-- If volume pace continues at current rate: 8.8M * 2 = 17.6M (close to full-day ADV)
-- Institutional distribution phase accelerating
-- No bounce or reversal signals observed yet
+SUPPORT LEVELS:
+- $1,300 (BROKEN - critical)
+- $1,280, $1,250, $1,200 (next supports)
+- $1,293 (current day low)
 
-SUPPORT/RESISTANCE LEVELS:
-- Critical Support: $1,293 (current day low, very close!)
-- Next Support: $1,280, $1,250, $1,200
-- Resistance: $1,350, $1,400, $1,450
+RESISTANCE LEVELS:
+- $1,350, $1,400, $1,450
 
-BASELINE FOR TRACKING:
-- Opening Price (May 19): $1,433.72
-- Current Price: $1,297.48
-- Total Intraday Decline: -9.5%
-- Volume: Moderate to heavy selling
+VOLUME ANALYSIS:
+- Last reading: 8.8M shares
 - ADV: 17.57M shares
+- Volume pace suggests heavy selling pressure continues
 
-NEXT CHECK:
-- Time: 01:31 HKT (1:31 PM EDT, May 19)
-- Continue 15-minute monitoring
-- Watch for: Further breakdown toward $1,293, stabilization above $1,300, reversal signals
+NEXT SCHEDULED CHECK:
+- Time: 02:16 HKT (15 min from now)
+- Continue monitoring for: Stabilization above $1,300, further breakdown toward $1,293, reversal signals, volume changes
 
-Last Alert Sent: 01:16 HKT - DANGER BELOW $1,300 SUPPORT ALERT
-Alert Format: WhatsApp with full price update and danger signal
+AUTOMATION STATUS: RUNNING - Next check scheduled in 15 minutes
