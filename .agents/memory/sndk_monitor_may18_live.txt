@@ -1,0 +1,23 @@
+SNDK LIVE PRICE MONITOR - MAY 18, 2026
+========================================
+
+BASELINE (Market Open - 11:01 AM EDT / 23:01 HKT)
+Date: Monday, May 18, 2026
+Time: 11:01 AM EDT
+Price: $1,323.33
+Previous Close: $1,407.61
+Day Change: -$84.28 (-5.99%)
+Volume: 5,683,695 shares
+ADV: 17M shares
+Open: $1,431.67
+Day Range: $1,308.65 - $1,440.00
+
+DIRECTION BASELINE: DOWN (opened at $1,431.67, now at $1,323.33 = -$108.34 from open)
+
+KEY LEVELS:
+Support: $1,405, $1,362, $1,340, $1,300
+Resistance: $1,450, $1,500, $1,550, $1,600
+
+CHECKS LOG:
+===========
+[23:01 HKT / 11:01 EDT] BASELINE - Price $1,323.33, DOWN from open, -5.99% day change
