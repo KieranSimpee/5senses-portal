@@ -1,0 +1,27 @@
+SNDK Live Price Monitor — May 18, 2026
+===============================================
+
+MONITORING START: May 18, 2026, 23:16 HKT (11:16 AM EDT)
+Previous close: $1,407.61 (May 17)
+Baseline price: $1,320.39
+Baseline time: 11:16 AM EDT
+Direction: UNKNOWN (first check)
+
+ADV: 17M shares
+Support levels: $1,405, $1,362, $1,340, $1,300
+Resistance levels: $1,450, $1,500, $1,550, $1,600
+
+Alert triggers:
+✅ BIG LOT (>2M first 5min OR >6.25M pace)
+✅ KEY LEVEL ($1,405)
+✅ DANGER ($1,362, $1,340, $1,300)
+✅ BREAKOUT ($1,450, $1,500, $1,550, $1,600)
+✅ REVERSAL (direction flip)
+✅ OPTIONS FLOW
+✅ LEVEL 2 SIGNAL
+
+Last check: 11:16 AM EDT / 23:16 HKT May 18
+Last price: $1,320.39
+Change from close: -$87.22 (-6.19%)
+
+Volume check: Still loading...
