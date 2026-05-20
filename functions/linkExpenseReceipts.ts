@@ -10,41 +10,31 @@ Deno.serve(async (req) => {
 
     const db = base44.asServiceRole;
 
-    // Map expense IDs to their correct receipt/invoice URLs
-    const updates = [
-      {
-        id: '6a0d5f803000b000fcf4cc7d', // Company Registration Service (Reap Business) $4,970
-        receipt_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/1f23c1094_7850-5SENSESBEAUTYLIMITED.pdf',
-      },
-      {
-        id: '6a0d5f803000b000fcf4cc7e', // Company Secretary Service $900
-        receipt_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/1f23c1094_7850-5SENSESBEAUTYLIMITED.pdf',
-      },
-      {
-        id: '6a0d5f803000b000fcf4cc7f', // Kwun Tong Virtual Office Plan A $1,980
-        receipt_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/1f23c1094_7850-5SENSESBEAUTYLIMITED.pdf',
-      },
-      {
-        id: '6a0d5f803000b000fcf4cc80', // Virtual Office Branch 001 Renewal $1,200
-        receipt_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/b68eacde1_1200receipt-5SENSESBEAUTYLIMITED.pdf',
-      },
-      {
-        id: '6a0d5f803000b000fcf4cc81', // Business Registration Fee $2,200
-        receipt_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/ad7d873f2_BRC_148077315.pdf',
-      },
-      {
-        id: '6a0d5f803000b000fcf4cc82', // Trade Mark Application Fee $5,000
-        receipt_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/5b9554cec_FormReceipt-11858136.pdf',
-      },
-    ];
+    // Fetch all expenses and update by title match
+    const all = await db.entities.Expense.list();
+    
+    const receiptMap: Record<string, string> = {
+      'Company Registration Service (Reap Business)': 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/1f23c1094_7850-5SENSESBEAUTYLIMITED.pdf',
+      'Company Secretary Service (Reap Business)': 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/1f23c1094_7850-5SENSESBEAUTYLIMITED.pdf',
+      'Kwun Tong Virtual Office Plan A (Reap Business)': 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/1f23c1094_7850-5SENSESBEAUTYLIMITED.pdf',
+      'Virtual Office Branch 001 Renewal (Reap Business)': 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/b68eacde1_1200receipt-5SENSESBEAUTYLIMITED.pdf',
+      'Business Registration Fee (HKSAR)': 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/ad7d873f2_BRC_148077315.pdf',
+      'Trade Mark Application Fee — SIMPLEX-ITY (IPD)': 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/5b9554cec_FormReceipt-11858136.pdf',
+    };
 
+    const toUpdate = all.filter((e: any) => receiptMap[e.title]);
+    
     const results = await Promise.all(
-      updates.map(u => db.entities.Expense.update(u.id, { receipt_url: u.receipt_url }))
+      toUpdate.map((e: any) =>
+        db.entities.Expense.update(e.id, { receipt_url: receiptMap[e.title] })
+      )
     );
 
     return Response.json({
       ok: true,
+      found: toUpdate.length,
       updated: results.length,
+      titles: toUpdate.map((e: any) => e.title),
     });
 
   } catch (error) {
