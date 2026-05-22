@@ -19,6 +19,49 @@
     "department": {
       "type": "string"
     },
+    "password_hash": {
+      "type": "string"
+    },
+    "access_admin": {
+      "type": "string",
+      "enum": [
+        "None",
+        "View",
+        "Edit"
+      ]
+    },
+    "access_finance": {
+      "type": "string",
+      "enum": [
+        "None",
+        "View",
+        "Edit"
+      ]
+    },
+    "access_hr": {
+      "type": "string",
+      "enum": [
+        "None",
+        "View",
+        "Edit"
+      ]
+    },
+    "access_brand": {
+      "type": "string",
+      "enum": [
+        "None",
+        "View",
+        "Edit"
+      ]
+    },
+    "access_tools": {
+      "type": "string",
+      "enum": [
+        "None",
+        "View",
+        "Edit"
+      ]
+    },
     "access_compliance": {
       "type": "string",
       "enum": [

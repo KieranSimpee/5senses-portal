@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Announcement",
+        "Reminder",
+        "HR Notice",
+        "Admin Alert",
+        "Finance Alert"
+      ]
+    },
+    "posted_by": {
+      "type": "string"
+    },
+    "section": {
+      "type": "string",
+      "enum": [
+        "All",
+        "Admin",
+        "Finance",
+        "HR",
+        "Brand"
+      ]
+    },
+    "pinned": {
+      "type": "boolean"
+    },
+    "expires_date": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [],
+  "name": "Notice"
+}
