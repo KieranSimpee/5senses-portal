@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "service_name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Design & Marketing",
+        "AI & Platform",
+        "Company Admin",
+        "Email",
+        "Finance & Trading",
+        "Website & Hosting",
+        "Other"
+      ]
+    },
+    "url": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "assigned_to": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "is_admin_only": {
+      "type": "boolean"
+    },
+    "last_updated": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "VaultItem"
+}

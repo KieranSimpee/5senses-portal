@@ -8,6 +8,7 @@ import RevenuePage from "./pages/RevenuePage";
 import BuildTrackerPage from "./pages/BuildTrackerPage";
 import DocumentsPage from "./pages/DocumentsPage";
 import CriticalPathPage from "./pages/CriticalPathPage";
+import VaultPage from "./pages/VaultPage";
 
 const NAV = [
   { id: "dashboard", label: "Dashboard", icon: "📊" },
@@ -21,6 +22,8 @@ const NAV = [
   { id: "criticalpath", label: "Critical Path", icon: "🗺️" },
   { id: "build", label: "Build Tracker", icon: "🏗️" },
   { id: "documents", label: "Documents", icon: "📁" },
+  { divider: true, label: "ADMIN" },
+  { id: "vault", label: "Vault", icon: "🔐" },
 ];
 
 const BRAND_DARK = "#1a0533";
@@ -85,6 +88,7 @@ export default function App() {
         {page === "criticalpath" && <CriticalPathPage />}
         {page === "build"        && <BuildTrackerPage />}
         {page === "documents"    && <DocumentsPage />}
+        {page === "vault"        && <VaultPage />}
       </div>
     </div>
   );
