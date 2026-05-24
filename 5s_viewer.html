@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5S Portal — Finance & Documents</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Montserrat',sans-serif;background:#f5f4ff;color:#1a1a1f;}
+  @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700;800&family=Montserrat:wght@400;500;600;700&display=swap');
+  .header{background:#fff;border-bottom:2px solid #e8e6fe;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:800;color:#5e50fb}
+  .sub{font-size:10px;color:#bab4fd;font-weight:700;letter-spacing:2px;margin-top:2px}
+  .tabs{display:flex;gap:8px;padding:20px 24px 0}
+  .tab{padding:10px 20px;border-radius:999px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;transition:all 0.2s}
+  .tab.active{background:#8c82fc;color:#fff}
+  .tab:not(.active){background:#e8e6fe;color:#5e50fb}
+  .content{padding:20px 24px;max-width:1200px;margin:0 auto}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+  .stat{background:#fff;border:1.5px solid #e8e6fe;border-radius:16px;padding:16px}
+  .stat-label{font-size:10px;color:#bab4fd;font-weight:700;letter-spacing:1px;margin-bottom:4px}
+  .stat-val{font-family:'Exo 2',sans-serif;font-size:22px;font-weight:800;color:#5e50fb}
+  .stat-val.green{color:#16a34a}
+  .filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+  input[type=text]{padding:8px 14px;border:1.5px solid #e8e6fe;border-radius:10px;font-family:'Montserrat',sans-serif;font-size:13px;outline:none;background:#fff;min-width:220px}
+  input[type=text]:focus{border-color:#8c82fc}
+  select{padding:8px 14px;border:1.5px solid #e8e6fe;border-radius:10px;font-family:'Montserrat',sans-serif;font-size:13px;background:#fff;cursor:pointer;outline:none}
+  .table-wrap{background:#fff;border:1.5px solid #e8e6fe;border-radius:16px;overflow:hidden}
+  table{width:100%;border-collapse:collapse}
+  thead tr{background:#f5f4ff}
+  th{padding:11px 16px;text-align:left;font-size:10px;font-weight:700;color:#bab4fd;letter-spacing:1.5px;text-transform:uppercase}
+  td{padding:12px 16px;font-size:13px;border-top:1px solid #f0efff;vertical-align:middle}
+  tr:hover td{background:#faf9ff}
+  .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:10px;font-weight:700}
+  .badge.paid{background:#dcfce7;color:#16a34a}
+  .badge.pending{background:#fef9c3;color:#ca8a04}
+  .badge.overdue{background:#fee2e2;color:#dc2626}
+  .cat-badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600;background:#e8e6fe;color:#5e50fb}
+  .doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+  .doc-card{background:#fff;border:1.5px solid #e8e6fe;border-radius:16px;padding:16px;transition:all 0.2s}
+  .doc-card:hover{border-color:#bab4fd;box-shadow:0 4px 20px rgba(140,130,252,0.1)}
+  .doc-icon{width:40px;height:40px;border-radius:12px;background:#e8e6fe;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:10px}
+  .doc-title{font-weight:700;font-size:13px;color:#1a1a1f;margin-bottom:6px;line-height:1.4}
+  .doc-link{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#8c82fc;font-weight:700;text-decoration:none;margin-top:10px;padding:5px 12px;background:#e8e6fe;border-radius:8px}
+  .doc-link:hover{background:#8c82fc;color:#fff}
+  .section-hidden{display:none}
+  .amount{font-weight:700;color:#1a1a1f}
+  .vendor{color:#6b7280;font-size:12px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <div class="logo">5S Portal</div>
+    <div class="sub">5SENSESBEAUTY LIMITED · SIMPLEX-ITY</div>
+  </div>
+  <div style="font-size:12px;color:#bab4fd;font-weight:600">Finance & Documents Viewer</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('expenses',this)">💰 Expenses (41)</button>
+  <button class="tab" onclick="showTab('docs',this)">📄 Documents (23 with links)</button>
+</div>
+
+<div class="content">
+
+  <!-- EXPENSES TAB -->
+  <div id="tab-expenses">
+    <div class="stats">
+      <div class="stat"><div class="stat-label">TOTAL HKD SPENT</div><div class="stat-val">HKD 198,867</div></div>
+      <div class="stat"><div class="stat-label">TOTAL TRANSACTIONS</div><div class="stat-val">41</div></div>
+      <div class="stat"><div class="stat-label">FUNDFLUENT FEES</div><div class="stat-val">HKD 105,000</div></div>
+      <div class="stat"><div class="stat-label">SUBSCRIPTIONS</div><div class="stat-val green">HKD 17,842</div></div>
+    </div>
+    <div class="filters">
+      <input type="text" id="exp-search" placeholder="🔍  Search expenses..." oninput="filterExp()">
+      <select id="exp-cat" onchange="filterExp()">
+        <option value="">All Categories</option>
+        <option>Professional Fees</option>
+        <option>Microsoft Licenses</option>
+        <option>Software & Subscriptions</option>
+        <option>Domain & Hosting</option>
+        <option>Branding & Design</option>
+        <option>Government Fees</option>
+        <option>Office & Admin</option>
+      </select>
+      <select id="exp-status" onchange="filterExp()">
+        <option value="">All Status</option>
+        <option>paid</option>
+        <option>pending</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Description</th><th>Vendor</th><th>Date</th><th>Category</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody id="exp-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DOCUMENTS TAB -->
+  <div id="tab-docs" class="section-hidden">
+    <div class="filters" style="margin-top:8px">
+      <input type="text" id="doc-search" placeholder="🔍  Search documents..." oninput="filterDocs()">
+      <select id="doc-cat" onchange="filterDocs()">
+        <option value="">All Categories</option>
+        <option>Invoice</option>
+        <option>Contract</option>
+        <option>Company Registration</option>
+        <option>Legal</option>
+        <option>Brand Deck</option>
+        <option>Design Asset</option>
+        <option>Influencer Deck</option>
+        <option>Core Values</option>
+      </select>
+    </div>
+    <div class="doc-grid" id="doc-grid"></div>
+  </div>
+
+</div>
+
+<script>
+const expenses = [{"date": "2026-05-11", "amount": 35000, "currency": "HKD", "vendor": "FundFluent Limited", "title": "FundFluent \u2014 Month 3 Retainer / Final Payment (FF-INV-0258)", "category": "Professional Fees", "status": "paid"}, {"date": "2026-05-11", "amount": 35000, "currency": "HKD", "vendor": "FundFluent Limited", "title": "FundFluent \u2014 Month 2 Retainer (Fractional CPO)", "category": "Professional Fees", "status": "paid"}, {"date": "2026-05-08", "amount": 256.74, "currency": "HKD", "vendor": "Shopify (via PayPal)", "title": "Shopify \u2014 Monthly Subscription (May 2026)", "category": "Software & Subscriptions", "status": "paid"}, {"date": "2026-05-07", "amount": 233, "currency": "HKD", "vendor": "Looka", "title": "Looka \u2014 Brand Kit Subscription (May 2026)", "category": "Branding & Design", "status": "paid"}, {"date": "2026-05-01", "amount": 97, "currency": "HKD", "vendor": "Microsoft 365", "title": "Microsoft 365 \u2014 kieran@5senses.global (Monthly)", "category": "Microsoft Licenses", "status": "paid"}, {"date": "2026-05-01", "amount": 97, "currency": "HKD", "vendor": "Microsoft 365", "title": "Microsoft 365 \u2014 kieran.li@5sensesbeauty.com (Monthly)", "category": "Microsoft Licenses", "status": "paid"}, {"date": "2026-05-01", "amount": 97, "currency": "HKD", "vendor": "Microsoft 365", "title": "Microsoft 365 \u2014 Loreen@5senses.global (Monthly)", "category": "Microsoft Licenses", "status": "pending"}, {"date": "2026-05-01", "amount": 97, "currency": "HKD", "vendor": "Microsoft 365", "title": "Microsoft 365 \u2014 Wilson (Monthly)", "category": "Microsoft Licenses", "status": "pending"}, {"date": "2026-05-01", "amount": 1400, "currency": "HKD", "vendor": "Squarespace", "title": "Squarespace \u2014 Website Hosting (Monthly)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2026-04-27", "amount": 35000, "currency": "HKD", "vendor": "FundFluent Limited", "title": "FundFluent \u2014 Fractional CPO Services Month 2 (Apr 2026)", "category": "Professional Fees", "status": "paid"}, {"date": "2026-04-11", "amount": 35000, "currency": "HKD", "vendor": "FundFluent Limited", "title": "FundFluent \u2014 Month 1 Retainer (Fractional CPO)", "category": "Professional Fees", "status": "paid"}, {"date": "2026-04-08", "amount": 256.74, "currency": "HKD", "vendor": "Shopify (via PayPal)", "title": "Shopify \u2014 Monthly Subscription (Apr 2026)", "category": "Software & Subscriptions", "status": "paid"}, {"date": "2026-03-14", "amount": 35000, "currency": "HKD", "vendor": "FundFluent Limited", "title": "FundFluent \u2014 Fractional CPO Services Month 1 (Mar 2026)", "category": "Professional Fees", "status": "paid"}, {"date": "2026-03-09", "amount": 256.74, "currency": "HKD", "vendor": "Shopify (via PayPal)", "title": "Shopify \u2014 Monthly Subscription (Mar 2026)", "category": "Software & Subscriptions", "status": "paid"}, {"date": "2026-02-07", "amount": 256.74, "currency": "HKD", "vendor": "Shopify (via PayPal)", "title": "Shopify \u2014 Monthly Subscription (Feb 2026)", "category": "Software & Subscriptions", "status": "paid"}, {"date": "2026-01-12", "amount": 80, "currency": "HKD", "vendor": "HK Companies Registry", "title": "Business Registration \u2014 SIMPLEX-ITY Branch (Jan 2026)", "category": "Government Fees", "status": "paid"}, {"date": "2026-01-08", "amount": 256.74, "currency": "HKD", "vendor": "Shopify (via PayPal)", "title": "Shopify \u2014 Monthly Subscription (Jan 2026)", "category": "Software & Subscriptions", "status": "paid"}, {"date": "2026-01-01", "amount": 620, "currency": "HKD", "vendor": "GoDaddy", "title": "GoDaddy \u2014 Domain Registration (5senses.global)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2026-01-01", "amount": 155, "currency": "HKD", "vendor": "GoDaddy", "title": "GoDaddy \u2014 Domain Registration (simplex-ity.com)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2026-01-01", "amount": 930, "currency": "HKD", "vendor": "Siteground", "title": "Siteground \u2014 Web Hosting (Annual)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2025-12-09", "amount": 256.74, "currency": "HKD", "vendor": "Shopify (via PayPal)", "title": "Shopify \u2014 Monthly Subscription (Dec 2025)", "category": "Software & Subscriptions", "status": "paid"}, {"date": "2025-11-09", "amount": 256.74, "currency": "HKD", "vendor": "Shopify (via PayPal)", "title": "Shopify \u2014 Monthly Subscription (Nov 2025)", "category": "Software & Subscriptions", "status": "paid"}, {"date": "2025-10-18", "amount": 812, "currency": "HKD", "vendor": "Squarespace Ireland Limited", "title": "Squarespace \u2014 5senses.global domain 2-year (Oct 2025)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2025-10-12", "amount": 122.92, "currency": "HKD", "vendor": "Shopify (via PayPal)", "title": "Shopify \u2014 Monthly Subscription (Oct 2025)", "category": "Software & Subscriptions", "status": "paid"}, {"date": "2025-10-05", "amount": 1087.29, "currency": "HKD", "vendor": "Microsoft Regional Sales Pte Ltd", "title": "Microsoft 365 \u2014 Invoice G116524246 (Sep 2025, 4 licenses)", "category": "Microsoft Licenses", "status": "paid"}, {"date": "2025-09-09", "amount": 855, "currency": "HKD", "vendor": "Shopify", "title": "Shopify \u2014 Monthly subscription (Sep 2025\u2013May 2026)", "category": "Software & Subscriptions", "status": "paid"}, {"date": "2025-09-07", "amount": 223, "currency": "HKD", "vendor": "SiteGround Hosting Ltd", "title": "SiteGround \u2014 Email Marketing 500 Contacts (Sep 2025)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2025-09-05", "amount": 3553.28, "currency": "HKD", "vendor": "Microsoft Regional Sales Pte Ltd", "title": "Microsoft 365 \u2014 Invoice G110703616 (Aug 2025, 3 licenses)", "category": "Microsoft Licenses", "status": "paid"}, {"date": "2025-08-12", "amount": 1549, "currency": "HKD", "vendor": "SiteGround Hosting Ltd", "title": "SiteGround \u2014 simplex-ity.org domain + SSL + CDN (Aug 2025)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2025-08-12", "amount": 696.5, "currency": "HKD", "vendor": "SiteGround Hosting Ltd", "title": "SiteGround \u2014 GrowBig Hosting + simplex-ity.co domain (Aug 2025)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2025-08-10", "amount": 294.54, "currency": "HKD", "vendor": "GoDaddy", "title": "GoDaddy \u2014 simplex-ity domains .NET/.CLUB/.INFO/.SHOP (Aug 2025)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2025-08-08", "amount": 550.7, "currency": "HKD", "vendor": "GoDaddy", "title": "GoDaddy \u2014 Domain Protection simplex-ity.com (Aug 2025)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2025-08-05", "amount": 364.8, "currency": "HKD", "vendor": "GoDaddy", "title": "GoDaddy \u2014 Microsoft 365 Email Essentials via GoDaddy (Aug 2025)", "category": "Microsoft Licenses", "status": "paid"}, {"date": "2025-08-05", "amount": 342.66, "currency": "HKD", "vendor": "GoDaddy", "title": "GoDaddy \u2014 simplex-ity.com .COM registration (Aug 2025)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2025-08-03", "amount": 124.48, "currency": "HKD", "vendor": "Shopify (via PayPal)", "title": "Shopify \u2014 Monthly Subscription (Aug 2025)", "category": "Software & Subscriptions", "status": "paid"}, {"date": "2025-08-02", "amount": 1210.51, "currency": "HKD", "vendor": "GoDaddy", "title": "GoDaddy \u2014 sentientby5senses.com + domain protection (Aug 2025)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2025-08-01", "amount": 1388.99, "currency": "HKD", "vendor": "GoDaddy", "title": "GoDaddy \u2014 Sentie Beauty domains sentiebeauty.com + protection (Aug 2025)", "category": "Domain & Hosting", "status": "paid"}, {"date": "2025-07-15", "amount": 2200, "currency": "HKD", "vendor": "HK Companies Registry", "title": "Business Registration \u2014 5SENSESBEAUTY LIMITED (Jul 2025)", "category": "Government Fees", "status": "paid"}, {"date": "2025-07-12", "amount": 7.78, "currency": "HKD", "vendor": "Shopify (via PayPal)", "title": "Shopify \u2014 Monthly Subscription (Jul 2025)", "category": "Software & Subscriptions", "status": "paid"}, {"date": "2025-07-09", "amount": 1980, "currency": "HKD", "vendor": "Reap Business Limited", "title": "Reap Business \u2014 Virtual Office Plan A (Jul 2025)", "category": "Office & Admin", "status": "paid"}, {"date": "2025-07-09", "amount": 900, "currency": "HKD", "vendor": "Reap Business Limited", "title": "Reap Business \u2014 Company Secretary Service (Jul 2025)", "category": "Professional Fees", "status": "paid"}];
+const documents = [{"title": "FundFluent Invoice FF-INV-0258 \u2014 HKD 35,000 (May 2026)", "category": "Invoice", "url": "https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/af9621d72_047098ec3_InvoiceFF-INV-0258.pdf"}, {"title": "Simplex-ity x FundFluent Partnership Agreement V1 (Mar 2026)", "category": "Contract", "url": "https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/313daaba2_4782a880b_Simplex-ityPartnershipAgreementV1032126.pdf"}, {"title": "BR Certificate \u2014 SIMPLEX-ITY Branch 001", "category": "Legal", "url": "https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/7190b9104_073b46d17_BR001SIMPLEX-ITY.pdf"}, {"title": "SIMPLEX-ITY Brand Deck", "category": "Brand Deck", "url": "https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/cb6ef35e4_1e99e33ef_Simplex-ityBrand.pdf"}, {"title": "SIMPLEX-ITY Influencer Deck V3", "category": "Influencer Deck", "url": "https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/9da7d7aa3_46a5a4fae_Simplex-ityInfluencer_V3.pdf"}, {"title": "SIMPLEX-ITY Core Values", "category": "Core Values", "url": "https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/8ac7e73ed_3cd3bd5cc_Simplex-ityCorevalue.pdf"}, {"title": "SIMPLEX-ITY Brand Guidelines Highlights v20260421", "category": "Design Asset", "url": "https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/4358a385d_a8d805137_-BX-01-Simplex-ityBrandGuidelines_Highlights_v20260421.pdf"}, {"title": "FundFluent Invoice FF-INV-0258 \u2014 HKD 35,000 (Apr 2026)", "category": "Invoice", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/047098ec3_InvoiceFF-INV-0258.pdf"}, {"title": "Looka Receipt #2716-2579 \u2014 USD $29.99 (May 2026)", "category": "Invoice", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/19ad90a2f_Receipt-2716-2579.pdf"}, {"title": "SiteGround Invoice #3799602 \u2014 USD $28.78 (Sep 2025)", "category": "Invoice", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/b2193e97b_invoice_3799602.pdf"}, {"title": "SiteGround Invoice #3754959 \u2014 USD $199.87 (Aug 2025)", "category": "Invoice", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/5ebf882e1_invoice_3754959.pdf"}, {"title": "SiteGround Invoice #3754715 \u2014 USD $89.87 (Aug 2025)", "category": "Invoice", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/fa30d5dff_invoice_3754715.pdf"}, {"title": "Squarespace Invoice #205749805 \u2014 HKD 812 (Oct 2025)", "category": "Invoice", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/e7a1c8a62_SquarespaceReceipt.pdf"}, {"title": "Microsoft Invoice G110703616 \u2014 USD $446.71 (Aug 2025)", "category": "Invoice", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/ff7f2d9fd_G110703616_62ded3d98cb641a08b780249005b047b.pdf"}, {"title": "Microsoft Invoice G116524246 \u2014 USD $140.14 (Sep 2025)", "category": "Invoice", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/42672cc32_G116524246_5bf3c4a49ea14189a66371b21d084299.pdf"}, {"title": "Microsoft Invoice G107785093 \u2014 USD $0.00 (Aug 2025)", "category": "Invoice", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/370d1e3cb_G107785093_9021e380d50243048fd369e282c350d4.pdf"}, {"title": "Microsoft Invoice G107786449 \u2014 USD $0.00 (Aug 2025)", "category": "Invoice", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/0e15d8d21_G107786449_c051b27838c6416ba53cd44812fbd274.pdf"}, {"title": "BR Certificate \u2014 SIMPLEX-ITY Branch (78459506-001-07-25-A)", "category": "Company Registration", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/073b46d17_BR001SIMPLEX-ITY.pdf"}, {"title": "BR Certificate \u2014 5SENSESBEAUTY LIMITED Main", "category": "Company Registration", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/ad7d873f2_BRC_148077315.pdf"}, {"title": "Reap Business \u2014 Company Setup Invoice #214386 (HKD $7,850)", "category": "Invoice", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/1f23c1094_7850-5SENSESBEAUTYLIMITED.pdf"}, {"title": "Reap Business \u2014 Branch Registration Invoice #229460 (HKD $1,200)", "category": "Invoice", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/8425b666b_1200-5SENSESBEAUTYLIMITED.pdf"}, {"title": "Simplex-ity x Fundfluent \u2014 Partnership Agreement V1 (Mar 2026)", "category": "Contract", "url": "https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/4782a880b_Simplex-ityPartnershipAgreementV1032126.pdf"}, {"title": "Bank of China \u2014 BOC Business Letter (Proof of Address)", "category": "Company Registration", "url": "https://media.base44.com/images/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/ba6be66fd_whatsapp_image_980511691102143.jpg"}];
+
+const catIcons = {"Invoice":"🧾","Contract":"📄","Company Registration":"🏢","Legal":"⚖️","Brand Deck":"✨","Design Asset":"🎨","Influencer Deck":"📱","Core Values":"💡","Finance":"💰","Other":"📁"};
+
+function renderExp(data) {
+  const tbody = document.getElementById('exp-tbody');
+  tbody.innerHTML = data.map(e => `
+    <tr>
+      <td><span style="font-weight:600">${e.title}</span></td>
+      <td class="vendor">${e.vendor}</td>
+      <td style="color:#6b7280;font-size:12px">${e.date}</td>
+      <td><span class="cat-badge">${e.category}</span></td>
+      <td class="amount">${e.currency} ${e.amount.toLocaleString()}</td>
+      <td><span class="badge ${e.status}">${e.status}</span></td>
+    </tr>`).join('');
+}
+
+function filterExp() {
+  const q = document.getElementById('exp-search').value.toLowerCase();
+  const cat = document.getElementById('exp-cat').value;
+  const status = document.getElementById('exp-status').value;
+  renderExp(expenses.filter(e =>
+    (!q || e.title.toLowerCase().includes(q) || e.vendor.toLowerCase().includes(q)) &&
+    (!cat || e.category === cat) &&
+    (!status || e.status === status)
+  ));
+}
+
+function renderDocs(data) {
+  document.getElementById('doc-grid').innerHTML = data.map(d => `
+    <div class="doc-card">
+      <div class="doc-icon">${catIcons[d.category]||'📁'}</div>
+      <div class="doc-title">${d.title}</div>
+      <span class="cat-badge">${d.category}</span>
+      ${d.url ? `<br><a class="doc-link" href="${d.url}" target="_blank">📂 Open File ↗</a>` : '<br><span style="font-size:11px;color:#bab4fd;margin-top:8px;display:block">No file link</span>'}
+    </div>`).join('');
+}
+
+function filterDocs() {
+  const q = document.getElementById('doc-search').value.toLowerCase();
+  const cat = document.getElementById('doc-cat').value;
+  renderDocs(documents.filter(d =>
+    (!q || d.title.toLowerCase().includes(q)) &&
+    (!cat || d.category === cat)
+  ));
+}
+
+function showTab(tab, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-expenses').classList.toggle('section-hidden', tab !== 'expenses');
+  document.getElementById('tab-docs').classList.toggle('section-hidden', tab !== 'docs');
+}
+
+renderExp(expenses);
+renderDocs(documents);
+</script>
+</body>
+</html>
