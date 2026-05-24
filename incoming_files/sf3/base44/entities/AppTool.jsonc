@@ -1,0 +1,58 @@
+{
+  "name": "AppTool",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "hosting",
+        "design",
+        "branding",
+        "development",
+        "productivity",
+        "analytics",
+        "communication",
+        "finance",
+        "other"
+      ],
+      "default": "other"
+    },
+    "url": {
+      "type": "string"
+    },
+    "logo_url": {
+      "type": "string"
+    },
+    "credential_id": {
+      "type": "string",
+      "description": "Linked SecureCredential ID"
+    },
+    "description": {
+      "type": "string"
+    },
+    "monthly_cost": {
+      "type": "number"
+    },
+    "yearly_cost": {
+      "type": "number"
+    },
+    "renewal_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "url"
+  ]
+}

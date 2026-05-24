@@ -1,0 +1,68 @@
+{
+  "name": "CalendarEvent",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "meeting",
+        "deadline",
+        "reminder",
+        "launch",
+        "payment",
+        "renewal",
+        "other"
+      ],
+      "default": "meeting"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "all_day": {
+      "type": "boolean",
+      "default": false
+    },
+    "location": {
+      "type": "string"
+    },
+    "attendees": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "reminder_minutes": {
+      "type": "number",
+      "default": 30
+    },
+    "whatsapp_reminder": {
+      "type": "boolean",
+      "default": false
+    },
+    "color": {
+      "type": "string",
+      "default": "#8c82fc"
+    }
+  },
+  "required": [
+    "title",
+    "start_date"
+  ]
+}
