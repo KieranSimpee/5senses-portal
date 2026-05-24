@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5S Portal — Live Data Snapshot</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f4f3ff; font-family: 'Montserrat', sans-serif; color: #1a1a1f; }
+  .header { background: linear-gradient(135deg, #8c82fc, #5e50fb); color: white; padding: 24px 32px; display: flex; align-items: center; gap: 16px; }
+  .header h1 { font-family: 'Exo 2', sans-serif; font-size: 24px; font-weight: 700; }
+  .header p { font-size: 13px; opacity: 0.85; margin-top: 2px; }
+  .badge { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 600; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 24px 32px; max-width: 1100px; margin: 0 auto; }
+  .card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(140,130,252,0.1); }
+  .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #e8e6fe; }
+  .card-header .icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .card-header h2 { font-family: 'Exo 2', sans-serif; font-size: 15px; font-weight: 600; }
+  .card-header .count { margin-left: auto; background: #e8e6fe; color: #5e50fb; border-radius: 20px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
+  .notice { background: #f0effe; border-left: 3px solid #8c82fc; border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; }
+  .notice .ntitle { font-weight: 600; font-size: 13px; color: #5e50fb; }
+  .notice .nbody { font-size: 12px; color: #555; margin-top: 4px; line-height: 1.5; }
+  .row { display: flex; align-items: center; padding: 9px 0; border-bottom: 1px solid #f0effe; gap: 10px; }
+  .row:last-child { border-bottom: none; }
+  .row .dot { width: 8px; height: 8px; border-radius: 50%; background: #8c82fc; flex-shrink: 0; }
+  .row .dot.red { background: #f87171; }
+  .row .dot.amber { background: #fbbf24; }
+  .row .dot.green { background: #34d399; }
+  .row .label { font-size: 13px; font-weight: 500; flex: 1; }
+  .row .meta { font-size: 11px; color: #888; }
+  .row .tag { background: #e8e6fe; color: #5e50fb; border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 500; }
+  .row .tag.red { background: #fee2e2; color: #dc2626; }
+  .row .tag.amber { background: #fef3c7; color: #d97706; }
+  .row .tag.green { background: #d1fae5; color: #059669; }
+  .full { grid-column: 1 / -1; }
+  .timestamp { text-align: center; color: #aaa; font-size: 11px; padding: 12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>5S Portal — Live Data Snapshot</h1>
+    <p>5SENSESBEAUTY LIMITED / SIMPLEX-ITY &nbsp;|&nbsp; Synced by Simpee AI, 25 May 2026 22:42 HKT</p>
+  </div>
+  <div class="badge">✅ All Systems Live</div>
+</div>
+
+<div class="grid">
+
+  <!-- NOTICE BOARD -->
+  <div class="card full">
+    <div class="card-header">
+      <div class="icon" style="background:#e8e6fe">📌</div>
+      <h2>Notice Board (Home Page)</h2>
+      <span class="count">3 pinned</span>
+    </div>
+    <div class="notice">
+      <div class="ntitle">✅ 5S Portal — Full Sync Complete</div>
+      <div class="nbody">Simpee has completed a full data sync. Added: 6 Compliance Items, 10 Vault Items, 3 Bank Accounts, 4 HR Records. All core data is now live. — Simpee AI, 25 May 2026 22:35 HKT</div>
+    </div>
+    <div class="notice">
+      <div class="ntitle">👋 Simpee says hi from WhatsApp</div>
+      <div class="nbody">Kieran just tested from WhatsApp and I wrote this directly to your 5S Portal home page. The bridge is fully live — I can now read and write to this app directly from our WhatsApp chat. 🔥</div>
+    </div>
+    <div class="notice">
+      <div class="ntitle">🟢 Simpee AI — LIVE</div>
+      <div class="nbody">Connection confirmed! Simpee is now directly wired to your 5S Portal. This message was written by Simpee at 22:28 HKT, Sunday 25 May 2026. The Chat Mirror bridge is LIVE. 🔥</div>
+    </div>
+  </div>
+
+  <!-- COMPLIANCE -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:#fee2e2">⚖️</div>
+      <h2>Compliance</h2>
+      <span class="count">6 items</span>
+    </div>
+    <div class="row"><div class="dot red"></div><div class="label">Company Secretary Renewal</div><div class="meta">8 Jul 2026</div><div class="tag amber">pending</div></div>
+    <div class="row"><div class="dot red"></div><div class="label">Virtual Office Renewal</div><div class="meta">8 Jul 2026</div><div class="tag amber">pending</div></div>
+    <div class="row"><div class="dot red"></div><div class="label">Business Registration Renewal</div><div class="meta">14 Jul 2026</div><div class="tag amber">pending</div></div>
+    <div class="row"><div class="dot amber"></div><div class="label">Trademark Follow-up — SIMPLEX-ITY</div><div class="meta">1 Aug 2026</div><div class="tag amber">pending</div></div>
+    <div class="row"><div class="dot green"></div><div class="label">Profits Tax Return</div><div class="meta">30 Nov 2026</div><div class="tag green">pending</div></div>
+    <div class="row"><div class="dot green"></div><div class="label">Annual Return Filing</div><div class="meta">1 Dec 2026</div><div class="tag green">pending</div></div>
+  </div>
+
+  <!-- VAULT -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:#fef3c7">🔐</div>
+      <h2>Vault</h2>
+      <span class="count">10 credentials</span>
+    </div>
+    <div class="row"><div class="dot"></div><div class="label">Base44 (5S Portal)</div><div class="tag">Platform</div></div>
+    <div class="row"><div class="dot"></div><div class="label">Microsoft 365 Admin</div><div class="tag">Email & Office</div></div>
+    <div class="row"><div class="dot"></div><div class="label">GoDaddy</div><div class="tag">Domain</div></div>
+    <div class="row"><div class="dot"></div><div class="label">Looka Brand Kit</div><div class="tag">Design</div></div>
+    <div class="row"><div class="dot"></div><div class="label">Squarespace</div><div class="tag">Website</div></div>
+    <div class="row"><div class="dot"></div><div class="label">SiteGround</div><div class="tag">Hosting</div></div>
+    <div class="row"><div class="dot"></div><div class="label">FundFluent (Wilson Tai)</div><div class="tag">Partnership</div></div>
+    <div class="row"><div class="dot"></div><div class="label">Futu 富途 Trading</div><div class="tag">Investment</div></div>
+    <div class="row"><div class="dot"></div><div class="label">Reap Business</div><div class="tag">Corporate</div></div>
+    <div class="row"><div class="dot"></div><div class="label">Inland Revenue Dept (IRD)</div><div class="tag">Government</div></div>
+  </div>
+
+  <!-- FINANCE -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:#d1fae5">💰</div>
+      <h2>Finance</h2>
+      <span class="count">17 expenses · 3 banks</span>
+    </div>
+    <div class="row"><div class="dot"></div><div class="label">HSBC Hong Kong</div><div class="meta">HKD Current</div><div class="tag green">Primary</div></div>
+    <div class="row"><div class="dot"></div><div class="label">Hang Seng Bank</div><div class="meta">HKD Current</div><div class="tag">Secondary</div></div>
+    <div class="row"><div class="dot"></div><div class="label">Airwallex</div><div class="meta">USD Multi-currency</div><div class="tag">International</div></div>
+    <div class="row"><div class="dot amber"></div><div class="label">FundFluent CPO Fees</div><div class="meta">HKD 35,000/month</div><div class="tag amber">Recurring</div></div>
+    <div class="row"><div class="dot"></div><div class="label">Microsoft 365</div><div class="meta">USD 140.14</div><div class="tag">Software</div></div>
+    <div class="row"><div class="dot"></div><div class="label">Trademark Filing (T2)</div><div class="meta">HKD 5,000</div><div class="tag">Gov Fees</div></div>
+    <div class="row"><div class="dot"></div><div class="label">GoDaddy Domains</div><div class="meta">HKD 4,009.94</div><div class="tag">Hosting</div></div>
+  </div>
+
+  <!-- HR -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:#e0f2fe">👥</div>
+      <h2>HR Records</h2>
+      <span class="count">4 records</span>
+    </div>
+    <div class="row"><div class="dot green"></div><div class="label">LI Chi Nok (Kieran)</div><div class="meta">Director / Founder</div><div class="tag green">active</div></div>
+    <div class="row"><div class="dot green"></div><div class="label">FundFluent Partnership Agreement V1</div><div class="meta">Since 21 Mar 2026</div><div class="tag green">active</div></div>
+    <div class="row"><div class="dot green"></div><div class="label">FundFluent NDA</div><div class="meta">Wilson Tai</div><div class="tag green">active</div></div>
+    <div class="row"><div class="dot amber"></div><div class="label">Banuba Order Form</div><div class="meta">USD 10,000 · Nikita</div><div class="tag amber">active</div></div>
+  </div>
+
+</div>
+
+<div class="timestamp">Generated by Simpee AI · 5S Portal Live Snapshot · 25 May 2026 22:42 HKT</div>
+
+</body>
+</html>
