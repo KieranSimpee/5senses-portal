@@ -8,212 +8,94 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Use service role to write directly
-    const db = base44.asServiceRole;
+    // Target the actual 5S Portal app
+    const db = base44.asServiceRole.forApp('69edd16e877d6e4391ad74bd');
 
     const documents = [
-      {
-        title: 'BR Certificate — SIMPLEX-ITY Branch (78459506-001-07-25-A)',
-        category: 'Company Registration',
-        file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/073b46d17_BR001SIMPLEX-ITY.pdf',
-        file_name: 'BR001SIMPLEX-ITY.pdf',
-        file_type: 'PDF',
-        tags: ['Company Registration', 'SIMPLEX-ITY', 'Branch'],
-        notes: 'FORM 2 Branch Registration. Entity: 5SENSESBEAUTY LIMITED. Branch: SIMPLEX-ITY. Commenced: 12/01/2026. Expires: 14/07/2026. Cert No: 78459506-001-07-25-A. Fee: HKD $80.',
-        version: '1',
-        access_level: 'admin',
-        is_template: false,
-      },
-      {
-        title: 'BR Certificate — 5SENSESBEAUTY LIMITED Main (78459506-000-07-25-9)',
-        category: 'Company Registration',
-        file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/ad7d873f2_BRC_148077315.pdf',
-        file_name: 'BRC_148077315.pdf',
-        file_type: 'PDF',
-        tags: ['Company Registration', '5SENSESBEAUTY', 'Main Entity'],
-        notes: 'FORM 2 Main BR. Entity: 5SENSESBEAUTY LIMITED (parent). Commenced: 15/07/2025. Expires: 14/07/2026. Cert No: 78459506-000-07-25-9. Fee: HKD $2,200.',
-        version: '1',
-        access_level: 'admin',
-        is_template: false,
-      },
-      {
-        title: 'Invoice #214386 — Company Setup HKD $7,850 (Reap Business)',
-        category: 'Financial',
-        file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/1f23c1094_7850-5SENSESBEAUTYLIMITED.pdf',
-        file_name: '7850-5SENSESBEAUTYLIMITED.pdf',
-        file_type: 'PDF',
-        tags: ['Financial', 'Invoice', 'Company Registration', 'Reap Business'],
-        notes: 'Invoice No: 214386. Issue: 2025-07-09. Total: HKD $7,850. Items: Registration Plan B $4,970 + Company Secretary $900 + Virtual Office $1,980 + Directory $0.',
-        version: '1',
-        access_level: 'admin',
-        is_template: false,
-      },
-      {
-        title: 'Invoice #229460 — Branch Registration HKD $1,200 (Reap Business)',
-        category: 'Company Registration',
-        file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/8425b666b_1200-5SENSESBEAUTYLIMITED.pdf',
-        file_name: '1200-5SENSESBEAUTYLIMITED.pdf',
-        file_type: 'PDF',
-        tags: ['Company Registration', 'Invoice', 'SIMPLEX-ITY', 'Reap Business'],
-        notes: 'Invoice No: 229460. Issue: 2026-01-06. Branch 001 service: 2025-07-15 to 2026-07-14. Total: HKD $1,200.',
-        version: '1',
-        access_level: 'admin',
-        is_template: false,
-      },
-      {
-        title: 'Receipt #229460 — Branch Registration HKD $1,200 Paid (Reap Business)',
-        category: 'Financial',
-        file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/b68eacde1_1200receipt-5SENSESBEAUTYLIMITED.pdf',
-        file_name: '1200receipt-5SENSESBEAUTYLIMITED.pdf',
-        file_type: 'PDF',
-        tags: ['Financial', 'Receipt', 'SIMPLEX-ITY', 'Reap Business'],
-        notes: 'Official Receipt. A/C: RB42993. Invoice: 229460. Paid: 2026-01-14 via bank transfer. Total paid: HKD $1,200. Balance: $0.',
-        version: '1',
-        access_level: 'admin',
-        is_template: false,
-      },
+      { title: 'FundFluent Invoice FF-INV-0258 — HKD 35,000 (May 2026)', category: 'Finance', file_url: 'https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/af9621d72_047098ec3_InvoiceFF-INV-0258.pdf', file_name: 'InvoiceFF-INV-0258.pdf', file_type: 'PDF', notes: 'FundFluent Month 3. HKD 35,000. Pay to Hang Seng 239 778269 883 / FPS 161690177.', tags: ['fundfluent','invoice','finance'], version: '1' },
+      { title: 'Simplex-ity x FundFluent Partnership Agreement V1 (Mar 2026)', category: 'Contract', file_url: 'https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/313daaba2_4782a880b_Simplex-ityPartnershipAgreementV1032126.pdf', file_name: 'PartnershipAgreementV1.pdf', file_type: 'PDF', notes: 'Signed. 3-month trial, 3% equity. Signed 21 Mar 2026.', tags: ['fundfluent','wilson','contract'], version: '1' },
+      { title: 'BR Certificate — SIMPLEX-ITY Branch 001', category: 'Legal', file_url: 'https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/7190b9104_073b46d17_BR001SIMPLEX-ITY.pdf', file_name: 'BR001SIMPLEX-ITY.pdf', file_type: 'PDF', notes: 'No: 78459506-001-07-25-A. Expires 14 Jul 2026.', tags: ['br','legal','compliance'], version: '1' },
+      { title: 'SIMPLEX-ITY Brand Deck', category: 'Brand', file_url: 'https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/cb6ef35e4_1e99e33ef_Simplex-ityBrand.pdf', file_name: 'Simplex-ityBrand.pdf', file_type: 'PDF', tags: ['brand','deck'], version: '1' },
+      { title: 'SIMPLEX-ITY Influencer Deck V3', category: 'Brand', file_url: 'https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/9da7d7aa3_46a5a4fae_Simplex-ityInfluencer_V3.pdf', file_name: 'Simplex-ityInfluencer_V3.pdf', file_type: 'PDF', tags: ['influencer','deck'], version: '3' },
+      { title: 'SIMPLEX-ITY Core Values', category: 'Brand', file_url: 'https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/8ac7e73ed_3cd3bd5cc_Simplex-ityCorevalue.pdf', file_name: 'Simplex-ityCorevalue.pdf', file_type: 'PDF', tags: ['brand','values'], version: '1' },
+      { title: 'SIMPLEX-ITY Brand Guidelines v20260421', category: 'Brand', file_url: 'https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/4358a385d_a8d805137_-BX-01-Simplex-ityBrandGuidelines_Highlights_v20260421.pdf', file_name: 'BrandGuidelines_v20260421.pdf', file_type: 'PDF', tags: ['brand-guidelines','design'], version: '1' },
+      { title: 'Looka Receipt #2716-2579 — USD $29.99 (May 2026)', category: 'Finance', file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/19ad90a2f_Receipt-2716-2579.pdf', file_name: 'Looka_Receipt_2716-2579.pdf', file_type: 'PDF', tags: ['looka','invoice'], version: '1' },
+      { title: 'SiteGround Invoice #3799602 — USD $28.78 (Sep 2025)', category: 'Finance', file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/b2193e97b_invoice_3799602.pdf', file_name: 'SiteGround_Invoice_3799602.pdf', file_type: 'PDF', tags: ['siteground','invoice'], version: '1' },
+      { title: 'SiteGround Invoice #3754959 — USD $199.87 (Aug 2025)', category: 'Finance', file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/5ebf882e1_invoice_3754959.pdf', file_name: 'SiteGround_Invoice_3754959.pdf', file_type: 'PDF', tags: ['siteground','invoice'], version: '1' },
+      { title: 'SiteGround Invoice #3754715 — USD $89.87 (Aug 2025)', category: 'Finance', file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/fa30d5dff_invoice_3754715.pdf', file_name: 'SiteGround_Invoice_3754715.pdf', file_type: 'PDF', tags: ['siteground','invoice'], version: '1' },
+      { title: 'Squarespace Invoice #205749805 — HKD 812 (Oct 2025)', category: 'Finance', file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/e7a1c8a62_SquarespaceReceipt.pdf', file_name: 'Squarespace_Invoice_205749805.pdf', file_type: 'PDF', tags: ['squarespace','invoice'], version: '1' },
+      { title: 'Microsoft Invoice G110703616 — USD $446.71 (Aug 2025)', category: 'Finance', file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/ff7f2d9fd_G110703616_62ded3d98cb641a08b780249005b047b.pdf', file_name: 'Microsoft_Invoice_G110703616.pdf', file_type: 'PDF', tags: ['microsoft','m365','invoice'], version: '1' },
+      { title: 'Microsoft Invoice G116524246 — USD $140.14 (Sep 2025)', category: 'Finance', file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/42672cc32_G116524246_5bf3c4a49ea14189a66371b21d084299.pdf', file_name: 'Microsoft_Invoice_G116524246.pdf', file_type: 'PDF', tags: ['microsoft','m365','invoice'], version: '1' },
+      { title: 'Microsoft Invoice G107785093 (Aug 2025)', category: 'Finance', file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/370d1e3cb_G107785093_9021e380d50243048fd369e282c350d4.pdf', file_name: 'Microsoft_Invoice_G107785093.pdf', file_type: 'PDF', tags: ['microsoft','m365','invoice'], version: '1' },
+      { title: 'Microsoft Invoice G107786449 (Aug 2025)', category: 'Finance', file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/0e15d8d21_G107786449_c051b27838c6416ba53cd44812fbd274.pdf', file_name: 'Microsoft_Invoice_G107786449.pdf', file_type: 'PDF', tags: ['microsoft','m365','invoice'], version: '1' },
+      { title: 'BR Certificate — 5SENSESBEAUTY LIMITED Main', category: 'Legal', file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/ad7d873f2_BRC_148077315.pdf', file_name: 'BRC_148077315.pdf', file_type: 'PDF', tags: ['br','legal','5sensesbeauty'], version: '1' },
+      { title: 'Reap Business — Company Setup Invoice #214386 (HKD $7,850)', category: 'Finance', file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/1f23c1094_7850-5SENSESBEAUTYLIMITED.pdf', file_name: '7850-5SENSESBEAUTYLIMITED.pdf', file_type: 'PDF', tags: ['reap-business','invoice'], version: '1' },
+      { title: 'Reap Business — Branch Registration Invoice #229460 (HKD $1,200)', category: 'Finance', file_url: 'https://media.base44.com/files/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/8425b666b_1200-5SENSESBEAUTYLIMITED.pdf', file_name: '1200-5SENSESBEAUTYLIMITED.pdf', file_type: 'PDF', tags: ['reap-business','invoice'], version: '1' },
+      { title: 'Bank of China — BOC Business Letter (Proof of Address)', category: 'Legal', file_url: 'https://media.base44.com/images/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/ba6be66fd_whatsapp_image_980511691102143.jpg', file_name: 'BOC_ProofOfAddress.jpg', file_type: 'Image', tags: ['boc','proof-of-address'], version: '1' },
+      { title: 'SIMPLEX-ITY Investor Pitch Deck v2', category: 'Brand', file_url: 'https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/5a1af66d0_SIMPLEX-ITY_Investor_Pitch_v2.pptx', file_name: 'SIMPLEX-ITY_Investor_Pitch_v2.pptx', file_type: 'PPTX', tags: ['investor','pitch','deck'], version: '2' },
     ];
 
     const expenses = [
-      {
-        title: 'Company Registration Service — Plan B (5SENSESBEAUTY LIMITED)',
-        amount: 4970,
-        currency: 'HKD',
-        category: 'Company Registration',
-        vendor: 'Reap Business Limited',
-        date: '2025-07-09',
-        recurring: false,
-        approved: true,
-        notes: 'Invoice #214386. Incorporation service Plan B, 7 working days. One-time setup fee.',
-      },
-      {
-        title: 'Company Secretary Service — Annual (5SENSESBEAUTY LIMITED)',
-        amount: 900,
-        currency: 'HKD',
-        category: 'Company Registration',
-        vendor: 'Reap Business Limited',
-        date: '2025-07-09',
-        recurring: true,
-        recurring_cycle: 'yearly',
-        approved: true,
-        notes: 'Invoice #214386. Service period: 2025-07-09 to 2026-07-08. Renewal due July 2026.',
-      },
-      {
-        title: 'Kwun Tong Virtual Office — Plan A (18 months)',
-        amount: 1980,
-        currency: 'HKD',
-        category: 'Company Registration',
-        vendor: 'Reap Business Limited',
-        date: '2025-07-09',
-        recurring: true,
-        recurring_cycle: 'yearly',
-        approved: true,
-        notes: 'Invoice #214386. RM 1608 16/F APEC Plaza. Service: 2025-07-09 to 2027-01-08.',
-      },
-      {
-        title: 'Main BR Registration Fee — 5SENSESBEAUTY LIMITED',
-        amount: 2200,
-        currency: 'HKD',
-        category: 'Company Registration',
-        vendor: 'IRD / Reap Business Limited',
-        date: '2025-07-15',
-        recurring: true,
-        recurring_cycle: 'yearly',
-        approved: true,
-        notes: 'Cert No: 78459506-000-07-25-9. Period: 15/07/2025 to 14/07/2026. Annual renewal.',
-      },
-      {
-        title: 'Branch Registration — SIMPLEX-ITY (Branch 001)',
-        amount: 1200,
-        currency: 'HKD',
-        category: 'Company Registration',
-        vendor: 'Reap Business Limited',
-        date: '2026-01-14',
-        recurring: true,
-        recurring_cycle: 'yearly',
-        approved: true,
-        notes: 'Invoice #229460. Branch 001 period: 2025-07-15 to 2026-07-14. Paid via bank 14 Jan 2026.',
-      },
+      { title: 'FundFluent — Fractional CPO Month 3 (FF-INV-0258)', amount: 35000, currency: 'HKD', category: 'Professional Fees', vendor: 'FundFluent Limited', date: '2026-05-11', status: 'paid', payment_method: 'Bank Transfer / FPS', notes: 'Final month. Hang Seng 239 778269 883 / FPS 161690177.' },
+      { title: 'FundFluent — Fractional CPO Month 2 (Apr 2026)', amount: 35000, currency: 'HKD', category: 'Professional Fees', vendor: 'FundFluent Limited', date: '2026-04-27', status: 'paid', payment_method: 'Bank Transfer / FPS' },
+      { title: 'FundFluent — Fractional CPO Month 1 (Mar 2026)', amount: 35000, currency: 'HKD', category: 'Professional Fees', vendor: 'FundFluent Limited', date: '2026-03-14', status: 'paid', payment_method: 'Bank Transfer / FPS' },
+      { title: 'Looka — Brand Kit Subscription (May 2026)', amount: 233, currency: 'HKD', category: 'Branding & Design', vendor: 'Looka', date: '2026-05-07', status: 'paid', payment_method: 'Credit Card', notes: 'USD 29.99/mo. Invoice J8GNTFYO-0011.' },
+      { title: 'Shopify — Monthly Subscription (May 2026)', amount: 256.74, currency: 'HKD', category: 'Software & Subscriptions', vendor: 'Shopify', date: '2026-05-08', status: 'paid', payment_method: 'PayPal' },
+      { title: 'Shopify — Monthly Subscription (Apr 2026)', amount: 256.74, currency: 'HKD', category: 'Software & Subscriptions', vendor: 'Shopify', date: '2026-04-08', status: 'paid', payment_method: 'PayPal' },
+      { title: 'Shopify — Monthly Subscription (Mar 2026)', amount: 256.74, currency: 'HKD', category: 'Software & Subscriptions', vendor: 'Shopify', date: '2026-03-09', status: 'paid', payment_method: 'PayPal' },
+      { title: 'Shopify — Monthly Subscription (Feb 2026)', amount: 256.74, currency: 'HKD', category: 'Software & Subscriptions', vendor: 'Shopify', date: '2026-02-07', status: 'paid', payment_method: 'PayPal' },
+      { title: 'Shopify — Monthly Subscription (Jan 2026)', amount: 256.74, currency: 'HKD', category: 'Software & Subscriptions', vendor: 'Shopify', date: '2026-01-08', status: 'paid', payment_method: 'PayPal' },
+      { title: 'Shopify — Monthly Subscription (Dec 2025)', amount: 256.74, currency: 'HKD', category: 'Software & Subscriptions', vendor: 'Shopify', date: '2025-12-09', status: 'paid', payment_method: 'PayPal' },
+      { title: 'Shopify — Monthly Subscription (Nov 2025)', amount: 256.74, currency: 'HKD', category: 'Software & Subscriptions', vendor: 'Shopify', date: '2025-11-09', status: 'paid', payment_method: 'PayPal' },
+      { title: 'Shopify — Monthly Subscription (Oct 2025)', amount: 122.92, currency: 'HKD', category: 'Software & Subscriptions', vendor: 'Shopify', date: '2025-10-12', status: 'paid', payment_method: 'PayPal' },
+      { title: 'Shopify — Monthly Subscription (Aug 2025)', amount: 124.48, currency: 'HKD', category: 'Software & Subscriptions', vendor: 'Shopify', date: '2025-08-03', status: 'paid', payment_method: 'PayPal' },
+      { title: 'Shopify — Monthly Subscription (Jul 2025)', amount: 7.78, currency: 'HKD', category: 'Software & Subscriptions', vendor: 'Shopify', date: '2025-07-12', status: 'paid', payment_method: 'PayPal' },
+      { title: 'Microsoft 365 — kieran@5senses.global (Monthly May 2026)', amount: 97, currency: 'HKD', category: 'Microsoft Licenses', vendor: 'Microsoft 365', date: '2026-05-01', status: 'paid', payment_method: 'Credit Card' },
+      { title: 'Microsoft 365 — kieran.li@5sensesbeauty.com (Monthly May 2026)', amount: 97, currency: 'HKD', category: 'Microsoft Licenses', vendor: 'Microsoft 365', date: '2026-05-01', status: 'paid', payment_method: 'Credit Card' },
+      { title: 'Microsoft 365 — Loreen@5senses.global (Monthly May 2026)', amount: 97, currency: 'HKD', category: 'Microsoft Licenses', vendor: 'Microsoft 365', date: '2026-05-01', status: 'pending', payment_method: 'Credit Card' },
+      { title: 'Microsoft 365 — Wilson (Monthly May 2026)', amount: 97, currency: 'HKD', category: 'Microsoft Licenses', vendor: 'Microsoft 365', date: '2026-05-01', status: 'pending', payment_method: 'Credit Card' },
+      { title: 'Microsoft 365 — Invoice G110703616 (Aug 2025, 3 licenses)', amount: 3553.28, currency: 'HKD', category: 'Microsoft Licenses', vendor: 'Microsoft Regional Sales Pte Ltd', date: '2025-09-05', status: 'paid', payment_method: 'Credit Card' },
+      { title: 'Microsoft 365 — Invoice G116524246 (Sep 2025, 4 licenses)', amount: 1087.29, currency: 'HKD', category: 'Microsoft Licenses', vendor: 'Microsoft Regional Sales Pte Ltd', date: '2025-10-05', status: 'paid', payment_method: 'Credit Card' },
+      { title: 'Microsoft 365 Email Essentials via GoDaddy (Aug 2025)', amount: 364.8, currency: 'HKD', category: 'Microsoft Licenses', vendor: 'GoDaddy', date: '2025-08-05', status: 'paid', payment_method: 'PayPal' },
+      { title: 'GoDaddy — simplex-ity.com .COM registration (Aug 2025)', amount: 342.66, currency: 'HKD', category: 'Domain & Hosting', vendor: 'GoDaddy', date: '2025-08-05', status: 'paid', payment_method: 'PayPal', notes: 'KEEP and renew Aug 2026.' },
+      { title: 'GoDaddy — simplex-ity.net/.club/.info/.shop domains (Aug 2025)', amount: 294.54, currency: 'HKD', category: 'Domain & Hosting', vendor: 'GoDaddy', date: '2025-08-10', status: 'paid', payment_method: 'PayPal', notes: 'Do NOT renew .club/.info/.shop. Keep .net only.' },
+      { title: 'GoDaddy — Domain Protection simplex-ity.com (Aug 2025)', amount: 550.7, currency: 'HKD', category: 'Domain & Hosting', vendor: 'GoDaddy', date: '2025-08-08', status: 'paid', payment_method: 'PayPal', notes: 'Downgrade Ultimate to Full on renewal. Save ~HKD 350/yr.' },
+      { title: 'GoDaddy — sentientby5senses.com + protection (Aug 2025)', amount: 1210.51, currency: 'HKD', category: 'Domain & Hosting', vendor: 'GoDaddy', date: '2025-08-02', status: 'paid', payment_method: 'PayPal', notes: 'DO NOT RENEW Aug 2026.' },
+      { title: 'GoDaddy — Sentie Beauty domains + protection (Aug 2025)', amount: 1388.99, currency: 'HKD', category: 'Domain & Hosting', vendor: 'GoDaddy', date: '2025-08-01', status: 'paid', payment_method: 'PayPal', notes: 'DO NOT RENEW — Sentie Beauty brand inactive.' },
+      { title: 'GoDaddy — Domain Registration 5senses.global (Jan 2026)', amount: 620, currency: 'HKD', category: 'Domain & Hosting', vendor: 'GoDaddy', date: '2026-01-01', status: 'paid', payment_method: 'PayPal' },
+      { title: 'GoDaddy — Domain Registration simplex-ity.com (Jan 2026)', amount: 155, currency: 'HKD', category: 'Domain & Hosting', vendor: 'GoDaddy', date: '2026-01-01', status: 'paid', payment_method: 'PayPal' },
+      { title: 'SiteGround — GrowBig Hosting + simplex-ity.co domain (Aug 2025)', amount: 696.5, currency: 'HKD', category: 'Domain & Hosting', vendor: 'SiteGround Hosting Ltd', date: '2025-08-12', status: 'paid', payment_method: 'Credit Card', notes: 'Invoice #3754715. Renewal Aug 2026.' },
+      { title: 'SiteGround — simplex-ity.org domain + SSL + CDN (Aug 2025)', amount: 1549, currency: 'HKD', category: 'Domain & Hosting', vendor: 'SiteGround Hosting Ltd', date: '2025-08-12', status: 'paid', payment_method: 'Credit Card', notes: 'Invoice #3754959. Renewal Aug 2026.' },
+      { title: 'SiteGround — Email Marketing 500 Contacts (Sep 2025)', amount: 223, currency: 'HKD', category: 'Domain & Hosting', vendor: 'SiteGround Hosting Ltd', date: '2025-09-07', status: 'paid', payment_method: 'Credit Card', notes: 'Invoice #3799602. Renewal Sep 2026.' },
+      { title: 'SiteGround — Web Hosting Annual (Jan 2026)', amount: 930, currency: 'HKD', category: 'Domain & Hosting', vendor: 'Siteground', date: '2026-01-01', status: 'paid', payment_method: 'Credit Card' },
+      { title: 'Squarespace — 5senses.global domain 2-year (Oct 2025)', amount: 812, currency: 'HKD', category: 'Domain & Hosting', vendor: 'Squarespace Ireland Limited', date: '2025-10-18', status: 'paid', payment_method: 'Credit Card', notes: 'Invoice #205749805. Expires Jul 2027. KEEP.' },
+      { title: 'Squarespace — Website Hosting (May 2026)', amount: 1400, currency: 'HKD', category: 'Domain & Hosting', vendor: 'Squarespace', date: '2026-05-01', status: 'paid', payment_method: 'Credit Card' },
+      { title: 'Business Registration — 5SENSESBEAUTY LIMITED (Jul 2025)', amount: 2200, currency: 'HKD', category: 'Government Fees', vendor: 'HK Companies Registry', date: '2025-07-15', status: 'paid', payment_method: 'Government Portal', notes: 'Cert No: 78459506-000-07-25-9. Renewal Jul 2026.' },
+      { title: 'Business Registration — SIMPLEX-ITY Branch (Jan 2026)', amount: 80, currency: 'HKD', category: 'Government Fees', vendor: 'HK Companies Registry', date: '2026-01-12', status: 'paid', payment_method: 'Government Portal', notes: 'Cert No: 78459506-001-07-25-A. Expires 14 Jul 2026.' },
+      { title: 'Reap Business — Company Secretary Service (Jul 2025)', amount: 900, currency: 'HKD', category: 'Professional Fees', vendor: 'Reap Business Limited', date: '2025-07-09', status: 'paid', payment_method: 'Bank Transfer', notes: 'Annual Jul 2025–Jul 2026. Renewal Jul 8 2026. Contact Carrie (852) 3166 1298.' },
+      { title: 'Reap Business — Virtual Office Plan A (Jul 2025)', amount: 1980, currency: 'HKD', category: 'Office & Admin', vendor: 'Reap Business Limited', date: '2025-07-09', status: 'paid', payment_method: 'Bank Transfer', notes: '18-month plan Jul 2025–Jan 2027. Room 1608, 16/F APEC Plaza.' },
+      { title: 'Reap Business — Branch Registration Invoice #229460 (Jan 2026)', amount: 1200, currency: 'HKD', category: 'Government Fees', vendor: 'Reap Business Limited', date: '2026-01-12', status: 'paid', payment_method: 'Bank Transfer', notes: 'Branch 001 processing fee. Invoice #229460.' },
     ];
 
-    const calendarEvents = [
-      {
-        title: '⚠️ BR Renewal Deadline — SIMPLEX-ITY Branch',
-        description: 'Renew SIMPLEX-ITY branch registration (Cert 78459506-001-07-25-A). Contact Reap Business Carrie at 3166 1298. Fee ~HKD $1,200. FPS: 65438388.',
-        event_type: 'deadline',
-        start_date: '2026-07-14T00:00:00',
-        all_day: true,
-        color: '#e53e3e',
-        reminder_minutes: 43200,
-        whatsapp_reminder: true,
-      },
-      {
-        title: '⚠️ BR Renewal Deadline — 5SENSESBEAUTY LIMITED Main',
-        description: 'Renew main BR (Cert 78459506-000-07-25-9). Fee ~HKD $2,200. Renew via GovHK eBR or Reap Business.',
-        event_type: 'deadline',
-        start_date: '2026-07-14T00:00:00',
-        all_day: true,
-        color: '#e53e3e',
-        reminder_minutes: 43200,
-        whatsapp_reminder: true,
-      },
-      {
-        title: '🔔 BR Renewal Reminder — 30 Days Before',
-        description: 'Both BRs expire 14 Jul 2026. Start renewal now. Contact Carrie at Reap Business: (852) 3166 1298.',
-        event_type: 'reminder',
-        start_date: '2026-06-14T09:00:00',
-        all_day: false,
-        color: '#f6ad55',
-        reminder_minutes: 1440,
-        whatsapp_reminder: true,
-      },
-      {
-        title: '⚠️ Company Secretary Renewal Deadline — Reap Business',
-        description: 'Company Secretary service expires 2026-07-08. Annual fee HKD $900. Contact Carrie at (852) 3166 1298.',
-        event_type: 'deadline',
-        start_date: '2026-07-08T00:00:00',
-        all_day: true,
-        color: '#e53e3e',
-        reminder_minutes: 43200,
-        whatsapp_reminder: true,
-      },
-      {
-        title: '🔔 Company Secretary Renewal Reminder — 30 Days',
-        description: 'Company Secretary expires 8 Jul 2026. Contact Reap Business (Carrie, 3166 1298). Fee: HKD $900/year.',
-        event_type: 'reminder',
-        start_date: '2026-06-08T09:00:00',
-        all_day: false,
-        color: '#f6ad55',
-        reminder_minutes: 1440,
-        whatsapp_reminder: true,
-      },
-      {
-        title: '🏢 Virtual Office Renewal — Kwun Tong Plan A',
-        description: 'Virtual office at APEC Plaza expires 8 Jan 2027. Fee: HKD $1,980. Contact Reap Business (Carrie, 3166 1298).',
-        event_type: 'renewal',
-        start_date: '2027-01-08T00:00:00',
-        all_day: true,
-        color: '#8c82fc',
-        reminder_minutes: 43200,
-        whatsapp_reminder: false,
-      },
-    ];
+    const docResults = [];
+    for (const d of documents) {
+      try { docResults.push(await db.entities.Document.create(d)); } catch(e) { docResults.push({ error: e.message, title: d.title }); }
+    }
 
-    const docResults = await Promise.all(
-      documents.map(d => db.entities.Document.create(d))
-    );
-    const expResults = await Promise.all(
-      expenses.map(e => db.entities.Expense.create(e))
-    );
-    const calResults = await Promise.all(
-      calendarEvents.map(c => db.entities.CalendarEvent.create(c))
-    );
+    const expResults = [];
+    for (const e of expenses) {
+      try { expResults.push(await db.entities.Expense.create(e)); } catch(err) { expResults.push({ error: err.message, title: e.title }); }
+    }
+
+    const docOk = docResults.filter(r => !r.error).length;
+    const expOk = expResults.filter(r => !r.error).length;
 
     return Response.json({
       ok: true,
-      documents_created: docResults.length,
-      expenses_created: expResults.length,
-      calendar_events_created: calResults.length,
+      message: `Synced to 5S Portal: ${docOk} documents + ${expOk} expenses`,
+      documents_created: docOk,
+      expenses_created: expOk,
+      errors: [...docResults, ...expResults].filter(r => r.error),
     });
 
   } catch (error) {
