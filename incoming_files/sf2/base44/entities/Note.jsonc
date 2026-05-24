@@ -1,0 +1,13 @@
+{
+  "name": "Note",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "title": { "type": "string" },
+      "content": { "type": "string" },
+      "source": { "type": "string" },
+      "tags": { "type": "array", "items": { "type": "string" } },
+      "pinned": { "type": "boolean" }
+    }
+  }
+}

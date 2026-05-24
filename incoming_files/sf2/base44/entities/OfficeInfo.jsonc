@@ -1,0 +1,40 @@
+{
+  "name": "OfficeInfo",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Unique key for this info item"
+    },
+    "label": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "address",
+        "contact",
+        "legal",
+        "banking",
+        "registration",
+        "other"
+      ],
+      "default": "other"
+    },
+    "admin_only": {
+      "type": "boolean",
+      "default": false
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "key",
+    "label",
+    "value"
+  ]
+}
