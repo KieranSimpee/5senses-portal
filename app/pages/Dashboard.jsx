@@ -1,178 +1,285 @@
 import { useState, useEffect } from "react";
-import { Brand, Influencer, Campaign, RevenueRecord, CalendarEvent } from "@/api/entities";
+import { ComplianceItem, Expense, Note, VaultItem, Document } from "@/api/entities";
 
-const BRAND_COLOR = "#7C3AED";
+const BRAND = {
+  primaryLilac: "#8c82fc",
+  accentViolet: "#5e50fb",
+  softLilac: "#bab4fd",
+  lavenderWash: "#e8e6fe",
+  white: "#ffffff",
+  neutralGrey: "#e6e6e6",
+  bodyText: "#1a1a1f",
+};
 
-function KPICard({ icon, label, value, sub, color }) {
-  return (
-    <div style={{
-      background: "#fff", borderRadius: 14, padding: "22px 24px",
-      boxShadow: "0 2px 12px rgba(124,58,237,0.07)",
-      borderTop: `4px solid ${color || BRAND_COLOR}`
-    }}>
-      <div style={{ fontSize: 26, marginBottom: 8 }}>{icon}</div>
-      <div style={{ fontSize: 26, fontWeight: 800, color: "#1a0533" }}>{value}</div>
-      <div style={{ fontSize: 13, color: "#64748b", marginTop: 3 }}>{label}</div>
-      {sub && <div style={{ fontSize: 11, color: color || BRAND_COLOR, marginTop: 4, fontWeight: 600 }}>{sub}</div>}
-    </div>
-  );
-}
+const Card = ({ children, style = {} }) => (
+  <div style={{
+    background: BRAND.white,
+    borderRadius: 14,
+    padding: "20px 22px",
+    boxShadow: "0 2px 12px rgba(140,130,252,0.08)",
+    border: `1px solid ${BRAND.neutralGrey}`,
+    ...style
+  }}>
+    {children}
+  </div>
+);
+
+const SectionTitle = ({ children }) => (
+  <div style={{
+    fontFamily: "'Exo 2', 'Montserrat', sans-serif",
+    fontWeight: 700, fontSize: 11,
+    color: BRAND.primaryLilac,
+    textTransform: "uppercase", letterSpacing: 1.5,
+    marginBottom: 14
+  }}>{children}</div>
+);
+
+const StatCard = ({ label, value, sub, color, onClick }) => (
+  <div onClick={onClick} style={{
+    background: BRAND.white,
+    borderRadius: 12,
+    padding: "18px 20px",
+    boxShadow: "0 2px 10px rgba(140,130,252,0.07)",
+    border: `1px solid ${BRAND.neutralGrey}`,
+    cursor: onClick ? "pointer" : "default",
+    borderTop: `3px solid ${color || BRAND.primaryLilac}`,
+    transition: "box-shadow 0.15s",
+  }}>
+    <div style={{ fontSize: 22, fontWeight: 800, color: color || BRAND.accentViolet, lineHeight: 1 }}>{value}</div>
+    <div style={{ fontSize: 12, fontWeight: 600, color: BRAND.bodyText, marginTop: 5 }}>{label}</div>
+    {sub && <div style={{ fontSize: 11, color: "#888", marginTop: 3 }}>{sub}</div>}
+  </div>
+);
 
 export default function Dashboard({ setPage }) {
-  const [brands, setBrands] = useState([]);
-  const [influencers, setInfluencers] = useState([]);
-  const [campaigns, setCampaigns] = useState([]);
-  const [revenue, setRevenue] = useState([]);
-  const [events, setEvents] = useState([]);
+  const [compliance, setCompliance] = useState([]);
+  const [expenses, setExpenses] = useState([]);
+  const [notes, setNotes] = useState([]);
+  const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const today = new Date();
 
   useEffect(() => {
     Promise.all([
-      Brand.list(),
-      Influencer.list(),
-      Campaign.list(),
-      RevenueRecord.list("-date"),
-      CalendarEvent.list("due_date")
-    ]).then(([b, i, c, r, e]) => {
-      setBrands(b); setInfluencers(i); setCampaigns(c); setRevenue(r); setEvents(e);
+      ComplianceItem.list(),
+      Expense.list(),
+      Note.list(),
+      Document.list(),
+    ]).then(([c, e, n, d]) => {
+      setCompliance(c);
+      setExpenses(e);
+      setNotes(n);
+      setDocs(d);
       setLoading(false);
-    });
+    }).catch(() => setLoading(false));
   }, []);
 
-  const totalRevenue = revenue.reduce((s, r) => s + (parseFloat(r.amount) || 0), 0);
-  const activeCampaigns = campaigns.filter(c => c.status === "Active").length;
-  const activeInfluencers = influencers.filter(i => i.status === "Active").length;
-  const avgReliability = influencers.length > 0
-    ? Math.round(influencers.reduce((s, i) => s + (i.reliability_score || 0), 0) / influencers.length)
-    : 0;
-  const atRisk = influencers.filter(i => (i.reliability_score || 0) < 75).length;
+  const overdue = compliance.filter(c => c.status !== "Done" && c.status !== "Completed" && new Date(c.due_date) < today);
+  const upcoming30 = compliance.filter(c => c.status !== "Done" && c.status !== "Completed" && new Date(c.due_date) >= today && (new Date(c.due_date) - today) / 86400000 <= 30);
+  const totalExpenses = expenses.reduce((s, e) => s + (e.amount || 0), 0);
+  const pinnedNotes = notes.filter(n => n.pinned);
+  const recentDocs = [...docs].sort((a, b) => new Date(b.created_date) - new Date(a.created_date)).slice(0, 5);
 
-  const upcomingEvents = events
-    .filter(e => e.status === "Scheduled" && e.due_date >= new Date().toISOString().split("T")[0])
-    .slice(0, 5);
-
-  const recentRevenue = revenue.slice(0, 5);
+  const daysUntil = (date) => Math.ceil((new Date(date) - today) / 86400000);
+  const statusColor = (s) => {
+    if (s === "Done" || s === "Completed") return "#22c55e";
+    if (s === "overdue") return "#ef4444";
+    if (s === "In Progress") return BRAND.primaryLilac;
+    return "#f59e0b";
+  };
 
   if (loading) return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", color: BRAND_COLOR, fontSize: 16 }}>
-      Loading dashboard...
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: BRAND.primaryLilac }}>
+      Loading 5S Portal...
     </div>
   );
 
   return (
-    <div style={{ padding: 32 }}>
+    <div style={{ padding: "28px 28px", fontFamily: "'Montserrat', 'Inter', sans-serif", color: BRAND.bodyText }}>
+
       {/* Header */}
-      <div style={{ marginBottom: 28 }}>
-        <h1 style={{ margin: 0, fontSize: 26, fontWeight: 800, color: "#1a0533" }}>✨ Platform Overview</h1>
-        <p style={{ margin: "6px 0 0", color: "#64748b", fontSize: 14 }}>
-          {new Date().toLocaleDateString("en-HK", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
-        </p>
-      </div>
-
-      {/* KPIs */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginBottom: 28 }}>
-        <KPICard icon="🏢" label="Total Brands" value={brands.length} sub={`${brands.filter(b => b.status === "Active").length} Active`} color="#7C3AED" />
-        <KPICard icon="⭐" label="Influencers" value={activeInfluencers} sub={atRisk > 0 ? `⚠️ ${atRisk} at risk` : "All healthy"} color="#a855f7" />
-        <KPICard icon="🚀" label="Active Campaigns" value={activeCampaigns} sub={`${campaigns.length} Total`} color="#6d28d9" />
-        <KPICard icon="💰" label="Total Revenue" value={`$${totalRevenue.toLocaleString()}`} sub="All time" color="#059669" />
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-        {/* Influencer Health */}
-        <div style={{ background: "#fff", borderRadius: 14, padding: 24, boxShadow: "0 2px 12px rgba(124,58,237,0.07)" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
-            <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#1a0533" }}>⭐ Influencer Reliability</h3>
-            <button onClick={() => setPage("influencers")} style={{ background: "none", border: "none", color: BRAND_COLOR, fontSize: 12, cursor: "pointer", fontWeight: 600 }}>View all →</button>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
-            <div style={{ width: 70, height: 70, borderRadius: "50%", background: avgReliability >= 75 ? "#e8f5e9" : "#fce8e8", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-              <div style={{ fontSize: 20, fontWeight: 800, color: avgReliability >= 75 ? "#2e7d32" : "#c62828" }}>{avgReliability}%</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 13, color: "#64748b" }}>Platform Average</div>
-              <div style={{ fontSize: 12, color: avgReliability >= 75 ? "#2e7d32" : "#c62828", fontWeight: 600, marginTop: 2 }}>
-                {avgReliability >= 90 ? "🟢 Excellent" : avgReliability >= 75 ? "🟡 Good" : "🔴 Needs Attention"}
-              </div>
-            </div>
-          </div>
-          {influencers.slice(0, 5).map(inf => (
-            <div key={inf.id} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "#1a0533" }}>{inf.name}</div>
-                <div style={{ fontSize: 11, color: "#94a3b8" }}>{inf.tier} · {inf.platform}</div>
-              </div>
-              <div style={{ width: 80, height: 6, background: "#f0f0f0", borderRadius: 4 }}>
-                <div style={{ width: `${inf.reliability_score || 0}%`, height: "100%", borderRadius: 4, background: (inf.reliability_score || 0) >= 75 ? "#7C3AED" : "#ef4444" }} />
-              </div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: (inf.reliability_score || 0) >= 75 ? "#7C3AED" : "#ef4444", minWidth: 36, textAlign: "right" }}>
-                {inf.reliability_score || 0}%
-              </div>
-            </div>
-          ))}
-          {influencers.length === 0 && <div style={{ textAlign: "center", padding: 20, color: "#94a3b8", fontSize: 13 }}>No influencers yet</div>}
+      <div style={{ marginBottom: 24 }}>
+        <div style={{
+          fontFamily: "'Exo 2', 'Montserrat', sans-serif",
+          fontWeight: 800, fontSize: 22, color: BRAND.bodyText, lineHeight: 1.2
+        }}>
+          Good {today.getHours() < 12 ? "morning" : today.getHours() < 18 ? "afternoon" : "evening"}, Kieran 👋
         </div>
+        <div style={{ fontSize: 13, color: "#888", marginTop: 4 }}>
+          {today.toLocaleDateString("en-HK", { weekday: "long", year: "numeric", month: "long", day: "numeric" })} · SIMPLEX-ITY Operations
+        </div>
+      </div>
 
-        {/* Upcoming Calendar */}
-        <div style={{ background: "#fff", borderRadius: 14, padding: 24, boxShadow: "0 2px 12px rgba(124,58,237,0.07)" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
-            <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#1a0533" }}>📅 Upcoming Deadlines</h3>
-            <button onClick={() => setPage("calendar")} style={{ background: "none", border: "none", color: BRAND_COLOR, fontSize: 12, cursor: "pointer", fontWeight: 600 }}>View all →</button>
-          </div>
-          {upcomingEvents.length === 0 && <div style={{ textAlign: "center", padding: 30, color: "#94a3b8", fontSize: 13 }}>No upcoming events</div>}
-          {upcomingEvents.map(ev => (
-            <div key={ev.id} style={{ display: "flex", gap: 12, marginBottom: 14, alignItems: "flex-start" }}>
-              <div style={{ fontSize: 20 }}>
-                {ev.type === "Live Stream" ? "🎥" : ev.type === "Blog Post" ? "✍️" : ev.type === "AI Certification" ? "🤖" : "📌"}
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "#1a0533" }}>{ev.title}</div>
-                <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 2 }}>
-                  {ev.influencer_name && `${ev.influencer_name} · `}{ev.due_date}
+      {/* Stat Cards */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, marginBottom: 24 }}>
+        <StatCard
+          label="Overdue Items"
+          value={overdue.length}
+          sub="Need immediate action"
+          color="#ef4444"
+          onClick={() => setPage("compliance")}
+        />
+        <StatCard
+          label="Due in 30 Days"
+          value={upcoming30.length}
+          sub="Upcoming compliance"
+          color="#f59e0b"
+          onClick={() => setPage("compliance")}
+        />
+        <StatCard
+          label="Total Expenses"
+          value={`HKD ${totalExpenses.toLocaleString()}`}
+          sub={`${expenses.length} records`}
+          color={BRAND.primaryLilac}
+          onClick={() => setPage("expenses")}
+        />
+        <StatCard
+          label="Documents"
+          value={docs.length}
+          sub={`${pinnedNotes.length} pinned notes`}
+          color={BRAND.accentViolet}
+          onClick={() => setPage("documents")}
+        />
+      </div>
+
+      {/* Main Grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginBottom: 18 }}>
+
+        {/* Overdue Compliance */}
+        <Card>
+          <SectionTitle>🚨 Overdue Compliance</SectionTitle>
+          {overdue.length === 0 ? (
+            <div style={{ color: "#22c55e", fontSize: 13, fontWeight: 600 }}>✓ All clear — nothing overdue</div>
+          ) : (
+            overdue.slice(0, 5).map(item => (
+              <div key={item.id} style={{
+                display: "flex", justifyContent: "space-between", alignItems: "flex-start",
+                padding: "10px 0", borderBottom: `1px solid ${BRAND.neutralGrey}`
+              }}>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: BRAND.bodyText }}>{item.title}</div>
+                  <div style={{ fontSize: 11, color: "#888", marginTop: 2 }}>{item.category}</div>
+                </div>
+                <div style={{
+                  fontSize: 11, fontWeight: 700, color: "#ef4444",
+                  background: "#fef2f2", padding: "3px 8px", borderRadius: 6, whiteSpace: "nowrap", marginLeft: 8
+                }}>
+                  {Math.abs(daysUntil(item.due_date))}d overdue
                 </div>
               </div>
-              <span style={{
-                padding: "2px 8px", borderRadius: 8, fontSize: 11, fontWeight: 600,
-                background: "#ede9fe", color: BRAND_COLOR
-              }}>{ev.type}</span>
-            </div>
-          ))}
-        </div>
+            ))
+          )}
+          <button onClick={() => setPage("compliance")} style={{
+            marginTop: 12, width: "100%", padding: "8px",
+            background: BRAND.lavenderWash, border: `1px solid ${BRAND.softLilac}`,
+            borderRadius: 8, color: BRAND.accentViolet, fontSize: 12, fontWeight: 600,
+            cursor: "pointer"
+          }}>View All Compliance →</button>
+        </Card>
 
-        {/* Recent Revenue */}
-        <div style={{ background: "#fff", borderRadius: 14, padding: 24, boxShadow: "0 2px 12px rgba(124,58,237,0.07)" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
-            <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#1a0533" }}>💰 Recent Revenue</h3>
-            <button onClick={() => setPage("revenue")} style={{ background: "none", border: "none", color: BRAND_COLOR, fontSize: 12, cursor: "pointer", fontWeight: 600 }}>View all →</button>
-          </div>
-          {recentRevenue.length === 0 && <div style={{ textAlign: "center", padding: 30, color: "#94a3b8", fontSize: 13 }}>No revenue recorded yet</div>}
-          {recentRevenue.map(r => (
-            <div key={r.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "#1a0533" }}>{r.brand_name || r.campaign_title}</div>
-                <div style={{ fontSize: 11, color: "#94a3b8" }}>{r.type} · {r.date}</div>
+        {/* Upcoming Deadlines */}
+        <Card>
+          <SectionTitle>📅 Upcoming — Next 30 Days</SectionTitle>
+          {upcoming30.length === 0 ? (
+            <div style={{ color: "#888", fontSize: 13 }}>No deadlines in the next 30 days.</div>
+          ) : (
+            upcoming30.slice(0, 5).map(item => (
+              <div key={item.id} style={{
+                display: "flex", justifyContent: "space-between", alignItems: "flex-start",
+                padding: "10px 0", borderBottom: `1px solid ${BRAND.neutralGrey}`
+              }}>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: BRAND.bodyText }}>{item.title}</div>
+                  <div style={{ fontSize: 11, color: "#888", marginTop: 2 }}>{item.category}</div>
+                </div>
+                <div style={{
+                  fontSize: 11, fontWeight: 600,
+                  color: daysUntil(item.due_date) <= 7 ? "#f59e0b" : BRAND.primaryLilac,
+                  background: daysUntil(item.due_date) <= 7 ? "#fffbeb" : BRAND.lavenderWash,
+                  padding: "3px 8px", borderRadius: 6, whiteSpace: "nowrap", marginLeft: 8
+                }}>
+                  {daysUntil(item.due_date)}d left
+                </div>
               </div>
-              <div style={{ fontSize: 15, fontWeight: 800, color: "#059669" }}>+${parseFloat(r.amount || 0).toLocaleString()}</div>
-            </div>
-          ))}
-        </div>
+            ))
+          )}
+          <button onClick={() => setPage("compliance")} style={{
+            marginTop: 12, width: "100%", padding: "8px",
+            background: BRAND.lavenderWash, border: `1px solid ${BRAND.softLilac}`,
+            borderRadius: 8, color: BRAND.accentViolet, fontSize: 12, fontWeight: 600, cursor: "pointer"
+          }}>View Full Calendar →</button>
+        </Card>
+      </div>
 
-        {/* Active Campaigns */}
-        <div style={{ background: "#fff", borderRadius: 14, padding: 24, boxShadow: "0 2px 12px rgba(124,58,237,0.07)" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
-            <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#1a0533" }}>🚀 Active Campaigns</h3>
-            <button onClick={() => setPage("campaigns")} style={{ background: "none", border: "none", color: BRAND_COLOR, fontSize: 12, cursor: "pointer", fontWeight: 600 }}>View all →</button>
-          </div>
-          {campaigns.filter(c => c.status === "Active").length === 0 && <div style={{ textAlign: "center", padding: 30, color: "#94a3b8", fontSize: 13 }}>No active campaigns</div>}
-          {campaigns.filter(c => c.status === "Active").slice(0, 4).map(c => (
-            <div key={c.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "#1a0533" }}>{c.title}</div>
-                <div style={{ fontSize: 11, color: "#94a3b8" }}>{c.brand_name} · {c.phase}</div>
+      {/* Bottom Grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+
+        {/* Recent Documents */}
+        <Card>
+          <SectionTitle>📁 Recent Documents</SectionTitle>
+          {recentDocs.length === 0 ? (
+            <div style={{ color: "#888", fontSize: 13 }}>No documents yet.</div>
+          ) : (
+            recentDocs.map(doc => (
+              <div key={doc.id} style={{
+                display: "flex", justifyContent: "space-between", alignItems: "center",
+                padding: "9px 0", borderBottom: `1px solid ${BRAND.neutralGrey}`
+              }}>
+                <div style={{ flex: 1, overflow: "hidden" }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: BRAND.bodyText, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{doc.title}</div>
+                  <div style={{ fontSize: 10, color: "#888", marginTop: 1 }}>{doc.category}</div>
+                </div>
+                {doc.file_url && (
+                  <a href={doc.file_url} target="_blank" rel="noreferrer" style={{
+                    fontSize: 11, color: BRAND.accentViolet, marginLeft: 8, textDecoration: "none",
+                    fontWeight: 600, whiteSpace: "nowrap"
+                  }}>View →</a>
+                )}
               </div>
-              <span style={{ padding: "3px 10px", borderRadius: 10, fontSize: 11, fontWeight: 600, background: "#ede9fe", color: BRAND_COLOR }}>{c.status}</span>
-            </div>
-          ))}
-        </div>
+            ))
+          )}
+          <button onClick={() => setPage("documents")} style={{
+            marginTop: 12, width: "100%", padding: "8px",
+            background: BRAND.lavenderWash, border: `1px solid ${BRAND.softLilac}`,
+            borderRadius: 8, color: BRAND.accentViolet, fontSize: 12, fontWeight: 600, cursor: "pointer"
+          }}>View All Documents →</button>
+        </Card>
+
+        {/* Pinned Notes */}
+        <Card>
+          <SectionTitle>📌 Pinned Notes</SectionTitle>
+          {pinnedNotes.length === 0 ? (
+            <div style={{ color: "#888", fontSize: 13 }}>No pinned notes yet.</div>
+          ) : (
+            pinnedNotes.slice(0, 4).map(note => (
+              <div key={note.id} style={{
+                padding: "10px 0", borderBottom: `1px solid ${BRAND.neutralGrey}`
+              }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: BRAND.bodyText }}>{note.title}</div>
+                <div style={{ fontSize: 11, color: "#888", marginTop: 3, lineHeight: 1.5 }}>
+                  {note.content?.slice(0, 90)}{note.content?.length > 90 ? "..." : ""}
+                </div>
+                {note.tags?.length > 0 && (
+                  <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginTop: 5 }}>
+                    {note.tags.slice(0, 3).map(tag => (
+                      <span key={tag} style={{
+                        fontSize: 9, fontWeight: 600, color: BRAND.primaryLilac,
+                        background: BRAND.lavenderWash, padding: "2px 6px", borderRadius: 10,
+                        textTransform: "uppercase", letterSpacing: 0.5
+                      }}>{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))
+          )}
+          <button onClick={() => setPage("notes")} style={{
+            marginTop: 12, width: "100%", padding: "8px",
+            background: BRAND.lavenderWash, border: `1px solid ${BRAND.softLilac}`,
+            borderRadius: 8, color: BRAND.accentViolet, fontSize: 12, fontWeight: 600, cursor: "pointer"
+          }}>View All Notes →</button>
+        </Card>
+
       </div>
     </div>
   );

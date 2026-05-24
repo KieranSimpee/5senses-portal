@@ -1,159 +1,190 @@
 import { useState, useEffect } from "react";
 import { ComplianceItem } from "@/api/entities";
 
-const STATUS_COLORS = {
-  "Upcoming": { bg: "#e8f0fe", color: "#1a73e8" },
-  "In Progress": { bg: "#fff8e1", color: "#f9a825" },
-  "Completed": { bg: "#e8f5e9", color: "#2e7d32" },
-  "Overdue": { bg: "#fce8e8", color: "#c62828" },
+const BRAND = {
+  primaryLilac: "#8c82fc",
+  accentViolet: "#5e50fb",
+  softLilac: "#bab4fd",
+  lavenderWash: "#e8e6fe",
+  white: "#ffffff",
+  neutralGrey: "#e6e6e6",
+  bodyText: "#1a1a1f",
 };
 
-const EMPTY_FORM = {
-  title: "", category: "Business Registration", due_date: "", status: "Upcoming",
-  description: "", reminder_days_before: 30, recurrence: "Annual", assigned_to: "", notes: ""
+const statusColor = (status, dueDate) => {
+  const today = new Date();
+  const due = new Date(dueDate);
+  if (status === "Done" || status === "Completed") return { bg: "#f0fdf4", text: "#16a34a", label: "Done" };
+  if (due < today) return { bg: "#fef2f2", text: "#ef4444", label: "Overdue" };
+  const days = Math.ceil((due - today) / 86400000);
+  if (days <= 14) return { bg: "#fffbeb", text: "#d97706", label: `${days}d left` };
+  return { bg: BRAND.lavenderWash, text: BRAND.primaryLilac, label: `${days}d left` };
 };
+
+const CATEGORIES = ["All", "Business Registration", "Tax", "MPF", "Company Secretarial", "Admin", "Office & Admin", "Contracts & Partnerships", "Partnerships"];
 
 export default function CompliancePage() {
   const [items, setItems] = useState([]);
-  const [filter, setFilter] = useState("All");
-  const [showForm, setShowForm] = useState(false);
-  const [editing, setEditing] = useState(null);
-  const [form, setForm] = useState(EMPTY_FORM);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("All");
+  const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState(null);
 
-  useEffect(() => { loadItems(); }, []);
+  useEffect(() => {
+    ComplianceItem.list().then(data => {
+      const sorted = [...data].sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+      setItems(sorted);
+      setLoading(false);
+    });
+  }, []);
 
-  async function loadItems() {
-    setLoading(true);
-    const data = await ComplianceItem.list("-due_date");
-    setItems(data);
-    setLoading(false);
-  }
+  const filtered = items.filter(i => {
+    const matchCat = filter === "All" || i.category === filter;
+    const matchSearch = !search || i.title?.toLowerCase().includes(search.toLowerCase());
+    return matchCat && matchSearch;
+  });
 
-  const categories = ["All", ...new Set(items.map(i => i.category).filter(Boolean))];
-  const filtered = filter === "All" ? items : items.filter(i => i.category === filter);
-
-  function openAdd() { setForm(EMPTY_FORM); setEditing(null); setShowForm(true); }
-  function openEdit(item) { setForm({ ...item }); setEditing(item.id); setShowForm(true); }
-
-  async function handleSave() {
-    if (editing) await ComplianceItem.update(editing, form);
-    else await ComplianceItem.create(form);
-    setShowForm(false);
-    loadItems();
-  }
-
-  async function handleDelete(id) {
-    if (confirm("Delete this compliance item?")) {
-      await ComplianceItem.delete(id);
-      loadItems();
-    }
-  }
+  const today = new Date();
+  const overdue = items.filter(i => i.status !== "Done" && i.status !== "Completed" && new Date(i.due_date) < today);
+  const upcoming = items.filter(i => i.status !== "Done" && i.status !== "Completed" && new Date(i.due_date) >= today && Math.ceil((new Date(i.due_date) - today) / 86400000) <= 30);
 
   return (
-    <div style={{ padding: 32 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+    <div style={{ padding: "28px", fontFamily: "'Montserrat', 'Inter', sans-serif", color: BRAND.bodyText }}>
+      
+      {/* Header */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 22 }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700, color: "#1a1f2e" }}>🛡️ Compliance</h1>
-          <p style={{ margin: "4px 0 0", color: "#7b8db0", fontSize: 14 }}>HK regulatory deadlines & requirements</p>
+          <div style={{ fontFamily: "'Exo 2', 'Montserrat', sans-serif", fontWeight: 800, fontSize: 20, color: BRAND.bodyText }}>
+            Compliance Tracker
+          </div>
+          <div style={{ fontSize: 12, color: "#888", marginTop: 3 }}>
+            HK regulatory deadlines · Business registration · Tax · MPF
+          </div>
         </div>
-        <button onClick={openAdd} style={{
-          background: "#4f8ef7", color: "#fff", border: "none", borderRadius: 8,
-          padding: "10px 20px", fontSize: 14, fontWeight: 600, cursor: "pointer"
-        }}>+ Add Item</button>
+        <div style={{ display: "flex", gap: 10 }}>
+          <div style={{
+            background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: 8,
+            padding: "8px 14px", fontSize: 12, fontWeight: 700, color: "#ef4444"
+          }}>
+            🚨 {overdue.length} Overdue
+          </div>
+          <div style={{
+            background: "#fffbeb", border: "1px solid #fcd34d", borderRadius: 8,
+            padding: "8px 14px", fontSize: 12, fontWeight: 700, color: "#d97706"
+          }}>
+            ⚠️ {upcoming.length} Due Soon
+          </div>
+        </div>
       </div>
 
-      {/* Category Filter */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
-        {categories.map(cat => (
+      {/* Filters */}
+      <div style={{ display: "flex", gap: 10, marginBottom: 18, flexWrap: "wrap" }}>
+        <input
+          placeholder="Search compliance items..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{
+            padding: "8px 14px", borderRadius: 8,
+            border: `1px solid ${BRAND.neutralGrey}`,
+            fontSize: 13, outline: "none", width: 240,
+            fontFamily: "'Montserrat', sans-serif"
+          }}
+        />
+        {CATEGORIES.map(cat => (
           <button key={cat} onClick={() => setFilter(cat)} style={{
-            padding: "6px 14px", borderRadius: 20, border: "none", cursor: "pointer", fontSize: 13,
-            background: filter === cat ? "#1a1f2e" : "#fff",
-            color: filter === cat ? "#fff" : "#555",
-            boxShadow: "0 1px 4px rgba(0,0,0,0.08)"
+            padding: "7px 14px", borderRadius: 20,
+            border: filter === cat ? `1.5px solid ${BRAND.primaryLilac}` : `1px solid ${BRAND.neutralGrey}`,
+            background: filter === cat ? BRAND.lavenderWash : BRAND.white,
+            color: filter === cat ? BRAND.accentViolet : "#666",
+            fontSize: 12, fontWeight: filter === cat ? 600 : 400,
+            cursor: "pointer"
           }}>{cat}</button>
         ))}
       </div>
 
       {/* Table */}
-      {loading ? <div style={{ textAlign: "center", padding: 40, color: "#aaa" }}>Loading...</div> : (
-        <div style={{ background: "#fff", borderRadius: 12, boxShadow: "0 2px 8px rgba(0,0,0,0.07)", overflow: "hidden" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={{ background: "#f8f9fc" }}>
-                {["Title", "Category", "Due Date", "Recurrence", "Status", "Actions"].map(h => (
-                  <th key={h} style={{ padding: "12px 16px", textAlign: "left", fontSize: 12, fontWeight: 600, color: "#7b8db0", textTransform: "uppercase", letterSpacing: 0.5 }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((item, i) => (
-                <tr key={item.id} style={{ borderTop: "1px solid #f0f2f7", background: i % 2 === 0 ? "#fff" : "#fafbfd" }}>
-                  <td style={{ padding: "14px 16px" }}>
-                    <div style={{ fontWeight: 600, color: "#1a1f2e", fontSize: 14 }}>{item.title}</div>
-                    {item.description && <div style={{ fontSize: 12, color: "#9aa3b2", marginTop: 2 }}>{item.description.slice(0, 60)}...</div>}
-                  </td>
-                  <td style={{ padding: "14px 16px", fontSize: 13, color: "#555" }}>{item.category}</td>
-                  <td style={{ padding: "14px 16px", fontSize: 13, color: "#1a1f2e", fontWeight: 500 }}>{item.due_date}</td>
-                  <td style={{ padding: "14px 16px", fontSize: 13, color: "#555" }}>{item.recurrence}</td>
-                  <td style={{ padding: "14px 16px" }}>
-                    <span style={{
-                      padding: "4px 10px", borderRadius: 12, fontSize: 12, fontWeight: 600,
-                      background: STATUS_COLORS[item.status]?.bg || "#eee",
-                      color: STATUS_COLORS[item.status]?.color || "#555"
-                    }}>{item.status}</span>
-                  </td>
-                  <td style={{ padding: "14px 16px" }}>
-                    <button onClick={() => openEdit(item)} style={{ background: "none", border: "none", cursor: "pointer", color: "#4f8ef7", marginRight: 8, fontSize: 13 }}>Edit</button>
-                    <button onClick={() => handleDelete(item.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#e53935", fontSize: 13 }}>Delete</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {loading ? (
+        <div style={{ textAlign: "center", color: BRAND.primaryLilac, padding: 40 }}>Loading...</div>
+      ) : (
+        <div style={{ background: BRAND.white, borderRadius: 14, border: `1px solid ${BRAND.neutralGrey}`, overflow: "hidden", boxShadow: "0 2px 12px rgba(140,130,252,0.07)" }}>
+          {/* Table Header */}
+          <div style={{
+            display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr",
+            padding: "12px 20px", background: BRAND.lavenderWash,
+            borderBottom: `1px solid ${BRAND.neutralGrey}`,
+            fontSize: 10, fontWeight: 700, color: BRAND.primaryLilac,
+            textTransform: "uppercase", letterSpacing: 1
+          }}>
+            <div>Item</div>
+            <div>Category</div>
+            <div>Due Date</div>
+            <div>Status</div>
+          </div>
+
+          {filtered.length === 0 && (
+            <div style={{ padding: 30, textAlign: "center", color: "#888", fontSize: 13 }}>No items found.</div>
+          )}
+
+          {filtered.map((item, idx) => {
+            const sc = statusColor(item.status, item.due_date);
+            return (
+              <div key={item.id} onClick={() => setSelected(selected?.id === item.id ? null : item)} style={{
+                display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr",
+                padding: "14px 20px",
+                borderBottom: idx < filtered.length - 1 ? `1px solid ${BRAND.neutralGrey}` : "none",
+                cursor: "pointer", transition: "background 0.1s",
+                background: selected?.id === item.id ? BRAND.lavenderWash : "transparent",
+              }}
+                onMouseEnter={e => e.currentTarget.style.background = BRAND.lavenderWash}
+                onMouseLeave={e => e.currentTarget.style.background = selected?.id === item.id ? BRAND.lavenderWash : "transparent"}
+              >
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: BRAND.bodyText }}>{item.title}</div>
+                  {item.assigned_to && <div style={{ fontSize: 11, color: "#888", marginTop: 2 }}>{item.assigned_to}</div>}
+                </div>
+                <div style={{ fontSize: 12, color: "#666", alignSelf: "center" }}>{item.category}</div>
+                <div style={{ fontSize: 12, fontWeight: 500, color: BRAND.bodyText, alignSelf: "center" }}>
+                  {item.due_date ? new Date(item.due_date).toLocaleDateString("en-HK", { day: "numeric", month: "short", year: "numeric" }) : "—"}
+                </div>
+                <div style={{ alignSelf: "center" }}>
+                  <span style={{
+                    fontSize: 11, fontWeight: 700,
+                    color: sc.text, background: sc.bg,
+                    padding: "3px 10px", borderRadius: 20
+                  }}>{sc.label}</span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
 
-      {/* Modal Form */}
-      {showForm && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100 }}>
-          <div style={{ background: "#fff", borderRadius: 16, padding: 32, width: 500, maxHeight: "80vh", overflowY: "auto", boxShadow: "0 8px 32px rgba(0,0,0,0.2)" }}>
-            <h2 style={{ margin: "0 0 20px", fontSize: 18 }}>{editing ? "Edit" : "Add"} Compliance Item</h2>
-            {[
-              { label: "Title", key: "title", type: "text" },
-              { label: "Due Date", key: "due_date", type: "date" },
-              { label: "Assigned To", key: "assigned_to", type: "text" },
-              { label: "Reminder (days before)", key: "reminder_days_before", type: "number" },
-            ].map(f => (
-              <div key={f.key} style={{ marginBottom: 14 }}>
-                <label style={{ display: "block", fontSize: 13, color: "#555", marginBottom: 4 }}>{f.label}</label>
-                <input type={f.type} value={form[f.key] || ""} onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                  style={{ width: "100%", padding: "8px 12px", borderRadius: 8, border: "1px solid #dde2ec", fontSize: 14, boxSizing: "border-box" }} />
-              </div>
-            ))}
-            {[
-              { label: "Category", key: "category", options: ["Business Registration", "Annual Return", "Profits Tax", "Audit", "MPF", "IRD Filing", "Company Secretary", "Other"] },
-              { label: "Status", key: "status", options: ["Upcoming", "In Progress", "Completed", "Overdue"] },
-              { label: "Recurrence", key: "recurrence", options: ["One-time", "Annual", "Quarterly", "Monthly"] },
-            ].map(f => (
-              <div key={f.key} style={{ marginBottom: 14 }}>
-                <label style={{ display: "block", fontSize: 13, color: "#555", marginBottom: 4 }}>{f.label}</label>
-                <select value={form[f.key] || ""} onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                  style={{ width: "100%", padding: "8px 12px", borderRadius: 8, border: "1px solid #dde2ec", fontSize: 14 }}>
-                  {f.options.map(o => <option key={o}>{o}</option>)}
-                </select>
-              </div>
-            ))}
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ display: "block", fontSize: 13, color: "#555", marginBottom: 4 }}>Notes</label>
-              <textarea value={form.notes || ""} onChange={e => setForm({ ...form, notes: e.target.value })}
-                rows={3} style={{ width: "100%", padding: "8px 12px", borderRadius: 8, border: "1px solid #dde2ec", fontSize: 14, boxSizing: "border-box" }} />
+      {/* Detail Panel */}
+      {selected && (
+        <div style={{
+          marginTop: 18, background: BRAND.white, borderRadius: 14,
+          border: `1.5px solid ${BRAND.softLilac}`,
+          padding: "20px 24px", boxShadow: "0 2px 16px rgba(140,130,252,0.10)"
+        }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div>
+              <div style={{ fontFamily: "'Exo 2', sans-serif", fontWeight: 700, fontSize: 16, color: BRAND.bodyText }}>{selected.title}</div>
+              <div style={{ fontSize: 11, color: BRAND.primaryLilac, marginTop: 3, fontWeight: 600 }}>{selected.category} · {selected.recurrence || "One-time"}</div>
             </div>
-            <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
-              <button onClick={() => setShowForm(false)} style={{ padding: "9px 20px", borderRadius: 8, border: "1px solid #dde2ec", background: "#fff", cursor: "pointer", fontSize: 14 }}>Cancel</button>
-              <button onClick={handleSave} style={{ padding: "9px 20px", borderRadius: 8, border: "none", background: "#4f8ef7", color: "#fff", cursor: "pointer", fontSize: 14, fontWeight: 600 }}>Save</button>
-            </div>
+            <button onClick={() => setSelected(null)} style={{
+              background: BRAND.lavenderWash, border: "none", borderRadius: 8,
+              padding: "6px 12px", fontSize: 12, color: BRAND.accentViolet,
+              cursor: "pointer", fontWeight: 600
+            }}>Close</button>
           </div>
+          {selected.description && (
+            <div style={{ marginTop: 14, fontSize: 13, color: "#555", lineHeight: 1.65, whiteSpace: "pre-line" }}>{selected.description}</div>
+          )}
+          {selected.notes && (
+            <div style={{ marginTop: 10, background: BRAND.lavenderWash, borderRadius: 8, padding: "10px 14px", fontSize: 12, color: BRAND.bodyText }}>
+              <strong>Notes:</strong> {selected.notes}
+            </div>
+          )}
         </div>
       )}
     </div>

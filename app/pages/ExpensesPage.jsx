@@ -1,247 +1,226 @@
 import { useState, useEffect } from "react";
 import { Expense } from "@/api/entities";
 
-const EMPTY_FORM = {
-  title: "", amount: "", currency: "HKD", category: "Office",
-  date: "", vendor: "", notes: "", status: "Pending", payment_method: "Bank Transfer",
-  receipt_url: ""
+const BRAND = {
+  primaryLilac: "#8c82fc",
+  accentViolet: "#5e50fb",
+  softLilac: "#bab4fd",
+  lavenderWash: "#e8e6fe",
+  white: "#ffffff",
+  neutralGrey: "#e6e6e6",
+  bodyText: "#1a1a1f",
 };
 
-const CATEGORY_COLORS = {
-  "Office": "#4f8ef7", "Salaries": "#9c27b0", "MPF": "#00897b",
-  "Marketing": "#f4511e", "Professional Fees": "#1565c0",
-  "Government Fees": "#6d4c41", "Travel": "#f9a825",
-  "Utilities": "#558b2f", "Software": "#0288d1", "Other": "#757575",
-  "legal": "#e53935", "design": "#8c82fc", "hosting": "#00bcd4",
-  "software": "#0288d1", "office": "#4f8ef7", "Company Registration": "#6d4c41"
+const CATEGORIES = ["All", "Professional Services", "Software & Subscriptions", "Domain & Hosting", "Branding & Design", "Marketing & Advertising", "Office & Admin"];
+
+const catColor = (cat) => {
+  const map = {
+    "Professional Services": "#8c82fc",
+    "Software & Subscriptions": "#5e50fb",
+    "Domain & Hosting": "#06b6d4",
+    "Branding & Design": "#ec4899",
+    "Marketing & Advertising": "#f59e0b",
+    "Office & Admin": "#64748b",
+  };
+  return map[cat] || "#8c82fc";
 };
 
 export default function ExpensesPage() {
   const [expenses, setExpenses] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
-  const [showForm, setShowForm] = useState(false);
-  const [editing, setEditing] = useState(null);
-  const [form, setForm] = useState(EMPTY_FORM);
-  const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState(null);
 
-  useEffect(() => { loadExpenses(); }, []);
+  useEffect(() => {
+    Expense.list().then(data => {
+      const sorted = [...data].sort((a, b) => new Date(b.date) - new Date(a.date));
+      setExpenses(sorted);
+      setLoading(false);
+    });
+  }, []);
 
-  async function loadExpenses() {
-    setLoading(true);
-    const data = await Expense.list("-date");
-    setExpenses(data);
-    setLoading(false);
-  }
+  const filtered = expenses.filter(e => {
+    const matchCat = filter === "All" || e.category === filter;
+    const matchSearch = !search || e.title?.toLowerCase().includes(search.toLowerCase()) || e.vendor?.toLowerCase().includes(search.toLowerCase());
+    return matchCat && matchSearch;
+  });
 
-  const categories = ["All", ...new Set(expenses.map(e => e.category).filter(Boolean))];
-  const filtered = expenses
-    .filter(e => filter === "All" || e.category === filter)
-    .filter(e => !search || e.title?.toLowerCase().includes(search.toLowerCase()) || e.vendor?.toLowerCase().includes(search.toLowerCase()));
+  const totalHKD = filtered.filter(e => e.currency === "HKD").reduce((s, e) => s + (e.amount || 0), 0);
+  const totalUSD = filtered.filter(e => e.currency === "USD").reduce((s, e) => s + (e.amount || 0), 0);
 
-  const totalHKD = filtered.filter(e => e.currency === "HKD").reduce((sum, e) => sum + (parseFloat(e.amount) || 0), 0);
-  const recurringTotal = filtered.filter(e => e.recurring).reduce((sum, e) => sum + (parseFloat(e.amount) || 0), 0);
-  const withReceipt = filtered.filter(e => e.receipt_url).length;
-
-  function openAdd() { setForm({ ...EMPTY_FORM, date: new Date().toISOString().split("T")[0] }); setEditing(null); setShowForm(true); }
-  function openEdit(item) { setForm({ ...item, receipt_url: item.receipt_url || "" }); setEditing(item.id); setShowForm(true); }
-
-  async function handleSave() {
-    const payload = { ...form };
-    if (!payload.receipt_url) delete payload.receipt_url;
-    if (editing) await Expense.update(editing, payload);
-    else await Expense.create(payload);
-    setShowForm(false);
-    loadExpenses();
-  }
-
-  async function handleDelete(id) {
-    if (confirm("Delete this expense?")) { await Expense.delete(id); loadExpenses(); }
-  }
-
-  const getCategoryColor = (cat) => CATEGORY_COLORS[cat] || "#9aa3b2";
+  // Category breakdown
+  const catTotals = {};
+  expenses.forEach(e => {
+    if (!catTotals[e.category]) catTotals[e.category] = 0;
+    if (e.currency === "HKD") catTotals[e.category] += e.amount || 0;
+    else if (e.currency === "USD") catTotals[e.category] += (e.amount || 0) * 7.8;
+  });
 
   return (
-    <div style={{ padding: 32, maxWidth: 1100, margin: "0 auto" }}>
+    <div style={{ padding: "28px", fontFamily: "'Montserrat', 'Inter', sans-serif", color: BRAND.bodyText }}>
+
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-        <div>
-          <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700, color: "#1a1f2e" }}>💰 Expenses</h1>
-          <p style={{ margin: "4px 0 0", color: "#7b8db0", fontSize: 14 }}>Track all company costs and subscriptions</p>
+      <div style={{ marginBottom: 22 }}>
+        <div style={{ fontFamily: "'Exo 2', 'Montserrat', sans-serif", fontWeight: 800, fontSize: 20, color: BRAND.bodyText }}>
+          Finance & Expenses
         </div>
-        <button onClick={openAdd} style={{ background: "#4f8ef7", color: "#fff", border: "none", borderRadius: 8, padding: "10px 20px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>+ Add Expense</button>
+        <div style={{ fontSize: 12, color: "#888", marginTop: 3 }}>
+          Subscriptions · Invoices · Vendor payments · Cost tracking
+        </div>
       </div>
 
       {/* Summary Cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginBottom: 24 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, marginBottom: 22 }}>
         {[
-          { label: "Total Spent", value: `HKD ${totalHKD.toLocaleString()}`, color: "#4f8ef7" },
-          { label: "Recurring/mo", value: `HKD ${Math.round(recurringTotal).toLocaleString()}`, color: "#9c27b0" },
-          { label: "Entries", value: filtered.length, color: "#00897b" },
-          { label: "With Receipt", value: `${withReceipt} / ${filtered.length}`, color: withReceipt === filtered.length ? "#00897b" : "#f4511e" },
-        ].map(c => (
-          <div key={c.label} style={{ background: "#fff", borderRadius: 12, padding: "20px 24px", boxShadow: "0 2px 8px rgba(0,0,0,0.07)", borderLeft: `4px solid ${c.color}` }}>
-            <div style={{ fontSize: 20, fontWeight: 700, color: c.color }}>{c.value}</div>
-            <div style={{ fontSize: 13, color: "#7b8db0", marginTop: 4 }}>{c.label}</div>
+          { label: "Total (HKD)", value: `HKD ${totalHKD.toLocaleString(undefined, { maximumFractionDigits: 0 })}`, color: BRAND.accentViolet },
+          { label: "Total (USD)", value: `USD ${totalUSD.toLocaleString(undefined, { maximumFractionDigits: 0 })}`, color: BRAND.primaryLilac },
+          { label: "Total Records", value: filtered.length, color: "#06b6d4" },
+          { label: "Vendors", value: new Set(filtered.map(e => e.vendor)).size, color: "#ec4899" },
+        ].map((s, i) => (
+          <div key={i} style={{
+            background: BRAND.white, borderRadius: 12,
+            padding: "16px 18px",
+            border: `1px solid ${BRAND.neutralGrey}`,
+            borderTop: `3px solid ${s.color}`,
+            boxShadow: "0 2px 8px rgba(140,130,252,0.07)"
+          }}>
+            <div style={{ fontSize: 20, fontWeight: 800, color: s.color }}>{s.value}</div>
+            <div style={{ fontSize: 11, color: "#888", marginTop: 4, fontWeight: 500 }}>{s.label}</div>
           </div>
         ))}
       </div>
 
-      {/* Search + Filter */}
-      <div style={{ display: "flex", gap: 12, marginBottom: 20, alignItems: "center", flexWrap: "wrap" }}>
-        <input
-          placeholder="Search expenses..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          style={{ flex: 1, minWidth: 200, padding: "8px 14px", borderRadius: 20, border: "1px solid #dde2ec", fontSize: 13, outline: "none" }}
-        />
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {categories.map(cat => (
-            <button key={cat} onClick={() => setFilter(cat)} style={{
-              padding: "6px 14px", borderRadius: 20, border: "none", cursor: "pointer", fontSize: 12,
-              background: filter === cat ? "#1a1f2e" : "#fff",
-              color: filter === cat ? "#fff" : "#555",
-              boxShadow: "0 1px 4px rgba(0,0,0,0.08)"
-            }}>{cat}</button>
+      {/* Category Breakdown */}
+      <div style={{
+        background: BRAND.white, borderRadius: 14, padding: "18px 20px",
+        border: `1px solid ${BRAND.neutralGrey}`, marginBottom: 18,
+        boxShadow: "0 2px 8px rgba(140,130,252,0.07)"
+      }}>
+        <div style={{ fontSize: 10, fontWeight: 700, color: BRAND.primaryLilac, textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 12 }}>
+          Spend by Category (HKD equivalent)
+        </div>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          {Object.entries(catTotals).sort((a, b) => b[1] - a[1]).map(([cat, total]) => (
+            <div key={cat} style={{
+              padding: "8px 14px", borderRadius: 10,
+              background: BRAND.lavenderWash,
+              border: `1px solid ${BRAND.softLilac}`,
+            }}>
+              <div style={{ fontSize: 10, color: catColor(cat), fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5 }}>{cat}</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: BRAND.bodyText, marginTop: 2 }}>
+                HKD {total.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+              </div>
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Expense List */}
-      {loading ? (
-        <div style={{ textAlign: "center", padding: 40, color: "#aaa" }}>Loading...</div>
-      ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {filtered.map(exp => (
-            <div key={exp.id} style={{
-              background: "#fff", borderRadius: 12, padding: "16px 20px",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
-              display: "flex", alignItems: "center", gap: 14,
-              borderLeft: `3px solid ${getCategoryColor(exp.category)}`
-            }}>
-              {/* Category dot */}
-              <div style={{ width: 10, height: 10, borderRadius: "50%", background: getCategoryColor(exp.category), flexShrink: 0 }} />
+      {/* Filters */}
+      <div style={{ display: "flex", gap: 10, marginBottom: 16, flexWrap: "wrap" }}>
+        <input
+          placeholder="Search expenses..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{
+            padding: "8px 14px", borderRadius: 8,
+            border: `1px solid ${BRAND.neutralGrey}`,
+            fontSize: 13, outline: "none", width: 220,
+            fontFamily: "'Montserrat', sans-serif"
+          }}
+        />
+        {CATEGORIES.map(cat => (
+          <button key={cat} onClick={() => setFilter(cat)} style={{
+            padding: "7px 12px", borderRadius: 20,
+            border: filter === cat ? `1.5px solid ${BRAND.primaryLilac}` : `1px solid ${BRAND.neutralGrey}`,
+            background: filter === cat ? BRAND.lavenderWash : BRAND.white,
+            color: filter === cat ? BRAND.accentViolet : "#666",
+            fontSize: 11, fontWeight: filter === cat ? 600 : 400,
+            cursor: "pointer"
+          }}>{cat}</button>
+        ))}
+      </div>
 
-              {/* Title + meta */}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontWeight: 600, color: "#1a1f2e", fontSize: 14, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{exp.title}</div>
-                <div style={{ fontSize: 12, color: "#9aa3b2", marginTop: 2 }}>
-                  {exp.vendor} · {exp.date}
-                  {exp.recurring && <span style={{ marginLeft: 6, background: "#e8e6fe", color: "#8c82fc", borderRadius: 10, padding: "1px 7px", fontSize: 11 }}>{exp.recurring_cycle}</span>}
-                </div>
-              </div>
-
-              {/* Category badge */}
-              <div style={{
-                fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 12,
-                background: getCategoryColor(exp.category) + "20",
-                color: getCategoryColor(exp.category),
-                whiteSpace: "nowrap"
-              }}>{exp.category}</div>
-
-              {/* Amount */}
-              <div style={{ fontWeight: 700, color: "#1a1f2e", fontSize: 15, minWidth: 110, textAlign: "right", whiteSpace: "nowrap" }}>
-                {exp.currency} {parseFloat(exp.amount || 0).toLocaleString()}
-              </div>
-
-              {/* Action buttons */}
-              <div style={{ display: "flex", gap: 8, alignItems: "center", flexShrink: 0 }}>
-                {/* Receipt / Invoice download button */}
-                {exp.receipt_url ? (
-                  <a
-                    href={exp.receipt_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      background: "#e8f5e9", color: "#2e7d32", border: "none",
-                      borderRadius: 6, padding: "5px 12px", fontSize: 12,
-                      fontWeight: 600, cursor: "pointer", textDecoration: "none",
-                      display: "inline-flex", alignItems: "center", gap: 4
-                    }}
-                    title="View Receipt / Invoice"
-                  >
-                    📄 Receipt
-                  </a>
-                ) : (
-                  <span style={{
-                    background: "#fafafa", color: "#ccc", border: "1px dashed #ddd",
-                    borderRadius: 6, padding: "5px 12px", fontSize: 12, whiteSpace: "nowrap"
-                  }}>No receipt</span>
-                )}
-                <button onClick={() => openEdit(exp)} style={{ background: "none", border: "none", cursor: "pointer", color: "#4f8ef7", fontSize: 13, padding: "4px 8px" }}>Edit</button>
-                <button onClick={() => handleDelete(exp.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#e53935", fontSize: 13, padding: "4px 8px" }}>Delete</button>
-              </div>
-            </div>
-          ))}
-          {filtered.length === 0 && (
-            <div style={{ textAlign: "center", padding: 40, color: "#aaa" }}>No expenses found.</div>
-          )}
+      {/* Table */}
+      <div style={{ background: BRAND.white, borderRadius: 14, border: `1px solid ${BRAND.neutralGrey}`, overflow: "hidden", boxShadow: "0 2px 12px rgba(140,130,252,0.07)" }}>
+        <div style={{
+          display: "grid", gridTemplateColumns: "2.5fr 1fr 1fr 1fr 1fr",
+          padding: "11px 20px", background: BRAND.lavenderWash,
+          borderBottom: `1px solid ${BRAND.neutralGrey}`,
+          fontSize: 10, fontWeight: 700, color: BRAND.primaryLilac,
+          textTransform: "uppercase", letterSpacing: 1
+        }}>
+          <div>Description</div>
+          <div>Vendor</div>
+          <div>Category</div>
+          <div>Amount</div>
+          <div>Date</div>
         </div>
-      )}
 
-      {/* Add / Edit Modal */}
-      {showForm && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100 }}>
-          <div style={{ background: "#fff", borderRadius: 16, padding: 32, width: 500, maxHeight: "85vh", overflowY: "auto", boxShadow: "0 8px 32px rgba(0,0,0,0.2)" }}>
-            <h2 style={{ margin: "0 0 20px", fontSize: 18, color: "#1a1f2e" }}>{editing ? "✏️ Edit" : "➕ Add"} Expense</h2>
+        {loading && <div style={{ padding: 30, textAlign: "center", color: BRAND.primaryLilac }}>Loading...</div>}
+        {!loading && filtered.length === 0 && <div style={{ padding: 30, textAlign: "center", color: "#888", fontSize: 13 }}>No expenses found.</div>}
 
-            {[
-              { label: "Title *", key: "title", type: "text" },
-              { label: "Amount *", key: "amount", type: "number" },
-              { label: "Date *", key: "date", type: "date" },
-              { label: "Vendor", key: "vendor", type: "text" },
-            ].map(f => (
-              <div key={f.key} style={{ marginBottom: 14 }}>
-                <label style={{ display: "block", fontSize: 13, color: "#555", marginBottom: 4 }}>{f.label}</label>
-                <input type={f.type} value={form[f.key] || ""} onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                  style={{ width: "100%", padding: "8px 12px", borderRadius: 8, border: "1px solid #dde2ec", fontSize: 14, boxSizing: "border-box" }} />
-              </div>
-            ))}
-
-            {[
-              { label: "Currency", key: "currency", options: ["HKD", "USD", "CNY", "EUR", "GBP"] },
-              { label: "Category", key: "category", options: ["Office", "Salaries", "MPF", "Marketing", "Professional Fees", "Government Fees", "Legal", "Design", "Software", "Hosting", "Travel", "Utilities", "Company Registration", "Other"] },
-              { label: "Payment Method", key: "payment_method", options: ["Cash", "Bank Transfer", "Credit Card", "FPS", "Cheque", "Other"] },
-              { label: "Status", key: "status", options: ["Pending", "Approved", "Rejected", "Reimbursed"] },
-            ].map(f => (
-              <div key={f.key} style={{ marginBottom: 14 }}>
-                <label style={{ display: "block", fontSize: 13, color: "#555", marginBottom: 4 }}>{f.label}</label>
-                <select value={form[f.key] || ""} onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                  style={{ width: "100%", padding: "8px 12px", borderRadius: 8, border: "1px solid #dde2ec", fontSize: 14 }}>
-                  {f.options.map(o => <option key={o}>{o}</option>)}
-                </select>
-              </div>
-            ))}
-
-            {/* Receipt URL field */}
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ display: "block", fontSize: 13, color: "#555", marginBottom: 4 }}>📄 Receipt / Invoice URL</label>
-              <input
-                type="url"
-                placeholder="https://... (paste direct link to PDF or image)"
-                value={form.receipt_url || ""}
-                onChange={e => setForm({ ...form, receipt_url: e.target.value })}
-                style={{ width: "100%", padding: "8px 12px", borderRadius: 8, border: "1px solid #dde2ec", fontSize: 13, boxSizing: "border-box", color: "#1a1f2e" }}
-              />
-              {form.receipt_url && (
-                <a href={form.receipt_url} target="_blank" rel="noopener noreferrer"
-                  style={{ fontSize: 12, color: "#4f8ef7", marginTop: 4, display: "inline-block" }}>
-                  Preview ↗
-                </a>
-              )}
+        {filtered.map((item, idx) => (
+          <div key={item.id} onClick={() => setSelected(selected?.id === item.id ? null : item)} style={{
+            display: "grid", gridTemplateColumns: "2.5fr 1fr 1fr 1fr 1fr",
+            padding: "13px 20px",
+            borderBottom: idx < filtered.length - 1 ? `1px solid ${BRAND.neutralGrey}` : "none",
+            cursor: "pointer", transition: "background 0.1s",
+            background: selected?.id === item.id ? BRAND.lavenderWash : "transparent"
+          }}
+            onMouseEnter={e => e.currentTarget.style.background = BRAND.lavenderWash}
+            onMouseLeave={e => e.currentTarget.style.background = selected?.id === item.id ? BRAND.lavenderWash : "transparent"}
+          >
+            <div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: BRAND.bodyText }}>{item.title}</div>
+              {item.notes && <div style={{ fontSize: 10, color: "#888", marginTop: 2, maxWidth: 300, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.notes}</div>}
             </div>
-
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ display: "block", fontSize: 13, color: "#555", marginBottom: 4 }}>Notes</label>
-              <textarea value={form.notes || ""} onChange={e => setForm({ ...form, notes: e.target.value })}
-                rows={2} style={{ width: "100%", padding: "8px 12px", borderRadius: 8, border: "1px solid #dde2ec", fontSize: 14, boxSizing: "border-box" }} />
+            <div style={{ fontSize: 12, color: "#555", alignSelf: "center" }}>{item.vendor}</div>
+            <div style={{ alignSelf: "center" }}>
+              <span style={{
+                fontSize: 10, fontWeight: 600,
+                color: catColor(item.category),
+                background: BRAND.lavenderWash,
+                padding: "2px 8px", borderRadius: 10
+              }}>{item.category}</span>
             </div>
-
-            <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 8 }}>
-              <button onClick={() => setShowForm(false)} style={{ padding: "9px 20px", borderRadius: 8, border: "1px solid #dde2ec", background: "#fff", cursor: "pointer", fontSize: 14 }}>Cancel</button>
-              <button onClick={handleSave} style={{ padding: "9px 20px", borderRadius: 8, border: "none", background: "#4f8ef7", color: "#fff", cursor: "pointer", fontSize: 14, fontWeight: 600 }}>Save</button>
+            <div style={{ fontSize: 13, fontWeight: 700, color: BRAND.accentViolet, alignSelf: "center" }}>
+              {item.currency} {(item.amount || 0).toLocaleString()}
+            </div>
+            <div style={{ fontSize: 12, color: "#666", alignSelf: "center" }}>
+              {item.date ? new Date(item.date).toLocaleDateString("en-HK", { day: "numeric", month: "short", year: "numeric" }) : "—"}
             </div>
           </div>
+        ))}
+      </div>
+
+      {/* Detail Panel */}
+      {selected && (
+        <div style={{
+          marginTop: 16, background: BRAND.white, borderRadius: 14,
+          border: `1.5px solid ${BRAND.softLilac}`,
+          padding: "20px 24px", boxShadow: "0 2px 16px rgba(140,130,252,0.10)"
+        }}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <div style={{ fontFamily: "'Exo 2', sans-serif", fontWeight: 700, fontSize: 15, color: BRAND.bodyText }}>{selected.title}</div>
+              <div style={{ fontSize: 11, color: BRAND.primaryLilac, fontWeight: 600, marginTop: 3 }}>{selected.vendor} · {selected.category}</div>
+            </div>
+            <button onClick={() => setSelected(null)} style={{
+              background: BRAND.lavenderWash, border: "none", borderRadius: 8,
+              padding: "6px 12px", fontSize: 12, color: BRAND.accentViolet, cursor: "pointer", fontWeight: 600
+            }}>Close</button>
+          </div>
+          {selected.notes && (
+            <div style={{ marginTop: 12, fontSize: 13, color: "#555", lineHeight: 1.65, whiteSpace: "pre-line" }}>{selected.notes}</div>
+          )}
+          {selected.receipt_url && (
+            <a href={selected.receipt_url} target="_blank" rel="noreferrer" style={{
+              display: "inline-block", marginTop: 10,
+              color: BRAND.accentViolet, fontSize: 12, fontWeight: 600,
+              background: BRAND.lavenderWash, padding: "6px 14px", borderRadius: 8, textDecoration: "none"
+            }}>View Receipt / Invoice →</a>
+          )}
         </div>
       )}
     </div>
