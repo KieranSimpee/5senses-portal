@@ -16,6 +16,7 @@ import CalendarPage from './pages/Calendar';
 import Inbox from './pages/Inbox.jsx';
 import Office from './pages/Office';
 import EmailScan from './pages/EmailScan';
+import Compliance from './pages/Compliance';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -41,6 +42,7 @@ const AuthenticatedApp = () => {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/compliance" element={<Compliance />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/expenses" element={<Expenses />} />
@@ -48,8 +50,8 @@ const AuthenticatedApp = () => {
         <Route path="/vault" element={<Vault />} />
         <Route path="/tools" element={<Tools />} />
         <Route path="/inbox" element={<Inbox />} />
-        <Route path="/office" element={<Office />} />
         <Route path="/email-scan" element={<EmailScan />} />
+        <Route path="/office" element={<Office />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
