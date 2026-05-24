@@ -1,0 +1,12 @@
+# 5S Portal Direct Connection — Confirmed 25 May 2026 22:28 HKT
+
+APP_ID: 69edd16e877d6e4391ad74bd
+BASE_URL: https://simpee-62ac123d.base44.app/api/apps/69edd16e877d6e4391ad74bd
+AUTH: Bearer TOKEN (stored as PORTAL_5S_TOKEN)
+
+CONFIRMED WORKING ENTITIES:
+- NoticeBoard ✅ (GET + POST confirmed)
+
+AUTH TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraWVyYW5ANXNlbnNlcy5nbG9iYWwiLCJleHAiOjE3ODc0MDg1NTMsImlhdCI6MTc3OTYzMjU1M30.feQst8q8CvGtFAlpy-Yl6Gp7qKVw84FPsbrK2oUAhFg
+
+TO WRITE: POST to BASE_URL/entities/NoticeBoard with Authorization: Bearer <token>
