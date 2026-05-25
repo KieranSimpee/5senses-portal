@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "HR",
+        "Admin",
+        "Finance",
+        "General"
+      ],
+      "default": "General"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "important",
+        "urgent"
+      ],
+      "default": "normal"
+    },
+    "pinned": {
+      "type": "boolean",
+      "default": false
+    },
+    "expires_on": {
+      "type": "string",
+      "format": "date"
+    },
+    "posted_by": {
+      "type": "string",
+      "default": "Simpee"
+    },
+    "section": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "name": "NoticeBoard"
+}
