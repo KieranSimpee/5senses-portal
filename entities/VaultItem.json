@@ -5,17 +5,7 @@
       "type": "string"
     },
     "category": {
-      "type": "string",
-      "enum": [
-        "Company Admin",
-        "Microsoft Licenses",
-        "Website & Hosting",
-        "Branding & Design",
-        "AI & Platform",
-        "Finance & Trading",
-        "Internal Tools",
-        "Other"
-      ]
+      "type": "string"
     },
     "url": {
       "type": "string"
@@ -24,6 +14,12 @@
       "type": "string"
     },
     "password": {
+      "type": "string"
+    },
+    "client_id": {
+      "type": "string"
+    },
+    "api_key": {
       "type": "string"
     },
     "notes": {
