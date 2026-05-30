@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "sender": {
+      "type": "string"
+    },
+    "sender_type": {
+      "type": "string",
+      "enum": [
+        "user",
+        "simpee"
+      ]
+    },
+    "message": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "session_id": {
+      "type": "string"
+    },
+    "read": {
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "name": "SChatMessage"
+}
