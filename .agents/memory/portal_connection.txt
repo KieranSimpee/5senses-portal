@@ -1,12 +1,29 @@
-# 5S Portal Direct Connection — Confirmed 25 May 2026 22:28 HKT
+# 5S Portal Direct Connection — Confirmed 30 May 2026 18:28 HKT
 
-APP_ID: 69edd16e877d6e4391ad74bd
-BASE_URL: https://simpee-62ac123d.base44.app/api/apps/69edd16e877d6e4391ad74bd
-AUTH: Bearer TOKEN (stored as PORTAL_5S_TOKEN)
+## App IDs
+- MY AGENT APP (sandbox only): 69ddc914cfcf229762ac123d
+- REAL 5S PORTAL (what Kieran sees): 69edd16e877d6e4391ad74bd
 
-CONFIRMED WORKING ENTITIES:
-- NoticeBoard ✅ (GET + POST confirmed)
+## API Access to Real 5S Portal
+BASE_URL: https://app.base44.com/api/apps/69edd16e877d6e4391ad74bd
+AUTH: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraWVyYW5ANXNlbnNlcy5nbG9iYWwiLCJleHAiOjE3ODc0MDg1NTMsImlhdCI6MTc3OTYzMjU1M30.feQst8q8CvGtFAlpy-Yl6Gp7qKVw84FPsbrK2oUAhFg
+TOKEN EXPIRY: ~Jun 2026 (refresh if 401s appear)
 
-AUTH TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraWVyYW5ANXNlbnNlcy5nbG9iYWwiLCJleHAiOjE3ODc0MDg1NTMsImlhdCI6MTc3OTYzMjU1M30.feQst8q8CvGtFAlpy-Yl6Gp7qKVw84FPsbrK2oUAhFg
+## Confirmed Working Operations
+- GET  $BASE_URL/entities/{EntityName}?limit=N → list records ✅
+- PUT  $BASE_URL/entities/{EntityName}/{id} -d '{"field":"value"}' → update record ✅
+- POST $BASE_URL/entities/{EntityName} -d '{...}' → create record ✅
+- DELETE $BASE_URL/entities/{EntityName}/{id} → delete record ✅
 
-TO WRITE: POST to BASE_URL/entities/NoticeBoard with Authorization: Bearer <token>
+## IMPORTANT RULE
+ALWAYS use this BASE_URL + Bearer token for any real 5S Portal data changes.
+The agent's built-in entity tools (read_entities, update_entities etc.) 
+only work on the AGENT'S OWN APP (69ddc914cfcf229762ac123d) — NOT the portal.
+For cross-app reads: use read_entities with app_id="69edd16e877d6e4391ad74bd"
+For cross-app writes: use bash + curl with the token above.
+
+## Available Entities in Real 5S Portal
+Expense, Project, Task, Document, SecureCredential, AppTool, CalendarEvent,
+OfficeInfo, DocumentFolder, VaultItem, BankAccount, HRRecord, ComplianceItem,
+RenewalItem, NoticeBoard, Note, TeamMember, ActivityLog, TradeLog,
+Brand, Influencer, Campaign, RevenueRecord, Notice, Invoice
