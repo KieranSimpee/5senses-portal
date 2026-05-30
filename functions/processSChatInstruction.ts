@@ -11,19 +11,34 @@ Deno.serve(async (req) => {
       return Response.json({ error: "No instruction provided" }, { status: 400 });
     }
 
-    // Save the instruction as a Notice so Simpee's entity automation picks it up
+    // Step 1: Save the notice to the portal DB
     await base44.asServiceRole.entities.Notice.create({
-      title: `S-Chat → Backend: ${instruction.slice(0, 60)}`,
-      content: `FROM: ${posted_by || "Kieran"}\n\nINSTRUCTION:\n${instruction}\n\n[Simpee will post CODE READY shortly]`,
+      title: instruction.slice(0, 60),
+      content: instruction,
       posted_by: posted_by || "Kieran",
       section: "backend",
       type: "info",
       pinned: false
     });
 
+    // Step 2: Ping Simpee agent directly via Base44 agent message API
+    const AGENT_APP_ID = "69ddc914cfcf229762ac123d";
+    const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraWVyYW5ANXNlbnNlcy5nbG9iYWwiLCJleHAiOjE3ODc0MDg1NTMsImlhdCI6MTc3OTYzMjU1M30.feQst8q8CvGtFAlpy-Yl6Gp7qKVw84FPsbrK2oUAhFg";
+
+    await fetch(`https://app.base44.com/api/apps/${AGENT_APP_ID}/agent/message`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${TOKEN}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: `S-CHAT BACKEND INSTRUCTION from ${posted_by || "Kieran"}:\n\n${instruction}\n\nPlease write the JSX code needed and post it back as a Notice (section=code_ready, posted_by=Simpee, pinned=true) to the real 5S Portal (app_id: 69edd16e877d6e4391ad74bd) so Kieran can copy and paste it into the builder.`
+      })
+    });
+
     return Response.json({
       success: true,
-      message: "Got it. Simpee is processing your instruction and will post the code shortly."
+      message: "Simpee is on it ✓"
     });
 
   } catch (error) {
