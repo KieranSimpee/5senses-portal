@@ -11,7 +11,8 @@ Deno.serve(async (req) => {
       return Response.json({ error: "No instruction provided" }, { status: 400 });
     }
 
-    // Step 1: Save the notice to the portal DB
+    // Step 1: Create a Notice in the SANDBOX app (69ddc914cfcf229762ac123d)
+    // This triggers the entity automation "S-Chat → Simpee Code Translator"
     await base44.asServiceRole.entities.Notice.create({
       title: instruction.slice(0, 60),
       content: instruction,
@@ -21,18 +22,22 @@ Deno.serve(async (req) => {
       pinned: false
     });
 
-    // Step 2: Ping Simpee agent directly via Base44 agent message API
-    const AGENT_APP_ID = "69ddc914cfcf229762ac123d";
-    const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraWVyYW5ANXNlbnNlcy5nbG9iYWwiLCJleHAiOjE3ODc0MDg1NTMsImlhdCI6MTc3OTYzMjU1M30.feQst8q8CvGtFAlpy-Yl6Gp7qKVw84FPsbrK2oUAhFg";
-
-    await fetch(`https://app.base44.com/api/apps/${AGENT_APP_ID}/agent/message`, {
+    // Step 2: Also mirror the notice to the REAL portal so Kieran sees it in the INBOX
+    const REAL_PORTAL_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraWVyYW5ANXNlbnNlcy5nbG9iYWwiLCJleHAiOjE3ODc0MDg1NTMsImlhdCI6MTc3OTYzMjU1M30.feQst8q8CvGtFAlpy-Yl6Gp7qKVw84FPsbrK2oUAhFg";
+    
+    await fetch("https://app.base44.com/api/apps/69edd16e877d6e4391ad74bd/entities/Notice", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${TOKEN}`,
+        "Authorization": `Bearer ${REAL_PORTAL_TOKEN}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        message: `S-CHAT BACKEND INSTRUCTION from ${posted_by || "Kieran"}:\n\n${instruction}\n\nPlease write the JSX code needed and post it back as a Notice (section=code_ready, posted_by=Simpee, pinned=true) to the real 5S Portal (app_id: 69edd16e877d6e4391ad74bd) so Kieran can copy and paste it into the builder.`
+        title: instruction.slice(0, 60),
+        content: instruction,
+        posted_by: posted_by || "Kieran",
+        section: "backend",
+        type: "info",
+        pinned: false
       })
     });
 
