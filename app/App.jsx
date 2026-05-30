@@ -12,6 +12,7 @@ import VaultPage from "./pages/VaultPage";
 import CompliancePage from "./pages/CompliancePage";
 import ExpensesPage from "./pages/ExpensesPage";
 import NotesPage from "./pages/NotesPage";
+import InvoicePage from "./pages/InvoicePage";
 
 // SIMPLEX-ITY Brand Guidelines
 const BRAND = {
@@ -36,6 +37,7 @@ const NAV = [
   { divider: true, label: "OPERATIONS" },
   { id: "compliance", label: "Compliance", icon: "✓" },
   { id: "expenses", label: "Finance", icon: "◈" },
+  { id: "invoices", label: "Invoices", icon: "🧾" },
   { id: "documents", label: "Documents", icon: "◧" },
   { id: "vault", label: "Vault", icon: "⬡" },
   { id: "notes", label: "Notes", icon: "✎" },
@@ -179,6 +181,7 @@ export default function App() {
           {page === "dashboard"    && <Dashboard setPage={setPage} />}
           {page === "compliance"   && <CompliancePage />}
           {page === "expenses"     && <ExpensesPage />}
+          {page === "invoices"     && <InvoicePage />}
           {page === "documents"    && <DocumentsPage />}
           {page === "vault"        && <VaultPage />}
           {page === "notes"        && <NotesPage />}
