@@ -1,0 +1,77 @@
+{
+  "type": "object",
+  "properties": {
+    "invoice_no": {
+      "type": "string"
+    },
+    "client_name": {
+      "type": "string"
+    },
+    "client_email": {
+      "type": "string"
+    },
+    "client_address": {
+      "type": "string"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "currency": {
+      "type": "string",
+      "enum": [
+        "HKD",
+        "USD",
+        "CNY",
+        "EUR",
+        "GBP"
+      ],
+      "default": "HKD"
+    },
+    "items": {
+      "type": "array"
+    },
+    "subtotal": {
+      "type": "number"
+    },
+    "tax": {
+      "type": "number"
+    },
+    "total": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Sent",
+        "Paid",
+        "Overdue",
+        "Cancelled"
+      ],
+      "default": "Draft"
+    },
+    "pdf_url": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "payment_method": {
+      "type": "string"
+    },
+    "airwallex_synced": {
+      "type": "boolean",
+      "default": false
+    },
+    "related_project": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "Invoice"
+}
