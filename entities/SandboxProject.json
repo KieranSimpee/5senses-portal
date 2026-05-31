@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "function",
+        "page",
+        "app"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "testing",
+        "checkpoint_review",
+        "validator_pending",
+        "approved",
+        "deploy_ready"
+      ]
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "checkpoint_status": {
+      "type": "string"
+    },
+    "validator_approved": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "SandboxProject"
+}
