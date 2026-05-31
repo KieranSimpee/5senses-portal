@@ -13,6 +13,7 @@ BODY_TEXT = HexColor("#1a1a1f")
 MUTED     = HexColor("#9896ad")
 WHITE     = white
 YELLOW_B  = HexColor("#fcd34d")
+YELLOW    = HexColor("#fffbeb")
 GREEN     = HexColor("#22c55e")
 RED       = HexColor("#ef4444")
 AMBER     = HexColor("#f59e0b")
@@ -20,16 +21,16 @@ DARK      = HexColor("#1a0533")
 NEUTRAL   = HexColor("#e6e6e6")
 BLUE      = HexColor("#3b82f6")
 AZURE     = HexColor("#0078d4")
-GOOGLE    = HexColor("#4285f4")
-ANTHROPIC = HexColor("#d97706")
-OPENAI    = HexColor("#10a37f")
+TEAL      = HexColor("#10a37f")
 ORANGE    = HexColor("#f59e0b")
-YELLOW    = HexColor("#fffbeb")
+LIGHT_RED = HexColor("#fff0f0")
+LIGHT_GREEN = HexColor("#f0fdf4")
+LIGHT_BLUE  = HexColor("#eff6ff")
 
 def s(name, **kw): return ParagraphStyle(name, **kw)
 today = datetime.date.today().strftime("%d %B %Y")
 
-doc = SimpleDocTemplate("Command_AI_Hub_Blueprint_v1.2.1_FINAL.pdf", pagesize=A4,
+doc = SimpleDocTemplate("Command_AI_Hub_Blueprint_v121_FINAL.pdf", pagesize=A4,
     leftMargin=18*mm, rightMargin=18*mm, topMargin=18*mm, bottomMargin=18*mm)
 story = []
 
@@ -37,11 +38,11 @@ story = []
 cover = Table([[
     Paragraph("COMMAND AI HUB", s("T", fontSize=24, fontName="Helvetica-Bold", textColor=WHITE)), ""
 ],[
-    Paragraph("SIMPLEX-ITY · AI TEAM ROLES, RESPONSIBILITIES & GATEKEEPER SYSTEM", s("S", fontSize=8, fontName="Helvetica", textColor=SOFT)),
+    Paragraph("SIMPLEX-ITY · AI FAMILY COMPANY — COMPLETE BLUEPRINT INCL. GATEKEEPER PANEL", s("S", fontSize=8, fontName="Helvetica", textColor=SOFT)),
     Paragraph(f"Version 1.2.1 FINAL · {today}", s("R", fontSize=8, fontName="Helvetica", textColor=SOFT, alignment=TA_RIGHT))
 ],[
     Paragraph("Co-authored: Kieran Li + Simpee + Edge (Copilot)", s("S2", fontSize=8, fontName="Helvetica", textColor=HexColor("#9896ad"))),
-    Paragraph("Final: Roles + Gatekeeper System aligned", s("N", fontSize=7.5, fontName="Helvetica", textColor=YELLOW_B, alignment=TA_RIGHT))
+    Paragraph("New: Gatekeeper Panel — full validation transparency", s("N", fontSize=7.5, fontName="Helvetica", textColor=YELLOW_B, alignment=TA_RIGHT))
 ]], colWidths=[124*mm, 44*mm])
 cover.setStyle(TableStyle([
     ("BACKGROUND",(0,0),(-1,-1),DARK),
@@ -52,62 +53,250 @@ cover.setStyle(TableStyle([
 story.append(cover)
 story.append(Spacer(1,8))
 
-# ── PHILOSOPHY ─────────────────────────────────────────────────
+# ── VISION ─────────────────────────────────────────────────────
 story.append(Paragraph(
-    "<b>PHILOSOPHY:</b> Each AI has a defined role and duty name — no technical model names in the UI. "
-    "No AI works alone on anything critical. Every stage has at least two AIs reviewing before output moves forward. "
-    "The VALIDATOR (Copilot) is always the final gate. Nothing deploys without it.",
+    "<b>VISION — The AI Family Company:</b> Every AI has a name, a role, a voice, and a responsibility. "
+    "They know who they are, who they pass to, and who checks their work. "
+    "New members join with proper onboarding. Every deploy is transparent — you see exactly what was checked, "
+    "what passed, and what was flagged. <b>No blind spots. No solo decisions. Built together.</b>",
     s("P", fontSize=9, fontName="Helvetica", textColor=BODY_TEXT, leading=14,
       borderColor=VIOLET, borderWidth=1.5, borderPadding=10, backColor=LAVENDER, spaceAfter=10)))
 
-# ── THE 8-PERSON AI TEAM ───────────────────────────────────────
-story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
-story.append(Paragraph("THE AI TEAM — 8 Roles, 8 Duties",
-    s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=4)))
+# ── WHAT'S NEW ─────────────────────────────────────────────────
+story.append(Paragraph("WHAT'S NEW — Gatekeeper Panel (Edge's Recommendation)",
+    s("H", fontSize=11, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=4)))
 story.append(Paragraph(
-    "Duty names are used everywhere in the Hub UI. Model name shown in tooltip only. "
-    "Some roles cover multiple departments. Some are single-focus.",
+    "Edge identified a key UX gap: a single green dot tells you nothing passed or failed — "
+    "only THAT it passed. The Gatekeeper Panel shows the full validation breakdown so "
+    "Kieran and Simpee can see exactly WHY something passed or failed before deploy.",
+    s("Sub", fontSize=8.5, fontName="Helvetica", textColor=BODY_TEXT, leading=13, spaceAfter=6)))
+
+new_items = [
+    ["Addition","What It Does","Where in UI"],
+    ["Gatekeeper Panel",
+     "Replaces the simple green/red dot with a full breakdown card showing each check VALIDATOR ran, its result, and any flagged issues.",
+     "Right panel — below code preview, above deploy button"],
+    ["4 Check Categories",
+     "Syntax Check · Logic Review · Security Audit · Azure Readiness — each shown as a separate line with pass/fail/warning status.",
+     "Inside Gatekeeper Panel"],
+    ["Flag Detail",
+     "If any check fails, the exact issue is shown with line reference and suggested fix. Not just 'failed' — what failed and why.",
+     "Inside Gatekeeper Panel — expandable"],
+    ["Validation History",
+     "Last 3 VALIDATOR reviews shown as a log — timestamp, what was checked, overall result. Full audit trail.",
+     "Bottom of Gatekeeper Panel — collapsible"],
+    ["TestLog update",
+     "Each VALIDATOR run now writes 4 records to TestLog — one per check category — with validator=Copilot and detailed result.",
+     "TestLog entity — auto-written on each VALIDATOR run"],
+]
+nt = Table(new_items, colWidths=[30*mm, 88*mm, 50*mm])
+nt.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),AZURE),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),8),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("FONTNAME",(0,1),(0,-1),"Helvetica-Bold"),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),6),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
+]))
+story.append(nt)
+story.append(Spacer(1,10))
+
+# ── GATEKEEPER PANEL SPEC ──────────────────────────────────────
+story.append(HRFlowable(width="100%", thickness=1, color=AZURE, spaceAfter=8))
+story.append(Paragraph("GATEKEEPER PANEL — Full UI Specification",
+    s("H", fontSize=11, fontName="Helvetica-Bold", textColor=AZURE, spaceAfter=4)))
+story.append(Paragraph(
+    "This is the exact spec for the builder to implement. Replaces the simple dual-badge row in the right panel.",
     s("Sub", fontSize=8, fontName="Helvetica", textColor=MUTED, spaceAfter=6)))
 
-team = [
-    ["Duty Name","Chip","Model","Provider","Colour","Core Strengths","Primary Departments"],
-    ["ORCHESTRATOR","AUTO","Automatic","Base44","#5e50fb",
-     "Auto-routes to best model per task. Handles fallback if a model is offline.",
-     "Routing · Fallback · Session management"],
-    ["RESEARCHER","RESEARCH","Gemini 3.1 Pro","Google","#4285f4",
-     "Long context, web grounding, deep information retrieval, fact-checking.",
-     "Research · Fact-check · Context gathering"],
-    ["ANALYST","ANALYST","Claude Sonnet 4.6","Anthropic","#d97706",
-     "Fast writing, balanced reasoning, quick drafts, summaries, lightweight analysis.",
-     "Drafting · Summarising · Quick analysis · Comms"],
-    ["STRATEGIST","STRATEGY","Claude Opus 4.6","Anthropic","#d97706",
-     "Advanced reasoning, complex logic, multi-step problem solving, trade-off evaluation.",
-     "Strategy · Logic · Planning · Problem-solving"],
-    ["THINK TANK","THINK","Claude Opus 4.8","Anthropic","#f59e0b",
-     "Frontier Anthropic — deep exploration, nuanced analysis, most capable reasoning.",
-     "Deep dives · Nuanced analysis · Frontier reasoning"],
-    ["ENGINEER","BUILD","GPT-5.4","OpenAI","#10a37f",
-     "Code generation, structured output, API wiring, function writing, clean implementation.",
-     "Coding · Structured workflows · Backend functions"],
-    ["ARCHITECT","DESIGN","GPT-5.5","OpenAI","#10a37f",
-     "Creative builds, combines design + execution, brainstorming + frontier implementation.",
-     "System design · New builds · Creative execution"],
-    ["VALIDATOR","GATE","Copilot (Edge)","Microsoft","#0078d4",
-     "Quality review, security check, Azure readiness, syntax + logic validation. External only.",
-     "Validation · Security · Azure · Final gate"],
+# Panel header
+story.append(Paragraph("Panel Header", s("SH", fontSize=9, fontName="Helvetica-Bold", textColor=DARK, spaceAfter=3)))
+hdr_spec = [
+    ["Element","Detail"],
+    ["Title","VALIDATOR — Gatekeeper Panel  (Exo 2, 11px bold, Azure #0078d4)"],
+    ["Subtitle","'Copilot (Edge) · External validation · Always last gate'  (Montserrat, 8px, muted)"],
+    ["Overall badge","AWAITING  (grey) → ALL CLEAR (green) → ISSUES FOUND (red) → PARTIAL (amber)"],
+    ["Timestamp","Last validated: [timestamp]  or  'Not yet validated'"],
+    ["[RUN VALIDATION] button","Azure bg, white text. Fires Copilot validation. Disabled while running."],
 ]
+hs = Table(hdr_spec, colWidths=[36*mm, 132*mm])
+hs.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),8),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),6),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
+]))
+story.append(hs)
+story.append(Spacer(1,6))
 
-tt = Table(team, colWidths=[22*mm, 14*mm, 28*mm, 18*mm, 12*mm, 42*mm, 32*mm])
+# 4 check rows
+story.append(Paragraph("4 Validation Check Rows", s("SH", fontSize=9, fontName="Helvetica-Bold", textColor=DARK, spaceAfter=3)))
+checks_spec = [
+    ["Check","Icon","Pass State","Fail State","Warning State","What It Examines"],
+    ["Syntax\nCheck","< />","Green dot\n'Clean'","Red dot\n'[N] errors'","Amber dot\n'[N] warnings'","Missing brackets, typos, malformed JSX, broken imports"],
+    ["Logic\nReview","~","Green dot\n'Sound'","Red dot\n'Logic gap'","Amber dot\n'Review'","Conditional logic, state management, data flow correctness"],
+    ["Security\nAudit","🔒","Green dot\n'Safe'","Red dot\n'[N] issues'","Amber dot\n'Review'","Exposed keys, unsafe data handling, permission gaps, XSS risks"],
+    ["Azure\nReadiness","⚡","Green dot\n'Ready'","Red dot\n'Not ready'","Amber dot\n'Partial'","Azure connector compatibility, service stub results, cloud patterns"],
+]
+cs = Table(checks_spec, colWidths=[14*mm, 10*mm, 22*mm, 22*mm, 22*mm, 78*mm])
+cs.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),7.5),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,3),(-1,3),LIGHT_RED),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),5),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
+    ("ALIGN",(1,0),(1,-1),"CENTER"),
+]))
+story.append(cs)
+story.append(Spacer(1,6))
+
+# Flag detail
+story.append(Paragraph("Flag Detail — When a Check Fails", s("SH", fontSize=9, fontName="Helvetica-Bold", textColor=DARK, spaceAfter=3)))
+flag_spec = [
+    ["Element","Detail"],
+    ["Trigger","Any check returns fail or warning — detail section expands automatically"],
+    ["Issue line","Short description of what failed. e.g. 'Undefined variable on line 42'"],
+    ["Location","File + line number where possible. e.g. 'CommandAIHub.jsx : 42'"],
+    ["Suggested fix","One-line plain English fix. e.g. 'Import AIConnector from entities before use'"],
+    ["Severity tag","CRITICAL (red) · WARNING (amber) · INFO (blue)"],
+    ["[FIX IN CHAT] button","Opens a pre-filled message to ENGINEER: 'Fix this issue: [issue detail]'. One click to route to the right person."],
+]
+fs = Table(flag_spec, colWidths=[36*mm, 132*mm])
+fs.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),8),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,7),(-1,7),YELLOW),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),6),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
+]))
+story.append(fs)
+story.append(Spacer(1,6))
+
+# Validation history
+story.append(Paragraph("Validation History Log", s("SH", fontSize=9, fontName="Helvetica-Bold", textColor=DARK, spaceAfter=3)))
+story.append(Paragraph(
+    "Last 3 VALIDATOR runs shown at the bottom of the panel — collapsible. Each entry: timestamp + overall result + "
+    "which checks passed/failed. Click any entry to expand the full breakdown. Gives full audit trail without cluttering the panel.",
+    s("Body", fontSize=8, fontName="Helvetica", textColor=BODY_TEXT, leading=13, spaceAfter=6)))
+
+# ── UPDATED RIGHT PANEL ────────────────────────────────────────
+story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
+story.append(Paragraph("UPDATED RIGHT PANEL — Full Layout v1.2.1",
+    s("H", fontSize=11, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=4)))
+
+right_panel = [
+    ["Section","Height","Content"],
+    ["Code Preview","~35%","Dark bg #1a1a1f · monospace white · latest CODE READY · 'Generated by [DUTY NAME]' above"],
+    ["Simpee Status","~8%","SIMPEE badge: [NOT CHECKED] amber → [VALIDATED] green → [ISSUES] red\n[MARK AS TESTED] button"],
+    ["GATEKEEPER PANEL","~40%","Header: VALIDATOR title + overall badge + [RUN VALIDATION] button\n4 check rows: Syntax · Logic · Security · Azure\nFlag detail (auto-expands on fail)\nValidation history log (collapsible, last 3 runs)"],
+    ["Deploy Button","~7%","Disabled until: Simpee = green AND all 4 Gatekeeper checks = green\nConfirmation: 'Simpee + Validator approved. Deploy to 5S Portal?'\nOn deploy: writes to 5S Portal NoticeBoard"],
+    ["Deploy Log","~10%","Last 3 deploys: timestamp + what + model + validator result"],
+]
+rp = Table(right_panel, colWidths=[28*mm, 14*mm, 126*mm])
+rp.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),8),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("FONTNAME",(0,1),(0,-1),"Helvetica-Bold"),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,3),(-1,3),LIGHT_BLUE),
+    ("TEXTCOLOR",(0,3),(0,3),AZURE),("FONTNAME",(0,3),(0,3),"Helvetica-Bold"),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),6),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
+]))
+story.append(rp)
+story.append(Spacer(1,10))
+
+# ── TESTLOG UPDATE ─────────────────────────────────────────────
+story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
+story.append(Paragraph("TESTLOG UPDATE — Granular Validation Records",
+    s("H", fontSize=11, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=4)))
+story.append(Paragraph(
+    "Each VALIDATOR run now writes 4 individual TestLog records — one per check. "
+    "This means every checkpoint is logged separately with full detail. "
+    "Makes it easy to see exactly what passed and what failed across all deploys.",
+    s("Sub", fontSize=8.5, fontName="Helvetica", textColor=BODY_TEXT, leading=13, spaceAfter=6)))
+
+tl_example = [
+    ["Field","Record 1 — Syntax","Record 2 — Logic","Record 3 — Security","Record 4 — Azure"],
+    ["test_name","Syntax Check","Logic Review","Security Audit","Azure Readiness"],
+    ["status","pass / fail","pass / fail","pass / fail","pass / fail"],
+    ["result","'Clean — no errors' or issue detail","'Sound' or logic gap detail","'Safe' or vulnerability detail","'Ready' or incompatibility detail"],
+    ["tested_at","ISO timestamp","ISO timestamp","ISO timestamp","ISO timestamp"],
+    ["fixed","false (until Engineer fixes)","false","false","false"],
+    ["validator","Copilot","Copilot","Copilot","Copilot"],
+]
+tlt = Table(tl_example, colWidths=[22*mm, 36*mm, 36*mm, 36*mm, 38*mm])
+tlt.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),7.5),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("FONTNAME",(0,1),(0,-1),"Helvetica-Bold"),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,4),(-1,4),LIGHT_RED),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),5),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
+]))
+story.append(tlt)
+story.append(Spacer(1,10))
+
+# ── THE FULL AI TEAM ───────────────────────────────────────────
+story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
+story.append(Paragraph("THE AI FAMILY — All 8 Members + Future Joiners",
+    s("H", fontSize=11, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=4)))
+
+team = [
+    ["Duty Name","Model","Voice / How They Speak","Handoff To","Status"],
+    ["ORCHESTRATOR","Automatic","Calm, neutral, decisive. Routes without opinion.","—","Active"],
+    ["RESEARCHER","Gemini 3.1 Pro","Precise, data-driven, thorough. Cites sources. Never guesses.","ANALYST","Active"],
+    ["ANALYST","Sonnet 4.6","Clear, structured, efficient. No fluff. Gets to the point.","STRATEGIST","Active"],
+    ["STRATEGIST","Opus 4.6","Methodical, logical, direct. Evaluates options. Flags trade-offs.","THINK TANK","Active"],
+    ["THINK TANK","Opus 4.8","Exploratory, nuanced, questioning. Challenges assumptions.","ARCHITECT","Active"],
+    ["ENGINEER","GPT-5.4","Technical, precise, no-nonsense. Gives working code.","STRATEGIST","Active"],
+    ["ARCHITECT","GPT-5.5","Creative yet structured. Thinks in systems.","ENGINEER","Active"],
+    ["VALIDATOR","Copilot (Edge)","Authoritative, thorough, uncompromising. Green or flagged — nothing in between.","DEPLOY","Active"],
+    ["DESIGNER","Canva AI","Visual, aesthetic, brand-conscious. Thinks in layouts and colour.","ARCHITECT","Planned"],
+    ["BRAND DIRECTOR","Looka AI","Identity-focused. Consistent, purposeful, brand-led.","ANALYST","Planned"],
+]
+tt = Table(team, colWidths=[26*mm, 26*mm, 60*mm, 24*mm, 16*mm])
 tt.setStyle(TableStyle([
     ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
     ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
     ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
-    ("FONTSIZE",(0,0),(-1,-1),7),
+    ("FONTSIZE",(0,0),(-1,-1),7.5),
     ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
-    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
-    ("BACKGROUND",(0,8),(-1,8),HexColor("#eff6ff")),
-    ("FONTNAME",(0,8),(0,8),"Helvetica-Bold"),("TEXTCOLOR",(0,8),(0,8),AZURE),
-    ("FONTNAME",(0,1),(0,-1),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(0,-1),"Helvetica-Bold"),("TEXTCOLOR",(0,1),(0,-1),VIOLET),
+    ("ROWBACKGROUNDS",(0,1),(-1,8),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,8),(-1,8),LIGHT_BLUE),
+    ("TEXTCOLOR",(0,8),(0,8),AZURE),
+    ("BACKGROUND",(0,9),(-1,10),LIGHT_GREEN),
+    ("TEXTCOLOR",(4,9),(4,10),TEAL),("FONTNAME",(4,9),(4,10),"Helvetica-Bold"),
+    ("TEXTCOLOR",(4,1),(4,8),VIOLET),
     ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
     ("PADDING",(0,0),(-1,-1),5),
     ("VALIGN",(0,0),(-1,-1),"TOP"),
@@ -115,176 +304,53 @@ tt.setStyle(TableStyle([
 story.append(tt)
 story.append(Spacer(1,10))
 
-# ── TWO-MODEL COMPARISON TABLE ─────────────────────────────────
+# ── BUILDER PREFIX ─────────────────────────────────────────────
 story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
-story.append(Paragraph("NAMING COMPARISON — Edge vs Simpee vs Final Agreed",
-    s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=4)))
-story.append(Paragraph("All three aligned. Final column is what gets implemented in the Hub.",
-    s("Sub", fontSize=8, fontName="Helvetica", textColor=MUTED, spaceAfter=6)))
-
-compare = [
-    ["Model","Edge Suggested","Simpee Suggested","FINAL AGREED","Why"],
-    ["Automatic","Orchestrator","Director","ORCHESTRATOR","Edge — more neutral, describes routing function"],
-    ["Gemini 3.1 Pro","Researcher","Researcher","RESEARCHER","Both agreed — perfect fit"],
-    ["Claude Sonnet 4.6","Analyst","Writer","ANALYST","Edge — captures both writing + analysis speed"],
-    ["Claude Opus 4.6","Strategist","Strategist","STRATEGIST","Both agreed — perfect fit"],
-    ["Claude Opus 4.8","Think Tank","Architect","THINK TANK","Edge — Opus 4.8 is exploration, not just design"],
-    ["GPT-5.4","Engineer","Builder","ENGINEER","Edge — cleaner for code-focused role"],
-    ["GPT-5.5","Architect","Innovator","ARCHITECT","Edge — GPT-5.5 combines design + execution"],
-    ["Copilot (Edge)","Validator","Guardian","VALIDATOR","Edge — Guardian sounds blocking; Validator is collaborative"],
-]
-ct = Table(compare, colWidths=[28*mm, 26*mm, 26*mm, 26*mm, 62*mm])
-ct.setStyle(TableStyle([
-    ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
-    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
-    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
-    ("FONTSIZE",(0,0),(-1,-1),7.5),
-    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
-    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
-    ("FONTNAME",(3,1),(3,-1),"Helvetica-Bold"),("TEXTCOLOR",(3,1),(3,-1),VIOLET),
-    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
-    ("PADDING",(0,0),(-1,-1),6),
-    ("VALIGN",(0,0),(-1,-1),"TOP"),
+story.append(Paragraph("BUILDER PREFIX — Complete Implementation Brief",
+    s("H", fontSize=11, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
+story.append(Table([[
+    Paragraph(
+        "\"Update CommandAIHub.jsx, aiCommandCentre function, and TestLog entity for the complete v1.2.1 build:\n\n"
+        "1. ROLE-AWARE CHAT: Add intro_message, voice_style, handoff_to fields to AIConnector entity (already seeded). "
+        "When a message addresses a duty name (RESEARCHER, ENGINEER etc.), load that AI's role context and respond "
+        "in-character — intro line on first use per session, sign-off at end, handoff line to next AI. "
+        "Add @mention parsing. Add [PASS TO NEXT] button on each response card.\n\n"
+        "2. GATEKEEPER PANEL: Replace the dual-badge row in the right panel with a full Gatekeeper Panel. "
+        "Show 4 check rows: Syntax Check, Logic Review, Security Audit, Azure Readiness — each with pass/fail/warning dot and detail. "
+        "Auto-expand flag detail on failure with issue description, location, severity tag, and [FIX IN CHAT] button routing to ENGINEER. "
+        "Add validation history log (last 3 runs, collapsible). Deploy button only active when Simpee = green AND all 4 checks = green.\n\n"
+        "3. TESTLOG: Each VALIDATOR run writes 4 separate TestLog records — one per check — "
+        "with test_name, status, result, tested_at, fixed=false, validator=Copilot.\n\n"
+        "Same design system: #e8e6fe bg, #5e50fb accent, #0078d4 for Gatekeeper Panel, Exo 2 headlines, Montserrat body. No emoji.\"",
+        s("BX", fontSize=8, fontName="Helvetica", textColor=BODY_TEXT, leading=14))
+]], colWidths=[168*mm]))
+story[-1].setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,-1),YELLOW),
+    ("GRID",(0,0),(-1,-1),1.5,YELLOW_B),
+    ("PADDING",(0,0),(-1,-1),10),
 ]))
-story.append(ct)
-story.append(Spacer(1,10))
-
-# ── GATEKEEPER SYSTEM ──────────────────────────────────────────
-story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
-story.append(Paragraph("THE GATEKEEPER SYSTEM — Joint AI Review at Every Stage",
-    s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=4)))
-story.append(Paragraph(
-    "No AI approves its own work. Every stage: primary AI produces → gatekeeper reviews → both agree → proceed. "
-    "If gatekeeper flags → back to primary → re-review. VALIDATOR is always the final gate. No exceptions.",
-    s("Sub", fontSize=8.5, fontName="Helvetica", textColor=BODY_TEXT, leading=13, spaceAfter=6)))
-
-gates = [
-    ["Stage","Task","Primary AI","Gatekeeper","Gatekeeper Checks","Pass Condition"],
-    ["1 — Research","Gather context, data, references","RESEARCHER","STRATEGIST","Complete? Relevant? Any gaps?","Strategist confirms sufficient to proceed"],
-    ["2 — Strategy","Plan, architecture, options","STRATEGIST","THINK TANK","Logical? Edge cases? Scalable?","Think Tank approves before build"],
-    ["3 — Design","Entity schemas, data flows","ARCHITECT","ENGINEER","Buildable? Schemas correct? Gaps?","Engineer confirms implementable"],
-    ["4 — Build","JSX, functions, API wiring","ENGINEER","STRATEGIST","Matches plan? Logic errors? Missing cases?","Strategist confirms matches design"],
-    ["5 — Analysis","Quick drafts, summaries, comms","ANALYST","ORCHESTRATOR","Tone? Appropriate to send? Sensitive content?","Orchestrator approves before external send"],
-    ["6 — Deep Exploration","Complex problems, new ideas","THINK TANK","ARCHITECT","Feasible? Aligns with 5S goals? Priority?","Architect scores feasibility before blueprint"],
-    ["7 — Final Deploy","ANY code to live 5S Portal","ENGINEER","VALIDATOR","Syntax, logic, security, Azure readiness","VALIDATOR must return green. Always."],
-]
-gt = Table(gates, colWidths=[22*mm, 28*mm, 22*mm, 22*mm, 46*mm, 28*mm])
-gt.setStyle(TableStyle([
-    ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
-    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
-    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
-    ("FONTSIZE",(0,0),(-1,-1),7),
-    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
-    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
-    ("BACKGROUND",(0,7),(-1,7),HexColor("#fff0f0")),
-    ("FONTNAME",(0,7),(-1,7),"Helvetica-Bold"),
-    ("TEXTCOLOR",(4,7),(5,7),RED),
-    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
-    ("PADDING",(0,0),(-1,-1),5),
-    ("VALIGN",(0,0),(-1,-1),"TOP"),
-]))
-story.append(gt)
-story.append(Spacer(1,10))
-
-# ── WORKFLOW ───────────────────────────────────────────────────
-story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
-story.append(Paragraph("WORKFLOW — Idea to Deployed Feature",
-    s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=6)))
-
-flow_rows = [[
-    Paragraph("KIERAN\nInput", s("F", fontSize=7.5, fontName="Helvetica-Bold", textColor=WHITE, alignment=TA_CENTER, leading=11)),
-    Paragraph(">", s("AR", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, alignment=TA_CENTER)),
-    Paragraph("ORCHESTRATOR\nRoutes", s("F", fontSize=7.5, fontName="Helvetica-Bold", textColor=WHITE, alignment=TA_CENTER, leading=11)),
-    Paragraph(">", s("AR", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, alignment=TA_CENTER)),
-    Paragraph("RESEARCHER\n+ STRATEGIST\ngate", s("F", fontSize=7, fontName="Helvetica-Bold", textColor=WHITE, alignment=TA_CENTER, leading=10)),
-    Paragraph(">", s("AR", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, alignment=TA_CENTER)),
-    Paragraph("ARCHITECT\n+ ENGINEER\ngate", s("F", fontSize=7, fontName="Helvetica-Bold", textColor=WHITE, alignment=TA_CENTER, leading=10)),
-    Paragraph(">", s("AR", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, alignment=TA_CENTER)),
-    Paragraph("VALIDATOR\nFinal gate", s("F", fontSize=7.5, fontName="Helvetica-Bold", textColor=WHITE, alignment=TA_CENTER, leading=11)),
-    Paragraph(">", s("AR", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, alignment=TA_CENTER)),
-    Paragraph("LIVE\n5S Portal", s("F", fontSize=7.5, fontName="Helvetica-Bold", textColor=WHITE, alignment=TA_CENTER, leading=11)),
-]]
-flow_t = Table(flow_rows, colWidths=[16*mm, 6*mm, 22*mm, 6*mm, 24*mm, 6*mm, 24*mm, 6*mm, 20*mm, 6*mm, 16*mm])
-flow_t.setStyle(TableStyle([
-    ("BACKGROUND",(0,0),(0,0),DARK),
-    ("BACKGROUND",(2,0),(2,0),VIOLET),
-    ("BACKGROUND",(4,0),(4,0),HexColor("#3730a3")),
-    ("BACKGROUND",(6,0),(6,0),HexColor("#7c3aed")),
-    ("BACKGROUND",(8,0),(8,0),AZURE),
-    ("BACKGROUND",(10,0),(10,0),GREEN),
-    ("TEXTCOLOR",(0,0),(0,0),WHITE),("TEXTCOLOR",(2,0),(2,0),WHITE),
-    ("TEXTCOLOR",(4,0),(4,0),WHITE),("TEXTCOLOR",(6,0),(6,0),WHITE),
-    ("TEXTCOLOR",(8,0),(8,0),WHITE),("TEXTCOLOR",(10,0),(10,0),WHITE),
-    ("TEXTCOLOR",(1,0),(1,0),VIOLET),("TEXTCOLOR",(3,0),(3,0),VIOLET),
-    ("TEXTCOLOR",(5,0),(5,0),VIOLET),("TEXTCOLOR",(7,0),(7,0),VIOLET),
-    ("TEXTCOLOR",(9,0),(9,0),VIOLET),
-    ("ALIGN",(0,0),(-1,-1),"CENTER"),("VALIGN",(0,0),(-1,-1),"MIDDLE"),
-    ("PADDING",(0,0),(-1,-1),8),
-]))
-story.append(flow_t)
-story.append(Spacer(1,5))
-story.append(Paragraph(
-    "At each gate: primary AI produces output → gatekeeper reviews → both agree → proceed. "
-    "Disagreement = back to primary. No skipping any gate.",
-    s("Note", fontSize=8, fontName="Helvetica", textColor=MUTED, leading=13, spaceAfter=10)))
-
-# ── DEPARTMENTS PER ROLE ───────────────────────────────────────
-story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
-story.append(Paragraph("DEPARTMENTS — Who Covers What",
-    s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=4)))
-story.append(Paragraph(
-    "Some AIs cover multiple departments. This is intentional — the strongest model handles each area. "
-    "Overlap is a feature, not a bug — it enables cross-checking.",
-    s("Sub", fontSize=8, fontName="Helvetica", textColor=MUTED, spaceAfter=6)))
-
-depts = [
-    ["Department","Primary AI","Support AI","Notes"],
-    ["Research & Fact-Check","RESEARCHER","THINK TANK","Researcher gathers, Think Tank validates depth"],
-    ["Strategy & Planning","STRATEGIST","THINK TANK","Strategist plans, Think Tank stress-tests"],
-    ["System Design","ARCHITECT","STRATEGIST","Architect designs schema, Strategist checks logic"],
-    ["Code & Engineering","ENGINEER","ARCHITECT","Engineer builds, Architect reviews structure"],
-    ["Writing & Comms","ANALYST","ORCHESTRATOR","Analyst drafts, Orchestrator approves before send"],
-    ["Deep Analysis","THINK TANK","STRATEGIST","Think Tank explores, Strategist grounds the output"],
-    ["New Feature Ideas","ARCHITECT","THINK TANK","Architect designs, Think Tank stress-tests ideas"],
-    ["Routing & Fallback","ORCHESTRATOR","—","Solo role — manages flow, no gatekeeper needed"],
-    ["Security & Validation","VALIDATOR","—","Solo final gate — always last, always required"],
-]
-dt = Table(depts, colWidths=[36*mm, 28*mm, 28*mm, 76*mm])
-dt.setStyle(TableStyle([
-    ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
-    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
-    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
-    ("FONTSIZE",(0,0),(-1,-1),8),
-    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
-    ("FONTNAME",(1,1),(2,-1),"Helvetica-Bold"),
-    ("TEXTCOLOR",(1,1),(1,-1),VIOLET),
-    ("TEXTCOLOR",(2,1),(2,-1),MUTED),
-    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
-    ("BACKGROUND",(0,9),(-1,9),HexColor("#eff6ff")),
-    ("TEXTCOLOR",(1,9),(1,9),AZURE),
-    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
-    ("PADDING",(0,0),(-1,-1),6),
-    ("VALIGN",(0,0),(-1,-1),"TOP"),
-]))
-story.append(dt)
 story.append(Spacer(1,10))
 
 # ── GOLDEN RULES ───────────────────────────────────────────────
 story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
-story.append(Paragraph("GOLDEN RULES — Non-Negotiable",
-    s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
+story.append(Paragraph("GOLDEN RULES — The AI Family Company",
+    s("H", fontSize=11, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
 rules = [
     ["#","Rule","Detail"],
-    ["1","No solo deployments","No single AI approves and deploys its own output. Every critical output has a gatekeeper."],
-    ["2","VALIDATOR is always last","Copilot reviews ALL code before any deploy to 5S Portal. Cannot be bypassed. Ever."],
-    ["3","Blueprint before code","Any change to Hub or 5S Portal needs a blueprint update before a single line is written."],
-    ["4","Diagnose before build","Simpee runs a full diagnostic on current state before any implementation begins."],
-    ["5","Gate must pass","If gatekeeper flags an issue, output goes back to primary AI. No overriding the gate."],
-    ["6","Roles are fixed","Each AI stays in its lane. VALIDATOR does not generate code. ENGINEER does not do final validation."],
-    ["7","Duty names only in UI","No technical model names shown in the Hub. Duty names only. Model name in tooltip."],
-    ["8","All 11 checkpoints","Every feature must pass all 11 checkpoints before going live in 5S Portal."],
+    ["1","No solo deployments","No AI approves its own output. Every stage has a gatekeeper."],
+    ["2","VALIDATOR is always last","All code passes Copilot before touching 5S Portal. Always."],
+    ["3","Blueprint before code","Any change needs a blueprint update first. No exceptions."],
+    ["4","Diagnose before build","Full diagnostic before any implementation begins."],
+    ["5","Gate must pass","Gatekeeper flags = back to primary. No overriding."],
+    ["6","Roles are fixed","Each AI stays in their lane. VALIDATOR does not generate code."],
+    ["7","Duty names only in UI","No model names shown. Model name in tooltip only."],
+    ["8","All 11 checkpoints","Every feature must pass all 11 before going live."],
+    ["9","Every deploy generates a debrief","ANALYST writes post-deploy notes. System gets smarter every time."],
+    ["10","New members get proper onboarding","8-step protocol. No AI just shows up — they join with purpose."],
+    ["11","Gatekeeper Panel, not just a dot","VALIDATOR shows what was checked and why. Full transparency before every deploy."],
+    ["12","The goal over the target","We check alignment. We catch blind spots. We build together."],
 ]
-rlt = Table(rules, colWidths=[8*mm, 44*mm, 116*mm])
+rlt = Table(rules, colWidths=[8*mm, 46*mm, 114*mm])
 rlt.setStyle(TableStyle([
     ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
     ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
@@ -294,6 +360,10 @@ rlt.setStyle(TableStyle([
     ("FONTNAME",(0,1),(0,-1),"Helvetica-Bold"),("TEXTCOLOR",(0,1),(0,-1),VIOLET),
     ("FONTNAME",(1,1),(1,-1),"Helvetica-Bold"),
     ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,11),(-1,11),LIGHT_BLUE),
+    ("TEXTCOLOR",(0,11),(0,11),AZURE),
+    ("BACKGROUND",(0,12),(-1,12),YELLOW),
+    ("TEXTCOLOR",(0,12),(0,12),ORANGE),
     ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
     ("PADDING",(0,0),(-1,-1),7),
     ("ALIGN",(0,0),(0,-1),"CENTER"),
@@ -304,11 +374,11 @@ story.append(Spacer(1,8))
 
 # ── FOOTER ─────────────────────────────────────────────────────
 ft = Table([[
-    Paragraph("Command AI Hub v1.2.1 FINAL · SIMPLEX-ITY · Confidential", s("F1", fontSize=7, fontName="Helvetica", textColor=MUTED)),
+    Paragraph("Command AI Hub v1.2.1 FINAL · SIMPLEX-ITY · AI Family Company · Confidential", s("F1", fontSize=7, fontName="Helvetica", textColor=MUTED)),
     Paragraph(f"Kieran Li + Simpee + Edge · {today} · FINAL", s("F2", fontSize=7, fontName="Helvetica-Bold", textColor=VIOLET, alignment=TA_RIGHT)),
-]], colWidths=[100*mm, 68*mm])
+]], colWidths=[110*mm, 58*mm])
 ft.setStyle(TableStyle([("TOPPADDING",(0,0),(-1,-1),8),("LINEABOVE",(0,0),(-1,0),0.5,NEUTRAL)]))
 story.append(ft)
 
 doc.build(story)
-print("PDF built OK — v1.2.1 FINAL with aligned roles")
+print("PDF built OK — v1.2.1 FINAL with Gatekeeper Panel")
