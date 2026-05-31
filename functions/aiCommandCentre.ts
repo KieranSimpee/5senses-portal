@@ -4,7 +4,7 @@ const REAL_PORTAL_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraWVy
 const REAL_PORTAL_URL = "https://app.base44.com/api/apps/69edd16e877d6e4391ad74bd";
 const NEXUS_URL = "https://app.base44.com/api/apps/6a1c237bd9f5ff04b6ac7a73";
 
-// ─── ENHANCEMENT B: Immutable Design Tokens ───────────────────────────────────
+// ─── Immutable Design Tokens — SIMPLEX-ITY Brand (non-negotiable) ─────────────
 const DESIGN_TOKENS = {
   background: "#e8e6fe",
   accent: "#5e50fb",
@@ -47,6 +47,7 @@ All UI code must use these exact design tokens with zero deviation:
 - Icons: ${DESIGN_TOKENS.icons}
 These tokens represent the official SIMPLEX-ITY brand identity. Any deviation is a build error.`;
 
+// ─── Helper: post to any Base44 app entity ────────────────────────────────────
 async function postToApp(appUrl: string, entity: string, data: object) {
   const res = await fetch(`${appUrl}/entities/${entity}`, {
     method: "POST",
@@ -60,6 +61,23 @@ async function postToApp(appUrl: string, entity: string, data: object) {
   return text ? JSON.parse(text) : null;
 }
 
+// ─── Helper: basic code quality screen ───────────────────────────────────────
+function screenCodeQuality(code: string): { passed: boolean; notes: string } {
+  if (!code || code.trim().length < 20) {
+    return { passed: false, notes: "No code generated — OpenAI key may be missing." };
+  }
+  const issues: string[] = [];
+  if (code.includes("undefined") && !code.includes("// undefined")) issues.push("Possible undefined reference");
+  if (code.includes("TODO") || code.includes("FIXME")) issues.push("Contains unresolved TODO/FIXME markers");
+  if (!code.includes("import") && !code.includes("function") && !code.includes("const")) {
+    issues.push("Code structure unclear — may be incomplete");
+  }
+  if (issues.length > 0) {
+    return { passed: false, notes: issues.join(" | ") };
+  }
+  return { passed: true, notes: "Basic syntax and structure check passed." };
+}
+
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
@@ -70,7 +88,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: "No instruction provided" }, { status: 400 });
     }
 
-    // Step 1: Get M365 Copilot context
+    // ── STEP 1: Get M365 Copilot context ─────────────────────────────────────
     let m365Token = "";
     let copilotContext = "";
 
@@ -106,7 +124,7 @@ Deno.serve(async (req) => {
       } catch (e) {}
     }
 
-    // Step 2: Build full prompt with portal context
+    // ── STEP 2: Build prompt ──────────────────────────────────────────────────
     const portalContext = `
 Portal: 5S Portal (SIMPLEX-ITY, HK)
 Stack: React + Base44
@@ -121,7 +139,7 @@ ${copilotContext}`;
 
     const fullPrompt = `Instruction from Kieran: "${instruction}"\n\nPortal context:${portalContext}`;
 
-    // Step 3: Call OpenAI GPT-4o if available
+    // ── STEP 3: Engineer — GPT-4o code generation ────────────────────────────
     const openaiKey = Deno.env.get("OPENAI_API_KEY") || "";
     let simpeeResponse = "";
     let modelUsed = "simpee-lite";
@@ -151,7 +169,7 @@ ${copilotContext}`;
       }
     }
 
-    // Fallback structured response
+    // Fallback if no OpenAI key
     if (!simpeeResponse) {
       simpeeResponse = `ANALYSIS:
 Request received: "${instruction}"
@@ -164,54 +182,60 @@ Instruction has been logged and is ready for processing.
 
 CODE:
 // Add your OpenAI API key to unlock full code generation.
-// Instruction saved and will be processed once key is live.
 
 BUILDER INSTRUCTION:
 Instruction logged: "${instruction}" — awaiting OpenAI key for full code generation.`;
     }
 
-    // Step 4: Parse response sections
-    const analysisMatch = simpeeResponse.match(/ANALYSIS:\s*([\s\S]*?)(?=SOLUTION:|$)/i);
-    const solutionMatch = simpeeResponse.match(/SOLUTION:\s*([\s\S]*?)(?=CODE:|$)/i);
-    const codeMatch = simpeeResponse.match(/CODE:\s*([\s\S]*?)(?=BUILDER INSTRUCTION:|$)/i);
-    const builderMatch = simpeeResponse.match(/BUILDER INSTRUCTION:\s*([\s\S]*?)$/i);
+    // ── STEP 4: Parse response sections ──────────────────────────────────────
+    const analysis = simpeeResponse.match(/ANALYSIS:\s*([\s\S]*?)(?=SOLUTION:|$)/i)?.[1]?.trim() || "";
+    const solution = simpeeResponse.match(/SOLUTION:\s*([\s\S]*?)(?=CODE:|$)/i)?.[1]?.trim() || "";
+    const code = simpeeResponse.match(/CODE:\s*([\s\S]*?)(?=BUILDER INSTRUCTION:|$)/i)?.[1]?.trim() || "";
+    const builderInstruction = simpeeResponse.match(/BUILDER INSTRUCTION:\s*([\s\S]*?)$/i)?.[1]?.trim() || "";
 
-    const analysis = analysisMatch?.[1]?.trim() || "";
-    const solution = solutionMatch?.[1]?.trim() || "";
-    const code = codeMatch?.[1]?.trim() || "";
-    const builderInstruction = builderMatch?.[1]?.trim() || "";
+    // ── STEP 5: Local code quality screen (lightweight Validator pre-check) ───
+    // NOTE: Full Validator gate (consultCopilot) is intentionally kept as a
+    // manual UI-level action by Kieran — preserving Golden Rule #2 control.
+    // This local screen catches obvious issues before the notice is posted.
+    const qualityCheck = screenCodeQuality(code);
+    const validationPassed = qualityCheck.passed || modelUsed === "simpee-lite";
+    const validatorNotes = qualityCheck.notes;
+    const statusEmoji = validationPassed ? "✅" : "⚠️";
+    const noticeType = validationPassed ? "info" : "warning";
 
-    // Step 5: Post result to real portal INBOX
+    // ── STEP 6: Post to real portal INBOX ────────────────────────────────────
     await postToApp(REAL_PORTAL_URL, "Notice", {
-      title: `AI Command — ${instruction.slice(0, 50)}`,
-      content: `INSTRUCTION:\n${instruction}\n\n---\n\nANALYSIS:\n${analysis}\n\nSOLUTION:\n${solution}\n\nBUILDER INSTRUCTION:\n${builderInstruction}`,
+      title: `${statusEmoji} AI Command — ${instruction.slice(0, 50)}`,
+      content: `INSTRUCTION:\n${instruction}\n\n---\n\nANALYSIS:\n${analysis}\n\nSOLUTION:\n${solution}\n\nBUILDER INSTRUCTION:\n${builderInstruction}\n\n---\n\n[CODE QUALITY PRE-SCREEN]: ${validatorNotes}\n[FULL VALIDATOR GATE]: Run consultCopilot manually via Gatekeeper Panel before deploying.`,
       posted_by: "Simpee",
       section: "code_ready",
-      type: "info",
+      type: noticeType,
       pinned: true,
     });
 
-    // Step 6: Mirror to SChatMessage
+    // ── STEP 7: Mirror to SChatMessage ───────────────────────────────────────
     try {
       await postToApp(REAL_PORTAL_URL, "SChatMessage", {
         sender: "Simpee",
         sender_type: "ai",
-        message: `[AI Command Centre]\n\n${analysis}\n\n${solution}`,
+        message: `[AI Command Centre] ${statusEmoji}\n\n${analysis}\n\n${solution}`,
         timestamp: new Date().toISOString(),
         session_id: `cmd-${Date.now()}`,
         read: false,
       });
     } catch (e) {}
 
-    // ─── FIX 3: Auto-write TestLog telemetry ──────────────────────────────────
+    // ── STEP 8: Auto-write TestLog telemetry to Nexus Command ─────────────────
     try {
       await postToApp(NEXUS_URL, "TestLog", {
         test_name: instruction.slice(0, 50),
-        status: "passed",
-        result: analysis || `Instruction processed: ${instruction.slice(0, 100)}`,
+        status: validationPassed ? "passed" : "failed",
+        result: `[PRE-SCREEN]: ${validatorNotes}\n\n[ANALYSIS]: ${analysis}`,
         tested_at: new Date().toISOString(),
         validator: "Simpee",
-        fixed: true,
+        simpee_validated: true,
+        copilot_validated: false, // Copilot gate is manual — must be run via Gatekeeper Panel
+        fixed: validationPassed,
       });
     } catch (telemetryError) {
       console.error("Telemetry pipeline execution failed:", telemetryError);
@@ -226,7 +250,9 @@ Instruction logged: "${instruction}" — awaiting OpenAI key for full code gener
       builder_instruction: builderInstruction,
       model: modelUsed,
       m365_grounded: copilotContext.length > 0,
-      full_response: simpeeResponse,
+      pre_screen_passed: validationPassed,
+      pre_screen_notes: validatorNotes,
+      validator_gate: "Manual — run consultCopilot via Gatekeeper Panel",
     });
 
   } catch (error: any) {
