@@ -50,7 +50,7 @@ export default function AICommandCentrePage() {
     setBriefCopied(false);
 
     try {
-      const res = await fetch("/api/run/aiCommandCentre", {
+      const res = await fetch("https://simpee-62ac123d.base44.app/functions/aiCommandCentre", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ instruction: `[${type}] ${instruction}`, posted_by: "Kieran" }),
