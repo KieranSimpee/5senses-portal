@@ -12,310 +12,323 @@ SOFT      = HexColor("#bab4fd")
 BODY_TEXT = HexColor("#1a1a1f")
 MUTED     = HexColor("#9896ad")
 WHITE     = white
-YELLOW    = HexColor("#fffbeb")
 YELLOW_B  = HexColor("#fcd34d")
+YELLOW    = HexColor("#fffbeb")
 GREEN     = HexColor("#22c55e")
 RED       = HexColor("#ef4444")
 AMBER     = HexColor("#f59e0b")
 DARK      = HexColor("#1a0533")
 NEUTRAL   = HexColor("#e6e6e6")
-TINT      = HexColor("#f5f4fe")
-CODE_BG   = HexColor("#1a1a1f")
+BLUE      = HexColor("#3b82f6")
+AZURE     = HexColor("#0078d4")
+TEAL      = HexColor("#10a37f")
+ORANGE    = HexColor("#f59e0b")
 
 def s(name, **kw): return ParagraphStyle(name, **kw)
-
 today = datetime.date.today().strftime("%d %B %Y")
 
-doc = SimpleDocTemplate("Command_AI_Hub_Blueprint_v1.pdf", pagesize=A4,
+doc = SimpleDocTemplate("Command_AI_Hub_Blueprint_v121_FINAL.pdf", pagesize=A4,
     leftMargin=18*mm, rightMargin=18*mm, topMargin=18*mm, bottomMargin=18*mm)
 story = []
 
 # ── COVER ──────────────────────────────────────────────────────
 cover = Table([[
-    Paragraph("COMMAND AI HUB", s("T", fontSize=24, fontName="Helvetica-Bold", textColor=WHITE)),
-    ""
+    Paragraph("COMMAND AI HUB", s("T", fontSize=24, fontName="Helvetica-Bold", textColor=WHITE)), ""
 ],[
-    Paragraph("SIMPLEX-ITY · 5S PORTAL · STANDALONE TEST APP BLUEPRINT", s("S", fontSize=8, fontName="Helvetica", textColor=SOFT)),
-    Paragraph(f"Version 1.0 · {today}", s("R", fontSize=8, fontName="Helvetica", textColor=SOFT, alignment=TA_RIGHT))
+    Paragraph("SIMPLEX-ITY · FUNCTIONAL AI TEAM — ROLES, HANDOFFS & PROBLEM-SOLVING FLOWS", s("S", fontSize=8, fontName="Helvetica", textColor=SOFT)),
+    Paragraph(f"Version 1.2.1 FINAL · {today}", s("R", fontSize=8, fontName="Helvetica", textColor=SOFT, alignment=TA_RIGHT))
+],[
+    Paragraph("Co-authored: Kieran Li + Simpee + Edge (Copilot)", s("S2", fontSize=8, fontName="Helvetica", textColor=HexColor("#9896ad"))),
+    Paragraph("Who does what. Who passes to who. How it flows.", s("N", fontSize=7.5, fontName="Helvetica", textColor=YELLOW_B, alignment=TA_RIGHT))
 ]], colWidths=[124*mm, 44*mm])
 cover.setStyle(TableStyle([
     ("BACKGROUND",(0,0),(-1,-1),DARK),
-    ("TOPPADDING",(0,0),(-1,-1),14), ("BOTTOMPADDING",(0,0),(-1,-1),14),
-    ("LEFTPADDING",(0,0),(-1,-1),16), ("RIGHTPADDING",(0,0),(-1,-1),16),
+    ("TOPPADDING",(0,0),(-1,-1),10),("BOTTOMPADDING",(0,0),(-1,-1),10),
+    ("LEFTPADDING",(0,0),(-1,-1),16),("RIGHTPADDING",(0,0),(-1,-1),16),
     ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
 ]))
 story.append(cover)
 story.append(Spacer(1,8))
 
-# ── WHAT IS COMMAND AI HUB ─────────────────────────────────────
+# ── THE TEAM AT A GLANCE ───────────────────────────────────────
+story.append(Paragraph("THE TEAM AT A GLANCE",
+    s("H", fontSize=11, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
+
+team = [
+    ["Duty Name","Model","What They Are BEST At","What They Are NOT For"],
+    ["ORCHESTRATOR","Automatic","Routing tasks to the right AI. Fallback if a model is offline. Keeps sessions moving.","Deep analysis, code, writing"],
+    ["RESEARCHER","Gemini 3.1 Pro","Market research, industry data, competitive analysis, web-grounded facts, long documents.","Writing final output, deploying code"],
+    ["ANALYST","Claude Sonnet 4.6","Fast summaries, feasibility notes, drafting briefs, lightweight analysis, comms.","Deep system design, complex code"],
+    ["STRATEGIST","Claude Opus 4.6","Complex logic, multi-step reasoning, evaluating options, planning architecture, trade-offs.","First-pass research, final code write"],
+    ["THINK TANK","Claude Opus 4.8","Deep exploration, nuanced problem-solving, stress-testing plans, uncovering blind spots.","Routine tasks, quick drafts"],
+    ["ENGINEER","GPT-5.4","Writing clean code, backend functions, API wiring, entity logic, structured output.","Strategy, research, deep analysis"],
+    ["ARCHITECT","GPT-5.5","New app/feature design, creative builds, combining ideas into implementable systems.","Validation, security review"],
+    ["VALIDATOR","Copilot (Edge)","Security review, syntax check, logic audit, Azure readiness. Final gate only.","Generating new code or ideas"],
+]
+tt = Table(team, colWidths=[24*mm, 28*mm, 72*mm, 44*mm])
+tt.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),7.5),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("FONTNAME",(0,1),(0,-1),"Helvetica-Bold"),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,8),(-1,8),HexColor("#eff6ff")),
+    ("TEXTCOLOR",(0,8),(0,8),AZURE),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),5),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
+]))
+story.append(tt)
+story.append(Spacer(1,10))
+
+# ── REAL SCENARIO FLOWS ────────────────────────────────────────
+story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
+story.append(Paragraph("REAL SCENARIO FLOWS — Who Does What and Passes to Who",
+    s("H", fontSize=11, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=4)))
 story.append(Paragraph(
-    "<b>WHAT IS COMMAND AI HUB?</b>  The highest-authority workspace in the 5S Portal ecosystem. "
-    "A single interface where Kieran thinks, plans, builds, tests, and deploys — with Simpee, Copilot, and the Builder AI all connected in one chat. "
-    "Nothing is deployed to the live 5S Portal until it is fully tested here first. "
-    "<b>This is your control room.</b>",
-    s("P", fontSize=9, fontName="Helvetica", textColor=BODY_TEXT, leading=14,
-      borderColor=VIOLET, borderWidth=1.5, borderPadding=10, backColor=LAVENDER, spaceAfter=10)))
+    "These are practical examples of how the team flows through real tasks. "
+    "Every handoff is a gate — receiver must agree before the next stage begins.",
+    s("Sub", fontSize=8, fontName="Helvetica", textColor=MUTED, spaceAfter=6)))
 
-# ── 4 PILLARS ──────────────────────────────────────────────────
-story.append(Paragraph("4 PILLARS OF COMMAND AI HUB", s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
-pillars = [
-    ["THINK", "Brainstorm ideas and features with Simpee + Copilot before writing a single line of code."],
-    ["BUILD", "Generate code inside the Hub. See it in the preview panel. Nothing touches production yet."],
-    ["TEST", "Run all 8 checkpoints. Pass = green. Fail = Simpee tells you exactly what to fix."],
-    ["DEPLOY", "One button. Only enabled when all tests pass. Sends approved code to the live 5S Portal."],
+# Scenario 1
+story.append(Paragraph("SCENARIO 1 — Market Research: How to Build an App",
+    s("SH", fontSize=9.5, fontName="Helvetica-Bold", textColor=DARK, spaceBefore=4, spaceAfter=3)))
+sc1 = [
+    ["Step","Who","What They Do","Passes To","Gate Check"],
+    ["1","RESEARCHER","Pulls market data — competitor apps, user needs, industry trends, pricing benchmarks. Grounds everything in real data.","ANALYST","Is the research complete and relevant?"],
+    ["2","ANALYST","Summarises the research into a readable brief. Highlights key opportunities and risks. Flags feasibility concerns.","STRATEGIST","Does the summary capture what matters?"],
+    ["3","STRATEGIST","Evaluates feasibility. Defines scope, priorities, and build order. Proposes architecture approach.","THINK TANK","Any blind spots? Is the plan stress-tested?"],
+    ["4","THINK TANK","Deep-dives on the hardest questions. What could go wrong? What's missing? What's the smartest path?","ARCHITECT","Is the strategic foundation solid enough to design on?"],
+    ["5","ARCHITECT","Designs the app structure — pages, entities, functions, user flows. Produces build brief.","ENGINEER","Can this actually be built? Any implementation gaps?"],
+    ["6","ENGINEER","Writes the code. Functions, entities, JSX, API wiring.","VALIDATOR","Syntax clean? Logic sound? Security issues?"],
+    ["7","VALIDATOR","Reviews all code. Security, logic, Azure readiness. Returns green or flags issues.","DEPLOY","All green = deploy to 5S Portal."],
 ]
-pt = Table(pillars, colWidths=[22*mm, 146*mm])
-pt.setStyle(TableStyle([
-    ("BACKGROUND",(0,0),(0,-1),VIOLET), ("TEXTCOLOR",(0,0),(0,-1),WHITE),
-    ("FONTNAME",(0,0),(0,-1),"Helvetica-Bold"), ("FONTNAME",(1,0),(1,-1),"Helvetica"),
-    ("FONTSIZE",(0,0),(-1,-1),9),
-    ("TEXTCOLOR",(1,0),(1,-1),BODY_TEXT),
-    ("ROWBACKGROUNDS",(1,0),(1,-1),[WHITE, LAVENDER, WHITE, LAVENDER]),
-    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL), ("PADDING",(0,0),(-1,-1),9),
-    ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+s1t = Table(sc1, colWidths=[8*mm, 22*mm, 56*mm, 22*mm, 60*mm])
+s1t.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),VIOLET),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),7),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("FONTNAME",(1,1),(1,-1),"Helvetica-Bold"),("TEXTCOLOR",(1,1),(1,-1),VIOLET),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,7),(-1,7),HexColor("#f0fdf4")),
+    ("TEXTCOLOR",(1,7),(1,7),GREEN),("FONTNAME",(1,7),(1,7),"Helvetica-Bold"),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),5),
+    ("ALIGN",(0,0),(0,-1),"CENTER"),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
 ]))
-story.append(pt)
-story.append(Spacer(1,10))
-
-# ── BUILD APPROACH ─────────────────────────────────────────────
-story.append(Paragraph("BUILD APPROACH — Why Separate App First", s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
-approach = [
-    ["OLD WAY", "Code → paste into live 5S Portal → crash → fix → crash again"],
-    ["NEW WAY", "Build in Command AI Hub test app → all 8 checkpoints pass → ONE clean deploy to portal"],
-    ["BENEFIT", "Zero crashes in production. Full traceability. Every function validated before touching real data."],
-]
-at = Table(approach, colWidths=[22*mm, 146*mm])
-at.setStyle(TableStyle([
-    ("BACKGROUND",(0,0),(0,0),RED), ("BACKGROUND",(0,1),(0,1),GREEN), ("BACKGROUND",(0,2),(0,2),VIOLET),
-    ("TEXTCOLOR",(0,0),(0,-1),WHITE),
-    ("FONTNAME",(0,0),(0,-1),"Helvetica-Bold"), ("FONTNAME",(1,0),(1,-1),"Helvetica"),
-    ("FONTSIZE",(0,0),(-1,-1),9), ("TEXTCOLOR",(1,0),(1,-1),BODY_TEXT),
-    ("ROWBACKGROUNDS",(1,0),(1,-1),[HexColor("#fff5f5"), HexColor("#f0fff4"), LAVENDER]),
-    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL), ("PADDING",(0,0),(-1,-1),9),
-    ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
-]))
-story.append(at)
-story.append(Spacer(1,10))
-
-# ── APP SPEC ───────────────────────────────────────────────────
-story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
-story.append(Paragraph("APP SPECIFICATION", s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
-spec = [
-    ["App Name", "Command AI Hub"],
-    ["Type", "Standalone Base44 test app (separate from 5S Portal)"],
-    ["Pages", "1 page — CommandAIHub.jsx (route: /)"],
-    ["Entities", "SChatMessage · TestLog"],
-    ["Backend Functions", "aiCommandCentre (reuse existing: https://simpee-62ac123d.base44.app/functions/aiCommandCentre)"],
-    ["Audience", "Admin only — Kieran Li"],
-    ["Design System", "bg #e8e6fe · cards #ffffff · accent #5e50fb · Exo 2 headlines · Montserrat body · no emoji"],
-    ["Purpose", "Build, test, validate all new features. Deploy to 5S Portal only when all 8 checkpoints green."],
-]
-spect = Table(spec, colWidths=[38*mm, 130*mm])
-spect.setStyle(TableStyle([
-    ("FONTNAME",(0,0),(0,-1),"Helvetica-Bold"), ("FONTNAME",(1,0),(1,-1),"Helvetica"),
-    ("FONTSIZE",(0,0),(-1,-1),8.5), ("TEXTCOLOR",(0,0),(-1,-1),BODY_TEXT),
-    ("ROWBACKGROUNDS",(0,0),(-1,-1),[WHITE, LAVENDER]),
-    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL), ("PADDING",(0,0),(-1,-1),7),
-]))
-story.append(spect)
-story.append(Spacer(1,10))
-
-# ── ENTITIES ───────────────────────────────────────────────────
-story.append(Paragraph("ENTITIES", s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
-for ename, efields in [
-    ("SChatMessage — Chat history between Kieran and all AIs", [
-        ("sender","string","Kieran / Simpee / Copilot / Builder"),
-        ("sender_type","string","user  |  ai  |  system"),
-        ("message","string","Full message or response text"),
-        ("timestamp","string","ISO datetime — auto-fill on create"),
-        ("session_id","string","Groups messages: main / test-1 / brainstorm-1 etc"),
-        ("read","boolean","Has Kieran seen this message"),
-    ]),
-    ("TestLog — Results of every checkpoint test", [
-        ("test_name","string","Name of what was tested"),
-        ("status","string","pass  |  fail  |  pending"),
-        ("result","string","Full result text or error message"),
-        ("tested_at","string","ISO datetime"),
-        ("fixed","boolean","Has the issue been resolved"),
-    ]),
-]:
-    story.append(Paragraph(ename, s("EH", fontSize=10, fontName="Helvetica-Bold", textColor=DARK, spaceBefore=4, spaceAfter=3)))
-    rows = [["Field","Type","Description"]] + [[f,t,d] for f,t,d in efields]
-    et = Table(rows, colWidths=[36*mm, 24*mm, 108*mm])
-    et.setStyle(TableStyle([
-        ("BACKGROUND",(0,0),(-1,0),DARK), ("TEXTCOLOR",(0,0),(-1,0),WHITE),
-        ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"), ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
-        ("FONTSIZE",(0,0),(-1,-1),8), ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
-        ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
-        ("GRID",(0,0),(-1,-1),0.3,NEUTRAL), ("PADDING",(0,0),(-1,-1),6),
-    ]))
-    story.append(et)
-    story.append(Spacer(1,6))
-
-# ── 3-PANEL LAYOUT ─────────────────────────────────────────────
-story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
-story.append(Paragraph("3-PANEL LAYOUT — CommandAIHub.jsx", s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
-
-layout = Table([[
-    Paragraph("LEFT PANEL\n220px wide\n\nQuick Commands\nTest Results", s("LP", fontSize=9, fontName="Helvetica-Bold", textColor=WHITE, alignment=TA_CENTER, leading=16)),
-    Paragraph("CENTRE PANEL\nFlex — main area\n\nChat Feed\nInput Bar\nIntent Chips", s("CP", fontSize=9, fontName="Helvetica-Bold", textColor=WHITE, alignment=TA_CENTER, leading=16)),
-    Paragraph("RIGHT PANEL\n280px wide\n\nCode Preview\nTest Status\nDeploy Button", s("RP", fontSize=9, fontName="Helvetica-Bold", textColor=WHITE, alignment=TA_CENTER, leading=16)),
-]], colWidths=[50*mm, 66*mm, 52*mm])
-layout.setStyle(TableStyle([
-    ("BACKGROUND",(0,0),(0,0),HexColor("#3730a3")),
-    ("BACKGROUND",(1,0),(1,0),VIOLET),
-    ("BACKGROUND",(2,0),(2,0),HexColor("#7c3aed")),
-    ("PADDING",(0,0),(-1,-1),14),
-    ("ALIGN",(0,0),(-1,-1),"CENTER"),
-    ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
-    ("GRID",(0,0),(-1,-1),2,WHITE),
-]))
-story.append(layout)
+story.append(s1t)
 story.append(Spacer(1,8))
 
-# Panel details
-panels = [
-    ("LEFT PANEL — Quick Commands + Test Status", [
-        ("Quick Commands", "7 pre-set buttons that fire instructions into chat automatically:\n1. Run Diagnostic\n2. Show All Entities\n3. Show All Functions\n4. What should I build next?\n5. Check Home Blueprint\n6. Check AI Hub Blueprint\n7. Clear Chat Session"),
-        ("Test Results Feed", "Last 5 TestLog records shown.\nEach row: test name + status badge.\nGreen = pass   Red = fail   Amber = pending\nClick any row to expand full result details."),
-    ]),
-    ("CENTRE PANEL — Chat Feed + Input", [
-        ("Top Status Bar", "Title: Command AI Hub  (Exo 2, 18px, bold, #5e50fb)\nStatus row:  Simpee (green dot if function live)  Copilot (blue dot)  Builder (grey dot standby)"),
-        ("User Messages", "Right-aligned. Background #5e50fb. White text. Montserrat 13px. Timestamp below in muted grey."),
-        ("AI Response — 3 Cards", "Card 1  ANALYSIS  (white bg, grey border)\nHeader: SIMPEE - Analysis  (violet, 10px uppercase)\nBody: what Simpee understood\n\nCard 2  SUGGESTION  (white bg)\nHeader: SIMPEE - Suggestion\nBody: recommended approach\n\nCard 3  CODE / BUILDER BRIEF  (bg #fffbeb, border #fcd34d)\nHeader: CODE READY\nBody: code or brief in dark code block\nButtons: [COPY]  [MARK AS TESTED]  [DEPLOY TO 5S PORTAL]"),
-        ("System Messages", "Centre-aligned. Italic. Grey. E.g. Session started / Diagnostic complete / Checkpoint 3 passed"),
-        ("Input Bar — pinned bottom", "Intent chips (pick one before typing):\nDiagnose   Build   Fix Bug   Connect   Brainstorm   Ask\n\nText input full width. SEND button (#5e50fb). Ctrl+Enter also sends.\n\nOn SEND:\n1. Save message to SChatMessage (sender_type = user)\n2. Show typing indicator (3 animated dots)\n3. POST to aiCommandCentre function\n4. Save AI response to SChatMessage (sender_type = ai)\n5. Render 3-card response"),
-    ]),
-    ("RIGHT PANEL — Code Preview + Deploy", [
-        ("Code Preview", "Background #1a1a1f (dark). Monospace white text. Shows most recent CODE READY content. Scrollable."),
-        ("Status Badge", "NOT TESTED  (amber) — default state\nTESTED PASS  (green) — after marking pass\nTESTED FAIL  (red) — after marking fail"),
-        ("Action Buttons", "[COPY CODE]  copies preview to clipboard\n\n[MARK AS TESTED]  opens modal: Pass or Fail + notes field. Saves to TestLog entity.\n\n[DEPLOY TO 5S PORTAL]  only active when status = TESTED PASS.\nShows confirmation: Are you sure? This updates the LIVE 5S Portal.\nOn confirm: posts builder brief to real portal NoticeBoard."),
-        ("Deploy Log", "Last 3 deploys shown at bottom. Timestamp + what was deployed."),
-    ]),
+# Scenario 2
+story.append(Paragraph("SCENARIO 2 — New Function Development (e.g. pingAllAI, invoice generator)",
+    s("SH", fontSize=9.5, fontName="Helvetica-Bold", textColor=DARK, spaceBefore=4, spaceAfter=3)))
+sc2 = [
+    ["Step","Who","What They Do","Passes To","Gate Check"],
+    ["1","STRATEGIST","Defines what the function needs to do. Inputs, outputs, edge cases, dependencies. Writes the spec.","THINK TANK","Is the spec complete? Any missed cases?"],
+    ["2","THINK TANK","Stress-tests the spec. What breaks it? What's the failure mode? Suggests improvements.","ARCHITECT","Is the design safe to build on?"],
+    ["3","ARCHITECT","Designs the function structure — data flow, entity writes, error handling, return format.","ENGINEER","Confirms the design is implementable."],
+    ["4","ENGINEER","Writes the function code. Clean, tested, documented.","STRATEGIST","Does the code match the spec exactly?"],
+    ["5","STRATEGIST","Reviews code against original spec. Confirms logic is correct.","VALIDATOR","Final security + Azure readiness check."],
+    ["6","VALIDATOR","Reviews code. Flags any issues. Returns green or sends back with notes.","DEPLOY","All green = function goes live."],
 ]
-for ptitle, psections in panels:
-    story.append(Paragraph(ptitle, s("PH", fontSize=10, fontName="Helvetica-Bold", textColor=DARK, spaceBefore=8, spaceAfter=3)))
-    for sname, sdesc in psections:
-        row = [[
-            Paragraph(sname, s("SN", fontSize=8, fontName="Helvetica-Bold", textColor=VIOLET)),
-            Paragraph(sdesc.replace("\n","<br/>"), s("SD", fontSize=8, fontName="Helvetica", textColor=BODY_TEXT, leading=14)),
-        ]]
-        st = Table(row, colWidths=[36*mm, 132*mm])
-        st.setStyle(TableStyle([
-            ("BACKGROUND",(0,0),(0,0),LAVENDER), ("BACKGROUND",(1,0),(1,0),WHITE),
-            ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
-            ("PADDING",(0,0),(-1,-1),7), ("VALIGN",(0,0),(-1,-1),"TOP"),
-        ]))
-        story.append(st)
-    story.append(Spacer(1,4))
+s2t = Table(sc2, colWidths=[8*mm, 22*mm, 60*mm, 22*mm, 56*mm])
+s2t.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),HexColor("#3730a3")),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),7),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("FONTNAME",(1,1),(1,-1),"Helvetica-Bold"),("TEXTCOLOR",(1,1),(1,-1),VIOLET),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,6),(-1,6),HexColor("#f0fdf4")),
+    ("TEXTCOLOR",(1,6),(1,6),GREEN),("FONTNAME",(1,6),(1,6),"Helvetica-Bold"),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),5),
+    ("ALIGN",(0,0),(0,-1),"CENTER"),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
+]))
+story.append(s2t)
+story.append(Spacer(1,8))
 
-# ── 8 CHECKPOINTS ──────────────────────────────────────────────
+# Scenario 3
+story.append(Paragraph("SCENARIO 3 — Error Diagnosis & Problem Solving (e.g. something breaks in production)",
+    s("SH", fontSize=9.5, fontName="Helvetica-Bold", textColor=DARK, spaceBefore=4, spaceAfter=3)))
+sc3 = [
+    ["Step","Who","What They Do","Passes To","Gate Check"],
+    ["1","ORCHESTRATOR","Receives the error. Routes to best team for diagnosis based on error type.","ENGINEER","Is routing correct for this error type?"],
+    ["2","ENGINEER","Reads the error, traces the code, isolates the root cause. Proposes fix.","STRATEGIST","Is the root cause correctly identified? Is the fix right?"],
+    ["3","STRATEGIST","Validates the diagnosis. Checks if fix solves root cause or just the symptom.","THINK TANK","Could this fix break anything else?"],
+    ["4","THINK TANK","Checks for downstream impact. Are there related issues? Is this a systemic problem?","ENGINEER","Safe to implement the fix?"],
+    ["5","ENGINEER","Applies the fix. Updates code and/or entities.","VALIDATOR","Final check before re-deploying."],
+    ["6","VALIDATOR","Reviews the fix. Confirms it's clean and safe.","DEPLOY","Re-deploy to 5S Portal."],
+]
+s3t = Table(sc3, colWidths=[8*mm, 22*mm, 60*mm, 22*mm, 56*mm])
+s3t.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),HexColor("#7c3aed")),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),7),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("FONTNAME",(1,1),(1,-1),"Helvetica-Bold"),("TEXTCOLOR",(1,1),(1,-1),VIOLET),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,6),(-1,6),HexColor("#f0fdf4")),
+    ("TEXTCOLOR",(1,6),(1,6),GREEN),("FONTNAME",(1,6),(1,6),"Helvetica-Bold"),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),5),
+    ("ALIGN",(0,0),(0,-1),"CENTER"),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
+]))
+story.append(s3t)
+story.append(Spacer(1,8))
+
+# Scenario 4
+story.append(Paragraph("SCENARIO 4 — Learning & Memory: How Connections Were Built, How to Simplify Going Forward",
+    s("SH", fontSize=9.5, fontName="Helvetica-Bold", textColor=DARK, spaceBefore=4, spaceAfter=3)))
+sc4 = [
+    ["Step","Who","What They Do","Passes To","Gate Check"],
+    ["1","ANALYST","After every deploy, writes a plain-English summary of what was built, how it was connected, what worked, what didn't.","STRATEGIST","Is the summary accurate and useful for future reference?"],
+    ["2","STRATEGIST","Extracts reusable patterns — if this connection worked, it can be templated for next time. Updates blueprint.","ARCHITECT","Can this pattern be standardised?"],
+    ["3","ARCHITECT","Turns proven patterns into reusable templates — entity schemas, function structures, deploy checklists.","ENGINEER","Are the templates correct and clean?"],
+    ["4","ENGINEER","Validates templates work in practice. Flags any edge cases.","ORCHESTRATOR","Ready to store in memory/blueprint?"],
+    ["5","ORCHESTRATOR","Routes the pattern to Simpee's memory + blueprint store. Available for all future sessions.","ALL","Team awareness — pattern is now part of the system."],
+]
+s4t = Table(sc4, colWidths=[8*mm, 22*mm, 62*mm, 22*mm, 54*mm])
+s4t.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),TEAL),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),7),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("FONTNAME",(1,1),(1,-1),"Helvetica-Bold"),("TEXTCOLOR",(1,1),(1,-1),VIOLET),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,5),(-1,5),HexColor("#f0fdf4")),
+    ("TEXTCOLOR",(1,5),(1,5),GREEN),("FONTNAME",(1,5),(1,5),"Helvetica-Bold"),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),5),
+    ("ALIGN",(0,0),(0,-1),"CENTER"),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
+]))
+story.append(s4t)
+story.append(Spacer(1,8))
+
+# Scenario 5
+story.append(Paragraph("SCENARIO 5 — Smooth Deploy with Testing & Simplification Going Forward",
+    s("SH", fontSize=9.5, fontName="Helvetica-Bold", textColor=DARK, spaceBefore=4, spaceAfter=3)))
+sc5 = [
+    ["Step","Who","What They Do","Passes To","Gate Check"],
+    ["1","ENGINEER","Writes the full test suite for the new feature. Runs it in Nexus Command staging app.","STRATEGIST","Are all 11 checkpoints covered?"],
+    ["2","STRATEGIST","Reviews test results. Identifies any checkpoint gaps. Confirms logic is tested end-to-end.","THINK TANK","Any failure scenarios we haven't tested?"],
+    ["3","THINK TANK","Stress-tests edge cases. Simulates failure modes. Confirms the system degrades gracefully.","VALIDATOR","Safe to deploy?"],
+    ["4","VALIDATOR","Final code review. Syntax, security, Azure readiness. Either returns green or sends back with notes.","DEPLOY","All 11 green = deploy to 5S Portal."],
+    ["5","ANALYST","Post-deploy: writes debrief. What was simplified vs previous version? What can be templated?","STRATEGIST","Update blueprint with learnings."],
+    ["6","STRATEGIST","Updates blueprint with simplified patterns. Every deploy makes the next one faster.","ORCHESTRATOR","Store in system memory."],
+]
+s5t = Table(sc5, colWidths=[8*mm, 22*mm, 62*mm, 22*mm, 54*mm])
+s5t.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),AZURE),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),7),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("FONTNAME",(1,1),(1,-1),"Helvetica-Bold"),("TEXTCOLOR",(1,1),(1,-1),VIOLET),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,5),(-1,5),HexColor("#eff6ff")),
+    ("BACKGROUND",(0,6),(-1,6),HexColor("#f0fdf4")),
+    ("TEXTCOLOR",(1,6),(1,6),GREEN),("FONTNAME",(1,6),(1,6),"Helvetica-Bold"),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),5),
+    ("ALIGN",(0,0),(0,-1),"CENTER"),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
+]))
+story.append(s5t)
+story.append(Spacer(1,10))
+
+# ── ROLE LOAD SUMMARY ─────────────────────────────────────────
 story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
-story.append(Paragraph("8 CHECKPOINTS — All Must Pass Before Deploying to 5S Portal",
-    s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
-story.append(Paragraph("Simpee runs these automatically when given the test app URL.",
-    s("Sub", fontSize=8, fontName="Helvetica", textColor=MUTED, spaceAfter=5)))
+story.append(Paragraph("ROLE LOAD SUMMARY — Who Appears Most in Real Scenarios",
+    s("H", fontSize=11, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=4)))
+story.append(Paragraph(
+    "Some roles carry more weight across multiple scenarios. This is by design — the best tool for the job gets used most.",
+    s("Sub", fontSize=8, fontName="Helvetica", textColor=MUTED, spaceAfter=6)))
 
-checks = [
-    ["#", "Checkpoint", "What Simpee Validates", "Result"],
-    ["1", "Page renders clean", "No console errors. All 3 panels visible on desktop.", ""],
-    ["2", "Message saves", "Sending a message creates a SChatMessage record in the entity.", ""],
-    ["3", "Function responds", "aiCommandCentre returns HTTP 200 with a valid response.", ""],
-    ["4", "3-card render", "AI response renders as 3 cards — not raw JSON text.", ""],
-    ["5", "Copy works", "COPY CODE button copies content to clipboard correctly.", ""],
-    ["6", "TestLog saves", "MARK AS TESTED creates a TestLog record with correct fields.", ""],
-    ["7", "Deploy gated", "DEPLOY button is disabled until status = TESTED PASS.", ""],
-    ["8", "Deploy posts to portal", "On confirm, a NoticeBoard record appears in live 5S Portal.", ""],
+load = [
+    ["Role","Scenarios Active In","Primary Responsibility Load","Notes"],
+    ["ORCHESTRATOR","1, 3, 4, 5","Routing + memory storage","Lighter load — coordinates, doesn't produce"],
+    ["RESEARCHER","1","Market research + data gathering","Scenario 1 only — but deep and critical"],
+    ["ANALYST","1, 4, 5","Summaries, briefs, post-deploy debriefs","Cross-cutting comms role — appears in learning loops"],
+    ["STRATEGIST","1, 2, 3, 4, 5","Spec validation, logic review, blueprint updates","Heaviest load — involved in almost everything"],
+    ["THINK TANK","1, 2, 3, 5","Deep dives, stress-testing, failure modes","Critical quality layer — never skipped on complex builds"],
+    ["ENGINEER","1, 2, 3, 5","Code writing, test suites, fix implementation","Core builder — all code flows through here"],
+    ["ARCHITECT","1, 2, 4","App/function design, template creation","Design-focused — builds the blueprints others implement"],
+    ["VALIDATOR","1, 2, 3, 5","Final gate on all deployments","Always last — every scenario ends here before deploy"],
 ]
-ct = Table(checks, colWidths=[10*mm, 44*mm, 94*mm, 20*mm])
-ct.setStyle(TableStyle([
-    ("BACKGROUND",(0,0),(-1,0),DARK), ("TEXTCOLOR",(0,0),(-1,0),WHITE),
+lt = Table(load, colWidths=[24*mm, 28*mm, 50*mm, 66*mm])
+lt.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
+    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+    ("FONTSIZE",(0,0),(-1,-1),8),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("FONTNAME",(0,1),(0,-1),"Helvetica-Bold"),
+    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
+    ("BACKGROUND",(0,4),(-1,4),HexColor("#fff7ed")),
+    ("BACKGROUND",(0,8),(-1,8),HexColor("#eff6ff")),
+    ("TEXTCOLOR",(0,4),(0,4),ORANGE),
+    ("TEXTCOLOR",(0,8),(0,8),AZURE),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),6),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
+]))
+story.append(lt)
+story.append(Spacer(1,10))
+
+# ── GOLDEN RULES ───────────────────────────────────────────────
+story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
+story.append(Paragraph("GOLDEN RULES — Non-Negotiable",
+    s("H", fontSize=11, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
+rules = [
+    ["#","Rule","Detail"],
+    ["1","No solo deployments","No AI approves its own output. Every critical stage has a gatekeeper."],
+    ["2","VALIDATOR is always last","Copilot reviews all code before any deploy. Cannot be skipped."],
+    ["3","Blueprint before code","Any change — Hub or 5S Portal — needs blueprint update first."],
+    ["4","Diagnose before build","Simpee runs full diagnostic before any implementation begins."],
+    ["5","Gate must pass","Gatekeeper flags = back to primary. No overriding."],
+    ["6","Roles are fixed","VALIDATOR does not generate code. ENGINEER does not validate security."],
+    ["7","Duty names only in UI","No model names shown. Duty names only. Model name in tooltip."],
+    ["8","All 11 checkpoints","Every feature must pass all 11 before going live."],
+    ["9","Every deploy generates a debrief","ANALYST writes post-deploy notes. STRATEGIST updates blueprint. System gets smarter every time."],
+]
+rlt = Table(rules, colWidths=[8*mm, 44*mm, 116*mm])
+rlt.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,0),DARK),("TEXTCOLOR",(0,0),(-1,0),WHITE),
     ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
     ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
     ("FONTSIZE",(0,0),(-1,-1),8.5),
-    ("TEXTCOLOR",(0,1),(0,-1),VIOLET), ("FONTNAME",(0,1),(0,-1),"Helvetica-Bold"),
-    ("TEXTCOLOR",(1,1),(-1,-1),BODY_TEXT),
+    ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
+    ("FONTNAME",(0,1),(0,-1),"Helvetica-Bold"),("TEXTCOLOR",(0,1),(0,-1),VIOLET),
+    ("FONTNAME",(1,1),(1,-1),"Helvetica-Bold"),
     ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
-    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL), ("PADDING",(0,0),(-1,-1),7),
-    ("ALIGN",(0,0),(0,-1),"CENTER"), ("ALIGN",(3,0),(3,-1),"CENTER"),
+    ("BACKGROUND",(0,9),(-1,9),HexColor("#fffbeb")),
+    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
+    ("PADDING",(0,0),(-1,-1),7),
+    ("ALIGN",(0,0),(0,-1),"CENTER"),
+    ("VALIGN",(0,0),(-1,-1),"TOP"),
 ]))
-story.append(ct)
-story.append(Spacer(1,10))
-
-# ── BUILDER STEPS ──────────────────────────────────────────────
-story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
-story.append(Paragraph("STEP-BY-STEP BUILDER INSTRUCTIONS",
-    s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
-
-steps = [
-    ("1", "Create new Base44 app", "Name it exactly: Command AI Hub\nDo NOT work inside the existing 5S Portal."),
-    ("2", "Add entity: SChatMessage", "Fields: sender (string), sender_type (string), message (string), timestamp (string), session_id (string), read (boolean)"),
-    ("3", "Add entity: TestLog", "Fields: test_name (string), status (string), result (string), tested_at (string), fixed (boolean)"),
-    ("4", "Paste to builder AI", "Use this exact prefix:\n'Build CommandAIHub.jsx. 3-panel layout: left 220px quick commands + test log, centre flex chat feed + input bar, right 280px code preview + deploy. SIMPLEX-ITY design: bg #e8e6fe, white cards, #5e50fb accent, Exo 2 bold headlines, Montserrat body. No emoji. Text symbols only. Then paste the 3-panel layout section of this blueprint.'"),
-    ("5", "Wire the function", "In the input bar ON SEND handler:\nPOST https://simpee-62ac123d.base44.app/functions/aiCommandCentre\nBody: { instruction: '[INTENT] message', posted_by: 'Kieran' }"),
-    ("6", "Share app URL with Simpee", "Once the app renders, send the URL to Simpee via WhatsApp or S-Chat. Simpee runs all 8 checkpoints and reports results."),
-    ("7", "Fix failing checkpoints", "Simpee tells you exactly what failed and provides the fix code."),
-    ("8", "Deploy when all green", "Simpee generates final CommandAIHub.jsx to paste into the live 5S Portal. Home page gets the AI Hub banner button pointing to this page."),
-]
-for num, title, desc in steps:
-    bg = VIOLET if int(num) % 2 == 1 else HexColor("#3730a3")
-    row = [[
-        Paragraph(num, s("N", fontSize=11, fontName="Helvetica-Bold", textColor=WHITE, alignment=TA_CENTER)),
-        Paragraph(f"<b>{title}</b><br/>{desc.replace(chr(10),'<br/>')}", s("D", fontSize=8.5, fontName="Helvetica", textColor=BODY_TEXT, leading=14)),
-    ]]
-    rt = Table(row, colWidths=[16*mm, 152*mm])
-    rt.setStyle(TableStyle([
-        ("BACKGROUND",(0,0),(0,0),bg),
-        ("BACKGROUND",(1,0),(1,0), WHITE if int(num)%2==1 else LAVENDER),
-        ("GRID",(0,0),(-1,-1),0.3,NEUTRAL),
-        ("PADDING",(0,0),(-1,-1),8), ("VALIGN",(0,0),(-1,-1),"TOP"),
-        ("ALIGN",(0,0),(0,0),"CENTER"),
-    ]))
-    story.append(rt)
-
-story.append(Spacer(1,10))
-
-# ── DESIGN SYSTEM QUICK REF ────────────────────────────────────
-story.append(HRFlowable(width="100%", thickness=1, color=VIOLET, spaceAfter=8))
-story.append(Paragraph("DESIGN SYSTEM QUICK REFERENCE",
-    s("H", fontSize=12, fontName="Helvetica-Bold", textColor=VIOLET, spaceAfter=5)))
-ds = [
-    ["Token","Value","Usage"],
-    ["Background","#e8e6fe","Page bg (Lavender Wash)"],
-    ["Card / Panel","#ffffff","All cards, chat bubbles (AI), panels"],
-    ["Left Panel bg","#f5f4fe","Slightly tinted white"],
-    ["Accent Violet","#5e50fb","Buttons, active states, user bubbles, dots"],
-    ["Soft Lilac","#bab4fd","Borders, secondary elements"],
-    ["Body Text","#1a1a1f","All main text"],
-    ["Muted Text","#9896ad","Timestamps, labels, secondary info"],
-    ["Code Background","#1a1a1f","Dark code preview panel"],
-    ["Code Text","#e8e6fe","Text inside code panel"],
-    ["Brief Card bg","#fffbeb","CODE READY response card"],
-    ["Brief Card border","#fcd34d","Border of CODE READY card"],
-    ["Headline Font","Exo 2 / Exo, bold","All headings, section titles"],
-    ["Body Font","Montserrat","All body text, inputs, chat"],
-    ["Border Radius","12-14px cards / 8px buttons","Consistent rounding"],
-    ["Icons","Text symbols only: + checkmark circle square","NO emoji NO cartoon"],
-]
-dst = Table(ds, colWidths=[38*mm, 40*mm, 90*mm])
-dst.setStyle(TableStyle([
-    ("BACKGROUND",(0,0),(-1,0),DARK), ("TEXTCOLOR",(0,0),(-1,0),WHITE),
-    ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
-    ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
-    ("FONTSIZE",(0,0),(-1,-1),8), ("TEXTCOLOR",(0,1),(-1,-1),BODY_TEXT),
-    ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE,LAVENDER]),
-    ("GRID",(0,0),(-1,-1),0.3,NEUTRAL), ("PADDING",(0,0),(-1,-1),6),
-]))
-story.append(dst)
+story.append(rlt)
 story.append(Spacer(1,8))
 
 # ── FOOTER ─────────────────────────────────────────────────────
 ft = Table([[
-    Paragraph("Command AI Hub · SIMPLEX-ITY · 5S Portal · Confidential", s("F1", fontSize=7, fontName="Helvetica", textColor=MUTED)),
-    Paragraph(f"Generated by Simpee · {today} · Version 1.0", s("F2", fontSize=7, fontName="Helvetica", textColor=MUTED, alignment=TA_RIGHT)),
-]], colWidths=[90*mm, 78*mm])
+    Paragraph("Command AI Hub v1.2.1 FINAL · SIMPLEX-ITY · Confidential", s("F1", fontSize=7, fontName="Helvetica", textColor=MUTED)),
+    Paragraph(f"Kieran Li + Simpee + Edge · {today} · FINAL", s("F2", fontSize=7, fontName="Helvetica-Bold", textColor=VIOLET, alignment=TA_RIGHT)),
+]], colWidths=[100*mm, 68*mm])
 ft.setStyle(TableStyle([("TOPPADDING",(0,0),(-1,-1),8),("LINEABOVE",(0,0),(-1,0),0.5,NEUTRAL)]))
 story.append(ft)
 
 doc.build(story)
-print("PDF built OK")
+print("PDF built OK — v1.2.1 FINAL functional flows")
