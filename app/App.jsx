@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Dashboard from "./pages/Dashboard";
+import AICommandCentrePage from "./pages/AICommandCentrePage";
 import BrandsPage from "./pages/BrandsPage";
 import InfluencersPage from "./pages/InfluencersPage";
 import CampaignsPage from "./pages/CampaignsPage";
@@ -14,7 +15,6 @@ import ExpensesPage from "./pages/ExpensesPage";
 import NotesPage from "./pages/NotesPage";
 import InvoicePage from "./pages/InvoicePage";
 
-// SIMPLEX-ITY Design System — extracted from simplex-ity.fluentlab.co
 const BRAND = {
   primaryLilac: "#8c82fc",
   accentViolet: "#5e50fb",
@@ -29,19 +29,20 @@ const BRAND = {
 
 const NAV = [
   { id: "dashboard", label: "Dashboard", icon: "◈" },
+  { id: "ai-command", label: "AI Command", icon: "⌘" },
   { divider: true, label: "OPERATIONS" },
   { id: "compliance", label: "Compliance", icon: "✓" },
-  { id: "expenses", label: "Finance", icon: "💰" },
-  { id: "invoices", label: "Invoices", icon: "🧾" },
-  { id: "documents", label: "Documents", icon: "📁" },
-  { id: "vault", label: "Vault", icon: "🔐" },
+  { id: "expenses", label: "Finance", icon: "◎" },
+  { id: "invoices", label: "Invoices", icon: "▤" },
+  { id: "documents", label: "Documents", icon: "▣" },
+  { id: "vault", label: "Vault", icon: "◉" },
   { id: "notes", label: "Notes", icon: "✎" },
   { divider: true, label: "PLATFORM" },
   { id: "brands", label: "Brands", icon: "◉" },
   { id: "influencers", label: "Influencers", icon: "★" },
-  { id: "campaigns", label: "Campaigns", icon: "📣" },
-  { id: "calendar", label: "Calendar", icon: "📅" },
-  { id: "revenue", label: "Revenue", icon: "📈" },
+  { id: "campaigns", label: "Campaigns", icon: "▶" },
+  { id: "calendar", label: "Calendar", icon: "▦" },
+  { id: "revenue", label: "Revenue", icon: "▲" },
   { divider: true, label: "BUILD" },
   { id: "criticalpath", label: "Critical Path", icon: "→" },
   { id: "build", label: "Build Tracker", icon: "⚙" },
@@ -116,26 +117,45 @@ export default function App() {
               }}>{item.label}</div>
             );
             const isActive = page === item.id;
+            const isCommand = item.id === "ai-command";
             return (
               <button key={item.id} onClick={() => setPage(item.id)} style={{
                 display: "flex", alignItems: "center", gap: 9,
                 width: "100%", padding: "8px 12px",
-                border: "none", cursor: "pointer",
-                background: isActive ? BRAND.lavenderWash : "transparent",
-                color: isActive ? BRAND.accentViolet : BRAND.textSecondary,
-                fontSize: 13, fontWeight: isActive ? 600 : 400,
+                border: isCommand ? `1.5px solid ${BRAND.softLilac}` : "none",
+                cursor: "pointer",
+                background: isActive
+                  ? BRAND.lavenderWash
+                  : isCommand
+                    ? "rgba(94,80,251,0.04)"
+                    : "transparent",
+                color: isActive ? BRAND.accentViolet : isCommand ? BRAND.accentViolet : BRAND.textSecondary,
+                fontSize: 13, fontWeight: isActive || isCommand ? 600 : 400,
                 borderRadius: 8,
                 transition: "all 0.15s",
                 textAlign: "left",
-                marginBottom: 1,
+                marginBottom: isCommand ? 6 : 1,
+                marginTop: isCommand ? 2 : 0,
                 outline: "none",
               }}>
                 <span style={{
                   fontSize: 13,
                   width: 20, textAlign: "center",
-                  opacity: isActive ? 1 : 0.65,
+                  opacity: isActive ? 1 : 0.75,
                 }}>{item.icon}</span>
                 <span style={{ whiteSpace: "nowrap" }}>{item.label}</span>
+                {isCommand && !isActive && (
+                  <span style={{
+                    marginLeft: "auto",
+                    fontSize: 9,
+                    background: BRAND.accentViolet,
+                    color: BRAND.white,
+                    padding: "1px 6px",
+                    borderRadius: 10,
+                    fontWeight: 700,
+                    letterSpacing: 0.3,
+                  }}>AI</span>
+                )}
                 {isActive && (
                   <span style={{
                     marginLeft: "auto",
@@ -149,15 +169,32 @@ export default function App() {
           })}
         </nav>
 
+        {/* Simpee status footer */}
+        <div style={{
+          padding: "10px 14px",
+          borderTop: `1px solid ${BRAND.neutralGrey}`,
+          flexShrink: 0,
+          display: "flex", alignItems: "center", gap: 8,
+          background: "rgba(94,80,251,0.03)",
+        }}>
+          <div style={{
+            width: 7, height: 7, borderRadius: "50%",
+            background: "#22c55e",
+            boxShadow: "0 0 0 3px rgba(34,197,94,0.2)",
+            flexShrink: 0,
+          }} />
+          <div style={{ fontSize: 11, color: BRAND.textMuted, fontFamily: "Montserrat, sans-serif" }}>
+            Simpee online · Copilot ready
+          </div>
+        </div>
+
         {/* Footer */}
         <div style={{
           padding: "14px 20px",
           borderTop: `1px solid ${BRAND.neutralGrey}`,
           flexShrink: 0,
         }}>
-          <div style={{
-            display: "flex", alignItems: "center", gap: 9,
-          }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
             <div style={{
               width: 30, height: 30, borderRadius: "50%",
               background: BRAND.lavenderWash,
@@ -193,7 +230,6 @@ export default function App() {
             borderRadius: 7, lineHeight: 1, transition: "all 0.15s",
           }}>☰</button>
 
-          {/* Breadcrumb */}
           <div style={{ display: "flex", alignItems: "center", gap: 6, flex: 1 }}>
             <span style={{ color: BRAND.textMuted, fontSize: 12 }}>5S Portal</span>
             <span style={{ color: BRAND.neutralGrey, fontSize: 12 }}>›</span>
@@ -205,7 +241,6 @@ export default function App() {
             </span>
           </div>
 
-          {/* Status pill */}
           <div style={{
             fontSize: 11, color: BRAND.accentViolet,
             background: BRAND.lavenderWash,
@@ -220,6 +255,7 @@ export default function App() {
         {/* Page Content */}
         <div style={{ flex: 1, overflow: "auto" }}>
           {page === "dashboard"    && <Dashboard setPage={setPage} />}
+          {page === "ai-command"   && <AICommandCentrePage />}
           {page === "compliance"   && <CompliancePage />}
           {page === "expenses"     && <ExpensesPage />}
           {page === "invoices"     && <InvoicePage />}
