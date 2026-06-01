@@ -1,17 +1,50 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
-const REAL_PORTAL_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraWVyYW5ANXNlbnNlcy5nbG9iYWwiLCJleHAiOjE3ODc0MDg1NTMsImlhdCI6MTc3OTYzMjU1M30.feQst8q8CvGtFAlpy-Yl6Gp7qKVw84FPsbrK2oUAhFg";
-const REAL_PORTAL_URL = "https://app.base44.com/api/apps/69edd16e877d6e4391ad74bd";
+// ─── AI HUB ONLY — All writes go to Nexus Command. Never the 5S Portal. ──────
+const NEXUS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraWVyYW5ANXNlbnNlcy5nbG9iYWwiLCJleHAiOjE3ODc0MDg1NTMsImlhdCI6MTc3OTYzMjU1M30.feQst8q8CvGtFAlpy-Yl6Gp7qKVw84FPsbrK2oUAhFg";
+const NEXUS_URL = "https://app.base44.com/api/apps/6a1c237bd9f5ff04b6ac7a73";
 
-async function postToRealPortal(notice: object) {
-  return fetch(`${REAL_PORTAL_URL}/entities/Notice`, {
+// ─── Azure OpenAI config ──────────────────────────────────────────────────────
+const AZURE_ENDPOINT = "https://kiera-mpv1nhzc-eastus2.cognitiveservices.azure.com/";
+const AZURE_DEPLOYMENT = "gpt-4o";
+const AZURE_API_VERSION = "2025-01-01-preview";
+
+async function postToNexus(entity: string, data: object) {
+  const res = await fetch(`${NEXUS_URL}/entities/${entity}`, {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${REAL_PORTAL_TOKEN}`,
+      "Authorization": `Bearer ${NEXUS_TOKEN}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(notice),
+    body: JSON.stringify(data),
   });
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+async function callAzureOpenAI(systemPrompt: string, userPrompt: string, apiKey: string): Promise<string> {
+  const url = `${AZURE_ENDPOINT}openai/deployments/${AZURE_DEPLOYMENT}/chat/completions?api-version=${AZURE_API_VERSION}`;
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "api-key": apiKey,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt },
+      ],
+      max_tokens: 1500,
+      temperature: 0.3,
+    }),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Azure OpenAI error: ${res.status} — ${err}`);
+  }
+  const data = await res.json();
+  return data.choices?.[0]?.message?.content || "";
 }
 
 Deno.serve(async (req) => {
@@ -60,59 +93,56 @@ Deno.serve(async (req) => {
       } catch (e) {}
     }
 
-    // Step 2: Call OpenAI GPT-4o if key is available
-    const openaiKey = Deno.env.get("OPENAI_API_KEY") || "";
+    // Step 2: Call Azure OpenAI GPT-4o
+    const azureKey = Deno.env.get("AZURE_OPENAI_API_KEY_3") || "";
     let answer = "";
     let modelUsed = "none";
 
-    if (openaiKey) {
-      const systemPrompt = `You are Simpee, the AI agent for SIMPLEX-ITY (5S Portal, Hong Kong).
-You assist with React/JSX coding, TypeScript, Deno backend functions, and business decisions.
+    const systemPrompt = `You are the VALIDATOR — the final quality gate for the Nexus Command AI Hub (SIMPLEX-ITY, Hong Kong).
+Your role is to review code, plans, and decisions proposed by the AI team before any deployment.
+You are strict, thorough, and impartial. You never approve your own work.
 Portal stack: React + Base44. Design: #e8e6fe bg, #5e50fb accent, Exo 2/Montserrat fonts.
-Give concise, actionable answers. For code: complete ready-to-paste solutions only.`;
+Give a structured VALIDATOR REPORT with: VERDICT (APPROVED / REJECTED / NEEDS REVISION), FINDINGS, and RECOMMENDATIONS.`;
 
-      const userPrompt = question
-        + (context ? `\n\nContext: ${context}` : "")
-        + searchContext;
+    const userPrompt = question
+      + (context ? `\n\nContext: ${context}` : "")
+      + searchContext;
 
-      const aiRes = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${openaiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "gpt-4o",
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: userPrompt },
-          ],
-          max_tokens: 1500,
-          temperature: 0.3,
-        }),
-      });
-
-      if (aiRes.ok) {
-        const aiData = await aiRes.json();
-        answer = aiData.choices?.[0]?.message?.content || "";
-        modelUsed = "gpt-4o";
+    if (azureKey) {
+      try {
+        answer = await callAzureOpenAI(systemPrompt, userPrompt, azureKey);
+        modelUsed = "azure-gpt-4o (VALIDATOR)";
+      } catch (e) {
+        console.error("Azure OpenAI call failed:", e);
       }
     }
 
-    // Step 3: Fallback if no key
+    // Step 3: Fallback if Azure fails
     if (!answer) {
-      answer = `Copilot is standing by.\n\nYour question: "${question}"\nM365 search: ${searchContext ? "context found ✅" : "no results"}\n\nReady to answer with full GPT-4o power once you add your OpenAI key tomorrow.`;
+      answer = `VALIDATOR REPORT\n\nVERDICT: PENDING\n\nFINDINGS:\nYour question: "${question}"\nM365 search: ${searchContext ? "context found ✅" : "no results"}\nAzure OpenAI: not responding — check AZURE_OPENAI_API_KEY_3.\n\nRECOMMENDATIONS:\nRecheck Azure key and retry.`;
       modelUsed = "pending";
     }
 
-    // Step 4: Post the response to AI Hub inbox
-    await postToRealPortal({
-      title: `Copilot — ${new Date().toLocaleTimeString("en-HK", { timeZone: "Asia/Hong_Kong" })}`,
-      content: `Q: ${question}\n\nA: ${answer.slice(0, 800)}`,
-      posted_by: "Simpee + Copilot",
-      section: "code_ready",
-      type: "info",
-      pinned: true,
+    // Step 4: Post ONLY to Nexus Command — AI Hub is the single source of truth
+    await postToNexus("SChatMessage", {
+      sender: "VALIDATOR (Copilot)",
+      sender_type: "ai",
+      message: `Q: ${question}\n\n${answer}`,
+      timestamp: new Date().toISOString(),
+      session_id: "copilot-validation",
+      read: false,
+    });
+
+    // Step 5: Log to TestLog in Nexus Command
+    await postToNexus("TestLog", {
+      test_name: question.slice(0, 60),
+      status: answer.includes("APPROVED") ? "passed" : answer.includes("REJECTED") ? "failed" : "review",
+      result: answer.slice(0, 500),
+      tested_at: new Date().toISOString(),
+      validator: "VALIDATOR (Azure GPT-4o)",
+      simpee_validated: false,
+      copilot_validated: true,
+      fixed: answer.includes("APPROVED"),
     });
 
     return Response.json({
