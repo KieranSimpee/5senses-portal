@@ -105,14 +105,14 @@ Give concise, actionable answers. For code: complete ready-to-paste solutions on
       modelUsed = "pending";
     }
 
-    // Step 4: Post the response to real portal S-Chat
+    // Step 4: Post the response to AI Hub inbox
     await postToRealPortal({
       title: `Copilot — ${new Date().toLocaleTimeString("en-HK", { timeZone: "Asia/Hong_Kong" })}`,
       content: `Q: ${question}\n\nA: ${answer.slice(0, 800)}`,
       posted_by: "Simpee + Copilot",
-      section: "schat",
+      section: "code_ready",
       type: "info",
-      pinned: false,
+      pinned: true,
     });
 
     return Response.json({

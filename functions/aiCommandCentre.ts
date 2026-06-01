@@ -131,7 +131,7 @@ Stack: React + Base44
 Entities: ComplianceItem, Expense, Project, Milestone, Note, TeamMember, Document, 
           Brand, Influencer, Campaign, CampaignInfluencer, VaultItem, Notice, 
           Invoice, HRRecord, BankAccount, TradeLog, BuildProject, BuildCheckpoint,
-          CalendarEvent, RevenueRecord, ActivityLog, SChatMessage, PropertyListing, NoticeBoard,
+          CalendarEvent, RevenueRecord, ActivityLog, PropertyListing, NoticeBoard,
           SandboxProject, ProjectFile, AIConnector, TestLog, azureConnectorStub, TeamLog
 Design tokens (immutable): ${JSON.stringify(DESIGN_TOKENS)}
 Import pattern: import { EntityName } from '@/api/entities'
@@ -213,19 +213,8 @@ Instruction logged: "${instruction}" — awaiting OpenAI key for full code gener
       pinned: true,
     });
 
-    // ── STEP 7: Mirror to SChatMessage ───────────────────────────────────────
-    try {
-      await postToApp(REAL_PORTAL_URL, "SChatMessage", {
-        sender: "Simpee",
-        sender_type: "ai",
-        message: `[AI Command Centre] ${statusEmoji}\n\n${analysis}\n\n${solution}`,
-        timestamp: new Date().toISOString(),
-        session_id: `cmd-${Date.now()}`,
-        read: false,
-      });
-    } catch (e) {}
 
-    // ── STEP 8: Auto-write TestLog telemetry to Nexus Command ─────────────────
+    // ── STEP 7: Auto-write TestLog telemetry to Nexus Command ─────────────────
     try {
       await postToApp(NEXUS_URL, "TestLog", {
         test_name: instruction.slice(0, 50),
