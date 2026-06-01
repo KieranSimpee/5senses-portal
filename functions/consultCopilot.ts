@@ -1,27 +1,46 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
 // ─── AI HUB ONLY — All writes go to Nexus Command. Never the 5S Portal. ──────
-const NEXUS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraWVyYW5ANXNlbnNlcy5nbG9iYWwiLCJleHAiOjE3ODc0MDg1NTMsImlhdCI6MTc3OTYzMjU1M30.feQst8q8CvGtFAlpy-Yl6Gp7qKVw84FPsbrK2oUAhFg";
+// SEC-001 FIX (CodeRabbit): Token moved to env var — never hardcoded in source.
+// SEC-002 FIX (CodeRabbit): Azure endpoint moved to env var.
+
+const NEXUS_TOKEN = Deno.env.get("NEXUS_PORTAL_TOKEN") || "";
 const NEXUS_URL = "https://app.base44.com/api/apps/6a1c237bd9f5ff04b6ac7a73";
 
-// ─── Azure OpenAI config ──────────────────────────────────────────────────────
-const AZURE_ENDPOINT = "https://kiera-mpv1nhzc-eastus2.cognitiveservices.azure.com/";
+const AZURE_ENDPOINT = Deno.env.get("AZURE_OPENAI_ENDPOINT") || "https://kiera-mpv1nhzc-eastus2.cognitiveservices.azure.com/";
 const AZURE_DEPLOYMENT = "gpt-4o";
 const AZURE_API_VERSION = "2025-01-01-preview";
 
-async function postToNexus(entity: string, data: object) {
-  const res = await fetch(`${NEXUS_URL}/entities/${entity}`, {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${NEXUS_TOKEN}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  const text = await res.text();
-  return text ? JSON.parse(text) : null;
+// ─── TYPE-001 FIX (CodeRabbit): Shared typed M365 interface ──────────────────
+interface M365Hit {
+  resource?: { subject?: string; name?: string };
+  summary?: string;
 }
 
+// ─── ERR-002 FIX (CodeRabbit): postToNexus with error surfacing ──────────────
+async function postToNexus(entity: string, data: object): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const res = await fetch(`${NEXUS_URL}/entities/${entity}`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${NEXUS_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error(`postToNexus(${entity}) failed: ${res.status} — ${errText}`);
+      return { ok: false, error: `${res.status}: ${errText}` };
+    }
+    return { ok: true };
+  } catch (e: any) {
+    console.error(`postToNexus(${entity}) exception:`, e);
+    return { ok: false, error: e.message };
+  }
+}
+
+// ─── STYLE-001 FIX (CodeRabbit): max_tokens raised to 2000 for full reports ──
 async function callAzureOpenAI(systemPrompt: string, userPrompt: string, apiKey: string): Promise<string> {
   const url = `${AZURE_ENDPOINT}openai/deployments/${AZURE_DEPLOYMENT}/chat/completions?api-version=${AZURE_API_VERSION}`;
   const res = await fetch(url, {
@@ -35,7 +54,7 @@ async function callAzureOpenAI(systemPrompt: string, userPrompt: string, apiKey:
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt },
       ],
-      max_tokens: 1500,
+      max_tokens: 2000,
       temperature: 0.3,
     }),
   });
@@ -57,14 +76,14 @@ Deno.serve(async (req) => {
       return Response.json({ error: "No question provided" }, { status: 400 });
     }
 
-    // Step 1: Get M365 token and search for relevant context
+    // ── Step 1: Get M365 token and search for relevant context ────────────────
     let m365Token = "";
     let searchContext = "";
 
     try {
       const connection = await base44.asServiceRole.connectors.getConnection("outlook");
       m365Token = connection?.access_token || "";
-    } catch (e) {}
+    } catch (_e) {}
 
     if (m365Token) {
       try {
@@ -84,16 +103,17 @@ Deno.serve(async (req) => {
           }),
         });
         const searchData = await searchRes.json();
-        const hits = searchData?.value?.[0]?.hitsContainers?.[0]?.hits || [];
+        // TYPE-001 FIX: typed hits
+        const hits: M365Hit[] = searchData?.value?.[0]?.hitsContainers?.[0]?.hits || [];
         if (hits.length > 0) {
-          searchContext = "\n\nRelevant M365 docs:\n" + hits.map((h: any) =>
+          searchContext = "\n\nRelevant M365 docs:\n" + hits.map((h) =>
             `- ${h.resource?.subject || h.resource?.name || "item"}: ${h.summary || ""}`
           ).join("\n");
         }
-      } catch (e) {}
+      } catch (_e) {}
     }
 
-    // Step 2: Call Azure OpenAI GPT-4o
+    // ── Step 2: Call Azure OpenAI GPT-4o ──────────────────────────────────────
     const azureKey = Deno.env.get("AZURE_OPENAI_API_KEY_3") || "";
     let answer = "";
     let modelUsed = "none";
@@ -117,14 +137,19 @@ Give a structured VALIDATOR REPORT with: VERDICT (APPROVED / REJECTED / NEEDS RE
       }
     }
 
-    // Step 3: Fallback if Azure fails
+    // ── Step 3: Fallback if Azure fails ───────────────────────────────────────
     if (!answer) {
       answer = `VALIDATOR REPORT\n\nVERDICT: PENDING\n\nFINDINGS:\nYour question: "${question}"\nM365 search: ${searchContext ? "context found ✅" : "no results"}\nAzure OpenAI: not responding — check AZURE_OPENAI_API_KEY_3.\n\nRECOMMENDATIONS:\nRecheck Azure key and retry.`;
       modelUsed = "pending";
     }
 
-    // Step 4: Post ONLY to Nexus Command — AI Hub is the single source of truth
-    await postToNexus("SChatMessage", {
+    // ── LOG-002 FIX (CodeRabbit): copilot_validated only true on real APPROVED ─
+    const isApproved = answer.includes("VERDICT: APPROVED") || answer.includes("APPROVED\n");
+    const isRejected = answer.includes("VERDICT: REJECTED") || answer.includes("REJECTED\n");
+    const validationStatus = isApproved ? "passed" : isRejected ? "failed" : "review";
+
+    // ── Step 4: Write ONLY to Nexus Command — with error handling (ERR-002) ───
+    const chatWrite = await postToNexus("SChatMessage", {
       sender: "VALIDATOR (Copilot)",
       sender_type: "ai",
       message: `Q: ${question}\n\n${answer}`,
@@ -132,24 +157,31 @@ Give a structured VALIDATOR REPORT with: VERDICT (APPROVED / REJECTED / NEEDS RE
       session_id: "copilot-validation",
       read: false,
     });
+    if (!chatWrite.ok) console.error("SChatMessage write failed:", chatWrite.error);
 
-    // Step 5: Log to TestLog in Nexus Command
-    await postToNexus("TestLog", {
+    const logWrite = await postToNexus("TestLog", {
       test_name: question.slice(0, 60),
-      status: answer.includes("APPROVED") ? "passed" : answer.includes("REJECTED") ? "failed" : "review",
-      result: answer.slice(0, 500),
+      status: validationStatus,
+      result: answer.slice(0, 800),
       tested_at: new Date().toISOString(),
       validator: "VALIDATOR (Azure GPT-4o)",
       simpee_validated: false,
-      copilot_validated: true,
-      fixed: answer.includes("APPROVED"),
+      // LOG-002 FIX: only true on genuine APPROVED verdict
+      copilot_validated: isApproved,
+      fixed: isApproved,
     });
+    if (!logWrite.ok) console.error("TestLog write failed:", logWrite.error);
 
     return Response.json({
       success: true,
       answer,
       m365_grounded: searchContext.length > 0,
       model: modelUsed,
+      verdict: isApproved ? "APPROVED" : isRejected ? "REJECTED" : "NEEDS REVISION",
+      write_errors: [
+        !chatWrite.ok ? `SChatMessage: ${chatWrite.error}` : null,
+        !logWrite.ok ? `TestLog: ${logWrite.error}` : null,
+      ].filter(Boolean),
     });
 
   } catch (error: any) {
