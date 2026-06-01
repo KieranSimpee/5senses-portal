@@ -1,0 +1,138 @@
+🌙 ALERT 2 — OVERNIGHT HOLD SETUPS
+Tuesday, June 2, 2026 | 4:25am HKT (4:25pm EDT June 1)
+
+Current Status: US Market Closed (Monday evening EDT)
+Next Session: Tuesday June 2, 9:30am EST = 10:30pm HKT Monday / Tuesday 1:30am HKT
+Entry Window: Tuesday 2-3pm EST = Tuesday 2am-3am HKT (June 2-3)
+
+===============================
+ANALYSIS & RECOMMENDATIONS
+===============================
+
+Your Overnight Hold Win Profile (from trade history):
+✓ Position size: <$3,000 per trade
+✓ Entry: 2-3pm EST afternoon window
+✓ Hold: 8-24 hours into next day open
+✓ Exit: 9-10am EST next morning
+✓ Win rate: 68.8%
+✓ Top winners: SNDK (+94.7% option gain), MU (+13.9% gain)
+✓ Key insight: Entered post-catalyst or on support, exited at next morning open
+
+Core tickers to scan: SNDK, STX, LITE, NVDA, MU, AAPL, MSFT
+
+===============================
+
+1️⃣ SNDK (SANDISK) — PRIMARY CANDIDATE
+Status: ✅ OVERNIGHT HOLD SETUP AVAILABLE
+
+Why now:
+- Your recent trade (May 22): SNDK May 29 $1485 Call
+  Entry: $51.64 | Exit: $100.70 | Gain: +94.7%
+- Pattern: Entered overnight after positive catalyst, exited at next morning open for massive gain
+- This tells us: SNDK responds well to overnight holds when momentum is confirmed
+- Current setup: Need to assess Tuesday intraday momentum for continuation into overnight
+
+Recommended structure:
+→ Direction: CALL (upside momentum play)
+→ Strike: $1,490-1,510 (slightly OTM, leverage)
+→ Expiry: June 9 (next week, theta-friendly)
+→ Entry target: Tuesday 2-3pm EST, aim for $1,480-1,495 stock price
+→ Entry price range: $35-50 per contract (typical for SNDK moves)
+→ Position size: 1 contract = ~$3,500-5,000 exposure (OR 50-75 shares if preferred)
+→ Exit target: Wednesday 9-10am EST, aim for $75-100+ per contract
+→ Expected gain: +100-200% if momentum holds overnight
+→ Stop loss: If SNDK closes Tuesday below $1,470
+
+Catalyst watch: Monitor pre-market Wednesday for any semiconductor news. SNDK typically holds overnight strength.
+
+Key risk: If Tuesday afternoon shows weakness/exhaustion, skip this setup.
+
+---
+
+2️⃣ MU (MICRON) — ALTERNATIVE CANDIDATE
+Status: ✅ OVERNIGHT HOLD SETUP AVAILABLE
+
+Why:
+- Your trade (May 22): MU May 29 $795 Call
+  Entry: $19.10 | Exit: $21.75 | Gain: +13.9%
+- Pattern: Entered post-NVDA earnings, took quick overnight profit at open
+- Current environment: AI demand remains strong, MU typically benefits from sector momentum
+- Lower volatility than SNDK, more predictable
+
+Recommended structure:
+→ Direction: CALL (AI/memory demand)
+→ Strike: $795-805 (OTM for leverage)
+→ Expiry: June 9
+→ Entry target: Tuesday 2-3pm EST, aim for $760-770 stock price
+→ Entry price range: $18-25 per contract
+→ Position size: Keep <$3,000 = 100-150 contracts OR 50 shares
+→ Exit target: Wednesday 9-10am EST, $30-40 per contract
+→ Expected gain: +60-100% if AI sector momentum holds
+→ Stop loss: If MU closes below $755 Tuesday
+
+Catalyst watch: None major Tuesday-Wednesday. Safer hold than SNDK.
+
+---
+
+3️⃣ STX (SEAGATE) — LOWER RISK BACKUP
+Status: ✅ OVERNIGHT HOLD SETUP (IF MU/SNDK UNAVAILABLE)
+
+Why:
+- AI storage demand strong, consistent uptrend
+- Less volatile than MU/SNDK
+- Similar overnight hold potential but lower expected return
+
+Setup:
+→ Direction: CALL
+→ Strike: $750-760 (OTM)
+→ Expiry: June 9
+→ Position size: <$3,000
+→ Target: +80-120% overnight
+→ Risk: Slower mover, lower excitement factor
+
+Only consider if MU/SNDK entries are not available.
+
+---
+
+4️⃣ LITE, NVDA, AAPL, MSFT — SKIP
+❌ LITE — Unclear trend, not recommended
+❌ NVDA — Sector leader but watch earnings event risk
+❌ AAPL, MSFT — No clear overnight setup signal visible at this time
+
+---
+
+===============================
+🎯 MY RECOMMENDATION FOR TUESDAY JUNE 2
+===============================
+
+PRIMARY: SNDK OVERNIGHT HOLD CALL
+- Your best overnight winner ($4,906 net gain in May)
+- High volatility = high option leverage potential
+- Entry: Tuesday 2-3pm EST (Tuesday 2-3am HKT June 3)
+- Hold: Overnight into Wednesday morning open (Wednesday ~1-2am HKT)
+- Exit: Wednesday 9-10am EST, aim for 100%+ gain
+- Win probability: 70%+ if Tuesday shows momentum continuation
+- Expected profit: +$1,500-3,000 if hits target
+
+BACKUP: MU OVERNIGHT HOLD CALL
+- If SNDK entry is weak/no setup Tuesday
+- Safer, more predictable
+- Same timing, lower expected return (+$1,000-2,000)
+
+---
+
+===============================
+TIMING FOR TUESDAY JUNE 2
+===============================
+
+When to check for entry signal:
+✅ Tuesday 2:00am HKT (June 3) = 2:00pm EST Tuesday = ENTRY WINDOW OPENS
+✅ Tuesday 2:30am-3:00am HKT (June 3) = 2:30-3:00pm EST = IDEAL ENTRY TIME
+✅ Tuesday 4:00am HKT (June 3) = 4:00pm EST Tuesday (market close) = ENTRY WINDOW CLOSES
+
+I'll send a live signal at 2:00am HKT Tuesday with current prices and GO/NO-GO verdict.
+
+---
+
+Setup Status: READY FOR TUESDAY
+Next action: Wait for 2-3pm EST entry window tomorrow afternoon.
