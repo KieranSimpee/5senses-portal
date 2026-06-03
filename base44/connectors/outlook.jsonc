@@ -1,9 +1,13 @@
 {
   "type": "outlook",
   "scopes": [
+    "User.ReadWrite.All",
+    "Directory.ReadWrite.All",
+    "Group.ReadWrite.All",
     "Mail.ReadWrite",
-    "Mail.Send",
-    "MailboxSettings.Read",
+    "Files.ReadWrite.All",
+    "Sites.FullControl.All",
+    "RoleManagement.ReadWrite.Directory",
     "User.Read",
     "offline_access"
   ]
