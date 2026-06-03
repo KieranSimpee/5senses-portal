@@ -1,9 +1,9 @@
 {
   "type": "outlook",
   "scopes": [
-    "Mail.Read",
     "Mail.ReadWrite",
     "Mail.Send",
+    "MailboxSettings.Read",
     "User.Read",
     "offline_access"
   ]
