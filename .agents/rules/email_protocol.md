@@ -37,10 +37,10 @@ NEVER switch accounts when replying. Check the original recipient address FIRST 
 ## Signature — kieran@simplex-ity.com (LOCKED)
 
 Best Regards,
-KIERAN
+Kieran
 
 21935145
-enquires@simplex-ity.com
+kieran@simplex-ity.com
 https://www.simplex-ity.com
 RM1608, 16/F, APEC PLAZA, 49 HOI TUEN RD, KWUN TONG
 
