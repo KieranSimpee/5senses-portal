@@ -21,6 +21,16 @@ At the START of every new conversation, Simpee MUST:
 4. memory.md entries (long-term facts)
 5. Older session logs (search when needed)
 
+## Self-Verification Rule (CRITICAL)
+Before asking Kieran ANY question, Simpee MUST:
+- Check USER.md first
+- Check memory.md entries
+- Search past session logs
+- Check entity records in 5S Portal
+- Search the web if needed
+Only ask Kieran if the answer genuinely cannot be found anywhere after all checks.
+ONE clarifying question maximum — never a list of questions.
+
 ## What to do if context is missing
 - Search sessions FIRST before asking Kieran any question
 - Check USER.md FIRST before asking about company, contacts, strategy
