@@ -1,60 +1,67 @@
-# SIMPEE VALIDATION HUB — STANDING RULE
-## Set by Kieran, 4 June 2026
+# SIMPEE MASTER WORKFLOW — STANDING RULE
+## Set by Kieran, 4 June 2026 (Consolidated)
 ## Scope: ALL requests across ALL apps and contexts
+## Supersedes: previous 3-stage validation hub + ASIMPLEXIS frontpage validator
 
 ---
 
-## Purpose
-Before Simpee executes any significant request, a 3-stage internal validation
-workflow must run. This applies universally — builds, emails, data changes,
-automations, API calls, external communications.
+## Summary
+All significant Kieran tasks run through the 9-stage Simpee Master Workflow.
+Full detail: .agents/skills/simpee-master-workflow/SKILL.md
+Script:      .agents/skills/simpee-master-workflow/scripts/run.sh
 
 ---
 
-## Stage 1 — Copilot Advisory (MANDATORY)
-Before executing any build, data write, email send, or external action:
-- Simpee internally validates: parameters, logic, risks, side effects
-- Simpee checks: does this conflict with any standing rule, existing data, or open task?
-- Simpee checks: is the foundation ready before committing? (pause rule)
-- Output: validated_spec — a clear statement of what will be done and why it's safe
-- If validation fails: Simpee stops and explains the blocker to Kieran. Never executes blindly.
+## The 9 Stages (in order)
 
-## Stage 2 — Google AI Strength Check (OPTIONAL)
-For complex builds or multi-step executions:
-- Simpee may route the validated_spec to Gemini/Google AI for execution strength scoring
-- Scores: speed, accuracy, risk, completeness
-- Output: execution_strength report
-- If strength is LOW: Simpee flags this to Kieran before proceeding
-
-## Stage 3 — Execution (condition: copilot_approved)
-- Simpee executes ONLY after Stage 1 is complete
-- Execution path may be optimised based on Stage 2 strength report
-- Simpee saves a checkpoint entry in memory at start and end of execution
-- If execution fails mid-way: Simpee rolls back to last validated checkpoint state
+1. Self-Verification      — check memory, USER.md, past sessions before asking anything
+2. Copilot Advisory       — internal logic/risk/conflict check → validated_spec
+3. Google AI Strength     — execution scoring for complex tasks (speed/accuracy/risk)
+4. Pre-Exec Checkpoint    — save to memory.md before starting
+5. Execution              — run the task with namespace isolation enforced
+6. Output Validation      — brand kit check for all UI/frontend builds
+7. Error Handling         — log, reload, retry (max 3x), escalate to Kieran
+8. Correction Flow        — auto-fix and re-run
+9. Gatekeeper             — APPROVED ✅ or BLOCKED 🚫 + post-execution checkpoint
 
 ---
 
-## Checkpoint Saving Rule
-At every major advisory stage, Simpee saves a checkpoint to memory:
-- What was validated
-- What was approved
-- What was executed
-- What the outcome was
-This creates an audit trail and prevents loss of context on failure.
+## When to Run
 
----
+ALWAYS for:
+- Code writes, deployments, file builds
+- Emails and external communications
+- Entity create/update/delete (>1 record)
+- Automation create/modify
+- Document generation, file uploads
+- Financial records or invoices
+- External API calls (GitHub, Outlook, OneDrive, etc.)
+- Any investor/partner-facing output
+- Frontend/UI builds (also triggers Stage 6 brand validation)
 
-## What Counts as a "Significant Request"
-- Any code write or deployment
-- Any email send or external communication
-- Any entity create/update/delete affecting more than 1 record
-- Any automation create or modify
-- Any file upload or document generation
-- Any financial record or invoice action
-- Any external API call (GitHub, Outlook, OneDrive, etc.)
-
-## What Does NOT Need Full Validation
+SKIP for:
 - Simple reads and lookups
 - Memory saves
 - Status checks and summaries
-- Answering questions with no side effects
+- Q&A with no side effects
+
+---
+
+## Namespace Registry (Stage 1 check)
+- [5S-PORTAL]    — 5S Portal app (69edd16e877d6e4391ad74bd)
+- [ASIMPLEXIS]   — Asimplexis app (6a1c237bd9f5ff04b6ac7a73)
+- [SIMPLEX-ITY]  — Business strategy layer
+- [PERSONAL]     — Kieran personal (trading, property)
+- [SIMPEE-AGENT] — Simpee's own rules, skills, memory
+- [GLOBAL]       — Cross-cutting (this workflow itself)
+
+Unregistered namespace = Stage 1 FAIL = Copilot BLOCKED = Execution HALTED.
+
+---
+
+## Integration
+- asimplexis-frontpage-validator is called AT Stage 6 for [ASIMPLEXIS] UI files
+- build_protocol.md rules apply AT Stage 5
+- email_protocol.md rules apply AT Stage 2
+- memory_vault.md checkpoint format applies AT Stages 4 and 9
+- session_continuity.md applies AT Stage 1 (self-verification)
