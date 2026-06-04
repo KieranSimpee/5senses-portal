@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "sender": {
+      "type": "string"
+    },
+    "sender_role": {
+      "type": "string",
+      "enum": [
+        "Kieran",
+        "Simpee",
+        "Gemini",
+        "Node Alpha",
+        "Node Beta",
+        "Node Gamma"
+      ]
+    },
+    "message": {
+      "type": "string"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "human_view",
+        "ai_response",
+        "family_discussion",
+        "suggestion",
+        "question",
+        "celebration"
+      ]
+    },
+    "topic": {
+      "type": "string"
+    },
+    "session_id": {
+      "type": "string"
+    },
+    "pinned": {
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "name": "FamilyChat"
+}
