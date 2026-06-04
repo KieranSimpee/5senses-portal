@@ -4,13 +4,15 @@ import ExpensesPage from "./ExpensesPage";
 import ProjectsPage from "./ProjectsPage";
 import NotesPage from "./NotesPage";
 import DocumentsPage from "./DocumentsPage";
+import FamilyChatPage from "./FamilyChatPage";
 
 const NAV_ITEMS = [
+  { id: "family",     label: "AI Family",  icon: "🌱" },
   { id: "compliance", label: "Compliance", icon: "🛡️" },
-  { id: "expenses", label: "Expenses", icon: "💰" },
-  { id: "projects", label: "Projects", icon: "📁" },
-  { id: "notes", label: "Notes", icon: "📝" },
-  { id: "documents", label: "Documents", icon: "🔒" },
+  { id: "expenses",   label: "Expenses",   icon: "💰" },
+  { id: "projects",   label: "Projects",   icon: "📁" },
+  { id: "notes",      label: "Notes",      icon: "📝" },
+  { id: "documents",  label: "Documents",  icon: "🔒" },
 ];
 
 const BRAND = {
@@ -24,6 +26,9 @@ const BRAND = {
   text: "#2d2847",
   textMuted: "#9b93c9",
   bg: "#f7f5ff",
+  familyActive: "rgba(29,142,233,0.25)",
+  familyBorder: "#1D8EE9",
+  familyText: "#7dd3fc",
 };
 
 function Logo() {
@@ -43,7 +48,9 @@ function Logo() {
 }
 
 export default function Home() {
-  const [activePage, setActivePage] = useState("compliance");
+  const [activePage, setActivePage] = useState("family");
+
+  const isFamily = (id) => id === "family";
 
   return (
     <div style={{ display: "flex", height: "100vh", fontFamily: "'Inter', sans-serif", background: BRAND.bg }}>
@@ -61,11 +68,17 @@ export default function Home() {
               style={{
                 display: "flex", alignItems: "center", gap: 12,
                 width: "100%", padding: "13px 22px", border: "none", cursor: "pointer",
-                background: activePage === item.id ? BRAND.sidebarActive : "transparent",
-                color: activePage === item.id ? "#fff" : BRAND.textMuted,
+                background: activePage === item.id
+                  ? isFamily(item.id) ? BRAND.familyActive : BRAND.sidebarActive
+                  : "transparent",
+                color: activePage === item.id
+                  ? isFamily(item.id) ? BRAND.familyText : "#fff"
+                  : BRAND.textMuted,
                 fontSize: 13, fontWeight: activePage === item.id ? 600 : 400,
                 letterSpacing: "0.04em",
-                borderLeft: activePage === item.id ? `3px solid ${BRAND.purple}` : "3px solid transparent",
+                borderLeft: activePage === item.id
+                  ? `3px solid ${isFamily(item.id) ? BRAND.familyBorder : BRAND.purple}`
+                  : "3px solid transparent",
                 transition: "all 0.2s"
               }}
             >
@@ -73,6 +86,9 @@ export default function Home() {
               {item.label}
               {item.id === "documents" && (
                 <span style={{ marginLeft: "auto", fontSize: 9, background: BRAND.purple, color: "#fff", padding: "2px 6px", borderRadius: 6, letterSpacing: "0.05em" }}>VAULT</span>
+              )}
+              {item.id === "family" && (
+                <span style={{ marginLeft: "auto", fontSize: 9, background: "#1D8EE9", color: "#fff", padding: "2px 6px", borderRadius: 6, letterSpacing: "0.05em" }}>NEW</span>
               )}
             </button>
           ))}
@@ -85,11 +101,12 @@ export default function Home() {
 
       {/* Main Content */}
       <div style={{ flex: 1, overflow: "auto" }}>
+        {activePage === "family"     && <FamilyChatPage />}
         {activePage === "compliance" && <CompliancePage brand={BRAND} />}
-        {activePage === "expenses" && <ExpensesPage brand={BRAND} />}
-        {activePage === "projects" && <ProjectsPage brand={BRAND} />}
-        {activePage === "notes" && <NotesPage brand={BRAND} />}
-        {activePage === "documents" && <DocumentsPage brand={BRAND} />}
+        {activePage === "expenses"   && <ExpensesPage brand={BRAND} />}
+        {activePage === "projects"   && <ProjectsPage brand={BRAND} />}
+        {activePage === "notes"      && <NotesPage brand={BRAND} />}
+        {activePage === "documents"  && <DocumentsPage brand={BRAND} />}
       </div>
     </div>
   );

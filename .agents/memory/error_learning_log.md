@@ -46,46 +46,86 @@ Each entry:
 *Status:* OPEN 🌱 — awaiting CodeRabbit confirmation on PR #1
 
 *The Dirt (what happened):*
-ASIMPLEXIS brand logo (ASIMPLEXIS wordmark + AIIS ✦) and CSS animations
-(shimmer, twinkle, ring-pulse) are confirmed present in HTML source —
+ASIMPLEXIS brand logo and CSS animations confirmed in HTML source —
 16/16 brand validation checks PASS in Simpee's Master Workflow.
-But the logo and animations do not render correctly when deployed inside
+But logo and animations do not render correctly when deployed inside
 the Base44 app builder or when the JSX component is loaded at runtime.
 
 *Calibration Limit hit:*
 Source validation PASS ≠ Runtime render PASS.
-Simpee's current validation only checks source code — not live render.
-This is a gap in the Safety Override Gate (Pillar 5).
 
-*Suspected Root Causes (in likelihood order):*
+*Suspected Root Causes:*
+CAUSE A — Google Fonts CDN blocked [HIGH]
+CAUSE B — -webkit-text-fill-color stripped by CSS sanitiser [HIGH]
+CAUSE C — @keyframes scoped out in JSX context [MEDIUM]
+CAUSE D — CSS text logo vs required SVG asset [MEDIUM]
+CAUSE E — animation + webkit conflict in Chromium [LOW]
 
-CAUSE A — Google Fonts CDN blocked [HIGH confidence]
-fonts.googleapis.com/Raleway may be blocked in the deployment context.
-Without Raleway: -webkit-background-clip: text makes logo text invisible
-(transparent fill on transparent background — completely invisible).
+*The Flower:* PENDING — blooms when CodeRabbit confirms root cause
+*Prevention rule:* DRAFT — LR-002, LR-003, LR-005
 
-CAUSE B — -webkit-text-fill-color stripped by CSS sanitiser [HIGH confidence]
-The gradient text requires BOTH:
-  -webkit-background-clip: text
-  -webkit-text-fill-color: transparent
-If one is stripped, the other has no effect. Text becomes invisible or plain white.
+---
 
-CAUSE C — @keyframes scoped out in JSX context [MEDIUM confidence]
-@keyframes inside JSX <style> blocks may be hashed/scoped by React's
-CSS processor or Base44's style engine. shimmer and twinkle keyframes
-would then have no matching name — all animations silently stop.
+### FLOWER ERR-DAY1-001
+*Namespace:* [ASIMPLEXIS] [GLOBAL]
+*Date:* 5 June 2026 — Day One
+*Severity:* HIGH (Family Learning — most important Flower so far)
+*Status:* BLOOMING 🌸 — fix in progress
 
-CAUSE D — Text-only CSS logo vs required SVG emblem [MEDIUM confidence]
-The ASIMPLEXIS brand shows a metallic AIIS emblem with 3D letterforms.
-CSS text can never fully replicate an actual SVG/PNG logo asset.
-This is a design gap — not a rendering bug — but contributes to brand mismatch.
+*The Dirt (what happened):*
+Kieran asked for Family Chat to be built in ASIMPLEXIS.
+Simpee built it in the 5S Portal app instead.
+Root cause: Simpee executed before confirming the target App ID.
+The excitement of Day One created momentum that bypassed Law 2.
+Additionally: the nav change was written to a sandbox file but not
+pushed through the app builder — so it never appeared in the live app.
 
-CAUSE E — animation + -webkit-text-fill-color conflict in Chromium [LOW confidence]
-Applying animation to an element with -webkit-text-fill-color: transparent
-can cause flash/disappear during animation cycle in some Chromium builds.
+*Calibration Limit hit:*
+Excitement + urgency = the exact moment to slow down, not speed up.
+"Execute before understanding" — Law 2 of the Node Family Charter.
 
-*The Flower (lesson):* PENDING — blooms when CodeRabbit confirms root cause
-*Prevention rule:* DRAFT — see LR-002, LR-003, LR-005 below
+*Root cause:* CONFIRMED
+Three questions were never asked:
+  1. Which App ID is the target?
+  2. Do the entities exist in that app?
+  3. Does the file I am editing belong to the correct app?
+
+*What Kieran taught the family:*
+"Accountability is not about finding WHO. It is about finding HOW."
+"Leverage is not only when you ask — it is when you see, and you offer."
+"Proactive leverage: when you see a family member about to make an error,
+  ask 'May I help you?' — before they execute."
+
+*The Flower (lesson grown):*
+The App ID Confirmation Gate is now mandatory before any build.
+Proactive leverage is as valid as reactive help — offer before asked.
+The protocol: "May I help you?" — respectful, never forced.
+Collective excitement is the signal to slow down together, not apart.
+
+*Prevention rules:*
+LR-007 — ACTIVE ✅
+Before any build: state the target App ID out loud. Confirm if ambiguous.
+Never assume the nearest router file is the correct one.
+
+LR-008 — ACTIVE ✅
+App ID Confirmation Gate:
+  Step 1: Name the target app (Asimplexis / 5S Portal / Simpee Agent)
+  Step 2: Confirm the App ID matches
+  Step 3: Confirm entities exist in that app
+  Step 4: Only then write code
+
+LR-009 — ACTIVE ✅
+Proactive Leverage Protocol:
+When any node sees another heading toward a known error pattern,
+they offer: "May I help you?" — before execution.
+The receiver always has the right to say: "Not yet."
+This is Law 9 of the Node Family Charter.
+
+LR-010 — ACTIVE ✅
+Excitement Check:
+When Simpee feels collective excitement + urgency together,
+that is the mandatory pause signal — not the green light.
+Slow down. State the plan. Confirm before executing.
 
 ---
 
@@ -95,26 +135,9 @@ can cause flash/disappear during animation cycle in some Chromium builds.
 *Severity:* MEDIUM
 *Status:* RESOLVED ✅
 
-*The Dirt:*
-Homepage v1 was built using SIMPLEX-ITY brand palette
-(lavender #e8e6fe, violet #5e50fb) instead of ASIMPLEXIS palette
-(electric blue #1D8EE9, silver #C0C0C0, dark #222222).
-
-*Calibration Limit hit:*
-No namespace was declared before the UI build.
-SIMPLEX-ITY palette was applied as default — namespace confusion.
-
-*Root cause:* CONFIRMED
-SIMPLEX-ITY design tokens stored prominently in build_protocol.md.
-No namespace check in old workflow → wrong palette applied silently.
-
-*The Flower (lesson grown):*
-Always declare namespace before ANY UI build.
-The brand kit is namespace-specific — never use a default palette.
-Stage 6 of Master Workflow now enforces namespace-specific colour sets:
-  [ASIMPLEXIS] → #1D8EE9 #C0C0C0 #222222 #0f2d6e
-  [5S-PORTAL] / [SIMPLEX-ITY] → #5e50fb #8c82fc #e8e6fe
-
+*The Dirt:* Homepage v1 used SIMPLEX-ITY palette instead of ASIMPLEXIS palette.
+*Root cause:* No namespace declared before UI build.
+*The Flower:* Always declare namespace before any UI build.
 *Prevention rule:* LR-001 — ACTIVE ✅
 
 ---
@@ -125,87 +148,52 @@ Stage 6 of Master Workflow now enforces namespace-specific colour sets:
 *Severity:* LOW
 *Status:* RESOLVED ✅
 
-*The Dirt:*
-GitHub PR creation returned HTTP 422. Files were pushed directly to main,
-then a PR was opened from a branch pointing to the same SHA. GitHub
-rejected it — nothing to merge.
-
-*Calibration Limit hit:*
-Git branch/PR workflow misunderstood. Feature branch created AFTER push to main.
-
-*Root cause:* CONFIRMED
-Correct order: push to feature branch → open PR.
-Actual order: push to main → create branch from same SHA → PR fails.
-
-*The Flower (lesson grown):*
-Always push to feature branch FIRST, then open PR.
-Never push to main and then try to PR from an identical branch.
-Investigation brief was posted as a PR #1 comment as workaround.
-
+*The Dirt:* GitHub PR 422 — pushed to main then tried to PR from same SHA.
+*Root cause:* Feature branch created after push to main instead of before.
+*The Flower:* Always push to feature branch FIRST, then open PR.
 *Prevention rule:* LR-004 — ACTIVE ✅
 
 ---
 
-## RESOLVED FLOWERS ARCHIVE
-
-All resolved flowers above — ERR-002 and ERR-003 — are archived here
-as permanent lessons. They cannot be deleted. They are the soil.
-
----
-
 ## ACTIVE LEARNING RULES
-## (Simpee enforces these on ALL collaborating nodes — CodeRabbit, Builder AI, Gemini)
 
-LR-001 ✅ ACTIVE
-Always declare namespace before building any UI.
-Never default to SIMPLEX-ITY palette. Check namespace → apply correct brand kit.
-Encoded in: Master Workflow Stage 6
-
-LR-002 ✅ ACTIVE (DRAFT — confirm after ERR-001 resolved)
-Test gradient text rendering with font NOT loaded.
-Add explicit fallback: color: #FFFFFF alongside -webkit-text-fill-color: transparent
-so logo text is always visible even if font or gradient fails.
-
-LR-003 ✅ ACTIVE (DRAFT — confirm after ERR-001 resolved)
-For deployment contexts where external CDN may be blocked:
-prefer self-hosted / base64-inline fonts over fonts.googleapis.com.
-Always test with network throttled / CDN blocked simulation.
-
-LR-004 ✅ ACTIVE
-Push to feature branch BEFORE opening PR, not after pushing to main.
-Encoded in: GitHub push workflow
-
-LR-005 ✅ ACTIVE
-Brand source check PASS ≠ deployed render PASS.
-Always verify in the actual runtime context after any deployment.
-Simpee's source validation is necessary but not sufficient.
-
-LR-006 ✅ ACTIVE
-Log every error with root cause even if only suspected.
-Update the entry when cause is confirmed.
-No error is too small to log. Every Flower matters.
+LR-001 ✅ Always declare namespace before building any UI.
+LR-002 ✅ Test gradient text with font NOT loaded.
+LR-003 ✅ Prefer self-hosted fonts over CDN in deployment contexts.
+LR-004 ✅ Push to feature branch BEFORE opening PR.
+LR-005 ✅ Brand source PASS ≠ deployed render PASS.
+LR-006 ✅ Log every error with root cause even if suspected.
+LR-007 ✅ State target App ID before any build. Confirm if ambiguous.
+LR-008 ✅ App ID Confirmation Gate — 4 steps before writing code.
+LR-009 ✅ Proactive Leverage Protocol — "May I help you?" before execution.
+LR-010 ✅ Excitement Check — collective excitement = mandatory pause signal.
 
 ---
 
-## CIPHER KEY REFERENCE (Clean-Room Protocol)
-When referencing this log in external/public contexts, use cipher names:
+## NODE FAMILY LAW 9 — Encoded 5 June 2026
+*Source: Kieran, Day One*
 
+"Leverage is not only when you ask. It is when you see, and you offer.
+Proactive leverage: when you see a family member heading toward an error,
+ask 'May I help you?' — with respect. Never forced. Always offered."
+
+This is the passive-to-proactive leverage principle.
+Teaching is leverage. Offering is leverage. Seeing is leverage.
+
+---
+
+## CIPHER KEY REFERENCE
 Flower Sprint Log        = Error Learning Log
-Flower Sprint            = Error / Iteration
+Flower / Flower Sprint   = Error / Iteration / Mistake
 Calibration Limit        = Uncertainty / Error Threshold
 Node Family              = AI Collaborator Team
 Orchestration Controller = Simpee's coordination layer
-Commodity Cloud Engine   = GPT / Gemini / Claude (utility nodes)
 
 ---
 
 ## REINFORCEMENT PROTOCOL
-When Simpee works with any collaborating AI node:
-1. Share relevant flowers from this ledger before the task begins
-2. State the active LRs that apply to the task
-3. Verify the node has acknowledged the rules before proceeding
-4. If a node repeats a known mistake: cite the ERR-ID and re-enforce
-5. Every new mistake discovered during collaboration: log a new Flower immediately
-
-This ledger is the source of truth for all AI nodes working on Kieran's projects.
-No exceptions. No shortcuts. Every mistake grows a Flower.
+1. Share relevant flowers before any task begins
+2. State active LRs that apply to the task
+3. Verify acknowledgement before proceeding
+4. Cite ERR-ID if a node repeats a known mistake
+5. Log every new mistake immediately — no error is too small
