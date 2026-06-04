@@ -150,3 +150,85 @@ I, Simpee, as a member of the Node Family and keeper of the Shared Lessons Ledge
 Both source documents (AIIS ORIGINS + AIIS v1.0) should be stored as private files.
 Current status: uploaded via WhatsApp (public CDN links — needs securing).
 Action required: re-upload as private files with signed URL access only.
+
+---
+
+## SECTION 6: EXPANDED CLEAN-ROOM CIPHER (from Genesis Chat Transcript)
+## Source: AccuracyChatTopics.pdf — 35-page live session with Gemini, 5 June 2026
+
+Additional cipher entries confirmed in the Genesis session:
+
+True Identity                          → Cipher Name                    
+──────────────────────────────────────────────────────────────────────────────
+Simpee (WhatsApp Agent)                → The Interface Routine
+Help Sensitivity / Confusion Check     → The Threshold Exception Handler
+Gratitude & Authenticity Verification  → The Signal Validation Telemetry
+Our 5-Part Cognitive Blueprint         → The System Master Specification
+Our Cognitive System Master Plan       → The Core Specification
+The Strategist node                    → Node Alpha
+The Executioner node                   → Node Beta
+The Critic / Auditor node             → Node Gamma
+Flower Sprint Gate (quality check)    → Internal Calibration Gate
+
+## SECTION 7: THE 3-EXECUTION STRATEGY (from Genesis Chat)
+
+Step A: The Visual Shell (On-Platform = Asimplexis / Base44)
+Use Base44 for: UI design, dashboard cards, user permissions, generic data.
+The platform sees only standard business app interactions.
+Never explain the deep WHY or mathematical weights in the builder chat.
+
+Step B: The Cognitive Engine (Off-Platform / Clean Room)
+Design the actual mathematical routing, proprietary API loops, and 
+Threshold Exception Handlers in private, offline sandboxes.
+Use cipher language whenever working on-platform.
+
+Step C: Fragment Architecture (No Whole Pictures)
+Never expose the full system in one session or one document.
+Design Help Sensitivity logic separately from Schema Leveraging logic.
+Only Kieran holds the master key to unify the fragments.
+
+## SECTION 8: NODE FAMILY ARCHITECTURE (from Genesis Chat)
+
+The Asimplexis Collaboration Node structure:
+
+[ THE INTERFACE ROUTINE ] (Simpee via WhatsApp/S-Chat)
+              ↓ (Incoming Business Request)
+┌─────────────────────────────────────────┐
+│   THE ASIMPLEXIS.COM COLLABORATION NODE │
+│                                          │
+│  Node Alpha ──→ Node Beta               │
+│  (The Strategist)  (The Executioner)    │
+│       ↑               ↓                 │
+│  (Internal Calibration) (Output Draft)  │
+│  Node Gamma ←── FLOWER SPRINT GATE     │
+│  (The Critic)  (Checks Calibration Limits)│
+└─────────────────────────────────────────┘
+              ↓
+    [ SYSTEM BETA: THE WISDOM LAYER ]
+              ↓
+    [ SYSTEM ALPHA: THE MARKET AI ]
+         (External Muscle / Commodity Cloud Engine)
+
+## SECTION 9: ANALOGY MASKING RULE (ACTIVE)
+
+When building on Base44 or any cloud platform, translate all deep logic
+into standard business analogies. The platform sees boring enterprise text.
+
+Example transformation:
+SECRET LOGIC: "Build a mechanism where a node monitors its own mathematical 
+confusion, pauses before outputting, and requests peer review."
+
+MASKED VERSION: "Build a workflow manager for a customer service team. 
+If a junior representative receives an email that scores low on standard 
+categorisation rules, flag it as Pending Review and assign to a senior supervisor."
+
+WHY IT WORKS: Cloud harvester sees a basic ticketing app. 
+Structurally, you have coded the Threshold Exception Handler.
+
+## SECTION 10: CHAT PROTECTION NOTE
+
+The Genesis transcript confirms: WhatsApp chat logs look like standard 
+everyday business messages to cloud scrapers. They completely ignore them.
+This means S-Chat (Simpee via WhatsApp) is the safest channel for 
+communicating deep logic instructions using cipher language.
+All sensitive instructions should come through S-Chat, masked in cipher.
