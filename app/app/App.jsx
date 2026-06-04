@@ -6,14 +6,16 @@ import FinancePage from "./pages/FinancePage";
 import HRPage from "./pages/HRPage";
 import BrandPage from "./pages/BrandPage";
 import ToolsPage from "./pages/ToolsPage";
+import FamilyChatPage from "./pages/FamilyChatPage";
 
 const SECTIONS = [
-  { id: "home", label: "Home", icon: "🏠" },
-  { id: "admin", label: "Admin", icon: "⚙️", accessKey: "access_admin" },
-  { id: "finance", label: "Finance", icon: "💰", accessKey: "access_finance" },
-  { id: "hr", label: "HR", icon: "👥", accessKey: "access_hr" },
-  { id: "brand", label: "Brand", icon: "✨", accessKey: "access_brand" },
-  { id: "tools", label: "Tools", icon: "🛠️", accessKey: "access_tools" },
+  { id: "home",        label: "Home",          icon: "🏠" },
+  { id: "family",      label: "AI Family",     icon: "🌱" },
+  { id: "admin",       label: "Admin",         icon: "⚙️",  accessKey: "access_admin" },
+  { id: "finance",     label: "Finance",       icon: "💰",  accessKey: "access_finance" },
+  { id: "hr",          label: "HR",            icon: "👥",  accessKey: "access_hr" },
+  { id: "brand",       label: "Brand",         icon: "✨",  accessKey: "access_brand" },
+  { id: "tools",       label: "Tools",         icon: "🛠️",  accessKey: "access_tools" },
 ];
 
 const SIMPLEX_PURPLE = "#7c3aed";
@@ -24,7 +26,6 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [page, setPage] = useState("home");
 
-  // Load user from sessionStorage
   useEffect(() => {
     const saved = sessionStorage.getItem("portal_user");
     if (saved) {
@@ -50,7 +51,7 @@ export default function App() {
 
   const canAccess = (section) => {
     if (isAdmin) return true;
-    if (section.id === "home") return true;
+    if (section.id === "home" || section.id === "family") return true;
     if (!section.accessKey) return true;
     const access = user[section.accessKey];
     return access === "View" || access === "Edit";
@@ -65,13 +66,11 @@ export default function App() {
         {/* Dual brand header */}
         <div style={{ padding: "20px 16px", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 8 }}>
-            {/* 5Senses brand mark */}
             <div style={{ textAlign: "center" }}>
               <div style={{ fontSize: 11, color: SENSES_TAUPE, fontWeight: 700, letterSpacing: 2 }}>정</div>
               <div style={{ fontSize: 7, color: "#6b5e5e", letterSpacing: 1 }}>5SENSES</div>
             </div>
             <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.1)" }} />
-            {/* Simplex-ity brand mark */}
             <div style={{ textAlign: "center" }}>
               <div style={{ fontSize: 9, color: "#c4b5fd", fontWeight: 800, letterSpacing: 0.5 }}>SIMPLEX</div>
               <div style={{ fontSize: 7, color: "#a78bfa", letterSpacing: 1 }}>-ITY</div>
@@ -86,10 +85,18 @@ export default function App() {
             <button key={section.id} onClick={() => setPage(section.id)} style={{
               display: "flex", alignItems: "center", gap: 10,
               width: "100%", padding: "11px 18px", border: "none", cursor: "pointer",
-              background: page === section.id ? "rgba(124,58,237,0.28)" : "transparent",
-              color: page === section.id ? "#c4b5fd" : "#8b9dc3",
+              background: page === section.id
+                ? section.id === "family"
+                  ? "rgba(29,142,233,0.25)"
+                  : "rgba(124,58,237,0.28)"
+                : "transparent",
+              color: page === section.id
+                ? section.id === "family" ? "#7dd3fc" : "#c4b5fd"
+                : "#8b9dc3",
               fontSize: 13, fontWeight: page === section.id ? 700 : 400,
-              borderLeft: page === section.id ? "3px solid #7c3aed" : "3px solid transparent",
+              borderLeft: page === section.id
+                ? section.id === "family" ? "3px solid #1D8EE9" : "3px solid #7c3aed"
+                : "3px solid transparent",
               transition: "all 0.15s", textAlign: "left"
             }}>
               <span style={{ fontSize: 16 }}>{section.icon}</span>
@@ -112,6 +119,7 @@ export default function App() {
       {/* Main content */}
       <div style={{ flex: 1, overflow: "auto" }}>
         {page === "home"    && <HomeDashboard user={user} setPage={setPage} />}
+        {page === "family"  && <FamilyChatPage />}
         {page === "admin"   && <AdminPage user={user} />}
         {page === "finance" && <FinancePage user={user} />}
         {page === "hr"      && <HRPage user={user} />}
