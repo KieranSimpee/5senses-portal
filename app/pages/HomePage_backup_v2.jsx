@@ -381,7 +381,8 @@ export default function HomePage() {
         {/* NAV */}
         <nav>
           <div className="nav-brand">
-            <img src="https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/5b6f61296_AIIS_logo_generated.png" alt="ASIMPLEXIS Logo" style={{height: "36px", objectFit: "contain"}} />
+            <span className="wm">ASIMPLEXIS</span>
+            <span className="star-icon">✦</span>
           </div>
           <div className="nav-links">
             <a href="#about">About</a>
@@ -405,8 +406,11 @@ export default function HomePage() {
               Innovation in Multi-Agent Solutions
             </div>
             <div className="logo-morph">
-              <img src="https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/5b6f61296_AIIS_logo_generated.png" alt="ASIMPLEXIS Logo" style={{maxWidth: "320px", width: "80%", objectFit: "contain", filter: "drop-shadow(0 0 24px rgba(29,142,233,0.45))", marginBottom: "16px"}} />
+              <span className="hero-logo-text">ASIMPLEXIS</span>
+              <span className="hero-star">✦</span>
             </div>
+            <div className="hero-aiis">A I I S</div>
+            <div className="hero-arc"></div>
             <div className="hero-tagline">
               Redefine AI Ability in <span className="hl">Realities™</span>
             </div>
