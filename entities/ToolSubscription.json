@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "tool_name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Analytics",
+        "Email",
+        "Automation",
+        "Influencer Tracking",
+        "Customer Support",
+        "Reviews",
+        "Heatmap",
+        "Commerce",
+        "Live Commerce"
+      ]
+    },
+    "monthly_cost_usd": {
+      "type": "number"
+    },
+    "free_trial_days": {
+      "type": "number"
+    },
+    "trial_start_date": {
+      "type": "string"
+    },
+    "trial_end_date": {
+      "type": "string"
+    },
+    "paid_start_date": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Not Started",
+        "Free Trial Active",
+        "Paid Active",
+        "Free Forever",
+        "Paused",
+        "Cancelled"
+      ]
+    },
+    "what_it_monitors": {
+      "type": "string"
+    },
+    "start_trigger": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "ToolSubscription"
+}
