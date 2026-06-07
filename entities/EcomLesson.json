@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "week": {
+      "type": "number"
+    },
+    "topic": {
+      "type": "string"
+    },
+    "what_it_means": {
+      "type": "string"
+    },
+    "why_it_matters": {
+      "type": "string"
+    },
+    "how_to_check_it": {
+      "type": "string"
+    },
+    "acceptable_standard": {
+      "type": "string"
+    },
+    "red_flag": {
+      "type": "string"
+    },
+    "kieran_notes": {
+      "type": "string"
+    },
+    "mastered": {
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "name": "EcomLesson"
+}

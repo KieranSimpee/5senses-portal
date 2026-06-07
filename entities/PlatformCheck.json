@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "check_date": {
+      "type": "string"
+    },
+    "week_number": {
+      "type": "number"
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "Tier 1 - Critical",
+        "Tier 2 - Core Experience",
+        "Tier 3 - Operations",
+        "Tier 4 - Business Performance"
+      ]
+    },
+    "surface": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pass \u2705",
+        "Fail \u274c",
+        "Warning \u26a0\ufe0f",
+        "Not Tested"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    },
+    "checked_by": {
+      "type": "string"
+    },
+    "action_required": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "PlatformCheck"
+}

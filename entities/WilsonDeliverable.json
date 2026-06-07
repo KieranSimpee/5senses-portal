@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "month": {
+      "type": "string"
+    },
+    "deliverable": {
+      "type": "string"
+    },
+    "agreed_date": {
+      "type": "string"
+    },
+    "actual_date": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Delivered \u2705",
+        "Late \u26a0\ufe0f",
+        "Missing \u274c",
+        "Disputed"
+      ]
+    },
+    "evidence_url": {
+      "type": "string"
+    },
+    "payment_released": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "WilsonDeliverable"
+}
