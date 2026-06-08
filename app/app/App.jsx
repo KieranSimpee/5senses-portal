@@ -7,6 +7,7 @@ import HRPage from "./pages/HRPage";
 import BrandPage from "./pages/BrandPage";
 import ToolsPage from "./pages/ToolsPage";
 import FamilyChatPage from "./pages/FamilyChatPage";
+import PartnerMonitorPage from "../pages/PartnerMonitorPage";
 
 const SECTIONS = [
   { id: "home",        label: "Home",          icon: "🏠" },
@@ -16,6 +17,7 @@ const SECTIONS = [
   { id: "hr",          label: "HR",            icon: "👥",  accessKey: "access_hr" },
   { id: "brand",       label: "Brand",         icon: "✨",  accessKey: "access_brand" },
   { id: "tools",       label: "Tools",         icon: "🛠️",  accessKey: "access_tools" },
+  { id: "monitor",     label: "Partner Monitor", icon: "🔭", accessKey: "access_admin" },
 ];
 
 const SIMPLEX_PURPLE = "#7c3aed";
@@ -88,14 +90,20 @@ export default function App() {
               background: page === section.id
                 ? section.id === "family"
                   ? "rgba(29,142,233,0.25)"
+                  : section.id === "monitor"
+                  ? "rgba(14,165,233,0.25)"
                   : "rgba(124,58,237,0.28)"
                 : "transparent",
               color: page === section.id
-                ? section.id === "family" ? "#7dd3fc" : "#c4b5fd"
+                ? section.id === "family" ? "#7dd3fc"
+                : section.id === "monitor" ? "#7dd3fc"
+                : "#c4b5fd"
                 : "#8b9dc3",
               fontSize: 13, fontWeight: page === section.id ? 700 : 400,
               borderLeft: page === section.id
-                ? section.id === "family" ? "3px solid #1D8EE9" : "3px solid #7c3aed"
+                ? section.id === "family" ? "3px solid #1D8EE9"
+                : section.id === "monitor" ? "3px solid #0ea5e9"
+                : "3px solid #7c3aed"
                 : "3px solid transparent",
               transition: "all 0.15s", textAlign: "left"
             }}>
@@ -125,6 +133,7 @@ export default function App() {
         {page === "hr"      && <HRPage user={user} />}
         {page === "brand"   && <BrandPage user={user} />}
         {page === "tools"   && <ToolsPage user={user} />}
+        {page === "monitor" && <PartnerMonitorPage />}
       </div>
     </div>
   );
