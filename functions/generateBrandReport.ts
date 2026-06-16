@@ -8,8 +8,12 @@ Deno.serve(async (req: Request) => {
     return new Response(JSON.stringify({ error: "report_id required" }), { status: 400 });
   }
 
-  const reports = await base44.entities.BrandReport.filter({ id: report_id });
-  const report = reports[0];
+  let report;
+  try {
+    report = await base44.entities.BrandReport.get(report_id);
+  } catch(e) {
+    return new Response(JSON.stringify({ error: "Report not found", detail: String(e) }), { status: 404 });
+  }
   if (!report) {
     return new Response(JSON.stringify({ error: "Report not found" }), { status: 404 });
   }
