@@ -90,6 +90,30 @@ export default function ReportGeneratorPage() {
   });
 
   const [autoFilling, setAutoFilling] = useState(false);
+  const [generatingReport, setGeneratingReport] = useState(false);
+  const [reportHtmlUrl, setReportHtmlUrl] = useState(null);
+
+  const generateBeautifulReport = async (report) => {
+    setGeneratingReport(true);
+    setReportHtmlUrl(null);
+    try {
+      const res = await fetch("/api/functions/generateBrandReport", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ report_id: report.id })
+      });
+      const data = await res.json();
+      if (data.html) {
+        const blob = new Blob([data.html], { type: "text/html" });
+        const url = URL.createObjectURL(blob);
+        setReportHtmlUrl(url);
+        window.open(url, "_blank");
+      }
+    } catch (e) {
+      alert("Error generating report. Please try again.");
+    }
+    setGeneratingReport(false);
+  };
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -547,6 +571,10 @@ export default function ReportGeneratorPage() {
               <button onClick={() => { setForm({ ...selectedReport }); setView("create"); }}
                 style={{ background: C.accent, color: "#fff", border: "none", borderRadius: 8, padding: "8px 18px", fontWeight: 600, fontSize: 13, cursor: "pointer", fontFamily: "Montserrat" }}>
                 Edit Report
+              </button>
+              <button onClick={() => generateBeautifulReport(selectedReport)} disabled={generatingReport}
+                style={{ background: generatingReport ? C.muted : "#1a1040", color: "#fff", border: `2px solid ${C.accent}`, borderRadius: 8, padding: "8px 20px", fontWeight: 700, fontSize: 13, cursor: generatingReport ? "not-allowed" : "pointer", fontFamily: "Montserrat", display: "flex", alignItems: "center", gap: 8 }}>
+                {generatingReport ? "⏳ Generating..." : "✨ Generate Beautiful Report"}
               </button>
             </div>
             <ReportPreview report={selectedReport} />
