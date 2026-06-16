@@ -307,7 +307,7 @@ export default function ReportGeneratorPage() {
           </div>
           {view !== "create" && (
             <button
-              onClick={() => { setView("create"); setSelectedReport(null); setForm({ brand_name: "", report_tier: "Basic (Free)", report_month: "", gmv_usd: "", orders_count: "", avg_order_value_usd: "", commission_captured_usd: "", top_product: "", top_influencer: "", total_lives_done: "", refund_rate_pct: "", engagement_rate_pct: "", audience_us_pct: "", audience_top_age: "", brand_satisfaction_score: "", influencer_reliability_avg: "", notes: "", report_status: "Draft", paid_amount_hkd: "" }); }}
+              onClick={() => { setView("create"); setSelectedReport(null); setForm({ brand_name: "", report_tier: "Basic (Free)", report_month: "", period_type: "monthly", period_start: "", period_end: "", gmv_usd: "", orders_count: "", avg_order_value_usd: "", commission_captured_usd: "", top_product: "", top_influencer: "", total_lives_done: "", refund_rate_pct: "", engagement_rate_pct: "", audience_us_pct: "", audience_top_age: "", brand_satisfaction_score: "", influencer_reliability_avg: "", notes: "", report_status: "Draft", paid_amount_hkd: "" }); }}
               style={{ background: C.accent, color: "#fff", border: "none", borderRadius: 10, padding: "10px 22px", fontWeight: 700, fontSize: 14, cursor: "pointer", fontFamily: "Montserrat" }}
             >
               + New Report
@@ -386,11 +386,70 @@ export default function ReportGeneratorPage() {
                 )}
               </div>
 
-              {/* Report Month */}
+              {/* Report Period */}
               <div style={{ marginBottom: 14 }}>
-                <label style={{ fontSize: 12, fontWeight: 600, color: C.muted, display: "block", marginBottom: 6 }}>REPORT MONTH *</label>
-                <input placeholder="e.g. July 2026" value={form.report_month} onChange={e => setForm(f => ({ ...f, report_month: e.target.value }))}
-                  style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${C.border}`, fontFamily: "Montserrat", fontSize: 13, boxSizing: "border-box" }} />
+                <label style={{ fontSize: 12, fontWeight: 600, color: C.muted, display: "block", marginBottom: 8 }}>REPORT PERIOD *</label>
+
+                {/* Quick select buttons */}
+                <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
+                  {[
+                    { label: "This Week", fn: () => {
+                      const now = new Date();
+                      const day = now.getDay();
+                      const mon = new Date(now); mon.setDate(now.getDate() - (day === 0 ? 6 : day - 1));
+                      const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+                      const fmt = d => d.toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" });
+                      setForm(f => ({ ...f, period_type: "weekly", period_start: mon.toISOString().slice(0,10), period_end: sun.toISOString().slice(0,10), report_month: `Week ${fmt(mon)} – ${fmt(sun)}` }));
+                    }},
+                    { label: "This Month", fn: () => {
+                      const now = new Date();
+                      const start = new Date(now.getFullYear(), now.getMonth(), 1);
+                      const end = new Date(now.getFullYear(), now.getMonth()+1, 0);
+                      const monthName = now.toLocaleDateString("en-GB", { month:"long", year:"numeric" });
+                      setForm(f => ({ ...f, period_type: "monthly", period_start: start.toISOString().slice(0,10), period_end: end.toISOString().slice(0,10), report_month: monthName }));
+                    }},
+                    { label: "This Quarter", fn: () => {
+                      const now = new Date();
+                      const q = Math.floor(now.getMonth() / 3);
+                      const start = new Date(now.getFullYear(), q * 3, 1);
+                      const end = new Date(now.getFullYear(), q * 3 + 3, 0);
+                      const qLabel = `Q${q+1} ${now.getFullYear()}`;
+                      setForm(f => ({ ...f, period_type: "quarterly", period_start: start.toISOString().slice(0,10), period_end: end.toISOString().slice(0,10), report_month: qLabel }));
+                    }},
+                    { label: "This Year", fn: () => {
+                      const yr = new Date().getFullYear();
+                      setForm(f => ({ ...f, period_type: "yearly", period_start: `${yr}-01-01`, period_end: `${yr}-12-31`, report_month: `Full Year ${yr}` }));
+                    }},
+                  ].map(({ label, fn }) => (
+                    <button key={label} type="button" onClick={fn}
+                      style={{ padding: "6px 12px", borderRadius: 7, border: `1px solid ${C.accent}`, background: C.bg, color: C.accent, fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "Montserrat" }}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Date range pickers */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
+                  <div>
+                    <label style={{ fontSize: 10, fontWeight: 600, color: C.muted, display: "block", marginBottom: 4 }}>FROM DATE</label>
+                    <input type="date" value={form.period_start || ""} onChange={e => {
+                      setForm(f => ({ ...f, period_start: e.target.value, report_month: f.period_end ? `${e.target.value} – ${f.period_end}` : e.target.value }));
+                    }} style={{ width: "100%", padding: "9px 10px", borderRadius: 7, border: `1px solid ${C.border}`, fontFamily: "Montserrat", fontSize: 12, boxSizing: "border-box" }} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: 10, fontWeight: 600, color: C.muted, display: "block", marginBottom: 4 }}>TO DATE</label>
+                    <input type="date" value={form.period_end || ""} onChange={e => {
+                      setForm(f => ({ ...f, period_end: e.target.value, report_month: f.period_start ? `${f.period_start} – ${e.target.value}` : e.target.value }));
+                    }} style={{ width: "100%", padding: "9px 10px", borderRadius: 7, border: `1px solid ${C.border}`, fontFamily: "Montserrat", fontSize: 12, boxSizing: "border-box" }} />
+                  </div>
+                </div>
+
+                {/* Period label display */}
+                {form.report_month && (
+                  <div style={{ background: "#ede9fe", borderRadius: 7, padding: "8px 12px", fontSize: 12, color: C.accent, fontWeight: 600 }}>
+                    📅 Period: {form.report_month}
+                  </div>
+                )}
               </div>
 
               {/* Tier */}
