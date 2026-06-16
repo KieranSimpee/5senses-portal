@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { geminiResearch } from "@/api/functions";
 
 const C = {
   bg: "#0a0a14",
@@ -276,7 +277,7 @@ export default function AsimplexisReportGen() {
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
-  // Simulate AI thinking + generate summary from inputs
+  // Real Gemini 2.5 Flash research call
   const runAI = async () => {
     if (!form.problem || !form.objective) {
       alert("Please fill in Problem and Objective first.");
@@ -284,39 +285,45 @@ export default function AsimplexisReportGen() {
     }
     setStep("thinking");
     const msgs = [
-      "Reading problem statement...",
-      "Analysing objective and goal...",
+      "Sending to Gemini 2.5 Flash...",
+      "Analysing problem root cause...",
+      "Researching industry benchmarks...",
       "Calculating ROI implications...",
-      "Researching relevant benchmarks...",
       "Drafting AI recommendations...",
       "Validating namespace [ASIMPLEXIS]...",
       "Preparing report preview...",
     ];
-    for (let i = 0; i < msgs.length; i++) {
-      setThinkingMsg(msgs[i]);
-      await new Promise(r => setTimeout(r, 700));
+    let msgIdx = 0;
+    setThinkingMsg(msgs[0]);
+    const ticker = setInterval(() => {
+      msgIdx = Math.min(msgIdx + 1, msgs.length - 1);
+      setThinkingMsg(msgs[msgIdx]);
+    }, 1800);
+
+    try {
+      const result = await geminiResearch({
+        problem: form.problem,
+        objective: form.objective,
+        goal: form.goal,
+        stage: form.stage,
+        difficulty: form.difficulty,
+        roi_score: form.roi_score,
+        lead_time: form.lead_time,
+        extra_notes: form.extra_notes,
+      });
+      clearInterval(ticker);
+      if (result.success && result.summary) {
+        setAiSummary(result.summary);
+        setStep("preview");
+      } else {
+        alert("Gemini research error: " + (result.error || "Unknown error"));
+        setStep("input");
+      }
+    } catch (e) {
+      clearInterval(ticker);
+      alert("Failed to reach Gemini: " + String(e));
+      setStep("input");
     }
-
-    // Generate AI summary from form inputs
-    const roiVal = parseInt(form.roi_score) || 0;
-    const roiLabel = roiVal >= 80 ? "high-value investment" : roiVal >= 60 ? "moderate ROI opportunity" : "a high-risk investment requiring further justification";
-    const diffNote = form.difficulty === "Critical" ? "This is a critical-complexity task requiring dedicated senior resource and thorough risk mitigation before execution." :
-                     form.difficulty === "High" ? "High complexity demands structured execution with milestone checkpoints to avoid scope creep." :
-                     form.difficulty === "Medium" ? "Medium complexity — manageable with a clear sprint plan and defined success metrics." :
-                     "Low complexity with a short feedback loop. Ideal for rapid prototyping and quick validation.";
-
-    const summary = `Based on the problem statement provided, this ${form.stage} stage initiative presents ${roiLabel} with an estimated lead time of ${form.lead_time || "TBD"}.
-
-The core problem identified is: "${form.problem}". The primary objective is to ${form.objective}${form.goal ? `, with the specific goal of achieving: ${form.goal}` : ""}.
-
-${diffNote}
-
-ROI Score of ${roiVal}/100 ${roiVal >= 70 ? "indicates a strong case for prioritisation. The investment is expected to deliver measurable returns within the projected lead time." : "suggests the return case needs strengthening. Consider breaking the initiative into smaller validated milestones before full commitment."} 
-
-Recommended next steps: (1) Define measurable success metrics aligned to the goal. (2) Identify the minimum viable scope to validate the ROI hypothesis. (3) Schedule a checkpoint review at 50% lead time to assess progress against objective.`;
-
-    setAiSummary(summary);
-    setStep("preview");
   };
 
   const downloadReport = () => {
