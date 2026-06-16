@@ -221,7 +221,7 @@ export default function ReportGeneratorPage() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 20 }}>
           {[
             { label: "Total GMV", value: report.gmv_usd ? `$${Number(report.gmv_usd).toLocaleString()} USD` : "—" },
-            { label: "Total Orders", value: report.orders_count || "—" },
+            { label: "Total Orders", value: report.orders_count ? Number(report.orders_count).toLocaleString() : "—" },
             { label: "Avg Order Value", value: report.avg_order_value_usd ? `$${Number(report.avg_order_value_usd).toFixed(2)} USD` : "—" },
             { label: "Commission Captured", value: report.commission_captured_usd ? `$${Number(report.commission_captured_usd).toLocaleString()} USD` : "—" },
             { label: "Top Product", value: report.top_product || "—" },
@@ -374,15 +374,20 @@ export default function ReportGeneratorPage() {
               {/* Brand */}
               <div style={{ marginBottom: 14 }}>
                 <label style={{ fontSize: 12, fontWeight: 600, color: C.muted, display: "block", marginBottom: 6 }}>BRAND NAME *</label>
-                <select value={form.brand_name} onChange={e => setForm(f => ({ ...f, brand_name: e.target.value }))}
-                  style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${C.border}`, fontFamily: "Montserrat", fontSize: 13, color: C.text }}>
-                  <option value="">Select brand...</option>
-                  {brands.map(b => <option key={b.id} value={b.name}>{b.name}</option>)}
-                  <option value="Other">Other (type below)</option>
-                </select>
-                {form.brand_name === "Other" && (
-                  <input placeholder="Brand name" value={form._custom_brand || ""} onChange={e => setForm(f => ({ ...f, brand_name: e.target.value, _custom_brand: e.target.value }))}
-                    style={{ width: "100%", marginTop: 8, padding: "10px 12px", borderRadius: 8, border: `1px solid ${C.border}`, fontFamily: "Montserrat", fontSize: 13, boxSizing: "border-box" }} />
+                {brands.length > 0 ? (
+                  <select value={form.brand_name} onChange={e => setForm(f => ({ ...f, brand_name: e.target.value }))}
+                    style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${C.border}`, fontFamily: "Montserrat", fontSize: 13, color: C.text }}>
+                    <option value="">Select brand...</option>
+                    {brands.map(b => <option key={b.id} value={b.name}>{b.name}</option>)}
+                    <option value="__custom__">+ Type custom name</option>
+                  </select>
+                ) : (
+                  <input placeholder="Type brand name..." value={form.brand_name} onChange={e => setForm(f => ({ ...f, brand_name: e.target.value }))}
+                    style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${C.border}`, fontFamily: "Montserrat", fontSize: 13, boxSizing: "border-box" }} />
+                )}
+                {form.brand_name === "__custom__" && (
+                  <input placeholder="Type brand name..." value={form._custom_brand || ""} onChange={e => setForm(f => ({ ...f, _custom_brand: e.target.value, brand_name: e.target.value }))}
+                    style={{ width: "100%", marginTop: 8, padding: "10px 12px", borderRadius: 8, border: `1px solid ${C.accent}`, fontFamily: "Montserrat", fontSize: 13, boxSizing: "border-box" }} />
                 )}
               </div>
 
