@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Brand, BrandReport, Campaign, RevenueRecord, Influencer, CampaignInfluencer } from "@/api/entities";
+import { generateBrandReport } from "@/api/functions";
 
 const C = {
   bg: "#e8e6fe",
@@ -97,12 +98,7 @@ export default function ReportGeneratorPage() {
     setGeneratingReport(true);
     setReportHtmlUrl(null);
     try {
-      const res = await fetch("/api/functions/generateBrandReport", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ report_id: report.id })
-      });
-      const data = await res.json();
+      const data = await generateBrandReport({ report_id: report.id });
       if (data.html) {
         const blob = new Blob([data.html], { type: "text/html" });
         const url = URL.createObjectURL(blob);
