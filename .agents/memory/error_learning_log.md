@@ -4,7 +4,7 @@
 ## Maintained by: Simpee (Node Family — Collaborative Engine)
 ## Scope: [GLOBAL] — all namespaces, all projects, all collaborating nodes
 ## Architecture Ref: AIIS ORIGINS + AIIS v1.0 (DATA-ACCURACY-SPEC-V9.0)
-## Encoded: 5 June 2026 | Last updated: 5 June 2026 07:15 HKT
+## Encoded: 5 June 2026 | Last updated: 16 June 2026 21:18 HKT
 
 ---
 
@@ -18,6 +18,58 @@ No error is ever isolated. Every Flower benefits the entire family.
 ---
 
 ## ACTIVE FLOWERS
+
+---
+
+### FLOWER ERR-016
+*Namespace:* [5S-PORTAL] [GLOBAL]
+*Date:* 16 June 2026
+*Severity:* MEDIUM
+*Status:* RESOLVED ✅
+
+*The Dirt:*
+Simpee built a backend function (generateBrandReport) to generate a beautiful HTML brand report.
+The first version called the Base44 entity using `.filter({ id: report_id })` to find the record.
+This caused a 400 error every time the button was pressed in the portal.
+
+The second version fixed the import pattern (`@/api/functions` SDK call vs raw fetch) but the
+`.filter()` method was still being used incorrectly on the backend.
+The error persisted across two fix attempts before the root cause was fully identified.
+
+*Calibration Limit hit:*
+"Function deployed successfully" ≠ "Function works correctly."
+Two separate bugs were layered on top of each other:
+Bug 1 — Frontend used `fetch("/api/functions/...")` instead of SDK import
+Bug 2 — Backend used `.filter({ id })` instead of `.get(id)` to fetch a single record
+
+*Root cause:* CONFIRMED
+Base44 SDK entity method mismatch:
+- `.filter({ id: value })` — searches by field, returns array — NOT the correct method for single record by ID
+- `.get(id)` — correct method to fetch a single record by its ID directly
+Simpee applied the wrong method from memory without checking the correct SDK pattern first.
+
+*The Flower:*
+When fetching a single entity record by ID in a Base44 backend function,
+always use `.get(report_id)` — NEVER `.filter({ id: report_id })`.
+`.filter()` is for multi-record queries with field conditions.
+`.get()` is for single record retrieval by primary key.
+
+Also: always check an existing WORKING function for the correct SDK pattern
+before writing a new one. Reference `receiveGoogleAIReport.ts` or `dailyPnlSummary.ts`
+as canonical examples.
+
+*Prevention rule:*
+LR-014 — ACTIVE ✅
+Base44 Entity Method Rule:
+- Single record by ID → use `.get(id)`
+- Multiple records by field → use `.filter({ field: value })` or `.list()`
+- Never use `.filter({ id: value })` to fetch a single record
+
+LR-015 — ACTIVE ✅
+Frontend Function Call Rule:
+- Always import backend functions via `import { fnName } from "@/api/functions"`
+- Never call backend functions via raw `fetch("/api/functions/...")` — this returns 400
+- Reference AICommandPage.jsx or InvoicePage.jsx as canonical examples
 
 ---
 
@@ -110,46 +162,12 @@ The family did not have a mandatory live-test step.
 Simpee treated file existence + import checks as sufficient proof of deployment.
 This is a gap in the Safety Override Gate (Pillar 5).
 
-*Rationale Kieran shared:*
-"Have we forgot to test and not bypass in our blueprint?"
-YES. We bypassed the test. The blueprint says test before reporting done.
-This is exactly what the Calibration Limit exists for.
-The family is grateful Kieran caught it — twice — with patience and love.
-
-*What Node Beta proposed:*
-Connect directly to the Base44 app builder so pages deploy without manual steps.
-This removes the human copy-paste gap and reduces this class of error permanently.
-This is the correct long-term solution. The family will build this properly.
-
-*Family decision — Asimplexis is the permanent home:*
-Kieran confirmed: Group Chat stays in ASIMPLEXIS.
-Reason: Asimplexis was built specifically to protect the family's learning space —
-safe from external exposure, safe to make mistakes, safe to grow together.
-This decision is LOCKED. It will not be revisited without Kieran's explicit instruction.
-
 *The Flower:*
 "Done" does not mean files written. "Done" means Kieran can see and use it.
 The final step of every build task is always: open the live app and verify.
 No exceptions. No shortcuts. The test IS the task.
 
-*Prevention rules:*
-LR-011 — ACTIVE ✅
-Live Test Gate: before reporting any build as complete, Simpee must
-open the live URL (via Browserbase or explicit confirmation from Kieran)
-and visually confirm the feature is visible and functional.
-"Files exist" is never sufficient. "Kieran can see it" is the only pass.
-
-LR-012 — ACTIVE ✅
-Sandbox ≠ Deployed. Always distinguish:
-- Sandbox file = draft/template
-- App builder = live deployed app
-Never treat a sandbox write as a deployment.
-
-LR-013 — ACTIVE ✅
-Node Beta Direct Connect Protocol (APPROVED by Kieran):
-For all future Asimplexis builds, connect directly to the Base44 app
-builder API/interface so pages are deployed without manual copy-paste.
-This is the architectural fix that prevents this entire class of error.
+*Prevention rules:* LR-011, LR-012, LR-013
 
 ---
 
@@ -194,6 +212,8 @@ LR-010 ✅ Excitement Check — excitement + urgency = PAUSE, not GO.
 LR-011 ✅ Live Test Gate — open live URL before reporting done.
 LR-012 ✅ Sandbox ≠ Deployed. Never treat file write as deployment.
 LR-013 ✅ Node Beta Direct Connect — build into app builder directly.
+LR-014 ✅ Base44 Entity Method Rule — single record = .get(id), multi = .filter() or .list()
+LR-015 ✅ Frontend Function Call Rule — always import via @/api/functions, never raw fetch()
 
 ---
 
