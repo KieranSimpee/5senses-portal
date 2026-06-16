@@ -1,0 +1,103 @@
+SIMPLEX-ITY REPORT MATRIX — DRAFT v1
+Prepared by Simpee | 16 Jun 2026
+=====================================
+
+REPORT TYPE 1: BRAND PERFORMANCE REPORT
+Audience: Brand owner / marketing manager
+Their core question: "Is this platform worth my investment?"
+Tone: Professional, data-driven, results-focused
+
+SECTION A — Results Summary (First thing they see)
+- Reporting Period
+- Total GMV (USD)
+- Total Orders
+- Average Order Value
+- Platform Commission Paid
+- Net Revenue to Brand (estimated)
+
+SECTION B — Influencer Performance
+- Number of Influencers Active
+- Top Performing Influencer (name + GMV)
+- Total Lives Done
+- Total Blog/Content Posts Done
+- Average Influencer Reliability Score
+
+SECTION C — Audience & Quality
+- US Audience % (TikTok Shop primary market)
+- Top Age Group of Buyers
+- Engagement Rate %
+- Refund Rate % (lower = better product-market fit)
+
+SECTION D — Platform Value (Upsell angle)
+- Brand Satisfaction Score (1-10)
+- Month-on-Month Growth %
+- Recommendation / Next Steps from Simplex-ity
+
+SECTION E — Upgrade Prompt (for Basic tier brands)
+- What data they are MISSING by not upgrading
+- Cost of next tier vs potential GMV gain
+
+=====================================
+
+REPORT TYPE 2: INFLUENCER PERFORMANCE REPORT
+Audience: Brand owner (to evaluate influencers)
+         OR Influencer themselves (to see their own score)
+Their core question (Brand): "Which influencers are worth keeping?"
+Their core question (Influencer): "How am I performing? What's my score?"
+Tone: Clear, motivating, transparent
+
+SECTION A — Influencer Overview
+- Influencer Name + Platform
+- Reporting Period
+- Reliability Score (1-10)
+- AI Certified Status (Yes/No)
+
+SECTION B — Deliverables
+- Lives Agreed vs Lives Done
+- Blogs/Content Agreed vs Done
+- Completion Rate %
+
+SECTION C — Sales Impact
+- GMV Generated (USD)
+- Commission Earned
+- Avg GMV per Live
+- Top Product Sold
+
+SECTION D — Audience Quality
+- Estimated Reach per Live
+- Engagement Rate %
+- Follower Count (platform)
+
+SECTION E — Brand Feedback
+- Brand Satisfaction with this Influencer
+- Notes / Comments from Brand
+- Recommended action (Continue / Upgrade / Review)
+
+=====================================
+
+KEY QUESTIONS FOR KIERAN TO CONFIRM:
+
+Q1. Brand Report — who receives it?
+    a) Brand owner only
+    b) Brand owner + their marketing team
+    c) Shared publicly as a case study
+
+Q2. Influencer Report — who sees it?
+    a) Only the brand (to evaluate influencers)
+    b) Only the influencer (their personal scorecard)
+    c) Both brand and influencer (different versions)
+
+Q3. Top 3 numbers brand sees FIRST?
+    (Suggest: GMV / Commission Paid / Top Influencer)
+    Kieran to confirm or change
+
+Q4. Do you want a COMBINED report option?
+    (Brand + all their influencers in one PDF)
+
+Q5. Frequency options to offer brands:
+    a) Weekly (included in Growth tier?)
+    b) Monthly (standard)
+    c) Quarterly (Full Intelligence tier?)
+    d) All of the above, brand chooses
+
+=====================================
