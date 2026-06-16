@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Brand, BrandReport, Campaign, RevenueRecord, Influencer, CampaignInfluencer } from "@/api/entities";
-import { generateBrandReport } from "@/api/functions";
 
 const C = {
   bg: "#e8e6fe",
@@ -94,21 +93,113 @@ export default function ReportGeneratorPage() {
   const [generatingReport, setGeneratingReport] = useState(false);
   const [reportHtmlUrl, setReportHtmlUrl] = useState(null);
 
-  const generateBeautifulReport = async (report) => {
-    setGeneratingReport(true);
-    setReportHtmlUrl(null);
-    try {
-      const data = await generateBrandReport({ report_id: report.id });
-      if (data.html) {
-        const blob = new Blob([data.html], { type: "text/html" });
-        const url = URL.createObjectURL(blob);
-        setReportHtmlUrl(url);
-        window.open(url, "_blank");
-      }
-    } catch (e) {
-      alert("Error generating report. Please try again.");
-    }
-    setGeneratingReport(false);
+  const generateBeautifulReport = (report) => {
+    if (!report) { alert("No report selected."); return; }
+    const tierColor = report.report_tier?.includes("Full") ? "#f59e0b" :
+                      report.report_tier?.includes("Growth") ? "#8c82fc" : "#10b981";
+    const tierLabel = report.report_tier?.includes("Full") ? "Full Intelligence" :
+                      report.report_tier?.includes("Growth") ? "Growth" : "Basic";
+    const fmtUSD = (v) => v ? `$${Number(v).toLocaleString()} USD` : "—";
+    const fmtPct = (v) => v ? `${v}%` : "—";
+    const fmtNum = (v) => v ? Number(v).toLocaleString() : "—";
+
+    const audienceHTML = report.report_tier !== "Basic (Free)" ? `
+      <div class="section">
+        <div class="section-title">Audience &amp; Quality Metrics</div>
+        <div class="two-col">
+          <div>
+            <div class="score-bar-wrap"><div class="score-bar-label"><span>US Audience</span><span>${fmtPct(report.audience_us_pct)}</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:${Math.min(report.audience_us_pct||0,100)}%"></div></div></div>
+            <div class="score-bar-wrap"><div class="score-bar-label"><span>Engagement Rate</span><span>${fmtPct(report.engagement_rate_pct)}</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:${Math.min((report.engagement_rate_pct||0)*5,100)}%"></div></div></div>
+            <div class="score-bar-wrap"><div class="score-bar-label"><span>Refund Rate</span><span>${fmtPct(report.refund_rate_pct)}</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:${Math.min(report.refund_rate_pct||0,100)}%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div></div>
+          </div>
+          <div>
+            <div class="metric-item" style="margin-bottom:12px"><div class="metric-value">${report.audience_top_age||"—"}</div><div class="metric-label">Top Age Group</div></div>
+            <div class="metric-item"><div class="metric-value">${report.influencer_reliability_avg||"—"}/10</div><div class="metric-label">Influencer Reliability</div></div>
+          </div>
+        </div>
+      </div>` : `
+      <div class="section"><div class="section-title">Audience &amp; Quality Metrics</div>
+        <div class="highlight-box"><p>Upgrade to Growth or Full Intelligence to unlock audience data.</p></div>
+      </div>`;
+
+    const satisfactionHTML = report.report_tier?.includes("Full") ? `
+      <div class="section"><div class="section-title">Satisfaction &amp; Platform Score</div>
+        <div class="two-col">
+          <div class="metric-item"><div class="metric-value" style="color:#f59e0b">${report.brand_satisfaction_score||"—"}/10</div><div class="metric-label">Brand Satisfaction</div></div>
+          <div class="metric-item"><div class="metric-value" style="color:#10b981">HKD ${Number(report.paid_amount_hkd||0).toLocaleString()}</div><div class="metric-label">Platform Investment</div></div>
+        </div>
+        ${report.notes ? `<div class="highlight-box" style="margin-top:14px"><p><strong>Notes:</strong> ${report.notes}</p></div>` : ""}
+      </div>` : "";
+
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Brand Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;800&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Montserrat',sans-serif;background:#0f0f1a;color:#fff}
+.cover{background:linear-gradient(135deg,#0f0f1a 0%,#1a1040 50%,#0f0f1a 100%);min-height:100vh}
+.header-bar{background:rgba(94,80,251,.15);border-bottom:1px solid rgba(94,80,251,.3);padding:16px 40px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Exo 2',sans-serif;font-size:18px;font-weight:800;color:#fff;letter-spacing:2px}
+.logo span{color:#5e50fb}.header-right{font-size:11px;color:rgba(255,255,255,.5);text-align:right}
+.cover-body{padding:60px 40px 40px}
+.badge{display:inline-block;background:rgba(94,80,251,.2);border:1px solid rgba(94,80,251,.5);color:#8c82fc;padding:6px 16px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
+.brand-name{font-family:'Exo 2',sans-serif;font-size:52px;font-weight:800;color:#fff;margin-bottom:8px}
+.subtitle{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:8px}
+.period{font-size:13px;color:#8c82fc;font-weight:600;margin-bottom:30px}
+.tier-badge{display:inline-flex;align-items:center;gap:8px;background:${tierColor}22;border:1px solid ${tierColor}66;color:${tierColor};padding:8px 20px;border-radius:8px;font-size:12px;font-weight:700;margin-bottom:40px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:30px}
+.kpi{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px;text-align:center}
+.kpi.h{background:rgba(94,80,251,.15);border-color:rgba(94,80,251,.4)}
+.kv{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:800;color:#fff;margin-bottom:6px}
+.kl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.section{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px 28px;margin-bottom:16px}
+.section-title{font-family:'Exo 2',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#5e50fb;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(94,80,251,.2)}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.metric-item{text-align:center;padding:14px;background:rgba(255,255,255,.03);border-radius:10px}
+.metric-value{font-family:'Exo 2',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
+.metric-label{font-size:10px;font-weight:600;color:rgba(255,255,255,.4);letter-spacing:1px;text-transform:uppercase}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.score-bar-wrap{margin-bottom:14px}.score-bar-label{display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px}
+.score-bar-bg{background:rgba(255,255,255,.08);border-radius:4px;height:8px}
+.score-bar-fill{height:8px;border-radius:4px;background:linear-gradient(90deg,#5e50fb,#8c82fc)}
+.footer-bar{background:rgba(94,80,251,.1);border-top:1px solid rgba(94,80,251,.2);padding:20px 40px;display:flex;justify-content:space-between;align-items:center;margin-top:30px}
+.footer-brand{font-family:'Exo 2',sans-serif;font-size:13px;font-weight:700;color:#5e50fb}
+.footer-note{font-size:10px;color:rgba(255,255,255,.3)}
+.pill{display:inline-block;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3)}
+.highlight-box{background:rgba(94,80,251,.1);border:1px solid rgba(94,80,251,.3);border-radius:10px;padding:14px 18px}
+.highlight-box p{font-size:13px;color:rgba(255,255,255,.7);line-height:1.6}
+</style></head><body>
+<div class="cover">
+  <div class="header-bar"><div class="logo">SIMPLEX<span>.</span>ITY</div><div class="header-right">BRAND PERFORMANCE REPORT<br>CONFIDENTIAL</div></div>
+  <div class="cover-body">
+    <div class="badge">Brand Performance Report</div>
+    <div class="brand-name">${report.brand_name||"Brand"}</div>
+    <div class="subtitle">PERFORMANCE ANALYSIS</div>
+    <div class="period">${report.report_month||"Reporting Period"}</div>
+    <div class="tier-badge">* ${tierLabel} Tier</div>
+    <div class="kpis">
+      <div class="kpi h"><div class="kv">${fmtUSD(report.gmv_usd)}</div><div class="kl">Total GMV</div></div>
+      <div class="kpi"><div class="kv">${fmtNum(report.orders_count)}</div><div class="kl">Orders</div></div>
+      <div class="kpi"><div class="kv">${fmtUSD(report.avg_order_value_usd)}</div><div class="kl">Avg Order</div></div>
+      <div class="kpi h"><div class="kv">${fmtUSD(report.commission_captured_usd)}</div><div class="kl">Commission</div></div>
+    </div>
+    <div class="section"><div class="section-title">Influencer Performance</div>
+      <div class="metric-grid">
+        <div class="metric-item"><div class="metric-value">${report.top_influencer||"—"}</div><div class="metric-label">Top Influencer</div></div>
+        <div class="metric-item"><div class="metric-value">${fmtNum(report.total_lives_done)}</div><div class="metric-label">Lives Done</div></div>
+        <div class="metric-item"><div class="metric-value">${report.top_product||"—"}</div><div class="metric-label">Top Product</div></div>
+      </div>
+    </div>
+    ${audienceHTML}${satisfactionHTML}
+  </div>
+  <div class="footer-bar">
+    <div class="footer-brand">Powered by Simplex-ity</div>
+    <div class="footer-note">Generated ${new Date().toLocaleDateString("en-GB")} · Confidential</div>
+    <div><span class="pill">${report.report_status||"Draft"}</span></div>
+  </div>
+</div></body></html>`;
+
+    const blob = new Blob([html], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
   };
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);

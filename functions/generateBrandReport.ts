@@ -2,7 +2,8 @@ import { createClientFromRequest } from "npm:@base44/sdk@0.8.31";
 
 Deno.serve(async (req: Request) => {
   const base44 = createClientFromRequest(req);
-  const { report_id } = await req.json();
+  const body = await req.json().catch(() => ({}));
+  const report_id = body.report_id;
 
   if (!report_id) {
     return new Response(JSON.stringify({ error: "report_id required" }), { status: 400 });
