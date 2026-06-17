@@ -1,0 +1,92 @@
+# ROI REPORT BUILDER - FULL PROJECT PACKAGE
+# =========================================
+# This file contains the complete instructions and code skeletons for the ROI REPORT BUILDER.
+# Upload this file to Simpee and your Base44 environment.
+
+---
+
+## PART 1: THE AGENTIC PROTOCOL (CONSTITUTION)
+
+### 1. THE CASCADE RESEARCH ARCHITECTURE
+We utilize a two-layer agentic approach to ensure research depth and validation.
+
+**Layer 1: The "Spotter" Agent (Reconnaissance)**
+* Goal: Broad scan of the codebase/market to flag technical debt and opportunities.
+* Outputs: Findings Log (Markdown/CSV), Top 3 High-Impact anomalies.
+
+**Layer 2: The "Deep-Diver" Agent (Psychological/Technical Specialist)**
+* Goal: Validate "Spotter" findings, perform deep-root analysis, and synthesize ROI.
+* Psychological Validation: Apply Story-Verify-Research-Solution framework.
+
+---
+
+### 2. THE STORY-VERIFY-RESEARCH-SOLUTION FLOW
+Simpee, every module must pass through this narrative and technical filter:
+
+1. STORY (The Pain): What is the client narrative?
+2. VERIFY (The Cultural/Age Factor): Cultural/Age psych context.
+3. RESEARCH PLAN: How we verified the pain.
+4. SOLUTION: Technical execution plan.
+5. ROI ESTIMATION: Measured by concrete criteria.
+
+---
+
+## PART 2: BACKEND IMPLEMENTATION (cascade_engine.py)
+
+import json
+
+class ResearchAgent:
+    def __init__(self, role):
+        self.role = role # 'Spotter' or 'Deep-Diver'
+
+    def execute_research(self, module):
+        if self.role == 'Spotter':
+            return self._scan_anomalies(module)
+        elif self.role == 'Deep-Diver':
+            return self._validate_and_analyze(module)
+
+    def _scan_anomalies(self, module):
+        # Scan for high-impact technical debt
+        return {"action": "Flagging", "scope": "Broad", "status": "Ready"}
+
+    def _validate_and_analyze(self, module):
+        # Psychological Validation + Root Cause Analysis
+        return {"action": "Root Cause Analysis", "psychology_layer": "Enabled", "status": "Validated"}
+
+---
+
+## PART 3: DATA SCHEMA (data_contract.json)
+
+{
+  "project_name": "ROI REPORT BUILDER",
+  "data_payload": {
+    "technical_audit": {
+      "module_metrics": {"file_path": "", "lines_of_code": 0},
+      "vulnerability_score": 0,
+      "liability_multiplier": 30
+    },
+    "financial_model": {
+      "manual_effort_baseline": 0,
+      "monthly_savings": 0
+    },
+    "psychological_layer": {
+      "client_story": "",
+      "cultural_factor": ""
+    }
+  }
+}
+
+---
+
+## PART 4: FRONTEND REPORT GENERATOR (ReportGenerator.js)
+
+const generateReportUI = (data) => {
+  return `
+    <div id="roi-report">
+      <h1>${data.moduleName} - ROI & Code Review</h1>
+      <div class="score">Platform Score: ${data.platformScore}/100</div>
+      <div class="savings">Annual Savings: ${data.annualSavings}</div>
+      <!-- Phase-Based Roadmap insertion point -->
+    </div>
+  `;
+};
