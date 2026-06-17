@@ -1,38 +1,57 @@
-const GEMINI_KEY = Deno.env.get("GEMINI_API_KEY") || "AQ.Ab8RN6IQPye9pC-S4YgRmqwBbITfUiDcspAVhQN5Fa_9sBtb2Q";
-const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+// CASCADE RESEARCH ARCHITECTURE v2 — Azure OpenAI GPT-4o
+// Spotter Agent + Deep-Diver Agent with SVRS Framework
+// Uses same Azure key as consultCopilot — no new secrets needed
 
-async function callGemini(prompt: string, maxTokens: number = 1024): Promise<string> {
-  const res = await fetch(`${GEMINI_URL}?key=${GEMINI_KEY}`, {
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
+
+const AZURE_ENDPOINT = Deno.env.get("AZURE_OPENAI_ENDPOINT") || "https://kiera-mpv1nhzc-eastus2.cognitiveservices.azure.com/";
+const AZURE_DEPLOYMENT = "gpt-4o";
+const AZURE_API_VERSION = "2025-01-01-preview";
+
+async function callAzure(prompt: string, azureKey: string, maxTokens: number = 800): Promise<string> {
+  const url = `${AZURE_ENDPOINT}openai/deployments/${AZURE_DEPLOYMENT}/chat/completions?api-version=${AZURE_API_VERSION}`;
+  const res = await fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "api-key": azureKey, "Content-Type": "application/json" },
     body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0.7, maxOutputTokens: maxTokens }
-    })
+      messages: [{ role: "user", content: prompt }],
+      max_tokens: maxTokens,
+      temperature: 0.7,
+    }),
   });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Azure error ${res.status}: ${err}`);
+  }
   const data = await res.json();
-  if (data.error) throw new Error(data.error.message);
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+  return data.choices?.[0]?.message?.content || "";
 }
 
-Deno.serve(async (req: Request) => {
-  const { problem, objective, goal, stage, difficulty, roi_score, lead_time, extra_notes } = await req.json();
+Deno.serve(async (req) => {
+  try {
+    const base44 = createClientFromRequest(req);
+    const body = await req.json().catch(() => ({}));
+    const { problem, objective, goal, stage, difficulty, roi_score, lead_time, extra_notes } = body;
 
-  if (!problem || !objective) {
-    return new Response(JSON.stringify({ error: "problem and objective required" }), { status: 400 });
-  }
+    if (!problem || !objective) {
+      return Response.json({ error: "problem and objective required" }, { status: 400 });
+    }
 
-  // ─── LAYER 1: SPOTTER AGENT ─────────────────────────────────────────────
-  // Broad reconnaissance — flag top anomalies and surface the real pain
-  const spotterPrompt = `You are the SPOTTER AGENT for ASIMPLEXIS CASCADE RESEARCH ARCHITECTURE.
+    const azureKey = Deno.env.get("AZURE_OPENAI_API_KEY_3") || "";
+    if (!azureKey) {
+      return Response.json({ error: "Azure API key not configured. Add AZURE_OPENAI_API_KEY_3 to app secrets." }, { status: 500 });
+    }
+
+    // ─── LAYER 1: SPOTTER AGENT ─────────────────────────────────────────
+    const spotterPrompt = `You are the SPOTTER AGENT for ASIMPLEXIS CASCADE RESEARCH ARCHITECTURE.
 Your role: Broad reconnaissance scan to identify the TOP 3 high-impact anomalies and flag technical debt or strategic risk.
 
 PROJECT INPUT:
-- Stage: ${stage}
+- Stage: ${stage || "Build"}
 - Problem: ${problem}
 - Objective: ${objective}
 - Goal: ${goal || "Not specified"}
-- Difficulty: ${difficulty}
+- Difficulty: ${difficulty || "Medium"}
 - ROI Score: ${roi_score || "N/A"}/100
 - Lead Time: ${lead_time || "Not specified"}
 - Notes: ${extra_notes || "None"}
@@ -47,17 +66,16 @@ IMPACT: [One sentence — what breaks if ignored]
 
 Be specific, data-aware, and investor-sharp. No padding. No markdown symbols.`;
 
-  // ─── LAYER 2: DEEP-DIVER AGENT (SVRS FRAMEWORK) ─────────────────────────
-  // Story → Verify → Research → Solution with ROI estimation
-  const deepDiverPrompt = `You are the DEEP-DIVER AGENT for ASIMPLEXIS CASCADE RESEARCH ARCHITECTURE.
+    // ─── LAYER 2: DEEP-DIVER AGENT (SVRS FRAMEWORK) ─────────────────────
+    const deepDiverPrompt = `You are the DEEP-DIVER AGENT for ASIMPLEXIS CASCADE RESEARCH ARCHITECTURE.
 You apply the STORY-VERIFY-RESEARCH-SOLUTION (SVRS) framework to produce a professional, investor-ready analysis.
 
 PROJECT INPUT:
-- Stage: ${stage}
+- Stage: ${stage || "Build"}
 - Problem: ${problem}
 - Objective: ${objective}
 - Goal: ${goal || "Not specified"}
-- Difficulty: ${difficulty}
+- Difficulty: ${difficulty || "Medium"}
 - ROI Score: ${roi_score || "N/A"}/100
 - Lead Time: ${lead_time || "Not specified"}
 - Notes: ${extra_notes || "None"}
@@ -78,30 +96,26 @@ SOLUTION — Execution Plan & ROI:
 
 TONE: Professional, data-driven, investor-ready. No bullet points. No markdown symbols. No headers beyond the 4 labels above.`;
 
-  try {
-    // Run both agents
-    const [spotterOutput, deepDiverOutput] = await Promise.all([
-      callGemini(spotterPrompt, 512),
-      callGemini(deepDiverPrompt, 1024)
+    // Run both agents in parallel
+    const [spotter, deepDiver] = await Promise.all([
+      callAzure(spotterPrompt, azureKey, 512),
+      callAzure(deepDiverPrompt, azureKey, 1024)
     ]);
 
-    // Combine into structured summary for frontend
-    const summary = `━━ LAYER 1: SPOTTER RECONNAISSANCE ━━\n\n${spotterOutput}\n\n━━ LAYER 2: DEEP-DIVER ANALYSIS (SVRS) ━━\n\n${deepDiverOutput}`;
+    const summary = `━━ LAYER 1: SPOTTER RECONNAISSANCE ━━\n\n${spotter}\n\n━━ LAYER 2: DEEP-DIVER ANALYSIS (SVRS) ━━\n\n${deepDiver}`;
 
-    return new Response(JSON.stringify({
+    return Response.json({
       success: true,
       summary,
-      spotter: spotterOutput,
-      deep_diver: deepDiverOutput,
-      model: "gemini-2.5-flash",
+      spotter,
+      deep_diver: deepDiver,
+      model: "azure-gpt-4o",
       architecture: "CASCADE_SVRS_v2",
       stage,
       difficulty
-    }), {
-      headers: { "Content-Type": "application/json" }
     });
 
-  } catch (e) {
-    return new Response(JSON.stringify({ error: String(e) }), { status: 500 });
+  } catch (e: any) {
+    return Response.json({ error: e.message }, { status: 500 });
   }
 });
