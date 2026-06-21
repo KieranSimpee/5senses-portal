@@ -69,7 +69,9 @@
     justify-content: center;
     position: relative;
     overflow: hidden;
-    padding: 60px 40px;
+    padding: 80px 40px;
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .cover::before {
@@ -172,12 +174,15 @@
 
   .cover-meta {
     display: flex;
-    gap: 50px;
+    gap: 60px;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    width: 100%;
+    max-width: 700px;
   }
   .cover-meta-item {
     text-align: center;
+    flex-shrink: 0;
   }
   .cover-meta-label {
     font-size: 9px;
@@ -819,13 +824,9 @@
       <span class="cover-meta-label">Markets</span>
       <span class="cover-meta-value">Korea · Japan · China</span>
     </div>
-    <div class="cover-meta-item">
-      <span class="cover-meta-label">Platforms</span>
-      <span class="cover-meta-value">TikTok · IG · Shopify</span>
-    </div>
   </div>
 
-  <div class="cover-badge">PREPARED BY SIMPLEX-ITY INTELLIGENCE · 2026</div>
+  
 </div>
 
 <!-- ══════════════════════════ EXECUTIVE SUMMARY ══════════════════════════ -->
