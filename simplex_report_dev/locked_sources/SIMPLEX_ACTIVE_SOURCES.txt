@@ -1,0 +1,57 @@
+=== SIMPLEX-ITY MASTER REFERENCE DOCUMENTS — LOCKED 21 June 2026 ===
+
+SOURCE 1 (Business Model):
+/app/incoming_files/69ddc9166e1e12f6313fc523/3e347b682_SIMPLEXBUSINSSMODEL_HIGHCONFIDENTIAL.docx
+/app/incoming_files/69ddc9166e1e12f6313fc523/17fd48612_SIMPLEX-ITYMASTERBUSINESS_HIGHCONFIDENTIAL.txt
+
+SOURCE 2 (Brand Playbook — AI-First v1.0 April 2026):
+/app/incoming_files/69ddc9166e1e12f6313fc523/BrandPlaybook_v1_April2026.pdf
+
+SOURCE 3 (Membership Tiers):
+/app/SIMPLEX-ITY_Membership_Pack.pptx
+
+SOURCE 4 (Official Logo):
+/app/simplex_logo_purple.png (white on purple — use on coloured backgrounds)
+/app/simplex_logo_official.jpg (purple on white — use on white backgrounds)
+
+=== OFFICIAL BRAND COLOURS (Section 11.1 of Playbook) ===
+Primary Lilac:    #8c82fc  — Headlines, logo on white, editorial framing
+Accent Violet:    #5e50fb  — CTA, emphasis, active states
+Soft Lilac:       #bab4fd  — Card fills, section framing
+Lavender Wash:    #e8e6fe  — Light backgrounds, separators
+White Canvas:     #ffffff  — PRIMARY page background (dominant)
+Neutral Grey:     #e6e6e6  — Borders, dividers
+Body Text:        #1a1a1f  — All running copy (NOT pure black)
+
+=== OFFICIAL TYPOGRAPHY (Section 11.2) ===
+Headlines/Slogans: Exo (Google Fonts)
+Body/Secondary:    Montserrat (Google Fonts)
+Fallback:          Calibri
+
+=== LOGO RULES (Section 11.3) ===
+Full colour (purple on white) — use ONLY on white/very light backgrounds
+White version — use on coloured/dark backgrounds
+No distortion, rotation, effects, or recolouring
+
+=== KEY RULES FROM PLAYBOOK ===
+- White carries MOST of every layout. Purple signals the brand (not flood)
+- Trust first, Guidance second, Desirability third, Technology last
+- NO em dashes in ANY brand copy
+- No: viral, game-changer, disrupt, one-stop shop, must-have, glow up
+- "One Stop Asian Beauty" tagline: under review (Watch-out 3 — do not use in copy)
+
+All other Simplex-ity documents → /app/archive/simplex_old/
+Locked by Kieran: 21 June 2026
+
+SOURCE 5 (Brand Guidelines Visual Highlight Guide):
+/app/incoming_files/69ddc9166e1e12f6313fc523/BrandGuidelines_Highlights_v1_April2026.pdf
+15-page visual summary — companion to BX-01 AI-First Brand Playbook
+
+=== LOGO DECISION PENDING (Page 9 of Guidelines) ===
+"One Stop Asian Beauty / Simplify to Amplify" tagline:
+FLAGGED — conflicts with curation positioning + illegible on mobile
+Decision required from Kieran:
+Option A: Keep as-is
+Option B: Revise to align with brand idea
+Option C: Remove tagline, use wordmark alone
+STATUS: Pending Kieran decision — do NOT use logo tagline in any copy until resolved
