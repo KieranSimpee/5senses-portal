@@ -106,7 +106,7 @@
   .logo-wrap {
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
     margin-bottom: 50px;
   }
   .logo-tree svg {
@@ -120,20 +120,24 @@
   }
   .logo-name {
     font-family: 'Alata', 'Montserrat', sans-serif;
-    font-size: 26px;
+    font-size: 32px;
     font-weight: 400;
-    letter-spacing: 6px;
-    color: var(--white);
+    letter-spacing: 8px;
+    color: #ffffff;
     text-transform: uppercase;
+    display: block;
+    text-align: center;
   }
   .logo-tagline {
     font-family: 'Montserrat', sans-serif;
-    font-size: 8px;
-    letter-spacing: 2.5px;
+    font-size: 9px;
+    letter-spacing: 3px;
     color: rgba(255,255,255,0.7);
     font-weight: 400;
     text-transform: uppercase;
-    margin-top: 5px;
+    margin-top: 6px;
+    display: block;
+    text-align: center;
   }
 
   .cover-divider {
@@ -711,16 +715,7 @@
   <div class="cover-tag">CONFIDENTIAL BRAND PERFORMANCE REPORT</div>
 
   <div class="logo-wrap">
-    <div class="logo-tree">
-      <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="48" r="36" stroke="rgba(255,255,255,0.85)" stroke-width="1.5"/>
-        <line x1="50" y1="84" x2="50" y2="115" stroke="rgba(255,255,255,0.85)" stroke-width="1.5"/>
-        <line x1="50" y1="48" x2="30" y2="68" stroke="rgba(255,255,255,0.85)" stroke-width="1.2"/>
-        <line x1="50" y1="48" x2="68" y2="62" stroke="rgba(255,255,255,0.85)" stroke-width="1.2"/>
-        <line x1="50" y1="28" x2="50" y2="84" stroke="rgba(255,255,255,0.85)" stroke-width="1.5"/>
-      </svg>
-    </div>
-    <div class="logo-text-wrap">
+    <div class="logo-text-wrap" style="text-align:center;">
       <span class="logo-name">S I M P L E X - I T Y</span>
       <span class="logo-tagline">ONE STOP ASIAN BEAUTY · SIMPLIFY TO AMPLIFY</span>
     </div>
