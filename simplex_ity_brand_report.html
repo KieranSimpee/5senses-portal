@@ -120,24 +120,23 @@
   }
   .logo-name {
     font-family: 'Alata', 'Montserrat', sans-serif;
-    font-size: 58px;
+    font-size: 52px;
     font-weight: 400;
-    letter-spacing: 12px;
+    letter-spacing: 10px;
     color: #ffffff;
     text-transform: uppercase;
     display: block;
-    text-align: center;
+    white-space: nowrap;
   }
   .logo-tagline {
     font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
-    letter-spacing: 4px;
-    color: rgba(255,255,255,0.7);
-    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
     text-transform: uppercase;
     margin-top: 8px;
     display: block;
-    text-align: center;
   }
 
   .cover-divider {
@@ -786,21 +785,27 @@
 <div class="cover">
   <div class="cover-tag">CONFIDENTIAL BRAND PERFORMANCE REPORT</div>
 
-  <!-- LOGO UPLOAD ZONE -->
-  <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)">
+  <!-- EXACT SIMPLEX-ITY LOGO — SVG REBUILT FROM BRAND IMAGE -->
+  <div class="logo-wrap" style="display:flex; align-items:center; justify-content:center; gap:28px; margin-bottom:50px;">
+    
+    <!-- Tree Icon SVG — exact match to Looka brand logo -->
+    <svg width="90" height="110" viewBox="0 0 90 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Circle -->
+      <circle cx="45" cy="42" r="34" stroke="white" stroke-width="2.5" fill="none"/>
+      <!-- Main trunk (full vertical, extends below circle) -->
+      <line x1="45" y1="10" x2="45" y2="108" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left branch -->
+      <line x1="45" y1="48" x2="22" y2="66" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- Right branch -->
+      <line x1="45" y1="40" x2="64" y2="56" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+    </svg>
 
-  <div class="logo-upload-zone" onclick="document.getElementById('logoFileInput').click()">
-    <!-- Uploaded image (hidden by default) -->
-    <img id="uploadedLogo" class="logo-uploaded-img" src="" alt="Brand Logo">
-
-    <!-- Default text logo (shown when no image uploaded) -->
-    <div class="logo-text-block" id="logoTextBlock">
-      <span class="logo-name">S I M P L E X - I T Y</span>
-      <span class="logo-tagline">ONE STOP ASIAN BEAUTY · SIMPLIFY TO AMPLIFY</span>
+    <!-- Brand Name + Tagline -->
+    <div style="display:flex; flex-direction:column; justify-content:center;">
+      <span class="logo-name">SIMPLEX-ITY</span>
+      <span class="logo-tagline">ONE STOP ASIAN BEAUTY : SIMPLIFY TO AMPLIFY</span>
     </div>
 
-    <!-- Upload prompt -->
-    <span class="upload-hint-default" id="uploadPrompt">⬆ Upload Your Logo</span>
   </div>
 
   <div class="cover-divider"></div>
