@@ -42,3 +42,16 @@ No distortion, rotation, effects, or recolouring
 
 All other Simplex-ity documents → /app/archive/simplex_old/
 Locked by Kieran: 21 June 2026
+
+SOURCE 5 (Brand Guidelines Visual Highlight Guide):
+/app/incoming_files/69ddc9166e1e12f6313fc523/BrandGuidelines_Highlights_v1_April2026.pdf
+15-page visual summary — companion to BX-01 AI-First Brand Playbook
+
+=== LOGO DECISION PENDING (Page 9 of Guidelines) ===
+"One Stop Asian Beauty / Simplify to Amplify" tagline:
+FLAGGED — conflicts with curation positioning + illegible on mobile
+Decision required from Kieran:
+Option A: Keep as-is
+Option B: Revise to align with brand idea
+Option C: Remove tagline, use wordmark alone
+STATUS: Pending Kieran decision — do NOT use logo tagline in any copy until resolved
