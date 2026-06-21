@@ -1,6 +1,6 @@
 # SIMPEE ASSET REGISTER
 ## 哥哥的資產清單 — 每次session開始必讀
-## Last Updated: 21 Jun 2026
+## Last Updated: 21 Jun 2026 (Brand Assets updated — Looka confirmed)
 ## Scope: [GLOBAL] — applies to ALL sessions
 
 ---
@@ -41,30 +41,65 @@ Key confirmed facts:
 - Platform model: 15% commission on GMV
 - Membership tiers: Essential / Professional / Enterprise
 - Currency: USD for sales/GMV, HKD for membership fees
-- Tagline: "Asian beauty, made easier to trust, learn, and love"
+- Tagline (marketing/web): "Asian beauty, made easier to trust, learn, and love"
+- Logo tagline (design only): "ONE STOP ASIAN BEAUTY : SIMPLIFY TO AMPLIFY"
 - Email: kieran@simplex-ity.com (external) / kieran@5senses.global (business)
 - Address: RM1608, 16/F, APEC PLAZA, 49 HOI TUEN RD, KWUN TONG
 Source of truth: SIMPLEXBUSINSSMODEL_HIGHCONFIDENTIAL.docx + Membership_Pack.pptx
 
 ---
 
-## 4. Simplex-ity Brand Assets
-- Logo: Looka (kieran@5senses.global) — PNG transparent background needed
-- Design tokens:
-  Background: #e8e6fe (Lavender Wash)
-  Accent: #5e50fb (Accent Violet)
-  Primary: #8c82fc (Primary Lilac)
-  Container: #ffffff
-  Body Text: #1a1a1f
-  Heading Font: Exo 2
-  Body Font: Montserrat
-- Report Template: HTML (simplex_ity_brand_report.html in workspace)
-- PPT Templates (workspace root):
-  SIMPLEX-ITY_Brand_Pitch_v2.pptx
-  SIMPLEX-ITY_360_Investor_v3_Visual.pptx
-  SIMPLEX-ITY_Membership_Pack.pptx
-  Simplex_6Month_Financial_Plan_v2.pptx
-  SIM_x_Vybd_Partnership_Deck.pptx
+## 4. Simplex-ity Brand Assets — ✅ LOOKA CONFIRMED (21 Jun 2026)
+
+### Official Brand Colors (from Looka Brand Kit — LOCKED)
+PRIMARY BRAND COLORS:
+- Brand Purple:  #ae9cdc  (RGB: 174, 156, 220 | CMYK: 21%, 29%, 0%, 14%)
+- Brand White:   #fcf9fc  (RGB: 252, 249, 252 | CMYK: 0%, 1.2%, 0%, 1.2%)
+
+DESIGN TOKEN COLORS (5S Portal / Simpee UI):
+- Background:    #e8e6fe  (Lavender Wash)
+- Accent:        #5e50fb  (Accent Violet)
+- Primary Lilac: #8c82fc  (Primary Lilac)
+- Container:     #ffffff
+- Body Text:     #1a1a1f
+
+IMPORTANT NOTE:
+#ae9cdc = Official Simplex-ity logo/brand color from Looka
+#8c82fc = Simpee/5S Portal UI accent color (slightly different)
+Use #ae9cdc for ALL Simplex-ity reports, decks, and brand materials.
+Use #8c82fc only for 5S Portal and Simpee internal UI.
+
+### Official Fonts (from Looka Brand Kit — LOCKED)
+- Wordmark font:  Alata
+- Slogan font:    Isabel Thin
+- Report heading: Exo 2 (approved supplementary)
+- Report body:    Montserrat (approved supplementary)
+
+### Logo Details
+- Icon: Tree/plant silhouette (minimalist)
+- Wordmark: SIMPLEX-ITY (spaced letters)
+- Logo tagline: ONE STOP ASIAN BEAUTY : SIMPLIFY TO AMPLIFY
+- Looka Brand Kit ID: 227248517
+- Two purchased kits: BRAND-KIT-ECOMMERCE + BRAND-KIT-WEB
+- Background variants: white bg + #ae9cdc purple bg
+
+### Other Available Assets in Looka (Brand Kit ID: 227248517)
+- Business Cards: 38 branded designs
+- Email Signatures: 9 designs
+- Social Media Kit: IG/FB post templates
+- Business Docs: Proposal/Quote templates
+- Invoices: Branded invoice designs
+
+### Report Template
+- File: simplex_ity_brand_report.html (workspace root)
+- Uses: #ae9cdc as primary brand color
+
+### PPT Templates (workspace root)
+- SIMPLEX-ITY_Brand_Pitch_v2.pptx
+- SIMPLEX-ITY_360_Investor_v3_Visual.pptx
+- SIMPLEX-ITY_Membership_Pack.pptx
+- Simplex_6Month_Financial_Plan_v2.pptx
+- SIM_x_Vybd_Partnership_Deck.pptx
 
 ---
 
