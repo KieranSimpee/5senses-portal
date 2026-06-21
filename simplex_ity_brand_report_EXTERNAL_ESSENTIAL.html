@@ -1151,6 +1151,7 @@
   </div>
 
 
+
 <!-- ══════════════════════════ EXECUTIVE SUMMARY ══════════════════════════ -->
 <div class="exec-bg">
   <div class="page" style="padding: 0;">
@@ -1191,6 +1192,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- ══════════════════════════ KPI STRIP ══════════════════════════ -->
 <div class="kpi-strip">
@@ -1239,177 +1241,116 @@
 </div>
 </div>
 
+
 <!-- ══- ══════════════════════════ BRAND PERFORMANCE ══════════════════════════ -->
 <div class="section-pad white">
-  <div class="page" style="padding: 0;">
+  <div class="page" style="padding:0;">
     <div class="section-header">
       <div class="section-num">02</div>
       <div class="section-title-wrap">
-        <span class="section-tag en-only">Brand Performance Ranking</span>
-        <span class="section-tag zh-only">品牌表現排行</span>
-        <div class="section-title en-only">Brand by Brand Analysis</div>
-        <div class="section-title zh-only">品牌逐一分析</div>
+        <span class="section-tag en-only">Brand Performance Summary</span>
+        <span class="section-tag zh-only" style="display:none">品牌表現摘要</span>
+        <div class="section-title en-only">Your Brand This Month</div>
+        <div class="section-title zh-only" style="display:none">您品牌本月表現</div>
       </div>
       <div class="section-line"></div>
     </div>
 
-    <table class="brand-table">
-      <thead><tr>
-        <th style="width:50px">#</th><th>Brand</th><th>Category</th>
-        <th>Your GMV (USD)</th><th>Platform Share</th><th>Orders</th><th>AOV</th><th>MoM</th>
-      </tr></thead>
-      <tbody>
-        <tr style="background:rgba(174,156,220,0.06);border-left:3px solid #ae9cdc;">
-          <td><div class="rank-badge gold">[#]</div></td>
-          <td><div class="brand-name-cell">[Your Brand]</div><div class="brand-country">[Country · Category]</div></td>
-          <td><span class="brand-category-pill pill-skincare">[Category]</span></td>
-          <td><strong>$[GMV]</strong></td>
-          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:[X]%"></div></div><span style="font-size:11px;color:var(--grey)">[X]%</span></div></td>
-          <td>[ORDERS]</td><td>$[AOV]</td>
-          <td><span class="trend-up">▲ [+X]%</span></td>
-        </tr>
-        <tr style="opacity:0.4;">
-          <td colspan="3" style="font-size:11px;color:var(--grey);font-style:italic;">Platform average (anonymised)</td>
-          <td><strong>$[AVG]</strong></td><td>—</td><td>[AVG]</td><td>$[AOV]</td><td>—</td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Monthly Summary text — PRIMARY, largest element -->
+    <div class="bp-summary-card">
+      <div class="bp-summary-label en-only">Monthly Summary · June 2026</div>
+      <div class="bp-summary-label zh-only" style="display:none">月度摘要 · 2026年6月</div>
+      <div class="bp-summary-text en-only">
+        [Your Brand] delivered a <em>strong performance</em> in June 2026 on the SIMPLEX-ITY platform. Your GMV reached <em>$[GMV]</em>, a growth of <em>[+X]%</em> versus May 2026. Your hero SKU continued to lead, while your [Category] range showed promising early traction. Buyer engagement remained high, with repeat purchase behaviour noted across your top customer segments. Overall, this was one of your brand's <em>strongest months</em> since joining the platform.
+      </div>
+      <div class="bp-summary-text zh-only" style="display:none">
+        [品牌名稱] 在2026年6月SIMPLEX-ITY平台上表現<em>出色</em>。您的GMV達到<em>$[GMV]</em>，較2026年5月增長<em>[+X]%</em>。明星SKU持續領跑，[品類]系列亦顯示出良好增長勢頭。買家互動度維持高水平，頂尖客戶群體中可見重複購買行為。整體而言，這是您品牌自加入平台以來<em>表現最強勁的月份之一</em>。
+      </div>
+    </div>
+
+    <!-- Customer Rating + Tags -->
+    <div class="bp-rating-row">
+      <div class="bp-rating-box">
+        <div class="bp-summary-label en-only">Customer Rating</div>
+        <div class="bp-summary-label zh-only" style="display:none">客戶評分</div>
+        <div class="bp-rating-score">[4.8]</div>
+        <div class="bp-rating-max en-only">out of 5.0 &nbsp;·&nbsp; [312] verified reviews</div>
+        <div class="bp-rating-max zh-only" style="display:none">滿分5.0 · [312]個已驗證評價</div>
+        <div class="bp-rating-stars"><svg class="bp-star" viewBox="0 0 16 16" fill="#ae9cdc"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,12 3.5,15 5,9.5 1,6 6,6"/></svg><svg class="bp-star" viewBox="0 0 16 16" fill="#ae9cdc"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,12 3.5,15 5,9.5 1,6 6,6"/></svg><svg class="bp-star" viewBox="0 0 16 16" fill="#ae9cdc"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,12 3.5,15 5,9.5 1,6 6,6"/></svg><svg class="bp-star" viewBox="0 0 16 16" fill="#ae9cdc"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,12 3.5,15 5,9.5 1,6 6,6"/></svg><svg class="bp-star" viewBox="0 0 16 16" fill="#ae9cdc"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,12 3.5,15 5,9.5 1,6 6,6"/></svg></div>
+        <div class="bp-rating-sub en-only">94% of buyers rated 4★ or above. Your brand sits in the <strong>top 15%</strong> of all platform ratings this month.</div>
+        <div class="bp-rating-sub zh-only" style="display:none">94%買家評分4星或以上。您的品牌位列本月平台評分<strong>前15%</strong>。</div>
+      </div>
+      <div class="bp-rating-box">
+        <div class="bp-votes-label en-only">What Customers Are Saying</div>
+        <div class="bp-votes-label zh-only" style="display:none">客戶評語關鍵詞</div>
+        <div class="bp-tag-cloud">
+          <span class="bp-tag positive en-only">Effective</span>
+          <span class="bp-tag positive en-only">Great Value</span>
+          <span class="bp-tag positive en-only">Gentle on Skin</span>
+          <span class="bp-tag positive en-only">Fast Shipping</span>
+          <span class="bp-tag positive en-only">True to Description</span>
+          <span class="bp-tag neutral en-only">Packaging</span>
+          <span class="bp-tag neutral en-only">Scent</span>
+          <span class="bp-tag positive zh-only" style="display:none">有效</span>
+          <span class="bp-tag positive zh-only" style="display:none">物超所值</span>
+          <span class="bp-tag positive zh-only" style="display:none">溫和</span>
+          <span class="bp-tag positive zh-only" style="display:none">快速送達</span>
+          <span class="bp-tag positive zh-only" style="display:none">如實描述</span>
+          <span class="bp-tag neutral zh-only" style="display:none">包裝</span>
+          <span class="bp-tag neutral zh-only" style="display:none">氣味</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delivery + Feedback -->
+    <div class="bp-delivery-row">
+      <div class="bp-delivery-box">
+        <div class="bp-delivery-title"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><rect x="1" y="5" width="11" height="9" rx="1.5" stroke="#ae9cdc" stroke-width="1.3"/><path d="M12 8h2.5l2 3v3h-4.5V8z" stroke="#ae9cdc" stroke-width="1.3" stroke-linejoin="round"/><circle cx="4.5" cy="14.5" r="1.5" stroke="#ae9cdc" stroke-width="1.2"/><circle cx="14" cy="14.5" r="1.5" stroke="#ae9cdc" stroke-width="1.2"/></svg> &nbsp;<span class="en-only">Delivery Performance</span><span class="zh-only" style="display:none">配送表現</span></div>
+        <div class="bp-delivery-stat"><span class="en-only">Average Delivery Time</span><span class="zh-only" style="display:none">平均送貨時間</span><span class="bp-delivery-val good">[3.2] days</span></div>
+        <div class="bp-delivery-stat"><span class="en-only">On-Time Rate</span><span class="zh-only" style="display:none">準時率</span><span class="bp-delivery-val good">[96%]</span></div>
+        <div class="bp-delivery-stat"><span class="en-only">Orders with Delay</span><span class="zh-only" style="display:none">延遲訂單</span><span class="bp-delivery-val warn">[4] orders</span></div>
+        <div class="bp-delivery-stat"><span class="en-only">Fulfilment Rate</span><span class="zh-only" style="display:none">履單率</span><span class="bp-delivery-val good">[99.1%]</span></div>
+      </div>
+      <div class="bp-delivery-box">
+        <div class="bp-delivery-title"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M2 2h14v11H9l-4 3v-3H2z" stroke="#ae9cdc" stroke-width="1.3" stroke-linejoin="round"/></svg> &nbsp;<span class="en-only">Customer Feedback</span><span class="zh-only" style="display:none">客戶反饋</span></div>
+        <div class="bp-feedback-list">
+          <div class="bp-feedback-item praise">
+            <div class="bp-feedback-badge badge-praise en-only">Praise</div>
+            <div class="bp-feedback-badge badge-praise zh-only" style="display:none">好評</div>
+            <div class="en-only">Multiple buyers highlighted the <strong>texture and absorption speed</strong> of your hero SKU. Several mentioned gifting to friends.</div>
+            <div class="zh-only" style="display:none">多位買家讚揚明星SKU的<strong>質地及吸收速度</strong>，並有多人表示會推薦給朋友。</div>
+          </div>
+          <div class="bp-feedback-item complaint">
+            <div class="bp-feedback-badge badge-complaint en-only">Note</div>
+            <div class="bp-feedback-badge badge-complaint zh-only" style="display:none">備注</div>
+            <div class="en-only">3 buyers flagged <strong>outer packaging damage</strong> upon arrival. No product damage reported. We recommend reviewing packaging with your logistics partner.</div>
+            <div class="zh-only" style="display:none">3位買家反映收貨時<strong>外包裝輕微損壞</strong>，產品完好。建議與物流合作夥伴檢討包裝材料。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform Insight -->
+    <div class="bp-insight-box">
+      <div class="bp-insight-label en-only"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="white" stroke-width="1.3" opacity="0.7"/><path d="M9 6v4" stroke="white" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="13" r="0.8" fill="white"/></svg> &nbsp; SIMPLEX-ITY Platform Insight</div>
+      <div class="bp-insight-label zh-only" style="display:none"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="white" stroke-width="1.3" opacity="0.7"/><path d="M9 6v4" stroke="white" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="13" r="0.8" fill="white"/></svg> &nbsp; SIMPLEX-ITY 平台洞察</div>
+      <div class="bp-insight-text en-only">[Your Brand]'s performance this month aligns strongly with the growing US consumer preference for <strong>clean, ingredient-focused skincare</strong>. We recommend highlighting your key ingredient story in upcoming campaign briefs — this has shown a 2.1x uplift in conversion for comparable brands on the platform.</div>
+      <div class="bp-insight-text zh-only" style="display:none">根據平台觀察，[品牌名稱]本月表現與美國消費者對<strong>成分透明、清潔護膚</strong>的增長偏好高度吻合。建議在即將推出的推廣簡報中突出核心成分故事——對同類品牌轉化率提升達2.1倍。</div>
+    </div>
+
   </div>
-</div>
-
-<!-- ══════════════════════════ CATEGORY BREAKDOWN ══════════════════════════ -->
-<div class="section-pad alt">
-  <div class="page" style="padding: 0;">
-    <div class="section-header">
-      <div class="section-num">03</div>
-      <div class="section-title-wrap">
-        <span class="section-tag en-only">Category Breakdown</span>
-        <span class="section-tag zh-only">品類分析</span>
-        <div class="section-title en-only">Performance by Category</div>
-        <div class="section-title zh-only">各品類表現</div>
-      </div>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="cat-grid">
-      <div class="cat-card skincare">
-        <div class="cat-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 22 C8 22 6 12 14 8 C20 5 24 8 22 16 C20 22 12 24 8 22Z" stroke="#ae9cdc" stroke-width="1.4" stroke-linejoin="round"/>
-  <line x1="8" y1="22" x2="16" y2="13" stroke="#ae9cdc" stroke-width="1.4" stroke-linecap="round"/>
-</svg></div>
-        <div class="cat-title">Skincare</div>
-        <span class="cat-title-zh">護膚品類</span>
-        <div class="cat-gmv">$162,800</div>
-        <div class="cat-gmv-label">GMV · 57% of total</div>
-        <div class="cat-pct">57%</div>
-        <div class="cat-sub-grid">
-          <div class="cat-sub-item">
-            <div class="cat-sub-name">Cleanse & Remove</div>
-            <div class="cat-sub-val">$48,200</div>
-          </div>
-          <div class="cat-sub-item">
-            <div class="cat-sub-name">Prep & Hydrate</div>
-            <div class="cat-sub-val">$62,400</div>
-          </div>
-          <div class="cat-sub-item">
-            <div class="cat-sub-name">Masks & Treat</div>
-            <div class="cat-sub-val">$31,600</div>
-          </div>
-          <div class="cat-sub-item">
-            <div class="cat-sub-name">Eye & Lip Care</div>
-            <div class="cat-sub-val">$20,600</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cat-card makeup">
-        <div class="cat-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M14 5 C14 5 10 9 10 14 C10 18 12 22 14 22 C16 22 18 18 18 14 C18 9 14 5 14 5Z" stroke="#ae9cdc" stroke-width="1.4"/>
-  <line x1="14" y1="22" x2="14" y2="26" stroke="#ae9cdc" stroke-width="1.4" stroke-linecap="round"/>
-  <line x1="10" y1="25" x2="18" y2="25" stroke="#ae9cdc" stroke-width="1.4" stroke-linecap="round"/>
-</svg></div>
-        <div class="cat-title">Makeup</div>
-        <span class="cat-title-zh">彩妝品類</span>
-        <div class="cat-gmv">$93,700</div>
-        <div class="cat-gmv-label">GMV · 33% of total</div>
-        <div class="cat-pct">33%</div>
-        <div class="cat-sub-grid">
-          <div class="cat-sub-item">
-            <div class="cat-sub-name">Lip</div>
-            <div class="cat-sub-val">$38,900</div>
-          </div>
-          <div class="cat-sub-item">
-            <div class="cat-sub-name">Face & Base</div>
-            <div class="cat-sub-val">$32,200</div>
-          </div>
-          <div class="cat-sub-item">
-            <div class="cat-sub-name">Eyes</div>
-            <div class="cat-sub-val">$14,800</div>
-          </div>
-          <div class="cat-sub-item">
-            <div class="cat-sub-name">Prep & Finish</div>
-            <div class="cat-sub-val">$7,800</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cat-card brands">
-        <div class="cat-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <polygon points="14,3 16.5,10.5 24,10.5 18,15.5 20.5,23 14,18 7.5,23 10,15.5 4,10.5 11.5,10.5" stroke="#ae9cdc" stroke-width="1.4" stroke-linejoin="round"/>
-</svg></div>
-        <div class="cat-title">Premium Brands</div>
-        <span class="cat-title-zh">精選品牌系列</span>
-        <div class="cat-gmv">$28,000</div>
-        <div class="cat-gmv-label">GMV · 10% of total</div>
-        <div class="cat-pct">10%</div>
-        <div class="cat-sub-grid">
-          <div class="cat-sub-item">
-            <div class="cat-sub-name">SU:M37°</div>
-            <div class="cat-sub-val">$19,500</div>
-          </div>
-          <div class="cat-sub-item">
-            <div class="cat-sub-name">Shiseido</div>
-            <div class="cat-sub-val">$8,500</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════ PRICE POINT ══════════════════════════ -->
-<div class="section-pad white">
-  <div class="page" style="padding: 0;">
-    <div class="section-header">
-      <div class="section-num">04</div>
-      <div class="section-title-wrap">
-        <span class="section-tag en-only">Price Point Analysis</span>
-        <span class="section-tag zh-only">價格帶分析</span>
-        <div class="section-title en-only">Where Customers Spend</div>
-        <div class="section-title zh-only">客戶消費偏好</div>
-      </div>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="upgrade-teaser">
-  <div style="margin-bottom:12px"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="5" y="10" width="12" height="9" rx="2" stroke="#ae9cdc" stroke-width="1.3"/><path d="M8 10V7a3 3 0 0 1 6 0v3" stroke="#ae9cdc" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-  <div class="upgrade-title en-only">Price Point Analysis — Professional & Above</div>
-  <div class="upgrade-title zh-only" style="display:none">價格帶分析 — 專業版及以上</div>
-  <div class="upgrade-body en-only">Detailed breakdown of sales by price tier, conversion rates by price point, and premium positioning insights.</div>
-  <div class="upgrade-body zh-only" style="display:none">按價格層級的銷售細分、各價格點轉化率及高端定位洞察於專業版及企業版提供。</div>
-  <a class="upgrade-btn" href="#">Upgrade Membership →</a>
 </div>
 
 <!-- ══- ══════════════════════════ BEST SELLERS ══════════════════════════ -->
 <div class="section-pad white">
   <div class="page" style="padding:0;">
     <div class="section-header">
-      <div class="section-num">04</div>
+      <div class="section-num">03</div>
       <div class="section-title-wrap">
         <span class="section-tag en-only">Top Products</span>
         <span class="section-tag zh-only">熱賣產品</span>
-        <div class="section-title en-only">Your Top 5 SKUs This Month</div>
-        <div class="section-title zh-only">本月您的5大熱賣單品</div>
+        <div class="section-title en-only">Your Top 6 SKUs This Month</div>
+        <div class="section-title zh-only">本月您的6大熱賣單品</div>
       </div>
       <div class="section-line"></div>
     </div>
@@ -1571,6 +1512,132 @@
   </div>
 </div>
 
+
+<!-- ══════════════════════════ CATEGORY BREAKDOWN ══════════════════════════ -->
+<div class="section-pad alt">
+  <div class="page" style="padding: 0;">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-title-wrap">
+        <span class="section-tag en-only">Category Breakdown</span>
+        <span class="section-tag zh-only">品類分析</span>
+        <div class="section-title en-only">Performance by Category</div>
+        <div class="section-title zh-only">各品類表現</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="cat-grid">
+      <div class="cat-card skincare">
+        <div class="cat-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 22 C8 22 6 12 14 8 C20 5 24 8 22 16 C20 22 12 24 8 22Z" stroke="#ae9cdc" stroke-width="1.4" stroke-linejoin="round"/>
+  <line x1="8" y1="22" x2="16" y2="13" stroke="#ae9cdc" stroke-width="1.4" stroke-linecap="round"/>
+</svg></div>
+        <div class="cat-title">Skincare</div>
+        <span class="cat-title-zh">護膚品類</span>
+        <div class="cat-gmv">$162,800</div>
+        <div class="cat-gmv-label">GMV · 57% of total</div>
+        <div class="cat-pct">57%</div>
+        <div class="cat-sub-grid">
+          <div class="cat-sub-item">
+            <div class="cat-sub-name">Cleanse & Remove</div>
+            <div class="cat-sub-val">$48,200</div>
+          </div>
+          <div class="cat-sub-item">
+            <div class="cat-sub-name">Prep & Hydrate</div>
+            <div class="cat-sub-val">$62,400</div>
+          </div>
+          <div class="cat-sub-item">
+            <div class="cat-sub-name">Masks & Treat</div>
+            <div class="cat-sub-val">$31,600</div>
+          </div>
+          <div class="cat-sub-item">
+            <div class="cat-sub-name">Eye & Lip Care</div>
+            <div class="cat-sub-val">$20,600</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cat-card makeup">
+        <div class="cat-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14 5 C14 5 10 9 10 14 C10 18 12 22 14 22 C16 22 18 18 18 14 C18 9 14 5 14 5Z" stroke="#ae9cdc" stroke-width="1.4"/>
+  <line x1="14" y1="22" x2="14" y2="26" stroke="#ae9cdc" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="10" y1="25" x2="18" y2="25" stroke="#ae9cdc" stroke-width="1.4" stroke-linecap="round"/>
+</svg></div>
+        <div class="cat-title">Makeup</div>
+        <span class="cat-title-zh">彩妝品類</span>
+        <div class="cat-gmv">$93,700</div>
+        <div class="cat-gmv-label">GMV · 33% of total</div>
+        <div class="cat-pct">33%</div>
+        <div class="cat-sub-grid">
+          <div class="cat-sub-item">
+            <div class="cat-sub-name">Lip</div>
+            <div class="cat-sub-val">$38,900</div>
+          </div>
+          <div class="cat-sub-item">
+            <div class="cat-sub-name">Face & Base</div>
+            <div class="cat-sub-val">$32,200</div>
+          </div>
+          <div class="cat-sub-item">
+            <div class="cat-sub-name">Eyes</div>
+            <div class="cat-sub-val">$14,800</div>
+          </div>
+          <div class="cat-sub-item">
+            <div class="cat-sub-name">Prep & Finish</div>
+            <div class="cat-sub-val">$7,800</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cat-card brands">
+        <div class="cat-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="14,3 16.5,10.5 24,10.5 18,15.5 20.5,23 14,18 7.5,23 10,15.5 4,10.5 11.5,10.5" stroke="#ae9cdc" stroke-width="1.4" stroke-linejoin="round"/>
+</svg></div>
+        <div class="cat-title">Premium Brands</div>
+        <span class="cat-title-zh">精選品牌系列</span>
+        <div class="cat-gmv">$28,000</div>
+        <div class="cat-gmv-label">GMV · 10% of total</div>
+        <div class="cat-pct">10%</div>
+        <div class="cat-sub-grid">
+          <div class="cat-sub-item">
+            <div class="cat-sub-name">SU:M37°</div>
+            <div class="cat-sub-val">$19,500</div>
+          </div>
+          <div class="cat-sub-item">
+            <div class="cat-sub-name">Shiseido</div>
+            <div class="cat-sub-val">$8,500</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════ PRICE POINT ══════════════════════════ -->
+<div class="section-pad white">
+  <div class="page" style="padding: 0;">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-title-wrap">
+        <span class="section-tag en-only">Price Point Analysis</span>
+        <span class="section-tag zh-only">價格帶分析</span>
+        <div class="section-title en-only">Where Customers Spend</div>
+        <div class="section-title zh-only">客戶消費偏好</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="upgrade-teaser">
+  <div style="margin-bottom:12px"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="5" y="10" width="12" height="9" rx="2" stroke="#ae9cdc" stroke-width="1.3"/><path d="M8 10V7a3 3 0 0 1 6 0v3" stroke="#ae9cdc" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+  <div class="upgrade-title en-only">Price Point Analysis — Professional & Above</div>
+  <div class="upgrade-title zh-only" style="display:none">價格帶分析 — 專業版及以上</div>
+  <div class="upgrade-body en-only">Detailed breakdown of sales by price tier, conversion rates by price point, and premium positioning insights.</div>
+  <div class="upgrade-body zh-only" style="display:none">按價格層級的銷售細分、各價格點轉化率及高端定位洞察於專業版及企業版提供。</div>
+  <a class="upgrade-btn" href="#">Upgrade Membership →</a>
+</div>
+
+
 <!-- ══════════════════════════ CUSTOMER INSIGHTS ══════════════════════════ -->
 <div class="section-pad white">
   <div class="page" style="padding: 0;">
@@ -1595,6 +1662,7 @@
 </div>
 
 
+
 <!-- ══════════════════════════ TRENDS ══════════════════════════ -->
 <div class="section-pad alt">
   <div class="page" style="padding: 0;">
@@ -1617,6 +1685,7 @@
   <div class="upgrade-body zh-only" style="display:none">月度趨勢追蹤、競品對比及品類增長預測於專業版及企業版報告提供。</div>
   <a class="upgrade-btn" href="#">Upgrade Membership →</a>
 </div>
+
 
 <!-- ══- ══════════════════════════ RECOMMENDATIONS ══════════════════════════ -->
 <div class="section-pad white">
@@ -1654,6 +1723,7 @@
     </div>
 </div>
 </div>
+
 
 <!-- ══- ══════════════════════════ FOOTER ══════════════════════════ -->
 <div class="report-footer">
