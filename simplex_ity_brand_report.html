@@ -282,6 +282,34 @@
     background: linear-gradient(to right, var(--lavender-light), transparent);
   }
 
+
+  /* ── INTERNAL ONLY BADGE ── */
+  .internal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    padding: 5px 14px;
+    margin-bottom: 20px;
+  }
+  .internal-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #FFD700;
+    flex-shrink: 0;
+  }
+  .internal-badge-text {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.9);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+  }
+
   /* ── EXECUTIVE SUMMARY ── */
   .exec-bg {
     background: linear-gradient(135deg, #7B6BB8 0%, #ae9cdc 100%);
@@ -854,6 +882,10 @@
 <div class="exec-bg">
   <div class="exec-grid">
     <div class="exec-left">
+      <div class="internal-badge">
+        <div class="internal-badge-dot"></div>
+        <span class="internal-badge-text">Internal Use Only</span>
+      </div>
       <span class="exec-eyebrow en-only">01 · Executive Summary</span>
       <span class="exec-eyebrow zh-only">01 · 執行摘要</span>
       <div class="exec-heading en-only">A strong month for Asian beauty. Skincare led, new brands emerged.</div>
