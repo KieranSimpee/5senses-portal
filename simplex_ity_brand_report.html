@@ -6,6 +6,15 @@
 <title>SIMPLEX-ITY Brand Performance Report — June 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Alata&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
   :root {
     --lavender-deep: #7B6BB8;
     --lavender-main: #ae9cdc;
@@ -62,6 +71,8 @@
   /* ── COVER PAGE ── */
   .cover {
     min-height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
     background: linear-gradient(145deg, #7B6BB8 0%, #ae9cdc 60%, #C4B8E8 100%);
     display: flex;
     flex-direction: column;
@@ -69,9 +80,7 @@
     justify-content: center;
     position: relative;
     overflow: hidden;
-    padding: 80px 40px;
-    box-sizing: border-box;
-    width: 100%;
+    padding: 80px 60px;
   }
 
   .cover::before {
@@ -174,15 +183,20 @@
 
   .cover-meta {
     display: flex;
-    gap: 60px;
+    gap: 0;
     justify-content: center;
     flex-wrap: nowrap;
     width: 100%;
-    max-width: 700px;
+    max-width: 720px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 28px;
+    margin-top: 10px;
   }
   .cover-meta-item {
     text-align: center;
-    flex-shrink: 0;
+    flex: 1 0 0;
+    min-width: 0;
+    padding: 0 10px;
   }
   .cover-meta-label {
     font-size: 9px;
@@ -190,14 +204,16 @@
     color: rgba(255,255,255,0.5);
     text-transform: uppercase;
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    white-space: nowrap;
   }
   .cover-meta-value {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    color: var(--white);
+    font-size: 17px;
+    color: #ffffff;
     font-weight: 400;
     letter-spacing: 1px;
+    white-space: nowrap;
   }
 
   .cover-badge {
@@ -805,7 +821,7 @@
     >
   </div>
 
-  <div class="cover-divider"></div>
+  <div class="cover-divider" style="width:60px;height:1px;background:rgba(255,255,255,0.4);margin:0 auto 40px auto;flex-shrink:0;"></div>
 
   <div class="cover-title"><em>Brand Performance</em> Report</div>
   <div class="cover-subtitle en-only">The June Edit · Monthly Intelligence Report · 2026</div>
