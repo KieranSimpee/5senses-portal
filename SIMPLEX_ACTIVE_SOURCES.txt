@@ -1,0 +1,9 @@
+=== ACTIVE SIMPLEX-ITY MASTER REFERENCES ===
+
+1. DOCX: /app/incoming_files/69ddc9166e1e12f6313fc523/3e347b682_SIMPLEXBUSINSSMODEL_HIGHCONFIDENTIAL.docx
+2. TXT:  /app/incoming_files/69ddc9166e1e12f6313fc523/17fd48612_SIMPLEX-ITYMASTERBUSINESS_HIGHCONFIDENTIAL.txt
+3. PPTX: /app/SIMPLEX-ITY_Membership_Pack.pptx
+4. LOGO: /app/incoming_files/simplex_logo.png
+
+All other files → /app/archive/simplex_old/
+Locked: 21 June 2026 by Kieran
