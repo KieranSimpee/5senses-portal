@@ -93,23 +93,27 @@ Files in workspace root:
 - 公司證書: 5S Portal → Document entity (category: Legal)
 - IP/DNS DS Records: 5S Portal → VaultItem (category: DNS/Domain)
   simplex-ity.com DS Record 1 & 2 已save
-- REAP WhatsApp: [待補充 — 請弟弟confirm號碼]
 - Domain: simplex-ity.com (Siteground hosted, GoDaddy DNS)
+- REAP Contact: Carrie (WhatsApp)
+  → 完整REAP文件: 5S Portal → Document entity (search "REAP")
+  → 或 incoming_files/ 入面搵REAP相關PDF
 
 ---
 
 ## 8. AI合作夥伴 Contact & 費用
+
 ### VYBD
 - Partnership Deck: SIM_x_Vybd_Partnership_Deck.pptx (workspace)
 - Agreement: Wilson_Partnership_Agreement_V2_Bilingual.txt (workspace)
-- Contact details: [待補充]
-- Fee details: [待補充 — 請弟弟confirm]
+- Contact: Wilson (VYBD) — details in above files
+- Fee/商業條款: [待更新 — 有新資料時弟弟confirm]
 
 ### TINT VTO
-- Merchant login: merchant.tintvto.com (5sensesbeauty / Yq33-=cz)
-- Saved in VaultItem
-- Contact details: [待補充]
-- Fee details: [待補充 — 請弟弟confirm]
+- Merchant login: merchant.tintvto.com (5sensesbeauty / Yq33-=cz) → saved in VaultItem
+- Contact: [待補充]
+- 費用/Order Placement: 參考弟弟之前share嘅order placement文件
+  → 搵 incoming_files/ 入面 TintVTO 相關文件
+  → 或 5S Portal → Document entity (search "Tint")
 
 ---
 
