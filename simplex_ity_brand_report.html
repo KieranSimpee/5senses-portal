@@ -700,6 +700,77 @@
   /* ── ZH TOGGLE ── */
   body.zh-mode .en-only { display: none !important; }
   body.en-mode .zh-only { display: none !important; }
+
+  /* ── LOGO UPLOAD ZONE ── */
+  .logo-upload-zone {
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo-upload-zone:hover .upload-hint {
+    opacity: 1;
+  }
+
+  .logo-uploaded-img {
+    max-height: 90px;
+    max-width: 320px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    display: none;
+  }
+
+  .logo-text-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .upload-hint {
+    opacity: 0;
+    transition: opacity 0.3s;
+    margin-top: 10px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    border: 1px dashed rgba(255,255,255,0.3);
+    padding: 6px 16px;
+    border-radius: 20px;
+  }
+
+  .upload-hint-default {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.4);
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    border: 1px dashed rgba(255,255,255,0.25);
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-top: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .upload-hint-default:hover {
+    border-color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.8);
+  }
+
+  #logoFileInput {
+    display: none;
+  }
+
+  .logo-white-filter {
+    filter: brightness(0) invert(1);
+  }
+
 </style>
 </head>
 <body class="en-mode">
@@ -714,11 +785,21 @@
 <div class="cover">
   <div class="cover-tag">CONFIDENTIAL BRAND PERFORMANCE REPORT</div>
 
-  <div class="logo-wrap">
-    <div class="logo-text-wrap" style="text-align:center;">
+  <!-- LOGO UPLOAD ZONE -->
+  <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)">
+
+  <div class="logo-upload-zone" onclick="document.getElementById('logoFileInput').click()">
+    <!-- Uploaded image (hidden by default) -->
+    <img id="uploadedLogo" class="logo-uploaded-img" src="" alt="Brand Logo">
+
+    <!-- Default text logo (shown when no image uploaded) -->
+    <div class="logo-text-block" id="logoTextBlock">
       <span class="logo-name">S I M P L E X - I T Y</span>
       <span class="logo-tagline">ONE STOP ASIAN BEAUTY · SIMPLIFY TO AMPLIFY</span>
     </div>
+
+    <!-- Upload prompt -->
+    <span class="upload-hint-default" id="uploadPrompt">⬆ Upload Your Logo</span>
   </div>
 
   <div class="cover-divider"></div>
@@ -1363,5 +1444,61 @@ function setLang(lang) {
   document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
 }
 </script>
+
+<script>
+function handleLogoUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const uploadedImg = document.getElementById('uploadedLogo');
+    const textBlock = document.getElementById('logoTextBlock');
+    const uploadPrompt = document.getElementById('uploadPrompt');
+
+    // Show the uploaded image
+    uploadedImg.src = e.target.result;
+    uploadedImg.style.display = 'block';
+
+    // Hide the text logo
+    textBlock.style.display = 'none';
+
+    // Update upload prompt
+    uploadPrompt.textContent = '✎ Change Logo';
+    uploadPrompt.style.opacity = '0.5';
+
+    // Apply white filter if image has dark colors (auto-detect)
+    // Check if PNG has transparency — if so, just apply white
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      try {
+        const pixel = ctx.getImageData(0, 0, 1, 1).data;
+        // If background is white/light, apply white filter
+        if (pixel[0] > 200 && pixel[1] > 200 && pixel[2] > 200) {
+          uploadedImg.style.filter = 'brightness(0) invert(1)';
+        } else if (pixel[3] < 10) {
+          // Transparent — just invert to white
+          uploadedImg.style.filter = 'brightness(0) invert(1)';
+        } else {
+          // Dark background — keep original but try to make it work
+          uploadedImg.style.filter = 'none';
+        }
+      } catch(e) {
+        // CORS issue — just apply white filter as default
+        uploadedImg.style.filter = 'brightness(0) invert(1)';
+      }
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+</script>
+
 </body>
 </html>
