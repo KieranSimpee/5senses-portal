@@ -90,6 +90,35 @@ export default function ReportGeneratorPage() {
   });
 
   const [autoFilling, setAutoFilling] = useState(false);
+  // Logo lock state
+  const [logoUrl, setLogoUrl] = useState(() => localStorage.getItem("simplex_report_logo") || null);
+  const [logoLocked, setLogoLocked] = useState(() => localStorage.getItem("simplex_report_logo_locked") === "true");
+  const [logoUploading, setLogoUploading] = useState(false);
+
+  const handleLogoUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setLogoUploading(true);
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const dataUrl = ev.target.result;
+      setLogoUrl(dataUrl);
+      localStorage.setItem("simplex_report_logo", dataUrl);
+      setLogoUploading(false);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleLogoLock = () => {
+    if (!logoUrl) { alert("Please upload a logo first."); return; }
+    setLogoLocked(true);
+    localStorage.setItem("simplex_report_logo_locked", "true");
+  };
+
+  const handleLogoUnlock = () => {
+    setLogoLocked(false);
+    localStorage.setItem("simplex_report_logo_locked", "false");
+  };
   const [generatingReport, setGeneratingReport] = useState(false);
   const [reportHtmlUrl, setReportHtmlUrl] = useState(null);
 
@@ -407,6 +436,45 @@ export default function ReportGeneratorPage() {
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "Montserrat", padding: "24px 20px" }}>
       {/* Header */}
       <div style={{ maxWidth: 960, margin: "0 auto" }}>
+        {/* Logo Upload & Lock Panel */}
+        <div style={{ background: C.container, borderRadius: 14, padding: "16px 20px", marginBottom: 20, border: `1px solid ${logoLocked ? "#10b981" : C.border}`, display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            {logoUrl ? (
+              <img src={logoUrl} alt="Report Logo" style={{ height: 48, width: "auto", borderRadius: 8, border: `2px solid ${logoLocked ? "#10b981" : C.border}`, objectFit: "contain", background: "#f8f7ff", padding: 4 }} />
+            ) : (
+              <div style={{ width: 48, height: 48, borderRadius: 8, border: `2px dashed ${C.border}`, display: "flex", alignItems: "center", justifyContent: "center", background: "#f8f7ff" }}>
+                <span style={{ fontSize: 20, color: C.muted }}>⬜</span>
+              </div>
+            )}
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: C.text, fontFamily: "Exo 2" }}>Report Logo</div>
+              <div style={{ fontSize: 11, color: logoLocked ? "#10b981" : C.muted, marginTop: 2, fontWeight: logoLocked ? 700 : 400 }}>
+                {logoLocked ? "🔒 Locked — used in all reports" : logoUrl ? "Preview only — not locked yet" : "Upload your logo to use in reports"}
+              </div>
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: 10, marginLeft: "auto", alignItems: "center" }}>
+            {!logoLocked && (
+              <>
+                <label style={{ background: C.primary, color: "#fff", borderRadius: 8, padding: "8px 16px", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "Montserrat" }}>
+                  {logoUploading ? "Uploading..." : logoUrl ? "Change Logo" : "Upload Logo"}
+                  <input type="file" accept="image/*" style={{ display: "none" }} onChange={handleLogoUpload} disabled={logoUploading} />
+                </label>
+                {logoUrl && (
+                  <button onClick={handleLogoLock} style={{ background: "#10b981", color: "#fff", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "Montserrat" }}>
+                    🔒 Lock Logo
+                  </button>
+                )}
+              </>
+            )}
+            {logoLocked && (
+              <button onClick={handleLogoUnlock} style={{ background: "#fee2e2", color: "#dc2626", border: "1px solid #fca5a5", borderRadius: 8, padding: "8px 16px", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "Montserrat" }}>
+                Unlock to Change
+              </button>
+            )}
+          </div>
+        </div>
+
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
           <div>
             <div style={{ fontSize: 22, fontWeight: 800, fontFamily: "Exo 2", color: C.text }}>
