@@ -72,30 +72,32 @@ function usePageSettings(pageKey) {
   useEffect(() => {
     async function load() {
       try {
-        // Try to load from localStorage first (instant)
+        // localStorage is always the source of truth
         const lsSaved = localStorage.getItem(LS_KEY);
         if (lsSaved) {
-          const parsed = JSON.parse(lsSaved);
-          setSettings({ ...DEFAULT_SETTINGS, ...parsed });
+          try {
+            const parsed = JSON.parse(lsSaved);
+            setSettings({ ...DEFAULT_SETTINGS, ...parsed });
+            setLoaded(true);
+            return; // localStorage has data — use it, skip DB
+          } catch(e) {}
         }
-        // Also try UISettings entity as backup
+        // No localStorage — try UISettings entity
         try {
           const records = await UISettings.filter({ page_key: pageKey });
           if (records && records.length > 0) {
             const map = {};
             const merged = { ...DEFAULT_SETTINGS };
-            if (lsSaved) Object.assign(merged, JSON.parse(lsSaved));
             records.forEach(r => {
               map[r.setting_key] = r.id;
               merged[r.setting_key] = r.value;
             });
             setRecordMap(map);
             setSettings(merged);
-            // Sync entity data back to localStorage
             localStorage.setItem(LS_KEY, JSON.stringify(merged));
           }
         } catch (e) {
-          console.log("UISettings entity not available, using localStorage only");
+          console.log("UISettings entity not available, using defaults");
         }
       } catch (e) {
         console.error("Settings load error", e);
