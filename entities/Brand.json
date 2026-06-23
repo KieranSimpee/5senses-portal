@@ -42,6 +42,12 @@
     },
     "notes": {
       "type": "string"
+    },
+    "brand_code": {
+      "type": "string"
+    },
+    "login_email": {
+      "type": "string"
     }
   },
   "required": [],
