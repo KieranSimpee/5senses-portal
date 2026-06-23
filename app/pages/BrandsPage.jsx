@@ -57,24 +57,48 @@ const DEFAULT_SETTINGS = {
 
 // ── usePageSettings hook ─────────────────────────────────────────────────────
 function usePageSettings(pageKey) {
-  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+  const LS_KEY = `simpee_page_settings_${pageKey}`;
+
+  const [settings, setSettings] = useState(() => {
+    try {
+      const saved = localStorage.getItem(LS_KEY);
+      if (saved) return { ...DEFAULT_SETTINGS, ...JSON.parse(saved) };
+    } catch (e) {}
+    return DEFAULT_SETTINGS;
+  });
   const [recordMap, setRecordMap] = useState({});
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     async function load() {
       try {
-        const records = await UISettings.filter({ page_key: pageKey });
-        const map = {};
-        const merged = { ...DEFAULT_SETTINGS };
-        records.forEach(r => {
-          map[r.setting_key] = r.id;
-          merged[r.setting_key] = r.value;
-        });
-        setRecordMap(map);
-        setSettings(merged);
+        // Try to load from localStorage first (instant)
+        const lsSaved = localStorage.getItem(LS_KEY);
+        if (lsSaved) {
+          const parsed = JSON.parse(lsSaved);
+          setSettings({ ...DEFAULT_SETTINGS, ...parsed });
+        }
+        // Also try UISettings entity as backup
+        try {
+          const records = await UISettings.filter({ page_key: pageKey });
+          if (records && records.length > 0) {
+            const map = {};
+            const merged = { ...DEFAULT_SETTINGS };
+            if (lsSaved) Object.assign(merged, JSON.parse(lsSaved));
+            records.forEach(r => {
+              map[r.setting_key] = r.id;
+              merged[r.setting_key] = r.value;
+            });
+            setRecordMap(map);
+            setSettings(merged);
+            // Sync entity data back to localStorage
+            localStorage.setItem(LS_KEY, JSON.stringify(merged));
+          }
+        } catch (e) {
+          console.log("UISettings entity not available, using localStorage only");
+        }
       } catch (e) {
-        console.error("UISettings load error", e);
+        console.error("Settings load error", e);
       }
       setLoaded(true);
     }
@@ -82,19 +106,26 @@ function usePageSettings(pageKey) {
   }, [pageKey]);
 
   async function saveSettings(newSettings) {
-    const updates = [];
-    for (const [key, value] of Object.entries(newSettings)) {
-      if (recordMap[key]) {
-        updates.push(UISettings.update(recordMap[key], { value: String(value) }));
-      } else {
-        updates.push(
-          UISettings.create({ page_key: pageKey, setting_key: key, value: String(value), value_type: "text", label: key })
-            .then(r => { recordMap[key] = r.id; })
-        );
-      }
-    }
-    await Promise.all(updates);
+    // Always save to localStorage first (instant, reliable)
+    localStorage.setItem(LS_KEY, JSON.stringify(newSettings));
     setSettings(newSettings);
+    // Try to also save to UISettings entity
+    try {
+      const updates = [];
+      for (const [key, value] of Object.entries(newSettings)) {
+        if (recordMap[key]) {
+          updates.push(UISettings.update(recordMap[key], { value: String(value) }));
+        } else {
+          updates.push(
+            UISettings.create({ page_key: pageKey, setting_key: key, value: String(value), value_type: "text", label: key })
+              .then(r => { recordMap[key] = r.id; })
+          );
+        }
+      }
+      await Promise.all(updates);
+    } catch (e) {
+      console.log("UISettings entity save skipped, localStorage saved");
+    }
   }
 
   return { settings, saveSettings, loaded };
