@@ -1121,6 +1121,19 @@
     <span class="upload-hint-default" id="uploadPrompt">⬆ Upload Your Logo</span>
   </div>
 
+  <!-- Lock / Unlock Button -->
+  <div id="logoLockBar" style="margin-top:14px; display:flex; align-items:center; gap:12px; justify-content:center;">
+    <button id="lockLogoBtn" onclick="lockLogo()" style="display:none; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.4); color:#fff; border-radius:20px; padding:7px 22px; font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:2px; font-weight:600; text-transform:uppercase; cursor:pointer;">
+      🔒 Lock Logo
+    </button>
+    <span id="logoLockedBadge" style="display:none; background:rgba(168,230,207,0.2); border:1px solid rgba(168,230,207,0.5); color:#a8e6cf; border-radius:20px; padding:7px 22px; font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:2px; font-weight:600; text-transform:uppercase;">
+      ✓ Logo Locked
+    </span>
+    <button id="unlockLogoBtn" onclick="unlockLogo()" style="display:none; background:rgba(255,100,100,0.15); border:1px solid rgba(255,100,100,0.3); color:rgba(255,180,180,0.9); border-radius:20px; padding:5px 16px; font-family:'Montserrat',sans-serif; font-size:9px; letter-spacing:1.5px; font-weight:600; text-transform:uppercase; cursor:pointer;">
+      Unlock to Change
+    </button>
+  </div>
+
   <div class="cover-divider"></div>
 
   <div class="cover-title"><em>Brand Performance</em> Report</div>
@@ -1773,6 +1786,19 @@ function handleLogoUpload(event) {
     uploadPrompt.textContent = '↑ Change Logo';
     uploadPrompt.style.opacity = '0.5';
 
+    // Save to localStorage
+    localStorage.setItem('simplex_locked_logo', e.target.result);
+    localStorage.setItem('simplex_logo_locked', 'false');
+
+    // Show lock button
+    document.getElementById('lockLogoBtn').style.display = 'inline-block';
+    document.getElementById('logoLockedBadge').style.display = 'none';
+    document.getElementById('unlockLogoBtn').style.display = 'none';
+
+    // Re-enable upload zone click
+    document.getElementById('logoFileInput').disabled = false;
+    document.querySelector('.logo-upload-zone').style.pointerEvents = 'auto';
+
     // Apply white filter if image has dark colors (auto-detect)
     // Check if PNG has transparency — if so, just apply white
     const img = new Image();
@@ -1804,6 +1830,55 @@ function handleLogoUpload(event) {
   };
   reader.readAsDataURL(file);
 }
+
+function lockLogo() {
+  localStorage.setItem('simplex_logo_locked', 'true');
+  document.getElementById('lockLogoBtn').style.display = 'none';
+  document.getElementById('logoLockedBadge').style.display = 'inline-block';
+  document.getElementById('unlockLogoBtn').style.display = 'inline-block';
+  // Disable upload zone
+  document.getElementById('logoFileInput').disabled = true;
+  document.querySelector('.logo-upload-zone').style.pointerEvents = 'none';
+  document.querySelector('.logo-upload-zone').style.cursor = 'default';
+  document.getElementById('uploadPrompt').style.display = 'none';
+}
+
+function unlockLogo() {
+  localStorage.setItem('simplex_logo_locked', 'false');
+  document.getElementById('lockLogoBtn').style.display = 'inline-block';
+  document.getElementById('logoLockedBadge').style.display = 'none';
+  document.getElementById('unlockLogoBtn').style.display = 'none';
+  // Re-enable upload zone
+  document.getElementById('logoFileInput').disabled = false;
+  document.querySelector('.logo-upload-zone').style.pointerEvents = 'auto';
+  document.querySelector('.logo-upload-zone').style.cursor = 'pointer';
+  document.getElementById('uploadPrompt').style.display = 'inline-block';
+}
+
+// Restore logo + lock state on page load
+window.addEventListener('DOMContentLoaded', function() {
+  const savedLogo = localStorage.getItem('simplex_locked_logo');
+  const isLocked = localStorage.getItem('simplex_logo_locked') === 'true';
+
+  if (savedLogo) {
+    const uploadedImg = document.getElementById('uploadedLogo');
+    const textBlock = document.getElementById('logoTextBlock');
+    const uploadPrompt = document.getElementById('uploadPrompt');
+
+    uploadedImg.src = savedLogo;
+    uploadedImg.style.display = 'block';
+    uploadedImg.style.filter = 'brightness(0) invert(1)';
+    textBlock.style.display = 'none';
+    uploadPrompt.textContent = '↑ Change Logo';
+    uploadPrompt.style.opacity = '0.5';
+
+    if (isLocked) {
+      lockLogo();
+    } else {
+      document.getElementById('lockLogoBtn').style.display = 'inline-block';
+    }
+  }
+});
 </script>
 
 </body>
