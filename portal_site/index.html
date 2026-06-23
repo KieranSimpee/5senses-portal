@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5Senses Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #e8e6fe;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 480px;
+      padding: 32px 24px;
+    }
+    .logo-area {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .logo-area h1 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #5e50fb;
+      letter-spacing: 2px;
+    }
+    .logo-area p {
+      font-size: 13px;
+      color: #6b6b80;
+      margin-top: 4px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .portal-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .portal-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px rgba(94,80,251,0.08);
+    }
+    .portal-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(94,80,251,0.18);
+    }
+    .portal-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .portal-icon svg { width: 26px; height: 26px; }
+    .staff-icon { background: #ede9ff; }
+    .brand-icon { background: #e9f0ff; }
+    .influencer-icon { background: #fce9ff; }
+    .portal-info h2 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a1a1f;
+      margin-bottom: 3px;
+    }
+    .portal-info p {
+      font-size: 13px;
+      color: #8888a0;
+    }
+    .portal-arrow {
+      margin-left: auto;
+      color: #c0b8ff;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 12px;
+      color: #aaaacc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-area">
+      <h1>5SENSES</h1>
+      <p>Portal — Select your access</p>
+    </div>
+    <div class="portal-cards">
+      <a href="/staff/index.html" class="portal-card">
+        <div class="portal-icon staff-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5e50fb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="portal-info">
+          <h2>Staff Portal</h2>
+          <p>Internal team access</p>
+        </div>
+        <div class="portal-arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </a>
+      <a href="/brand/index.html" class="portal-card">
+        <div class="portal-icon brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3b7cf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+            <line x1="12" y1="12" x2="12" y2="16"/>
+            <line x1="10" y1="14" x2="14" y2="14"/>
+          </svg>
+        </div>
+        <div class="portal-info">
+          <h2>Brand Portal</h2>
+          <p>Brand partner access</p>
+        </div>
+        <div class="portal-arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </a>
+      <a href="/influencer/index.html" class="portal-card">
+        <div class="portal-icon influencer-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#c060e0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 1 0 10 10"/>
+            <path d="M12 8v4l3 3"/>
+            <path d="M18 2l4 4-4 4"/>
+            <path d="M22 2l-4 4"/>
+          </svg>
+        </div>
+        <div class="portal-info">
+          <h2>Influencer Portal</h2>
+          <p>Creator & KOL access</p>
+        </div>
+        <div class="portal-arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </a>
+    </div>
+    <div class="footer">
+      5SENSESBEAUTY LIMITED · SIMPLEX-ITY · Powered by Simpee
+    </div>
+  </div>
+</body>
+</html>
