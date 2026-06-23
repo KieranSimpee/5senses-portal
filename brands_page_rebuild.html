@@ -2,64 +2,53 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>BrandsPage — Rebuilt</title>
+<title>BrandsPage v3 — Database Settings</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: #f8f7ff; color: #1a1a1f; }
-  .header { background: #1a0533; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; }
-  .header h1 { color: #fff; font-size: 17px; font-weight: 900; }
-  .header span { color: #a78bfa; font-size: 12px; }
-  .container { max-width: 900px; margin: 28px auto; padding: 0 24px; }
-  .info { background: #fff; border-radius: 14px; padding: 18px 22px; margin-bottom: 22px; border: 1px solid #ede9fe; }
-  .info h2 { font-size: 14px; color: #1a0533; margin-bottom: 8px; font-weight: 800; }
-  .info p { font-size: 12px; color: #64748b; line-height: 1.6; }
-  .changes { background: #f9f7ff; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; border: 1px solid #ede9fe; }
-  .changes h3 { font-size: 12px; font-weight: 800; color: #1a0533; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.8px; }
-  .change-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 7px; font-size: 12px; color: #4c3f6e; }
-  .dot { width: 6px; height: 6px; border-radius: 50%; background: #5e50fb; flex-shrink: 0; margin-top: 4px; }
-  .file-card { background: #fff; border-radius: 14px; overflow: hidden; border: 1px solid #ede9fe; box-shadow: 0 2px 10px rgba(94,80,251,0.07); }
-  .file-header { background: linear-gradient(135deg, #1a0533, #2d1157); padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; }
-  .file-name { color: #fff; font-size: 14px; font-weight: 800; }
-  .file-path { color: #a78bfa; font-size: 11px; margin-top: 2px; }
-  .tag { background: #fef9c3; color: #854d0e; border-radius: 20px; padding: 2px 10px; font-size: 10px; font-weight: 700; }
-  .copy-btn { background: #5e50fb; color: #fff; border: none; border-radius: 8px; padding: 8px 18px; font-size: 12px; font-weight: 700; cursor: pointer; margin: 14px 20px; display: block; }
-  .copy-btn.copied { background: #065f46; }
-  pre { background: #0f0a1e; color: #e2d9f3; padding: 18px 22px; font-size: 11px; line-height: 1.6; overflow-x: auto; font-family: 'Fira Code', monospace; max-height: 420px; overflow-y: auto; border-top: 1px solid rgba(94,80,251,0.2); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Inter, sans-serif; background: #f8f7ff; color: #1a1a1f; }
+.header { background: linear-gradient(135deg,#1a0533,#2d1157); padding: 18px 32px; display:flex; align-items:center; justify-content:space-between; }
+.header h1 { color:#fff; font-size:16px; font-weight:900; }
+.header span { color:#a78bfa; font-size:11px; }
+.container { max-width:880px; margin:28px auto; padding:0 24px; }
+.badge { background:#d1fae5; color:#065f46; border-radius:20px; padding:3px 12px; font-size:11px; font-weight:700; display:inline-block; margin-bottom:16px; }
+.changes { background:#fff; border-radius:12px; padding:18px 22px; margin-bottom:20px; border:1px solid #ede9fe; }
+.changes h3 { font-size:11px; font-weight:800; color:#1a0533; margin-bottom:12px; text-transform:uppercase; letter-spacing:.8px; }
+.item { display:flex; gap:10px; align-items:flex-start; margin-bottom:8px; font-size:12px; color:#4c3f6e; line-height:1.5; }
+.dot { width:6px; height:6px; border-radius:50%; background:#5e50fb; flex-shrink:0; margin-top:5px; }
+.file-card { background:#fff; border-radius:14px; overflow:hidden; border:1px solid #ede9fe; box-shadow:0 2px 10px rgba(94,80,251,.07); }
+.file-header { background:linear-gradient(135deg,#1a0533,#2d1157); padding:14px 22px; }
+.file-name { color:#fff; font-size:14px; font-weight:800; }
+.file-path { color:#a78bfa; font-size:11px; margin-top:3px; }
+.tag { background:#fef9c3; color:#854d0e; border-radius:20px; padding:2px 10px; font-size:10px; font-weight:700; margin-left:8px; }
+.copy-btn { background:#5e50fb; color:#fff; border:none; border-radius:9px; padding:10px 22px; font-size:13px; font-weight:700; cursor:pointer; margin:14px 20px; display:block; }
+.copy-btn.done { background:#065f46; }
+pre { background:#0f0a1e; color:#e2d9f3; padding:18px 22px; font-size:11px; line-height:1.65; overflow-x:auto; font-family:'Fira Code',monospace; max-height:400px; overflow-y:auto; border-top:1px solid rgba(94,80,251,.2); }
 </style>
 </head>
 <body>
 <div class="header">
-  <h1>BrandsPage.jsx — Rebuilt</h1>
-  <span>1 file · Replace existing · 5S Portal</span>
+  <h1>BrandsPage.jsx v3 — Database-Backed Settings</h1>
+  <span>1 file · Replace entire file · 5S Portal</span>
 </div>
 <div class="container">
-
-  <div class="info">
-    <h2>What changed</h2>
-    <p>Open on desktop. Click Copy Code, paste into Base44 builder at <strong>app &gt; pages &gt; BrandsPage.jsx</strong> — replace the entire file.</p>
-  </div>
-
+  <div class="badge">UISettings entity already created ✅</div>
   <div class="changes">
-    <h3>What's new in this version</h3>
-    <div class="change-item"><div class="dot"></div>KPI strip — compact height, 5 clean cards (Total, Active, Trial, MRR, TINT)</div>
-    <div class="change-item"><div class="dot"></div>Simplex-ity hero banner — editable! Admin can click Edit to change headline, subtitle, button text + URL</div>
-    <div class="change-item"><div class="dot"></div>All emoji removed — replaced with clean periwinkle SVG icons</div>
-    <div class="change-item"><div class="dot"></div>Brand book colours — #5e50fb accent, #8c82fc primary, #e8e6fe background, Exo 2 headings</div>
-    <div class="change-item"><div class="dot"></div>Add Brand form now includes Login Email + Brand Code fields (for portal access)</div>
-    <div class="change-item"><div class="dot"></div>Compact table rows — less whitespace, easier to scan</div>
-    <div class="change-item"><div class="dot"></div>Banner text saved to localStorage — persists between sessions without touching any code</div>
+    <h3>What's new — Settings Panel that actually works</h3>
+    <div class="item"><div class="dot"></div><strong>Settings button</strong> — top right, next to Tier Guide. Slides open a side drawer.</div>
+    <div class="item"><div class="dot"></div><strong>Save = database</strong> — NOT localStorage. Refresh safe. Any device. Forever.</div>
+    <div class="item"><div class="dot"></div><strong>KPI toggles</strong> — show/hide each KPI card with a toggle. Changes immediately.</div>
+    <div class="item"><div class="dot"></div><strong>Banner editor</strong> — change headline, subtitle, button text, URL, background colours with colour picker.</div>
+    <div class="item"><div class="dot"></div><strong>Page title + subtitle</strong> — editable directly from the settings drawer.</div>
+    <div class="item"><div class="dot"></div>Saving shows "Saving..." then closes — zero guesswork.</div>
   </div>
-
   <div class="file-card">
     <div class="file-header">
-      <div>
-        <div class="file-name">BrandsPage.jsx <span class="tag">REPLACE</span></div>
-        <div class="file-path">app &gt; pages &gt; BrandsPage.jsx</div>
-      </div>
+      <div class="file-name">BrandsPage.jsx <span class="tag">REPLACE ENTIRE FILE</span></div>
+      <div class="file-path">app &gt; pages &gt; BrandsPage.jsx</div>
     </div>
-    <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+    <button class="copy-btn" onclick="copy(this)">Copy Code</button>
     <pre id="code">import { useState, useEffect } from &quot;react&quot;;
-import { Brand } from &quot;@/api/entities&quot;;
+import { Brand, UISettings } from &quot;@/api/entities&quot;;
 
 const V = &quot;#5e50fb&quot;;
 const V2 = &quot;#8c82fc&quot;;
@@ -69,7 +58,6 @@ const BG = &quot;#e8e6fe&quot;;
 // ── SVG Icons ────────────────────────────────────────────────────────────────
 const Icon = {
   brands: &lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#ae9cdc&quot; strokeWidth=&quot;2&quot; strokeLinecap=&quot;round&quot; strokeLinejoin=&quot;round&quot;&gt;&lt;rect x=&quot;2&quot; y=&quot;7&quot; width=&quot;20&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2&quot;/&gt;&lt;/svg&gt;,
-  mrr:    &lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#ae9cdc&quot; strokeWidth=&quot;2&quot; strokeLinecap=&quot;round&quot; strokeLinejoin=&quot;round&quot;&gt;&lt;line x1=&quot;12&quot; y1=&quot;1&quot; x2=&quot;12&quot; y2=&quot;23&quot;/&gt;&lt;path d=&quot;M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6&quot;/&gt;&lt;/svg&gt;,
   tint:   &lt;svg width=&quot;13&quot; height=&quot;13&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#5e50fb&quot; strokeWidth=&quot;2&quot; strokeLinecap=&quot;round&quot; strokeLinejoin=&quot;round&quot;&gt;&lt;polyline points=&quot;20 6 9 17 4 12&quot;/&gt;&lt;/svg&gt;,
   edit:   &lt;svg width=&quot;13&quot; height=&quot;13&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#5e50fb&quot; strokeWidth=&quot;2&quot; strokeLinecap=&quot;round&quot; strokeLinejoin=&quot;round&quot;&gt;&lt;path d=&quot;M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7&quot;/&gt;&lt;path d=&quot;M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z&quot;/&gt;&lt;/svg&gt;,
   del:    &lt;svg width=&quot;13&quot; height=&quot;13&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#ef4444&quot; strokeWidth=&quot;2&quot; strokeLinecap=&quot;round&quot; strokeLinejoin=&quot;round&quot;&gt;&lt;polyline points=&quot;3 6 5 6 21 6&quot;/&gt;&lt;path d=&quot;M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6&quot;/&gt;&lt;path d=&quot;M10 11v6&quot;/&gt;&lt;path d=&quot;M14 11v6&quot;/&gt;&lt;/svg&gt;,
@@ -77,13 +65,15 @@ const Icon = {
   tiers:  &lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#5e50fb&quot; strokeWidth=&quot;2&quot; strokeLinecap=&quot;round&quot; strokeLinejoin=&quot;round&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;3&quot; width=&quot;7&quot; height=&quot;7&quot;/&gt;&lt;rect x=&quot;14&quot; y=&quot;3&quot; width=&quot;7&quot; height=&quot;7&quot;/&gt;&lt;rect x=&quot;3&quot; y=&quot;14&quot; width=&quot;7&quot; height=&quot;7&quot;/&gt;&lt;rect x=&quot;14&quot; y=&quot;14&quot; width=&quot;7&quot; height=&quot;7&quot;/&gt;&lt;/svg&gt;,
   add:    &lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; strokeWidth=&quot;2.5&quot; strokeLinecap=&quot;round&quot;&gt;&lt;line x1=&quot;12&quot; y1=&quot;5&quot; x2=&quot;12&quot; y2=&quot;19&quot;/&gt;&lt;line x1=&quot;5&quot; y1=&quot;12&quot; x2=&quot;19&quot; y2=&quot;12&quot;/&gt;&lt;/svg&gt;,
   close:  &lt;svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#64748b&quot; strokeWidth=&quot;2&quot; strokeLinecap=&quot;round&quot;&gt;&lt;line x1=&quot;18&quot; y1=&quot;6&quot; x2=&quot;6&quot; y2=&quot;18&quot;/&gt;&lt;line x1=&quot;6&quot; y1=&quot;6&quot; x2=&quot;18&quot; y2=&quot;18&quot;/&gt;&lt;/svg&gt;,
+  settings: &lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#5e50fb&quot; strokeWidth=&quot;2&quot; strokeLinecap=&quot;round&quot; strokeLinejoin=&quot;round&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;3&quot;/&gt;&lt;path d=&quot;M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z&quot;/&gt;&lt;/svg&gt;,
+  save:   &lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; strokeWidth=&quot;2&quot; strokeLinecap=&quot;round&quot; strokeLinejoin=&quot;round&quot;&gt;&lt;path d=&quot;M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z&quot;/&gt;&lt;polyline points=&quot;17 21 17 13 7 13 7 21&quot;/&gt;&lt;polyline points=&quot;7 3 7 8 15 8&quot;/&gt;&lt;/svg&gt;,
 };
 
 const TIER_INFO = {
-  Trial:        { color: &quot;#d97706&quot;, bg: &quot;#fef3c7&quot;, fee: &quot;20% Commission&quot;, content: &quot;Basic Insights (free)&quot;,    influencers: &quot;5-10 matched&quot; },
-  Essential:    { color: &quot;#0277bd&quot;, bg: &quot;#e0f2fe&quot;, fee: &quot;$400/mo&quot;,        content: &quot;1x Blog + 1x Live&quot;,        influencers: &quot;1 Nano&quot; },
-  Professional: { color: V,        bg: &quot;#ede9fe&quot;, fee: &quot;$900/mo&quot;,        content: &quot;2x Blogs + 4x Lives&quot;,      influencers: &quot;2 Micro&quot; },
-  Enterprise:   { color: &quot;#be185d&quot;, bg: &quot;#fce7f3&quot;, fee: &quot;$2,500/mo&quot;,     content: &quot;5x Blogs + 10x Lives&quot;,     influencers: &quot;4 Star + 1 Super&quot; },
+  Trial:        { color: &quot;#d97706&quot;, bg: &quot;#fef3c7&quot;, fee: &quot;20% Commission&quot;, content: &quot;Basic Insights (free)&quot;, influencers: &quot;5-10 matched&quot; },
+  Essential:    { color: &quot;#0277bd&quot;, bg: &quot;#e0f2fe&quot;, fee: &quot;$400/mo&quot;,        content: &quot;1x Blog + 1x Live&quot;,    influencers: &quot;1 Nano&quot; },
+  Professional: { color: V,        bg: &quot;#ede9fe&quot;, fee: &quot;$900/mo&quot;,        content: &quot;2x Blogs + 4x Lives&quot;,  influencers: &quot;2 Micro&quot; },
+  Enterprise:   { color: &quot;#be185d&quot;, bg: &quot;#fce7f3&quot;, fee: &quot;$2,500/mo&quot;,     content: &quot;5x Blogs + 10x Lives&quot;, influencers: &quot;4 Star + 1 Super&quot; },
 };
 
 const STATUS_COLORS = {
@@ -93,81 +83,197 @@ const STATUS_COLORS = {
   Churned:  { bg: &quot;#fee2e2&quot;, color: &quot;#991b1b&quot; },
 };
 
-const EMPTY = { name: &quot;&quot;, contact_name: &quot;&quot;, contact_email: &quot;&quot;, tier: &quot;Trial&quot;, status: &quot;Pending&quot;, membership_fee: &quot;&quot;, category: &quot;&quot;, country: &quot;Hong Kong&quot;, tint_integrated: false, notes: &quot;&quot;, brand_code: &quot;&quot;, login_email: &quot;&quot; };
+const EMPTY_BRAND = { name: &quot;&quot;, contact_name: &quot;&quot;, contact_email: &quot;&quot;, tier: &quot;Trial&quot;, status: &quot;Pending&quot;, membership_fee: &quot;&quot;, category: &quot;&quot;, country: &quot;Hong Kong&quot;, tint_integrated: false, notes: &quot;&quot;, brand_code: &quot;&quot;, login_email: &quot;&quot; };
 
-// ── Simplex-ity Hero Banner (editable via localStorage) ──────────────────────
-const DEFAULT_BANNER = {
-  headline: &quot;Asian beauty, made easier to trust, learn, and love.&quot;,
-  sub: &quot;Join SIMPLEX-ITY — the curator platform connecting Korean beauty brands with the right voices.&quot;,
-  cta: &quot;Learn More&quot;,
-  ctaUrl: &quot;https://simplex-ity.com&quot;,
-  bg1: &quot;#1a0533&quot;,
-  bg2: &quot;#2d1157&quot;,
+const PAGE_KEY = &quot;brands_page&quot;;
+
+const DEFAULT_SETTINGS = {
+  banner_headline: &quot;Asian beauty, made easier to trust, learn, and love.&quot;,
+  banner_sub: &quot;Join SIMPLEX-ITY — the curator platform connecting Korean beauty brands with the right voices.&quot;,
+  banner_cta: &quot;Learn More&quot;,
+  banner_url: &quot;https://simplex-ity.com&quot;,
+  banner_bg1: &quot;#1a0533&quot;,
+  banner_bg2: &quot;#2d1157&quot;,
+  page_title: &quot;Brands&quot;,
+  page_subtitle: &quot;Manage brand partnerships &amp; membership tiers&quot;,
+  show_kpi_total: &quot;true&quot;,
+  show_kpi_active: &quot;true&quot;,
+  show_kpi_trial: &quot;true&quot;,
+  show_kpi_mrr: &quot;true&quot;,
+  show_kpi_tint: &quot;true&quot;,
+  show_banner: &quot;true&quot;,
 };
 
-function HeroBanner({ isAdmin }) {
-  const [editing, setEditing] = useState(false);
-  const [banner, setBanner] = useState(() =&gt; {
-    try { return { ...DEFAULT_BANNER, ...JSON.parse(localStorage.getItem(&quot;sx_banner&quot;) || &quot;{}&quot;) }; }
-    catch { return DEFAULT_BANNER; }
-  });
-  const [draft, setDraft] = useState(banner);
+// ── usePageSettings hook ─────────────────────────────────────────────────────
+function usePageSettings(pageKey) {
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+  const [recordMap, setRecordMap] = useState({});
+  const [loaded, setLoaded] = useState(false);
 
-  function save() {
-    localStorage.setItem(&quot;sx_banner&quot;, JSON.stringify(draft));
-    setBanner(draft);
-    setEditing(false);
+  useEffect(() =&gt; {
+    async function load() {
+      try {
+        const records = await UISettings.filter({ page_key: pageKey });
+        const map = {};
+        const merged = { ...DEFAULT_SETTINGS };
+        records.forEach(r =&gt; {
+          map[r.setting_key] = r.id;
+          merged[r.setting_key] = r.value;
+        });
+        setRecordMap(map);
+        setSettings(merged);
+      } catch (e) {
+        console.error(&quot;UISettings load error&quot;, e);
+      }
+      setLoaded(true);
+    }
+    load();
+  }, [pageKey]);
+
+  async function saveSettings(newSettings) {
+    const updates = [];
+    for (const [key, value] of Object.entries(newSettings)) {
+      if (recordMap[key]) {
+        updates.push(UISettings.update(recordMap[key], { value: String(value) }));
+      } else {
+        updates.push(
+          UISettings.create({ page_key: pageKey, setting_key: key, value: String(value), value_type: &quot;text&quot;, label: key })
+            .then(r =&gt; { recordMap[key] = r.id; })
+        );
+      }
+    }
+    await Promise.all(updates);
+    setSettings(newSettings);
   }
 
-  return (
-    &lt;div style={{ marginBottom: 20, position: &quot;relative&quot; }}&gt;
-      &lt;div style={{ background: `linear-gradient(135deg, ${banner.bg1}, ${banner.bg2})`, borderRadius: 14, padding: &quot;20px 28px&quot;, display: &quot;flex&quot;, alignItems: &quot;center&quot;, justifyContent: &quot;space-between&quot;, gap: 20, minHeight: 90 }}&gt;
-        &lt;div style={{ flex: 1 }}&gt;
-          &lt;div style={{ fontSize: 9, color: &quot;#a78bfa&quot;, fontWeight: 700, letterSpacing: 2, textTransform: &quot;uppercase&quot;, marginBottom: 6 }}&gt;SIMPLEX-ITY · Partner Network&lt;/div&gt;
-          &lt;div style={{ fontSize: 15, fontWeight: 800, color: &quot;#fff&quot;, lineHeight: 1.4, maxWidth: 520 }}&gt;{banner.headline}&lt;/div&gt;
-          &lt;div style={{ fontSize: 11, color: &quot;#c4b5fd&quot;, marginTop: 5, maxWidth: 480 }}&gt;{banner.sub}&lt;/div&gt;
-        &lt;/div&gt;
-        &lt;a href={banner.ctaUrl} target=&quot;_blank&quot; rel=&quot;noreferrer&quot; style={{ background: V, color: &quot;#fff&quot;, borderRadius: 8, padding: &quot;9px 18px&quot;, fontSize: 12, fontWeight: 700, textDecoration: &quot;none&quot;, whiteSpace: &quot;nowrap&quot;, flexShrink: 0 }}&gt;{banner.cta}&lt;/a&gt;
-        {isAdmin &amp;&amp; (
-          &lt;button onClick={() =&gt; { setDraft(banner); setEditing(true); }} title=&quot;Edit banner&quot; style={{ position: &quot;absolute&quot;, top: 10, right: 10, background: &quot;rgba(255,255,255,0.12)&quot;, border: &quot;1px solid rgba(255,255,255,0.2)&quot;, borderRadius: 6, padding: &quot;4px 8px&quot;, cursor: &quot;pointer&quot;, color: &quot;#c4b5fd&quot;, fontSize: 10, fontWeight: 700 }}&gt;Edit&lt;/button&gt;
-        )}
-      &lt;/div&gt;
+  return { settings, saveSettings, loaded };
+}
 
-      {editing &amp;&amp; (
-        &lt;div style={{ position: &quot;fixed&quot;, inset: 0, background: &quot;rgba(26,5,51,0.55)&quot;, display: &quot;flex&quot;, alignItems: &quot;center&quot;, justifyContent: &quot;center&quot;, zIndex: 200 }}&gt;
-          &lt;div style={{ background: &quot;#fff&quot;, borderRadius: 16, padding: 28, width: 480, boxShadow: &quot;0 12px 40px rgba(94,80,251,0.2)&quot; }}&gt;
-            &lt;div style={{ display: &quot;flex&quot;, justifyContent: &quot;space-between&quot;, alignItems: &quot;center&quot;, marginBottom: 20 }}&gt;
-              &lt;div style={{ fontSize: 15, fontWeight: 800, color: DARK }}&gt;Edit Banner&lt;/div&gt;
-              &lt;button onClick={() =&gt; setEditing(false)} style={{ background: &quot;none&quot;, border: &quot;none&quot;, cursor: &quot;pointer&quot; }}&gt;{Icon.close}&lt;/button&gt;
-            &lt;/div&gt;
-            {[[&quot;Headline&quot;, &quot;headline&quot;], [&quot;Subtitle&quot;, &quot;sub&quot;], [&quot;Button Text&quot;, &quot;cta&quot;], [&quot;Button URL&quot;, &quot;ctaUrl&quot;]].map(([label, key]) =&gt; (
-              &lt;div key={key} style={{ marginBottom: 14 }}&gt;
-                &lt;label style={{ fontSize: 11, fontWeight: 700, color: &quot;#64748b&quot;, display: &quot;block&quot;, marginBottom: 5, textTransform: &quot;uppercase&quot;, letterSpacing: 0.7 }}&gt;{label}&lt;/label&gt;
-                &lt;input value={draft[key]} onChange={e =&gt; setDraft({ ...draft, [key]: e.target.value })}
-                  style={{ width: &quot;100%&quot;, padding: &quot;9px 12px&quot;, borderRadius: 8, border: &quot;1.5px solid #e2d9f3&quot;, fontSize: 13, outline: &quot;none&quot;, boxSizing: &quot;border-box&quot; }} /&gt;
+// ── Settings Drawer ──────────────────────────────────────────────────────────
+function SettingsDrawer({ open, onClose, settings, onSave }) {
+  const [draft, setDraft] = useState(settings);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() =&gt; { setDraft(settings); }, [settings, open]);
+
+  async function handleSave() {
+    setSaving(true);
+    await onSave(draft);
+    setSaving(false);
+    onClose();
+  }
+
+  const inp = { width: &quot;100%&quot;, padding: &quot;8px 11px&quot;, borderRadius: 8, border: &quot;1.5px solid #e2d9f3&quot;, fontSize: 12, outline: &quot;none&quot;, boxSizing: &quot;border-box&quot;, fontFamily: &quot;Montserrat, Inter, sans-serif&quot; };
+  const toggle = (key) =&gt; setDraft(d =&gt; ({ ...d, [key]: d[key] === &quot;true&quot; ? &quot;false&quot; : &quot;true&quot; }));
+
+  if (!open) return null;
+
+  return (
+    &lt;div style={{ position: &quot;fixed&quot;, inset: 0, zIndex: 300, display: &quot;flex&quot; }}&gt;
+      &lt;div onClick={onClose} style={{ flex: 1, background: &quot;rgba(26,5,51,0.4)&quot; }} /&gt;
+      &lt;div style={{ width: 340, background: &quot;#fff&quot;, height: &quot;100%&quot;, overflowY: &quot;auto&quot;, boxShadow: &quot;-4px 0 24px rgba(94,80,251,0.15)&quot;, display: &quot;flex&quot;, flexDirection: &quot;column&quot; }}&gt;
+
+        {/* Drawer Header */}
+        &lt;div style={{ background: `linear-gradient(135deg, #1a0533, #2d1157)`, padding: &quot;16px 20px&quot;, display: &quot;flex&quot;, justifyContent: &quot;space-between&quot;, alignItems: &quot;center&quot; }}&gt;
+          &lt;div&gt;
+            &lt;div style={{ color: &quot;#fff&quot;, fontWeight: 800, fontSize: 14, fontFamily: &quot;Exo 2, sans-serif&quot; }}&gt;Page Settings&lt;/div&gt;
+            &lt;div style={{ color: &quot;#a78bfa&quot;, fontSize: 10, marginTop: 2 }}&gt;Changes save to database&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;button onClick={onClose} style={{ background: &quot;rgba(255,255,255,0.1)&quot;, border: &quot;none&quot;, borderRadius: 6, padding: &quot;5px 8px&quot;, cursor: &quot;pointer&quot; }}&gt;{Icon.close}&lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;div style={{ padding: &quot;18px 20px&quot;, flex: 1 }}&gt;
+
+          {/* Page Info */}
+          &lt;div style={{ marginBottom: 20 }}&gt;
+            &lt;div style={{ fontSize: 11, fontWeight: 800, color: &quot;#1a0533&quot;, marginBottom: 10, textTransform: &quot;uppercase&quot;, letterSpacing: 0.8 }}&gt;Page Info&lt;/div&gt;
+            {[[&quot;Page Title&quot;, &quot;page_title&quot;], [&quot;Page Subtitle&quot;, &quot;page_subtitle&quot;]].map(([label, key]) =&gt; (
+              &lt;div key={key} style={{ marginBottom: 10 }}&gt;
+                &lt;label style={{ display: &quot;block&quot;, fontSize: 10, color: &quot;#64748b&quot;, marginBottom: 4, fontWeight: 700, textTransform: &quot;uppercase&quot; }}&gt;{label}&lt;/label&gt;
+                &lt;input value={draft[key] || &quot;&quot;} onChange={e =&gt; setDraft(d =&gt; ({ ...d, [key]: e.target.value }))} style={inp} /&gt;
               &lt;/div&gt;
             ))}
-            &lt;div style={{ display: &quot;flex&quot;, gap: 10, marginTop: 18 }}&gt;
-              &lt;button onClick={save} style={{ flex: 1, background: V, color: &quot;#fff&quot;, border: &quot;none&quot;, borderRadius: 9, padding: &quot;11px&quot;, fontSize: 13, fontWeight: 700, cursor: &quot;pointer&quot; }}&gt;Save Banner&lt;/button&gt;
-              &lt;button onClick={() =&gt; setEditing(false)} style={{ flex: 1, background: &quot;#f1f5f9&quot;, color: &quot;#64748b&quot;, border: &quot;none&quot;, borderRadius: 9, padding: &quot;11px&quot;, fontSize: 13, fontWeight: 600, cursor: &quot;pointer&quot; }}&gt;Cancel&lt;/button&gt;
+          &lt;/div&gt;
+
+          {/* KPI Cards */}
+          &lt;div style={{ marginBottom: 20 }}&gt;
+            &lt;div style={{ fontSize: 11, fontWeight: 800, color: &quot;#1a0533&quot;, marginBottom: 10, textTransform: &quot;uppercase&quot;, letterSpacing: 0.8 }}&gt;KPI Cards — Show / Hide&lt;/div&gt;
+            {[
+              [&quot;Total Brands&quot;, &quot;show_kpi_total&quot;],
+              [&quot;Active Brands&quot;, &quot;show_kpi_active&quot;],
+              [&quot;Trial Brands&quot;, &quot;show_kpi_trial&quot;],
+              [&quot;MRR&quot;, &quot;show_kpi_mrr&quot;],
+              [&quot;TINT Live&quot;, &quot;show_kpi_tint&quot;],
+            ].map(([label, key]) =&gt; (
+              &lt;div key={key} onClick={() =&gt; toggle(key)} style={{ display: &quot;flex&quot;, justifyContent: &quot;space-between&quot;, alignItems: &quot;center&quot;, padding: &quot;8px 12px&quot;, borderRadius: 8, background: draft[key] === &quot;true&quot; ? &quot;#f0eeff&quot; : &quot;#f8f9fa&quot;, marginBottom: 6, cursor: &quot;pointer&quot;, border: `1.5px solid ${draft[key] === &quot;true&quot; ? V + &quot;40&quot; : &quot;#e2e8f0&quot;}` }}&gt;
+                &lt;span style={{ fontSize: 12, fontWeight: 600, color: draft[key] === &quot;true&quot; ? DARK : &quot;#94a3b8&quot; }}&gt;{label}&lt;/span&gt;
+                &lt;div style={{ width: 36, height: 20, borderRadius: 10, background: draft[key] === &quot;true&quot; ? V : &quot;#cbd5e1&quot;, position: &quot;relative&quot;, transition: &quot;background 0.2s&quot; }}&gt;
+                  &lt;div style={{ width: 16, height: 16, borderRadius: &quot;50%&quot;, background: &quot;#fff&quot;, position: &quot;absolute&quot;, top: 2, left: draft[key] === &quot;true&quot; ? 18 : 2, transition: &quot;left 0.2s&quot;, boxShadow: &quot;0 1px 3px rgba(0,0,0,0.2)&quot; }} /&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            ))}
+          &lt;/div&gt;
+
+          {/* Banner */}
+          &lt;div style={{ marginBottom: 20 }}&gt;
+            &lt;div style={{ display: &quot;flex&quot;, justifyContent: &quot;space-between&quot;, alignItems: &quot;center&quot;, marginBottom: 10 }}&gt;
+              &lt;div style={{ fontSize: 11, fontWeight: 800, color: &quot;#1a0533&quot;, textTransform: &quot;uppercase&quot;, letterSpacing: 0.8 }}&gt;Simplex-ity Banner&lt;/div&gt;
+              &lt;div onClick={() =&gt; toggle(&quot;show_banner&quot;)} style={{ display: &quot;flex&quot;, alignItems: &quot;center&quot;, gap: 6, cursor: &quot;pointer&quot; }}&gt;
+                &lt;span style={{ fontSize: 10, color: &quot;#64748b&quot; }}&gt;{draft.show_banner === &quot;true&quot; ? &quot;Visible&quot; : &quot;Hidden&quot;}&lt;/span&gt;
+                &lt;div style={{ width: 32, height: 18, borderRadius: 9, background: draft.show_banner === &quot;true&quot; ? V : &quot;#cbd5e1&quot;, position: &quot;relative&quot; }}&gt;
+                  &lt;div style={{ width: 14, height: 14, borderRadius: &quot;50%&quot;, background: &quot;#fff&quot;, position: &quot;absolute&quot;, top: 2, left: draft.show_banner === &quot;true&quot; ? 16 : 2, transition: &quot;left 0.2s&quot; }} /&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            {[
+              [&quot;Headline&quot;, &quot;banner_headline&quot;],
+              [&quot;Subtitle&quot;, &quot;banner_sub&quot;],
+              [&quot;Button Text&quot;, &quot;banner_cta&quot;],
+              [&quot;Button URL&quot;, &quot;banner_url&quot;],
+            ].map(([label, key]) =&gt; (
+              &lt;div key={key} style={{ marginBottom: 9 }}&gt;
+                &lt;label style={{ display: &quot;block&quot;, fontSize: 10, color: &quot;#64748b&quot;, marginBottom: 4, fontWeight: 700, textTransform: &quot;uppercase&quot; }}&gt;{label}&lt;/label&gt;
+                &lt;input value={draft[key] || &quot;&quot;} onChange={e =&gt; setDraft(d =&gt; ({ ...d, [key]: e.target.value }))} style={inp} /&gt;
+              &lt;/div&gt;
+            ))}
+            &lt;div style={{ display: &quot;grid&quot;, gridTemplateColumns: &quot;1fr 1fr&quot;, gap: 8, marginTop: 4 }}&gt;
+              {[[&quot;Bg Start&quot;, &quot;banner_bg1&quot;], [&quot;Bg End&quot;, &quot;banner_bg2&quot;]].map(([label, key]) =&gt; (
+                &lt;div key={key}&gt;
+                  &lt;label style={{ display: &quot;block&quot;, fontSize: 10, color: &quot;#64748b&quot;, marginBottom: 4, fontWeight: 700 }}&gt;{label}&lt;/label&gt;
+                  &lt;div style={{ display: &quot;flex&quot;, gap: 6, alignItems: &quot;center&quot; }}&gt;
+                    &lt;input type=&quot;color&quot; value={draft[key] || &quot;#1a0533&quot;} onChange={e =&gt; setDraft(d =&gt; ({ ...d, [key]: e.target.value }))} style={{ width: 32, height: 28, borderRadius: 6, border: &quot;1.5px solid #e2d9f3&quot;, cursor: &quot;pointer&quot;, padding: 2 }} /&gt;
+                    &lt;input value={draft[key] || &quot;&quot;} onChange={e =&gt; setDraft(d =&gt; ({ ...d, [key]: e.target.value }))} style={{ ...inp, width: &quot;auto&quot;, flex: 1, fontSize: 11 }} /&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              ))}
             &lt;/div&gt;
           &lt;/div&gt;
         &lt;/div&gt;
-      )}
+
+        {/* Save Button */}
+        &lt;div style={{ padding: &quot;14px 20px&quot;, borderTop: &quot;1px solid #f0eeff&quot; }}&gt;
+          &lt;button onClick={handleSave} disabled={saving} style={{ width: &quot;100%&quot;, background: saving ? &quot;#a5b4fc&quot; : V, color: &quot;#fff&quot;, border: &quot;none&quot;, borderRadius: 10, padding: &quot;12px&quot;, fontSize: 13, fontWeight: 700, cursor: saving ? &quot;not-allowed&quot; : &quot;pointer&quot;, display: &quot;flex&quot;, alignItems: &quot;center&quot;, justifyContent: &quot;center&quot;, gap: 8 }}&gt;
+            {Icon.save} {saving ? &quot;Saving...&quot; : &quot;Save Changes&quot;}
+          &lt;/button&gt;
+          &lt;div style={{ fontSize: 10, color: &quot;#94a3b8&quot;, textAlign: &quot;center&quot;, marginTop: 6 }}&gt;Saved to database — refresh safe&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   );
 }
 
 // ── Main Page ────────────────────────────────────────────────────────────────
 export default function BrandsPage({ user }) {
-  const [brands, setBrands]     = useState([]);
-  const [loading, setLoading]   = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [showTiers, setShowTiers] = useState(false);
-  const [editing, setEditing]   = useState(null);
-  const [form, setForm]         = useState(EMPTY);
-  const [search, setSearch]     = useState(&quot;&quot;);
+  const [brands, setBrands]         = useState([]);
+  const [loading, setLoading]       = useState(true);
+  const [showForm, setShowForm]     = useState(false);
+  const [showTiers, setShowTiers]   = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [editing, setEditing]       = useState(null);
+  const [form, setForm]             = useState(EMPTY_BRAND);
+  const [search, setSearch]         = useState(&quot;&quot;);
 
+  const { settings, saveSettings, loaded } = usePageSettings(PAGE_KEY);
   const isAdmin = !user || user.role === &quot;Admin&quot;;
 
   useEffect(() =&gt; { load(); }, []);
@@ -179,7 +285,7 @@ export default function BrandsPage({ user }) {
     setLoading(false);
   }
 
-  async function save() {
+  async function saveBrand() {
     const tierFees = { Trial: 0, Essential: 400, Professional: 900, Enterprise: 2500 };
     const payload = { ...form, membership_fee: form.membership_fee || tierFees[form.tier] || 0 };
     if (editing) await Brand.update(editing, payload);
@@ -198,52 +304,75 @@ export default function BrandsPage({ user }) {
   const active   = brands.filter(b =&gt; b.status === &quot;Active&quot;);
   const totalMRR = active.filter(b =&gt; b.tier !== &quot;Trial&quot;).reduce((s, b) =&gt; s + (parseFloat(b.membership_fee) || 0), 0);
 
-  const kpis = [
-    { label: &quot;Total Brands&quot;, value: brands.length,                      color: V },
-    { label: &quot;Active&quot;,       value: active.length,                       color: &quot;#065f46&quot; },
-    { label: &quot;Trial&quot;,        value: brands.filter(b=&gt;b.tier===&quot;Trial&quot;).length, color: &quot;#d97706&quot; },
-    { label: &quot;MRR&quot;,          value: `$${totalMRR.toLocaleString()}`,     color: &quot;#be185d&quot; },
-    { label: &quot;TINT Live&quot;,    value: brands.filter(b=&gt;b.tint_integrated).length, color: V2 },
+  const allKpis = [
+    { key: &quot;show_kpi_total&quot;,  label: &quot;Total Brands&quot;, value: brands.length,                                  color: V },
+    { key: &quot;show_kpi_active&quot;, label: &quot;Active&quot;,        value: active.length,                                  color: &quot;#065f46&quot; },
+    { key: &quot;show_kpi_trial&quot;,  label: &quot;Trial&quot;,         value: brands.filter(b =&gt; b.tier === &quot;Trial&quot;).length,  color: &quot;#d97706&quot; },
+    { key: &quot;show_kpi_mrr&quot;,    label: &quot;MRR&quot;,           value: `$${totalMRR.toLocaleString()}`,                color: &quot;#be185d&quot; },
+    { key: &quot;show_kpi_tint&quot;,   label: &quot;TINT Live&quot;,     value: brands.filter(b =&gt; b.tint_integrated).length,   color: V2 },
   ];
+
+  const visibleKpis = allKpis.filter(k =&gt; settings[k.key] === &quot;true&quot;);
 
   const inp = { width: &quot;100%&quot;, padding: &quot;9px 12px&quot;, borderRadius: 8, border: &quot;1.5px solid #e2d9f3&quot;, fontSize: 13, outline: &quot;none&quot;, boxSizing: &quot;border-box&quot;, fontFamily: &quot;Montserrat, Inter, sans-serif&quot; };
 
   return (
     &lt;div style={{ padding: &quot;24px 28px&quot;, background: BG, minHeight: &quot;100vh&quot;, fontFamily: &quot;Montserrat, Inter, sans-serif&quot; }}&gt;
 
+      {/* Settings Drawer */}
+      &lt;SettingsDrawer open={showSettings} onClose={() =&gt; setShowSettings(false)} settings={settings} onSave={saveSettings} /&gt;
+
       {/* Header */}
       &lt;div style={{ display: &quot;flex&quot;, justifyContent: &quot;space-between&quot;, alignItems: &quot;center&quot;, marginBottom: 16 }}&gt;
         &lt;div&gt;
           &lt;div style={{ display: &quot;flex&quot;, alignItems: &quot;center&quot;, gap: 8, marginBottom: 2 }}&gt;
             {Icon.brands}
-            &lt;span style={{ fontSize: 18, fontWeight: 900, color: DARK, fontFamily: &quot;Exo 2, sans-serif&quot; }}&gt;Brands&lt;/span&gt;
+            &lt;span style={{ fontSize: 18, fontWeight: 900, color: DARK, fontFamily: &quot;Exo 2, sans-serif&quot; }}&gt;
+              {loaded ? settings.page_title : &quot;Brands&quot;}
+            &lt;/span&gt;
           &lt;/div&gt;
-          &lt;div style={{ fontSize: 11, color: &quot;#64748b&quot; }}&gt;Manage brand partnerships &amp; membership tiers&lt;/div&gt;
+          &lt;div style={{ fontSize: 11, color: &quot;#64748b&quot; }}&gt;{loaded ? settings.page_subtitle : &quot;Manage brand partnerships &amp; membership tiers&quot;}&lt;/div&gt;
         &lt;/div&gt;
         &lt;div style={{ display: &quot;flex&quot;, gap: 8 }}&gt;
+          {isAdmin &amp;&amp; (
+            &lt;button onClick={() =&gt; setShowSettings(true)} style={{ display: &quot;flex&quot;, alignItems: &quot;center&quot;, gap: 6, background: &quot;#fff&quot;, color: V, border: `1.5px solid ${V}30`, borderRadius: 8, padding: &quot;8px 14px&quot;, fontSize: 12, fontWeight: 700, cursor: &quot;pointer&quot; }}&gt;
+              {Icon.settings} Settings
+            &lt;/button&gt;
+          )}
           &lt;button onClick={() =&gt; setShowTiers(!showTiers)} style={{ display: &quot;flex&quot;, alignItems: &quot;center&quot;, gap: 6, background: &quot;#fff&quot;, color: V, border: `1.5px solid ${V}30`, borderRadius: 8, padding: &quot;8px 14px&quot;, fontSize: 12, fontWeight: 700, cursor: &quot;pointer&quot; }}&gt;
             {Icon.tiers} Tier Guide
           &lt;/button&gt;
-          &lt;button onClick={() =&gt; { setForm(EMPTY); setEditing(null); setShowForm(true); }} style={{ display: &quot;flex&quot;, alignItems: &quot;center&quot;, gap: 6, background: V, color: &quot;#fff&quot;, border: &quot;none&quot;, borderRadius: 8, padding: &quot;8px 16px&quot;, fontSize: 12, fontWeight: 700, cursor: &quot;pointer&quot; }}&gt;
+          &lt;button onClick={() =&gt; { setForm(EMPTY_BRAND); setEditing(null); setShowForm(true); }} style={{ display: &quot;flex&quot;, alignItems: &quot;center&quot;, gap: 6, background: V, color: &quot;#fff&quot;, border: &quot;none&quot;, borderRadius: 8, padding: &quot;8px 16px&quot;, fontSize: 12, fontWeight: 700, cursor: &quot;pointer&quot; }}&gt;
             {Icon.add} Add Brand
           &lt;/button&gt;
         &lt;/div&gt;
       &lt;/div&gt;
 
-      {/* KPI Strip — compact */}
-      &lt;div style={{ display: &quot;grid&quot;, gridTemplateColumns: &quot;repeat(5,1fr)&quot;, gap: 10, marginBottom: 16 }}&gt;
-        {kpis.map(k =&gt; (
-          &lt;div key={k.label} style={{ background: &quot;#fff&quot;, borderRadius: 10, padding: &quot;10px 14px&quot;, borderLeft: `3px solid ${k.color}`, boxShadow: &quot;0 1px 4px rgba(94,80,251,0.06)&quot; }}&gt;
-            &lt;div style={{ fontSize: 18, fontWeight: 900, color: k.color, lineHeight: 1 }}&gt;{k.value}&lt;/div&gt;
-            &lt;div style={{ fontSize: 10, color: &quot;#64748b&quot;, marginTop: 3, fontWeight: 600, textTransform: &quot;uppercase&quot;, letterSpacing: 0.5 }}&gt;{k.label}&lt;/div&gt;
-          &lt;/div&gt;
-        ))}
-      &lt;/div&gt;
+      {/* KPI Strip */}
+      {visibleKpis.length &gt; 0 &amp;&amp; (
+        &lt;div style={{ display: &quot;grid&quot;, gridTemplateColumns: `repeat(${visibleKpis.length},1fr)`, gap: 10, marginBottom: 16 }}&gt;
+          {visibleKpis.map(k =&gt; (
+            &lt;div key={k.key} style={{ background: &quot;#fff&quot;, borderRadius: 10, padding: &quot;10px 14px&quot;, borderLeft: `3px solid ${k.color}`, boxShadow: &quot;0 1px 4px rgba(94,80,251,0.06)&quot; }}&gt;
+              &lt;div style={{ fontSize: 18, fontWeight: 900, color: k.color, lineHeight: 1 }}&gt;{k.value}&lt;/div&gt;
+              &lt;div style={{ fontSize: 10, color: &quot;#64748b&quot;, marginTop: 3, fontWeight: 600, textTransform: &quot;uppercase&quot;, letterSpacing: 0.5 }}&gt;{k.label}&lt;/div&gt;
+            &lt;/div&gt;
+          ))}
+        &lt;/div&gt;
+      )}
 
       {/* Simplex-ity Hero Banner */}
-      &lt;HeroBanner isAdmin={isAdmin} /&gt;
+      {settings.show_banner === &quot;true&quot; &amp;&amp; loaded &amp;&amp; (
+        &lt;div style={{ background: `linear-gradient(135deg, ${settings.banner_bg1}, ${settings.banner_bg2})`, borderRadius: 14, padding: &quot;20px 28px&quot;, display: &quot;flex&quot;, alignItems: &quot;center&quot;, justifyContent: &quot;space-between&quot;, gap: 20, minHeight: 90, marginBottom: 16 }}&gt;
+          &lt;div style={{ flex: 1 }}&gt;
+            &lt;div style={{ fontSize: 9, color: &quot;#a78bfa&quot;, fontWeight: 700, letterSpacing: 2, textTransform: &quot;uppercase&quot;, marginBottom: 6 }}&gt;SIMPLEX-ITY · Partner Network&lt;/div&gt;
+            &lt;div style={{ fontSize: 15, fontWeight: 800, color: &quot;#fff&quot;, lineHeight: 1.4, maxWidth: 520 }}&gt;{settings.banner_headline}&lt;/div&gt;
+            &lt;div style={{ fontSize: 11, color: &quot;#c4b5fd&quot;, marginTop: 5, maxWidth: 480 }}&gt;{settings.banner_sub}&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;a href={settings.banner_url} target=&quot;_blank&quot; rel=&quot;noreferrer&quot; style={{ background: V, color: &quot;#fff&quot;, borderRadius: 8, padding: &quot;9px 18px&quot;, fontSize: 12, fontWeight: 700, textDecoration: &quot;none&quot;, whiteSpace: &quot;nowrap&quot;, flexShrink: 0 }}&gt;{settings.banner_cta}&lt;/a&gt;
+        &lt;/div&gt;
+      )}
 
-      {/* Tier Guide (collapsible) */}
+      {/* Tier Guide */}
       {showTiers &amp;&amp; (
         &lt;div style={{ background: &quot;#fff&quot;, borderRadius: 12, padding: 18, marginBottom: 16, border: &quot;1px solid #ede9fe&quot; }}&gt;
           &lt;div style={{ fontSize: 12, fontWeight: 800, color: DARK, marginBottom: 12, textTransform: &quot;uppercase&quot;, letterSpacing: 0.8 }}&gt;Membership Tiers&lt;/div&gt;
@@ -257,7 +386,6 @@ export default function BrandsPage({ user }) {
               &lt;/div&gt;
             ))}
           &lt;/div&gt;
-          &lt;div style={{ fontSize: 10, color: &quot;#94a3b8&quot;, marginTop: 10 }}&gt;All tiers include 20% platform commission. Campaign Lineup Fee: $1,000+ per event (Phase 2).&lt;/div&gt;
         &lt;/div&gt;
       )}
 
@@ -265,7 +393,7 @@ export default function BrandsPage({ user }) {
       &lt;div style={{ position: &quot;relative&quot;, display: &quot;inline-flex&quot;, alignItems: &quot;center&quot;, marginBottom: 14 }}&gt;
         &lt;span style={{ position: &quot;absolute&quot;, left: 10 }}&gt;{Icon.search}&lt;/span&gt;
         &lt;input type=&quot;text&quot; placeholder=&quot;Search brands...&quot; value={search} onChange={e =&gt; setSearch(e.target.value)}
-          style={{ ...inp, width: 280, paddingLeft: 32 }} /&gt;
+          style={{ ...inp, width: 280, paddingLeft: 32, fontSize: 12 }} /&gt;
       &lt;/div&gt;
 
       {/* Table */}
@@ -317,7 +445,7 @@ export default function BrandsPage({ user }) {
         &lt;/div&gt;
       )}
 
-      {/* Add / Edit Modal */}
+      {/* Add/Edit Modal */}
       {showForm &amp;&amp; (
         &lt;div style={{ position: &quot;fixed&quot;, inset: 0, background: &quot;rgba(26,5,51,0.5)&quot;, display: &quot;flex&quot;, alignItems: &quot;center&quot;, justifyContent: &quot;center&quot;, zIndex: 100 }}&gt;
           &lt;div style={{ background: &quot;#fff&quot;, borderRadius: 16, padding: 28, width: 520, maxHeight: &quot;88vh&quot;, overflowY: &quot;auto&quot;, boxShadow: &quot;0 12px 48px rgba(94,80,251,0.2)&quot; }}&gt;
@@ -325,8 +453,6 @@ export default function BrandsPage({ user }) {
               &lt;div style={{ fontSize: 15, fontWeight: 800, color: DARK, fontFamily: &quot;Exo 2, sans-serif&quot; }}&gt;{editing ? &quot;Edit&quot; : &quot;Add&quot;} Brand&lt;/div&gt;
               &lt;button onClick={() =&gt; { setShowForm(false); setEditing(null); }} style={{ background: &quot;none&quot;, border: &quot;none&quot;, cursor: &quot;pointer&quot; }}&gt;{Icon.close}&lt;/button&gt;
             &lt;/div&gt;
-
-            {/* Tier Selector */}
             &lt;div style={{ marginBottom: 16 }}&gt;
               &lt;label style={{ display: &quot;block&quot;, fontSize: 11, color: &quot;#64748b&quot;, marginBottom: 8, fontWeight: 700, textTransform: &quot;uppercase&quot; }}&gt;Membership Tier&lt;/label&gt;
               &lt;div style={{ display: &quot;grid&quot;, gridTemplateColumns: &quot;1fr 1fr&quot;, gap: 7 }}&gt;
@@ -339,51 +465,29 @@ export default function BrandsPage({ user }) {
                 ))}
               &lt;/div&gt;
             &lt;/div&gt;
-
-            {/* Fields */}
-            {[
-              [&quot;Brand Name&quot;, &quot;name&quot;, &quot;text&quot;],
-              [&quot;Contact Name&quot;, &quot;contact_name&quot;, &quot;text&quot;],
-              [&quot;Contact Email&quot;, &quot;contact_email&quot;, &quot;email&quot;],
-              [&quot;Login Email (Portal)&quot;, &quot;login_email&quot;, &quot;email&quot;],
-              [&quot;Brand Code (e.g. SK-LAMER-01)&quot;, &quot;brand_code&quot;, &quot;text&quot;],
-              [&quot;Category&quot;, &quot;category&quot;, &quot;text&quot;],
-              [&quot;Country&quot;, &quot;country&quot;, &quot;text&quot;],
-            ].map(([label, key, type]) =&gt; (
-              &lt;div key={key} style={{ marginBottom: 13 }}&gt;
+            {[[&quot;Brand Name&quot;,&quot;name&quot;,&quot;text&quot;],[&quot;Contact Name&quot;,&quot;contact_name&quot;,&quot;text&quot;],[&quot;Contact Email&quot;,&quot;contact_email&quot;,&quot;email&quot;],[&quot;Login Email (Portal)&quot;,&quot;login_email&quot;,&quot;email&quot;],[&quot;Brand Code (e.g. SK-LAMER-01)&quot;,&quot;brand_code&quot;,&quot;text&quot;],[&quot;Category&quot;,&quot;category&quot;,&quot;text&quot;],[&quot;Country&quot;,&quot;country&quot;,&quot;text&quot;]].map(([label,key,type]) =&gt; (
+              &lt;div key={key} style={{ marginBottom: 12 }}&gt;
                 &lt;label style={{ display: &quot;block&quot;, fontSize: 11, color: &quot;#64748b&quot;, marginBottom: 5, fontWeight: 700, textTransform: &quot;uppercase&quot; }}&gt;{label}&lt;/label&gt;
                 &lt;input type={type} value={form[key] || &quot;&quot;} onChange={e =&gt; setForm({ ...form, [key]: e.target.value })} style={inp} /&gt;
               &lt;/div&gt;
             ))}
-
-            {/* Status */}
-            &lt;div style={{ marginBottom: 13 }}&gt;
+            &lt;div style={{ marginBottom: 12 }}&gt;
               &lt;label style={{ display: &quot;block&quot;, fontSize: 11, color: &quot;#64748b&quot;, marginBottom: 5, fontWeight: 700, textTransform: &quot;uppercase&quot; }}&gt;Status&lt;/label&gt;
               &lt;select value={form.status} onChange={e =&gt; setForm({ ...form, status: e.target.value })} style={inp}&gt;
-                {[&quot;Active&quot;, &quot;Pending&quot;, &quot;Inactive&quot;, &quot;Churned&quot;].map(s =&gt; &lt;option key={s}&gt;{s}&lt;/option&gt;)}
+                {[&quot;Active&quot;,&quot;Pending&quot;,&quot;Inactive&quot;,&quot;Churned&quot;].map(s =&gt; &lt;option key={s}&gt;{s}&lt;/option&gt;)}
               &lt;/select&gt;
             &lt;/div&gt;
-
-            {/* TINT */}
             &lt;div style={{ display: &quot;flex&quot;, alignItems: &quot;center&quot;, gap: 10, marginBottom: 16, padding: &quot;10px 12px&quot;, background: &quot;#f9f7ff&quot;, borderRadius: 8 }}&gt;
               &lt;input type=&quot;checkbox&quot; checked={!!form.tint_integrated} onChange={e =&gt; setForm({ ...form, tint_integrated: e.target.checked })} id=&quot;tint_cb&quot; /&gt;
               &lt;label htmlFor=&quot;tint_cb&quot; style={{ fontSize: 12, fontWeight: 600, color: DARK, cursor: &quot;pointer&quot; }}&gt;TINT AR Try-On Integrated&lt;/label&gt;
             &lt;/div&gt;
-
-            {/* Notes */}
             &lt;div style={{ marginBottom: 18 }}&gt;
               &lt;label style={{ display: &quot;block&quot;, fontSize: 11, color: &quot;#64748b&quot;, marginBottom: 5, fontWeight: 700, textTransform: &quot;uppercase&quot; }}&gt;Notes&lt;/label&gt;
-              &lt;textarea value={form.notes || &quot;&quot;} onChange={e =&gt; setForm({ ...form, notes: e.target.value })} rows={3}
-                style={{ ...inp, resize: &quot;vertical&quot; }} /&gt;
+              &lt;textarea value={form.notes || &quot;&quot;} onChange={e =&gt; setForm({ ...form, notes: e.target.value })} rows={3} style={{ ...inp, resize: &quot;vertical&quot; }} /&gt;
             &lt;/div&gt;
-
             &lt;div style={{ display: &quot;flex&quot;, gap: 10 }}&gt;
-              &lt;button onClick={save} style={{ flex: 1, background: V, color: &quot;#fff&quot;, border: &quot;none&quot;, borderRadius: 9, padding: &quot;11px&quot;, fontSize: 13, fontWeight: 700, cursor: &quot;pointer&quot; }}&gt;
-                {editing ? &quot;Save Changes&quot; : &quot;Add Brand&quot;}
-              &lt;/button&gt;
-              &lt;button onClick={() =&gt; { setShowForm(false); setEditing(null); }} style={{ flex: 1, background: &quot;#f1f5f9&quot;, color: &quot;#64748b&quot;, border: &quot;none&quot;, borderRadius: 9, padding: &quot;11px&quot;, fontSize: 13, fontWeight: 600, cursor: &quot;pointer&quot; }}&gt;
-                Cancel
-              &lt;/button&gt;
+              &lt;button onClick={saveBrand} style={{ flex: 1, background: V, color: &quot;#fff&quot;, border: &quot;none&quot;, borderRadius: 9, padding: &quot;11px&quot;, fontSize: 13, fontWeight: 700, cursor: &quot;pointer&quot; }}&gt;{editing ? &quot;Save Changes&quot; : &quot;Add Brand&quot;}&lt;/button&gt;
+              &lt;button onClick={() =&gt; { setShowForm(false); setEditing(null); }} style={{ flex: 1, background: &quot;#f1f5f9&quot;, color: &quot;#64748b&quot;, border: &quot;none&quot;, borderRadius: 9, padding: &quot;11px&quot;, fontSize: 13, fontWeight: 600, cursor: &quot;pointer&quot; }}&gt;Cancel&lt;/button&gt;
             &lt;/div&gt;
           &lt;/div&gt;
         &lt;/div&gt;
@@ -393,15 +497,12 @@ export default function BrandsPage({ user }) {
 }
 </pre>
   </div>
-
 </div>
 <script>
-function copyCode(btn) {
-  const text = document.getElementById('code').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = 'Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy Code'; btn.classList.remove('copied'); }, 2000);
+function copy(btn){
+  navigator.clipboard.writeText(document.getElementById('code').textContent).then(()=>{
+    btn.textContent='Copied!'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Copy Code';btn.classList.remove('done');},2500);
   });
 }
 </script>
