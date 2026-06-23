@@ -8,16 +8,17 @@ import BrandPage from "./pages/BrandPage";
 import ToolsPage from "./pages/ToolsPage";
 import FamilyChatPage from "./pages/FamilyChatPage";
 import PartnerMonitorPage from "../pages/PartnerMonitorPage";
+import BrandPortalPage from "./pages/BrandPortalPage";
 
 const SECTIONS = [
-  { id: "home",        label: "Home",          icon: "🏠" },
-  { id: "family",      label: "AI Family",     icon: "🌱" },
-  { id: "admin",       label: "Admin",         icon: "⚙️",  accessKey: "access_admin" },
-  { id: "finance",     label: "Finance",       icon: "💰",  accessKey: "access_finance" },
-  { id: "hr",          label: "HR",            icon: "👥",  accessKey: "access_hr" },
-  { id: "brand",       label: "Brand",         icon: "✨",  accessKey: "access_brand" },
-  { id: "tools",       label: "Tools",         icon: "🛠️",  accessKey: "access_tools" },
-  { id: "monitor",     label: "Partner Monitor", icon: "🔭", accessKey: "access_admin" },
+  { id: "home",        label: "Home",            icon: "🏠" },
+  { id: "family",      label: "AI Family",       icon: "🌱" },
+  { id: "admin",       label: "Admin",           icon: "⚙️",  accessKey: "access_admin" },
+  { id: "finance",     label: "Finance",         icon: "💰",  accessKey: "access_finance" },
+  { id: "hr",          label: "HR",              icon: "👥",  accessKey: "access_hr" },
+  { id: "brand",       label: "Brand",           icon: "✨",  accessKey: "access_brand" },
+  { id: "tools",       label: "Tools",           icon: "🛠️",  accessKey: "access_tools" },
+  { id: "monitor",     label: "Partner Monitor", icon: "🔭",  accessKey: "access_admin" },
 ];
 
 const SIMPLEX_PURPLE = "#7c3aed";
@@ -49,6 +50,12 @@ export default function App() {
 
   if (!user) return <LoginPage onLogin={handleLogin} />;
 
+  // ── Brand Partner gets their own portal — no internal nav ──
+  if (user.role === "Brand") {
+    return <BrandPortalPage user={user} onLogout={handleLogout} />;
+  }
+
+  // ── Staff portal ──
   const isAdmin = user.role === "Admin";
 
   const canAccess = (section) => {
