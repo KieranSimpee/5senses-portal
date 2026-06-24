@@ -114,9 +114,93 @@
       text-transform: uppercase;
       margin-top: 8px;
     }
+  
+    /* ── WATERCOLOUR BACKGROUND ── */
+    body { animation: bg-colour-shift 20s ease-in-out infinite; }
+    .wc-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      overflow: hidden; pointer-events: none;
+    }
+    .wc-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      mix-blend-mode: multiply;
+    }
+    .wc-blob-1 {
+      width: 70vw; height: 70vw;
+      top: -20%; left: -15%;
+      background: radial-gradient(circle, rgba(180,160,252,0.55) 0%, rgba(200,180,255,0.25) 60%, transparent 100%);
+      animation: watercolour-drift 18s ease-in-out infinite;
+    }
+    .wc-blob-2 {
+      width: 60vw; height: 60vw;
+      top: 20%; right: -20%;
+      background: radial-gradient(circle, rgba(160,200,255,0.50) 0%, rgba(180,220,255,0.22) 60%, transparent 100%);
+      animation: watercolour-drift-2 22s ease-in-out infinite;
+    }
+    .wc-blob-3 {
+      width: 55vw; height: 55vw;
+      bottom: -15%; left: 20%;
+      background: radial-gradient(circle, rgba(230,160,255,0.45) 0%, rgba(255,180,230,0.20) 60%, transparent 100%);
+      animation: watercolour-drift-3 26s ease-in-out infinite;
+    }
+    .wc-blob-4 {
+      width: 40vw; height: 40vw;
+      top: 40%; left: 30%;
+      background: radial-gradient(circle, rgba(200,230,200,0.35) 0%, rgba(180,255,200,0.15) 60%, transparent 100%);
+      animation: watercolour-drift 30s ease-in-out infinite reverse;
+    }
+    .wc-blob-5 {
+      width: 50vw; height: 50vw;
+      top: 5%; left: 40%;
+      background: radial-gradient(circle, rgba(255,200,180,0.30) 0%, rgba(255,220,200,0.12) 60%, transparent 100%);
+      animation: watercolour-drift-2 24s ease-in-out infinite reverse;
+    }
+    /* ensure content sits above canvas */
+    .container { position: relative; z-index: 1; }
+
+    @keyframes watercolour-drift {
+      0%   { transform: translate(0%, 0%) scale(1);     opacity: 0.55; }
+      25%  { transform: translate(8%, -12%) scale(1.15); opacity: 0.65; }
+      50%  { transform: translate(-6%, 8%) scale(0.92);  opacity: 0.50; }
+      75%  { transform: translate(10%, 5%) scale(1.08);  opacity: 0.60; }
+      100% { transform: translate(0%, 0%) scale(1);     opacity: 0.55; }
+    }
+    @keyframes watercolour-drift-2 {
+      0%   { transform: translate(0%, 0%) scale(1.1);   opacity: 0.45; }
+      33%  { transform: translate(-10%, 6%) scale(0.9); opacity: 0.60; }
+      66%  { transform: translate(7%, -8%) scale(1.2);  opacity: 0.40; }
+      100% { transform: translate(0%, 0%) scale(1.1);   opacity: 0.45; }
+    }
+    @keyframes watercolour-drift-3 {
+      0%   { transform: translate(0%, 0%) scale(0.95);  opacity: 0.50; }
+      40%  { transform: translate(12%, 10%) scale(1.1); opacity: 0.65; }
+      80%  { transform: translate(-8%, -5%) scale(1.0); opacity: 0.45; }
+      100% { transform: translate(0%, 0%) scale(0.95);  opacity: 0.50; }
+    }
+    @keyframes bg-colour-shift {
+      0%   { background-color: #f0eeff; }
+      20%  { background-color: #e8f0ff; }
+      40%  { background-color: #f5eaff; }
+      60%  { background-color: #eef5ff; }
+      80%  { background-color: #fceaff; }
+      100% { background-color: #f0eeff; }
+    }
+
   </style>
 </head>
 <body>
+
+  <!-- WATERCOLOUR ANIMATION LAYER -->
+  <div class="wc-canvas">
+    <div class="wc-blob wc-blob-1"></div>
+    <div class="wc-blob wc-blob-2"></div>
+    <div class="wc-blob wc-blob-3"></div>
+    <div class="wc-blob wc-blob-4"></div>
+    <div class="wc-blob wc-blob-5"></div>
+  </div>
+
   <div class="container">
     <div class="logo-area">
       <div class="brand-logos">
