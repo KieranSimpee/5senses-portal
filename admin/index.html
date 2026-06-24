@@ -298,7 +298,7 @@
 </div>
 
 <script>
-const API = 'https://api.base44.app/api/apps/69ddc914cfcf229762ac123d/functions/portalSettings';
+const STORAGE_KEY = 'portal_5senses_settings';
 const ADMIN_CODE = 'simpee2026';
 
 function checkPass() {
@@ -363,10 +363,9 @@ function previewLogoFromUrl(urlFieldId, previewId) {
 async function loadSettings() {
   setStatus('Loading settings...','loading');
   try {
-    const res = await fetch(API);
-    const data = await res.json();
-    if (!data.success) { setStatus('Failed to load','error'); return; }
-    const s = data.settings;
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) { setStatus('No saved settings yet','success'); return; }
+    const s = JSON.parse(stored);
     const set=(id,val)=>{const el=document.getElementById(id);if(el&&val!==undefined){if(el.type==='checkbox')el.checked=val==='true';else el.value=val;}};
     const setColor=(id,cpId,val)=>{if(!val)return;set(id,val);const cp=document.getElementById(cpId);if(cp)cp.value=val;};
 
@@ -421,10 +420,9 @@ async function saveSettings() {
       login_accent_color:g('login_accent_color'),
       login_logo_url:g('login_logo_url'),
     };
-    const res = await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({settings})});
-    const data = await res.json();
-    if(data.success){setStatus('Saved! ✓','success');setTimeout(refreshPreview,800);}
-    else setStatus('Save failed','error');
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    setStatus('Saved! ✓','success');
+    setTimeout(refreshPreview,800);
   } catch(e){setStatus('Error: '+e.message,'error');}
 }
 
