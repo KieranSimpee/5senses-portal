@@ -9,7 +9,6 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Montserrat', sans-serif;
-      background: #e8e6fe;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -186,22 +185,20 @@
   </div>
 
 <script>
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
   const STORAGE_KEY = 'portal_5senses_settings';
   const stored = localStorage.getItem(STORAGE_KEY);
   if (!stored) return;
   try {
     const s = JSON.parse(stored);
 
-    // Background
+    // Background — force override hardcoded CSS
     if (s.bg_image_url && s.bg_image_url.trim() !== '') {
-      document.body.style.backgroundImage = 'url(' + s.bg_image_url + ')';
-      document.body.style.backgroundSize = 'cover';
-      document.body.style.backgroundPosition = 'center';
+      document.body.setAttribute('style', 'background-image:url(' + s.bg_image_url + ');background-size:cover;background-position:center;');
     } else if (s.bg_gradient_from) {
       const mid = s.bg_gradient_mid || s.bg_gradient_from;
       const to = s.bg_gradient_to || s.bg_gradient_from;
-      document.body.style.background = 'linear-gradient(135deg,' + s.bg_gradient_from + ',' + mid + ',' + to + ')';
+      document.body.setAttribute('style', 'background:linear-gradient(135deg,' + s.bg_gradient_from + ',' + mid + ',' + to + ');');
     }
 
     // Title & subtitle
@@ -245,7 +242,7 @@
     }
 
   } catch(e) { console.warn('CMS load error:', e); }
-})();
+});
 </script>
 
 </body>
