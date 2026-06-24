@@ -36,15 +36,15 @@
   .blob {
     position: fixed;
     border-radius: 50%;
-    filter: blur(80px);
+    filter: blur(45px);
     opacity: 0.35;
     pointer-events: none;
     z-index: 0;
     animation: floatBlob 14s ease-in-out infinite alternate;
   }
-  .blob-1 { width:420px; height:420px; background:#f7b8cc; top:-80px; left:-100px; animation-delay:0s; }
-  .blob-2 { width:350px; height:350px; background:#c4b0f0; top:30%; right:-80px; animation-delay:-4s; }
-  .blob-3 { width:300px; height:300px; background:#a8c8f8; bottom:-60px; left:30%; animation-delay:-8s; }
+  .blob-1 { width:220px; height:220px; background:#f7b8cc; top:5%; left:5%; animation-delay:0s; }
+  .blob-2 { width:180px; height:180px; background:#c4b0f0; top:25%; right:8%; animation-delay:-4s; }
+  .blob-3 { width:160px; height:160px; background:#a8c8f8; bottom:8%; left:35%; animation-delay:-8s; }
   @keyframes floatBlob {
     0%   { transform: translateY(0) scale(1); }
     100% { transform: translateY(-30px) scale(1.08); }
@@ -72,7 +72,7 @@
     flex-wrap: wrap;
   }
   .logo-img-5senses {
-    height: 72px;
+    height: 110px;
     width: auto;
     object-fit: contain;
     mix-blend-mode: multiply;
@@ -80,11 +80,11 @@
   }
   .logo-divider {
     width: 1px;
-    height: 50px;
+    height: 70px;
     background: rgba(139,118,118,0.25);
   }
   .logo-img-simplexity {
-    height: 52px;
+    height: 75px;
     width: auto;
     object-fit: contain;
     mix-blend-mode: multiply;
@@ -137,7 +137,7 @@
     user-select: none;
   }
   .portal-label:hover,
-  .portal-card:hover .portal-label {
+  .portal-card.active .portal-label {
     background: rgba(255,255,255,0.75);
     border-color: rgba(139,118,118,0.5);
     color: #5a4a5a;
@@ -163,7 +163,7 @@
     transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
     z-index: 100;
   }
-  .portal-card:hover .login-panel {
+  .portal-card.active .login-panel {
     opacity: 1;
     pointer-events: all;
     transform: translateX(-50%) translateY(0);
@@ -295,5 +295,27 @@
   <div class="footer">portal.5senses.global · secure access · 2026</div>
 
 </div>
+
+<script>
+  document.querySelectorAll('.portal-card').forEach(function(card) {
+    card.querySelector('.portal-label').addEventListener('click', function(e) {
+      e.stopPropagation();
+      var isActive = card.classList.contains('active');
+      // close all
+      document.querySelectorAll('.portal-card').forEach(function(c) { c.classList.remove('active'); });
+      // toggle clicked
+      if (!isActive) card.classList.add('active');
+    });
+  });
+  // click outside to close
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.portal-card').forEach(function(c) { c.classList.remove('active'); });
+  });
+  // prevent login panel click from closing
+  document.querySelectorAll('.login-panel').forEach(function(panel) {
+    panel.addEventListener('click', function(e) { e.stopPropagation(); });
+  });
+</script>
+
 </body>
 </html>
