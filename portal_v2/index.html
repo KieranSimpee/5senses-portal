@@ -3,219 +3,235 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The World of Equilibrium — 5SENSES x SIMPLEX-ITY</title>
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>The World of Equilibrium</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Montserrat', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Montserrat',sans-serif; min-height:100vh; overflow-x:hidden; }
 
-  .bg-canvas {
-    position: fixed; inset: 0; z-index: 0;
+  #bg-canvas {
+    position:fixed; inset:0; z-index:0; transition: background 1s ease;
     background:
       radial-gradient(ellipse 70% 60% at 8% 25%, rgba(255,200,185,0.45) 0%, transparent 70%),
       radial-gradient(ellipse 55% 50% at 28% 65%, rgba(230,175,195,0.32) 0%, transparent 65%),
       radial-gradient(ellipse 75% 65% at 52% 28%, rgba(200,185,240,0.38) 0%, transparent 70%),
       radial-gradient(ellipse 60% 55% at 78% 68%, rgba(180,175,245,0.32) 0%, transparent 65%),
-      radial-gradient(ellipse 45% 40% at 92% 18%, rgba(210,200,250,0.28) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 35% at 12% 88%, rgba(245,210,200,0.22) 0%, transparent 55%),
       linear-gradient(140deg, #fff9f7 0%, #f6f0ff 55%, #f0f1ff 100%);
   }
 
+  #bg-image-layer {
+    position:fixed; inset:0; z-index:0;
+    background-size:cover; background-position:center;
+    opacity:0; transition: opacity 1s ease;
+  }
+
   .container {
-    position: relative; z-index: 1; min-height: 100vh;
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: center; padding: 50px 24px;
+    position:relative; z-index:1; min-height:100vh;
+    display:flex; flex-direction:column; align-items:center;
+    justify-content:center; padding:50px 24px;
   }
 
-  /* Brand header */
   .brand-header {
-    display: flex; align-items: center; justify-content: center;
-    gap: 48px; margin-bottom: 52px; flex-wrap: wrap;
+    display:flex; align-items:center; justify-content:center;
+    gap:48px; margin-bottom:52px; flex-wrap:wrap;
   }
 
-  /* 5SENSES logo */
-  .brand-5senses { position: relative; display: flex; flex-direction: column; align-items: flex-start; }
-
+  .brand-5senses { position:relative; display:flex; flex-direction:column; align-items:flex-start; }
   .cloud-blob {
-    position: absolute; top: -20px; right: -40px;
-    width: 140px; height: 110px; pointer-events: none;
-    background: radial-gradient(ellipse 80% 70% at 50% 50%,
-      rgba(185,155,205,0.32) 0%, rgba(210,185,225,0.20) 45%, transparent 75%);
-    border-radius: 65% 75% 60% 80% / 60% 65% 80% 55%;
-    filter: blur(10px);
+    position:absolute; top:-20px; right:-40px;
+    width:140px; height:110px; pointer-events:none;
+    background:radial-gradient(ellipse 80% 70% at 50% 50%, rgba(185,155,205,0.32) 0%, rgba(210,185,225,0.20) 45%, transparent 75%);
+    border-radius:65% 75% 60% 80% / 60% 65% 80% 55%;
+    filter:blur(10px);
   }
-  .cloud-blob::after {
-    content: ''; position: absolute; top: 15px; right: -10px;
-    width: 80px; height: 65px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(190,165,215,0.22) 0%, transparent 70%);
-    border-radius: 50%; filter: blur(8px);
-  }
+  .logo-5s-row { display:flex; align-items:flex-end; }
+  #logo-korean { font-size:56px; font-weight:700; color:#7a5a5a; line-height:1; font-family:serif; letter-spacing:-2px; }
+  #logo-five { font-size:42px; font-weight:600; color:#7a5a5a; font-family:'Exo 2',sans-serif; line-height:1; margin-left:2px; }
+  #logo-senses { font-size:19px; font-weight:500; color:#7a5a5a; letter-spacing:5px; font-family:'Montserrat',sans-serif; margin-top:-2px; }
 
-  .logo-5s-row { display: flex; align-items: flex-end; gap: 0; }
-  .logo-korean { font-size: 56px; font-weight: 700; color: #7a5a5a; line-height: 1; font-family: serif; letter-spacing: -2px; }
-  .logo-five { font-size: 42px; font-weight: 600; color: #7a5a5a; font-family: 'Exo 2', sans-serif; line-height: 1; margin-left: 2px; }
-  .logo-senses { font-size: 19px; font-weight: 500; color: #7a5a5a; letter-spacing: 5px; font-family: 'Montserrat', sans-serif; margin-top: -2px; }
+  .brand-divider { width:1px; height:88px; background:linear-gradient(to bottom, transparent, rgba(140,130,252,0.28), transparent); }
 
-  /* Divider */
-  .brand-divider { width: 1px; height: 88px; background: linear-gradient(to bottom, transparent, rgba(140,130,252,0.28), transparent); }
+  .brand-simplexity { display:flex; align-items:center; gap:16px; }
+  .simplex-tree { width:54px; height:54px; flex-shrink:0; }
+  .simplex-texts { display:flex; flex-direction:column; gap:5px; }
+  #simplex-name { font-family:'Exo 2',sans-serif; font-size:24px; font-weight:400; color:#8c82fc; letter-spacing:5px; line-height:1; }
+  #simplex-tagline { font-size:8px; font-weight:500; color:#8c82fc; letter-spacing:2.5px; opacity:0.75; }
 
-  /* SIMPLEX-ITY */
-  .brand-simplexity { display: flex; align-items: center; gap: 16px; }
-  .simplex-tree { width: 54px; height: 54px; flex-shrink: 0; }
-  .simplex-texts { display: flex; flex-direction: column; gap: 5px; }
-  .simplex-name { font-family: 'Exo 2', sans-serif; font-size: 24px; font-weight: 400; color: #8c82fc; letter-spacing: 5px; line-height: 1; }
-  .simplex-tagline { font-size: 8px; font-weight: 500; color: #8c82fc; letter-spacing: 2.5px; opacity: 0.75; }
+  .main-title { text-align:center; margin-bottom:12px; }
+  #main-title { font-family:'Exo 2',sans-serif; font-size:clamp(26px,4.5vw,50px); font-weight:300; color:#4a3d58; letter-spacing:2px; line-height:1.25; }
+  #main-subtitle { font-size:13px; font-weight:300; color:#9085a5; letter-spacing:3.5px; margin-top:12px; font-style:italic; display:block; }
 
-  /* Title */
-  .main-title { text-align: center; margin-bottom: 12px; }
-  .main-title h1 { font-family: 'Exo 2', sans-serif; font-size: clamp(26px, 4.5vw, 50px); font-weight: 300; color: #4a3d58; letter-spacing: 2px; line-height: 1.25; }
-  .main-title .subtitle { font-size: 13px; font-weight: 300; color: #9085a5; letter-spacing: 3.5px; margin-top: 12px; font-style: italic; }
+  .line-accent { width:64px; height:1px; margin:22px auto 44px; background:linear-gradient(to right, rgba(122,90,90,0.35), rgba(140,130,252,0.45)); }
 
-  .line-accent {
-    width: 64px; height: 1px; margin: 22px auto 44px;
-    background: linear-gradient(to right, rgba(122,90,90,0.35), rgba(140,130,252,0.45));
-  }
-
-  /* Portal cards */
-  .portals { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; margin-bottom: 52px; width: 100%; max-width: 920px; }
+  .portals { display:flex; gap:22px; justify-content:center; flex-wrap:wrap; margin-bottom:52px; width:100%; max-width:920px; }
 
   .portal-card {
-    background: rgba(255,255,255,0.70);
-    backdrop-filter: blur(22px);
-    border: 1px solid rgba(255,255,255,0.88);
-    border-radius: 22px; padding: 38px 26px;
-    text-align: center; cursor: pointer;
-    transition: all 0.32s ease;
-    flex: 1; min-width: 225px; max-width: 265px;
-    text-decoration: none; display: flex;
-    flex-direction: column; align-items: center; gap: 14px;
-    box-shadow: 0 4px 28px rgba(140,130,252,0.07), 0 1px 4px rgba(0,0,0,0.035);
+    background:rgba(255,255,255,0.70); backdrop-filter:blur(22px);
+    border:1px solid rgba(255,255,255,0.88); border-radius:22px; padding:38px 26px;
+    text-align:center; cursor:pointer; transition:all 0.32s ease;
+    flex:1; min-width:225px; max-width:265px; text-decoration:none;
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+    box-shadow:0 4px 28px rgba(140,130,252,0.07), 0 1px 4px rgba(0,0,0,0.035);
   }
-  .portal-card:hover {
-    transform: translateY(-7px);
-    background: rgba(255,255,255,0.88);
-    box-shadow: 0 18px 52px rgba(140,130,252,0.17), 0 4px 14px rgba(0,0,0,0.05);
-    border-color: rgba(140,130,252,0.22);
+  .portal-card:hover { transform:translateY(-7px); background:rgba(255,255,255,0.88); box-shadow:0 18px 52px rgba(140,130,252,0.17), 0 4px 14px rgba(0,0,0,0.05); border-color:rgba(140,130,252,0.22); }
+
+  .portal-icon { width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .portal-card.staff .portal-icon { background:linear-gradient(135deg, rgba(122,90,90,0.10), rgba(185,155,155,0.14)); }
+  .portal-card.brand .portal-icon { background:linear-gradient(135deg, rgba(140,130,252,0.11), rgba(186,180,253,0.17)); }
+  .portal-card.influencer .portal-icon { background:linear-gradient(135deg, rgba(200,175,220,0.16), rgba(140,130,252,0.11)); }
+  .portal-icon svg { width:28px; height:28px; }
+
+  .portal-label { font-family:'Exo 2',sans-serif; font-size:12px; font-weight:600; letter-spacing:3px; text-transform:uppercase; }
+  .portal-card.staff .portal-label { color:#7a5a5a; }
+  .portal-card.brand .portal-label { color:#8c82fc; }
+  .portal-card.influencer .portal-label { color:#7a6dcc; }
+  .portal-desc { font-size:12px; font-weight:300; color:#8a8a9a; line-height:1.65; }
+  .portal-arrow { font-size:15px; color:#c0b8f0; margin-top:2px; transition:transform 0.28s ease, color 0.28s ease; }
+  .portal-card:hover .portal-arrow { transform:translateX(5px); color:#8c82fc; }
+
+  .footer { text-align:center; color:rgba(95,85,115,0.45); font-size:10px; letter-spacing:2px; line-height:2; }
+
+  /* Admin floating button */
+  .admin-btn {
+    position:fixed; bottom:24px; right:24px; z-index:100;
+    background:rgba(140,130,252,0.18); backdrop-filter:blur(12px);
+    border:1px solid rgba(140,130,252,0.30); border-radius:50px;
+    padding:10px 20px; color:#8c82fc; font-size:11px; font-weight:600;
+    letter-spacing:2px; cursor:pointer; text-decoration:none;
+    transition:all 0.25s ease; font-family:'Exo 2',sans-serif;
   }
+  .admin-btn:hover { background:rgba(140,130,252,0.30); transform:translateY(-2px); }
 
-  .portal-icon { width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-  .portal-card.staff .portal-icon { background: linear-gradient(135deg, rgba(122,90,90,0.10), rgba(185,155,155,0.14)); }
-  .portal-card.brand .portal-icon { background: linear-gradient(135deg, rgba(140,130,252,0.11), rgba(186,180,253,0.17)); }
-  .portal-card.influencer .portal-icon { background: linear-gradient(135deg, rgba(200,175,220,0.16), rgba(140,130,252,0.11)); }
-
-  .portal-icon svg { width: 28px; height: 28px; }
-
-  .portal-label { font-family: 'Exo 2', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; }
-  .portal-card.staff .portal-label { color: #7a5a5a; }
-  .portal-card.brand .portal-label { color: #8c82fc; }
-  .portal-card.influencer .portal-label { color: #7a6dcc; }
-
-  .portal-desc { font-size: 12px; font-weight: 300; color: #8a8a9a; line-height: 1.65; letter-spacing: 0.3px; }
-
-  .portal-arrow { font-size: 15px; color: #c0b8f0; margin-top: 2px; transition: transform 0.28s ease, color 0.28s ease; }
-  .portal-card:hover .portal-arrow { transform: translateX(5px); color: #8c82fc; }
-
-  /* Footer */
-  .footer { text-align: center; color: rgba(95,85,115,0.45); font-size: 10px; letter-spacing: 2px; line-height: 2; }
-
-  @media (max-width: 600px) {
-    .brand-divider { display: none; }
-    .brand-header { gap: 28px; }
-    .portals { flex-direction: column; align-items: center; }
-    .portal-card { max-width: 90%; width: 90%; }
+  @media(max-width:600px) {
+    .brand-divider { display:none; }
+    .brand-header { gap:28px; }
+    .portals { flex-direction:column; align-items:center; }
+    .portal-card { max-width:90%; width:90%; }
   }
 </style>
 </head>
 <body>
 
-<div class="bg-canvas"></div>
+<div id="bg-canvas"></div>
+<div id="bg-image-layer"></div>
 
 <div class="container">
-
   <div class="brand-header">
-
-    <!-- 정5SENSES -->
-    <div class="brand-5senses">
+    <div class="brand-5senses" id="brand-5senses-wrap">
       <div class="cloud-blob"></div>
       <div class="logo-5s-row">
-        <span class="logo-korean">정</span>
-        <span class="logo-five">5</span>
+        <span id="logo-korean">정</span>
+        <span id="logo-five">5</span>
       </div>
-      <div class="logo-senses">SENSES</div>
+      <div id="logo-senses">SENSES</div>
     </div>
-
     <div class="brand-divider"></div>
-
-    <!-- SIMPLEX-ITY -->
-    <div class="brand-simplexity">
-      <svg class="simplex-tree" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="brand-simplexity" id="brand-simplexity-wrap">
+      <svg class="simplex-tree" viewBox="0 0 80 80" fill="none">
         <circle cx="40" cy="40" r="36" stroke="#8c82fc" stroke-width="1.5"/>
         <line x1="40" y1="64" x2="40" y2="18" stroke="#8c82fc" stroke-width="1.5" stroke-linecap="round"/>
         <line x1="40" y1="36" x2="26" y2="27" stroke="#8c82fc" stroke-width="1.5" stroke-linecap="round"/>
         <line x1="40" y1="46" x2="54" y2="37" stroke="#8c82fc" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
       <div class="simplex-texts">
-        <div class="simplex-name">SIMPLEX-ITY</div>
-        <div class="simplex-tagline">ONE STOP ASIAN BEAUTY · SIMPLIFY TO AMPLIFY</div>
+        <div id="simplex-name">SIMPLEX-ITY</div>
+        <div id="simplex-tagline">ONE STOP ASIAN BEAUTY · SIMPLIFY TO AMPLIFY</div>
       </div>
     </div>
-
   </div>
 
-  <!-- Title -->
   <div class="main-title">
-    <h1>The World of Equilibrium</h1>
-    <p class="subtitle">Where awareness meets simplicity.</p>
+    <h1 id="main-title">The World of Equilibrium</h1>
+    <span id="main-subtitle">Where awareness meets simplicity.</span>
   </div>
-
   <div class="line-accent"></div>
 
-  <!-- Portal Cards -->
   <div class="portals">
-
     <a href="/staff" class="portal-card staff">
       <div class="portal-icon">
-        <svg viewBox="0 0 28 28" fill="none">
-          <circle cx="14" cy="9" r="5" stroke="#7a5a5a" stroke-width="1.5"/>
-          <path d="M4 24c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="#7a5a5a" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
+        <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="9" r="5" stroke="#7a5a5a" stroke-width="1.5"/><path d="M4 24c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="#7a5a5a" stroke-width="1.5" stroke-linecap="round"/></svg>
       </div>
-      <div class="portal-label">Staff Portal</div>
-      <div class="portal-desc">Internal team access for operations, compliance and daily management</div>
+      <div class="portal-label" id="card-staff-label">Staff Portal</div>
+      <div class="portal-desc" id="card-staff-desc">Internal team access for operations, compliance and daily management</div>
       <div class="portal-arrow">→</div>
     </a>
-
     <a href="/brand" class="portal-card brand">
       <div class="portal-icon">
-        <svg viewBox="0 0 28 28" fill="none">
-          <rect x="4" y="8" width="20" height="14" rx="3" stroke="#8c82fc" stroke-width="1.5"/>
-          <path d="M9 8V6a5 5 0 0110 0v2" stroke="#8c82fc" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="14" cy="15" r="2" fill="#8c82fc"/>
-        </svg>
+        <svg viewBox="0 0 28 28" fill="none"><rect x="4" y="8" width="20" height="14" rx="3" stroke="#8c82fc" stroke-width="1.5"/><path d="M9 8V6a5 5 0 0110 0v2" stroke="#8c82fc" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="15" r="2" fill="#8c82fc"/></svg>
       </div>
-      <div class="portal-label">Brand Portal</div>
-      <div class="portal-desc">Brand partner dashboard for campaigns, reports and collaboration</div>
+      <div class="portal-label" id="card-brand-label">Brand Portal</div>
+      <div class="portal-desc" id="card-brand-desc">Brand partner dashboard for campaigns, reports and collaboration</div>
       <div class="portal-arrow">→</div>
     </a>
-
     <a href="/influencer" class="portal-card influencer">
       <div class="portal-icon">
-        <svg viewBox="0 0 28 28" fill="none">
-          <path d="M14 4L16.5 10H23L18 14L20 20.5L14 17L8 20.5L10 14L5 10H11.5L14 4Z" stroke="#7a6dcc" stroke-width="1.5" stroke-linejoin="round"/>
-        </svg>
+        <svg viewBox="0 0 28 28" fill="none"><path d="M14 4L16.5 10H23L18 14L20 20.5L14 17L8 20.5L10 14L5 10H11.5L14 4Z" stroke="#7a6dcc" stroke-width="1.5" stroke-linejoin="round"/></svg>
       </div>
-      <div class="portal-label">Influencer Portal</div>
-      <div class="portal-desc">Creator hub for campaigns, commissions and performance tracking</div>
+      <div class="portal-label" id="card-influencer-label">Influencer Portal</div>
+      <div class="portal-desc" id="card-influencer-desc">Creator hub for campaigns, commissions and performance tracking</div>
       <div class="portal-arrow">→</div>
     </a>
-
   </div>
 
-  <div class="footer">
-    5SENSESBEAUTY LIMITED · SIMPLEX-ITY · PORTAL v2.0<br>
-    Powered by Simpee
-  </div>
-
+  <div class="footer" id="footer-text">5SENSESBEAUTY LIMITED · SIMPLEX-ITY · PORTAL v2.0<br>Powered by Simpee</div>
 </div>
+
+<a class="admin-btn" href="/admin">⚙ ADMIN</a>
+
+<script>
+const API = 'https://api.base44.app/api/apps/69ddc914cfcf229762ac123d/functions/portalSettings';
+
+async function loadSettings() {
+  try {
+    const res = await fetch(API);
+    const data = await res.json();
+    if (!data.success) return;
+    const s = data.settings;
+
+    // Title & subtitle
+    if (s.title) document.getElementById('main-title').textContent = s.title;
+    if (s.subtitle) document.getElementById('main-subtitle').textContent = s.subtitle;
+    if (s.title_color) document.getElementById('main-title').style.color = s.title_color;
+    if (s.subtitle_color) document.getElementById('main-subtitle').style.color = s.subtitle_color;
+    if (s.title_font) document.getElementById('main-title').style.fontFamily = s.title_font + ', sans-serif';
+
+    // Background
+    const bgLayer = document.getElementById('bg-image-layer');
+    const bgCanvas = document.getElementById('bg-canvas');
+    if (s.bg_image_url && s.bg_image_url.trim() !== '') {
+      bgLayer.style.backgroundImage = 'url(' + s.bg_image_url + ')';
+      bgLayer.style.opacity = '1';
+      bgCanvas.style.opacity = '0';
+    } else if (s.bg_gradient_from && s.bg_gradient_mid && s.bg_gradient_to) {
+      bgCanvas.style.background = [
+        'radial-gradient(ellipse 70% 60% at 8% 25%, rgba(255,200,185,0.45) 0%, transparent 70%)',
+        'radial-gradient(ellipse 55% 50% at 28% 65%, rgba(230,175,195,0.32) 0%, transparent 65%)',
+        'radial-gradient(ellipse 75% 65% at 52% 28%, rgba(200,185,240,0.38) 0%, transparent 70%)',
+        'linear-gradient(140deg, ' + s.bg_gradient_from + ' 0%, ' + s.bg_gradient_mid + ' 55%, ' + s.bg_gradient_to + ' 100%)'
+      ].join(',');
+    }
+
+    // Cards
+    if (s.card_staff_label) document.getElementById('card-staff-label').textContent = s.card_staff_label;
+    if (s.card_staff_desc) document.getElementById('card-staff-desc').textContent = s.card_staff_desc;
+    if (s.card_brand_label) document.getElementById('card-brand-label').textContent = s.card_brand_label;
+    if (s.card_brand_desc) document.getElementById('card-brand-desc').textContent = s.card_brand_desc;
+    if (s.card_influencer_label) document.getElementById('card-influencer-label').textContent = s.card_influencer_label;
+    if (s.card_influencer_desc) document.getElementById('card-influencer-desc').textContent = s.card_influencer_desc;
+
+    // Footer
+    if (s.footer_text) document.getElementById('footer-text').innerHTML = s.footer_text + '<br>Powered by Simpee';
+
+    // Logo visibility
+    if (s.show_5senses_logo === 'false') document.getElementById('brand-5senses-wrap').style.display = 'none';
+    if (s.show_simplexity_logo === 'false') document.getElementById('brand-simplexity-wrap').style.display = 'none';
+
+  } catch(e) {
+    console.log('Settings load skipped:', e.message);
+  }
+}
+
+loadSettings();
+</script>
 </body>
 </html>
