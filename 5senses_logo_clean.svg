@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 100" width="220" height="100">
-  <rect width="220" height="100" fill="transparent"/>
-  <!-- Korean char 정 -->
-  <text x="10" y="68" font-family="serif" font-size="58" font-weight="700" fill="#5a3a3a">정</text>
-  <!-- Number 5 -->
-  <text x="68" y="65" font-family="Georgia,serif" font-size="44" font-weight="600" fill="#5a3a3a">5</text>
-  <!-- SENSES -->
-  <text x="10" y="88" font-family="Arial,sans-serif" font-size="14" font-weight="500" fill="#5a3a3a" letter-spacing="5">SENSES</text>
-</svg>
