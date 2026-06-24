@@ -2,6 +2,7 @@
   "rewrites": [
     { "source": "/staff", "destination": "/staff/index.html" },
     { "source": "/brand", "destination": "/brand/index.html" },
-    { "source": "/influencer", "destination": "/influencer/index.html" }
+    { "source": "/influencer", "destination": "/influencer/index.html" },
+    { "source": "/admin", "destination": "/admin/index.html" }
   ]
 }
