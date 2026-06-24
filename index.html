@@ -3,385 +3,272 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>5Senses Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <title>5SENSES · SIMPLEX-ITY Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       font-family: 'Montserrat', sans-serif;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .container {
-      width: 100%;
-      max-width: 480px;
-      padding: 32px 24px;
-    }
-
-
-
-    .portal-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .portal-card {
       background: #ffffff;
-      border-radius: 16px;
-      padding: 24px 28px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 12px rgba(94,80,251,0.08);
-    }
-    .portal-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(94,80,251,0.18);
-    }
-    .portal-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-    }
-    .portal-icon svg { width: 26px; height: 26px; }
-    .staff-icon { background: #ede9ff; }
-    .brand-icon { background: #e9f0ff; }
-    .influencer-icon { background: #fce9ff; }
-    .portal-info h2 {
-      font-family: 'Exo 2', sans-serif;
-      font-size: 17px;
-      font-weight: 700;
-      color: #1a1a1f;
-      margin-bottom: 3px;
-    }
-    .portal-info p {
-      font-size: 13px;
-      color: #8888a0;
-    }
-    .portal-arrow {
-      margin-left: auto;
-      color: #c0b8ff;
-    }
-    .footer {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 12px;
-      color: #aaaacc;
+      overflow: hidden;
     }
 
-    .logo-area {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .brand-logos {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 10px;
-    }
-    .logo-5senses-img {
-      height: 120px;
-      width: auto;
-      object-fit: contain;
-    }
-    .logo-divider {
-      width: 1px;
-      height: 110px;
-      background: #d0cce8;
-      flex-shrink: 0;
-    }
-    .logo-simplexity {
-      height: 100px;
-      width: auto;
-      object-fit: contain;
-    }
-    .portal-tagline {
-      font-size: 12px;
-      color: #9085a5;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-top: 8px;
-    }
-  
-    
-      20%  { background-color: #e8f0ff; }
-      40%  { background-color: #f5eaff; }
-      60%  { background-color: #eef5ff; }
-      80%  { background-color: #fceaff; }
-      100% { background-color: #f0eeff; }
-    }
-
-  
-    /* ── WATERCOLOUR ANIMATION ── */
-    body { background: #ffffff; }
-
+    /* ── WATERCOLOUR BACKGROUND ── */
     .wc-canvas {
       position: fixed; inset: 0; z-index: 0;
       overflow: hidden; pointer-events: none;
       background: #ffffff;
     }
-
-    /* SVG-based organic watercolour blobs */
     .wc-blob {
       position: absolute;
       border-radius: 60% 40% 55% 45% / 50% 60% 40% 55%;
-      filter: blur(45px);
-      opacity: 0;
+      filter: blur(50px);
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
-      animation-fill-mode: both;
     }
-
-    /* Peach-orange — left */
     .wc-blob-1 {
       width: 55vw; height: 45vw;
-      top: 10%; left: -5%;
+      top: 5%; left: -5%;
       background: radial-gradient(ellipse at 40% 50%,
-        rgba(255, 190, 160, 0.75) 0%,
-        rgba(255, 170, 140, 0.45) 40%,
-        rgba(255, 200, 180, 0.15) 70%,
-        transparent 100%);
+        rgba(255,190,160,0.70) 0%, rgba(255,170,140,0.40) 45%, transparent 100%);
       border-radius: 62% 38% 55% 45% / 48% 62% 38% 52%;
       animation: wc-drift-1 20s ease-in-out infinite;
     }
-
-    /* Rose-pink — centre */
     .wc-blob-2 {
       width: 50vw; height: 42vw;
       top: 15%; left: 25%;
       background: radial-gradient(ellipse at 50% 50%,
-        rgba(210, 140, 170, 0.65) 0%,
-        rgba(200, 130, 165, 0.38) 45%,
-        rgba(220, 160, 190, 0.12) 72%,
-        transparent 100%);
+        rgba(210,140,170,0.60) 0%, rgba(200,130,165,0.32) 48%, transparent 100%);
       border-radius: 55% 45% 60% 40% / 52% 48% 55% 45%;
       animation: wc-drift-2 25s ease-in-out infinite;
     }
-
-    /* Lavender-blue — right */
     .wc-blob-3 {
       width: 52vw; height: 44vw;
-      top: 8%; right: -8%;
+      top: 5%; right: -8%;
       background: radial-gradient(ellipse at 60% 45%,
-        rgba(180, 175, 230, 0.70) 0%,
-        rgba(165, 160, 220, 0.40) 42%,
-        rgba(190, 185, 235, 0.14) 70%,
-        transparent 100%);
+        rgba(180,175,230,0.65) 0%, rgba(165,160,220,0.35) 45%, transparent 100%);
       border-radius: 45% 55% 42% 58% / 55% 45% 58% 42%;
       animation: wc-drift-3 22s ease-in-out infinite;
     }
-
-    /* Small accent dots — like watercolour splatter */
-    .wc-dot-1 {
+    .wc-blob-4 {
       width: 6vw; height: 6vw;
-      top: 38%; left: 42%;
-      background: radial-gradient(circle, rgba(200, 130, 165, 0.55) 0%, transparent 70%);
-      border-radius: 50%;
-      filter: blur(12px);
-      animation: wc-dot-float 18s ease-in-out infinite;
+      top: 40%; left: 42%;
+      background: radial-gradient(circle, rgba(200,130,165,0.50) 0%, transparent 70%);
+      border-radius: 50%; filter: blur(14px);
+      animation: wc-dot 18s ease-in-out infinite;
     }
-    .wc-dot-2 {
+    .wc-blob-5 {
       width: 4vw; height: 4vw;
-      top: 22%; left: 60%;
-      background: radial-gradient(circle, rgba(180, 175, 230, 0.60) 0%, transparent 70%);
-      border-radius: 50%;
-      filter: blur(8px);
-      animation: wc-dot-float 14s ease-in-out infinite reverse;
+      top: 20%; left: 62%;
+      background: radial-gradient(circle, rgba(180,175,230,0.55) 0%, transparent 70%);
+      border-radius: 50%; filter: blur(9px);
+      animation: wc-dot 14s ease-in-out infinite reverse;
     }
-    .wc-dot-3 {
-      width: 3vw; height: 3vw;
-      top: 50%; left: 30%;
-      background: radial-gradient(circle, rgba(255, 190, 160, 0.50) 0%, transparent 70%);
-      border-radius: 50%;
-      filter: blur(6px);
-      animation: wc-dot-float 16s ease-in-out infinite 3s;
-    }
-
-    /* ensure content sits above */
-    .container { position: relative; z-index: 1; }
-
     @keyframes wc-drift-1 {
-      0%   { opacity: 0.80; transform: translate(0,   0)   scale(1.00) rotate(0deg); }
-      25%  { opacity: 0.90; transform: translate(3%,  -4%) scale(1.06) rotate(2deg); }
-      50%  { opacity: 0.75; transform: translate(-2%, 5%)  scale(0.96) rotate(-1deg); }
-      75%  { opacity: 0.85; transform: translate(4%,  2%)  scale(1.03) rotate(1deg); }
-      100% { opacity: 0.80; transform: translate(0,   0)   scale(1.00) rotate(0deg); }
+      0%   { transform: translate(0,0) scale(1) rotate(0deg); opacity:.80; }
+      25%  { transform: translate(3%,-4%) scale(1.06) rotate(2deg); opacity:.90; }
+      50%  { transform: translate(-2%,5%) scale(.96) rotate(-1deg); opacity:.72; }
+      75%  { transform: translate(4%,2%) scale(1.03) rotate(1deg); opacity:.85; }
+      100% { transform: translate(0,0) scale(1) rotate(0deg); opacity:.80; }
     }
     @keyframes wc-drift-2 {
-      0%   { opacity: 0.75; transform: translate(0,   0)   scale(1.00) rotate(0deg); }
-      30%  { opacity: 0.85; transform: translate(-4%, 3%)  scale(1.08) rotate(-2deg); }
-      60%  { opacity: 0.65; transform: translate(3%,  -5%) scale(0.94) rotate(2deg); }
-      100% { opacity: 0.75; transform: translate(0,   0)   scale(1.00) rotate(0deg); }
+      0%   { transform: translate(0,0) scale(1) rotate(0deg); opacity:.72; }
+      33%  { transform: translate(-4%,3%) scale(1.08) rotate(-2deg); opacity:.82; }
+      66%  { transform: translate(3%,-5%) scale(.94) rotate(2deg); opacity:.62; }
+      100% { transform: translate(0,0) scale(1) rotate(0deg); opacity:.72; }
     }
     @keyframes wc-drift-3 {
-      0%   { opacity: 0.78; transform: translate(0,   0)   scale(1.00) rotate(0deg); }
-      35%  { opacity: 0.88; transform: translate(-3%, -3%) scale(1.05) rotate(1deg); }
-      70%  { opacity: 0.68; transform: translate(4%,  4%)  scale(0.97) rotate(-2deg); }
-      100% { opacity: 0.78; transform: translate(0,   0)   scale(1.00) rotate(0deg); }
+      0%   { transform: translate(0,0) scale(1) rotate(0deg); opacity:.75; }
+      35%  { transform: translate(-3%,-3%) scale(1.05) rotate(1deg); opacity:.85; }
+      70%  { transform: translate(4%,4%) scale(.97) rotate(-2deg); opacity:.65; }
+      100% { transform: translate(0,0) scale(1) rotate(0deg); opacity:.75; }
     }
-    @keyframes wc-dot-float {
-      0%   { opacity: 0.60; transform: translate(0, 0) scale(1.0); }
-      50%  { opacity: 0.80; transform: translate(8px, -10px) scale(1.2); }
-      100% { opacity: 0.60; transform: translate(0, 0) scale(1.0); }
+    @keyframes wc-dot {
+      0%   { opacity:.55; transform: translate(0,0) scale(1); }
+      50%  { opacity:.75; transform: translate(8px,-10px) scale(1.2); }
+      100% { opacity:.55; transform: translate(0,0) scale(1); }
     }
 
+    /* ── MAIN CONTAINER ── */
+    .container {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 480px;
+      padding: 48px 32px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* ── LOGO AREA ── */
+    .logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 8px;
+    }
+    .logo-5senses {
+      height: 72px;
+      width: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+    .logo-divider {
+      width: 1px;
+      height: 52px;
+      background: rgba(160,140,200,0.35);
+      flex-shrink: 0;
+    }
+    .logo-simplexity {
+      height: 60px;
+      width: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    /* ── TAGLINE ── */
+    .portal-tagline {
+      font-size: 10px;
+      color: #a090b8;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 16px;
+      margin-bottom: 36px;
+      font-weight: 400;
+    }
+
+    /* ── PORTAL CARDS ── */
+    .portal-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .portal-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(180,160,220,0.25);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .portal-card:hover {
+      background: rgba(255,255,255,0.90);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(140,130,252,0.15);
+    }
+    .portal-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .staff-icon  { background: rgba(237,233,255,0.90); }
+    .brand-icon  { background: rgba(233,240,255,0.90); }
+    .inf-icon    { background: rgba(252,233,255,0.90); }
+    .portal-icon svg { width: 22px; height: 22px; }
+    .portal-info { flex: 1; }
+    .portal-name {
+      font-size: 15px; font-weight: 600;
+      color: #2a2040; line-height: 1.2;
+    }
+    .portal-desc {
+      font-size: 12px; color: #8878a8;
+      margin-top: 2px; font-weight: 400;
+    }
+    .portal-arrow { color: #c0b0e0; font-size: 18px; }
+
+    /* ── FOOTER ── */
+    .footer {
+      font-size: 10px;
+      color: #b8aad0;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
 
-  <!-- WATERCOLOUR ANIMATION LAYER -->
+  <!-- WATERCOLOUR LAYER -->
   <div class="wc-canvas">
     <div class="wc-blob wc-blob-1"></div>
     <div class="wc-blob wc-blob-2"></div>
-    <div class="wc-blob wc-blob-3"></div>
-    <div class="wc-blob wc-dot-1"></div>
-    <div class="wc-blob wc-dot-2"></div>
-    <div class="wc-blob wc-dot-3"></div>
-  </div>
-
-      <div class="wc-blob wc-blob-2"></div>
     <div class="wc-blob wc-blob-3"></div>
     <div class="wc-blob wc-blob-4"></div>
     <div class="wc-blob wc-blob-5"></div>
   </div>
 
   <div class="container">
-    <div class="logo-area">
-      <div class="brand-logos">
-        <img src="/assets/5senses_logo_transparent.png" alt="정5SENSES" class="logo-5senses-img" />
-        <div class="logo-divider"></div>
-        <img src="/assets/simplex_ity_logo_transparent.png" alt="SIMPLEX-ITY" class="logo-simplexity" />
-      </div>
-      <p class="portal-tagline">Portal — Select your access</p>
+
+    <!-- LOGOS -->
+    <div class="logo-row">
+      <img src="/assets/5senses_logo.png" alt="정5SENSES" class="logo-5senses" />
+      <div class="logo-divider"></div>
+      <img src="/assets/simplex_ity_logo.png" alt="SIMPLEX-ITY" class="logo-simplexity" />
     </div>
-    <div class="portal-cards">
-      <a href="/staff/index.html" class="portal-card">
+
+    <!-- TAGLINE -->
+    <p class="portal-tagline">Portal — Select Your Access</p>
+
+    <!-- PORTAL CARDS -->
+    <div class="portal-list">
+      <a href="/staff/" class="portal-card">
         <div class="portal-icon staff-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5e50fb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#7c6fcd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
           </svg>
         </div>
         <div class="portal-info">
-          <h2>Staff Portal</h2>
-          <p>Internal team access</p>
+          <div class="portal-name">Staff Portal</div>
+          <div class="portal-desc">Internal team access for operations &amp; daily management</div>
         </div>
-        <div class="portal-arrow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
+        <span class="portal-arrow">›</span>
       </a>
-      <a href="/brand/index.html" class="portal-card">
+
+      <a href="/brand/" class="portal-card">
         <div class="portal-icon brand-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#3b7cf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="7" width="20" height="14" rx="2"/>
-            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
-            <line x1="12" y1="12" x2="12" y2="16"/>
-            <line x1="10" y1="14" x2="14" y2="14"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b7fcd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
           </svg>
         </div>
         <div class="portal-info">
-          <h2>Brand Portal</h2>
-          <p>Brand partner access</p>
+          <div class="portal-name">Brand Portal</div>
+          <div class="portal-desc">Brand partner dashboard for campaigns &amp; reports</div>
         </div>
-        <div class="portal-arrow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
+        <span class="portal-arrow">›</span>
       </a>
-      <a href="/influencer/index.html" class="portal-card">
-        <div class="portal-icon influencer-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#c060e0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2a10 10 0 1 0 10 10"/>
-            <path d="M12 8v4l3 3"/>
-            <path d="M18 2l4 4-4 4"/>
-            <path d="M22 2l-4 4"/>
+
+      <a href="/influencer/" class="portal-card">
+        <div class="portal-icon inf-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#a05fcd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/>
           </svg>
         </div>
         <div class="portal-info">
-          <h2>Influencer Portal</h2>
-          <p>Creator & KOL access</p>
+          <div class="portal-name">Influencer Portal</div>
+          <div class="portal-desc">Creator hub for campaigns &amp; performance tracking</div>
         </div>
-        <div class="portal-arrow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
+        <span class="portal-arrow">›</span>
       </a>
     </div>
-    <div class="footer">
-      5SENSESBEAUTY LIMITED · SIMPLEX-ITY · Powered by Simpee
-    </div>
+
+    <div class="footer">5SENSESBEAUTY LIMITED · SIMPLEX-ITY · Powered by Simpee</div>
   </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const STORAGE_KEY = 'portal_5senses_settings';
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (!stored) return;
-  try {
-    const s = JSON.parse(stored);
-
-    // Background — force override hardcoded CSS
-    if (s.bg_image_url && s.bg_image_url.trim() !== '') {
-      document.body.setAttribute('style', 'background-image:url(' + s.bg_image_url + ');background-size:cover;background-position:center;');
-    } else if (s.bg_gradient_from) {
-      const mid = s.bg_gradient_mid || s.bg_gradient_from;
-      const to = s.bg_gradient_to || s.bg_gradient_from;
-      document.body.setAttribute('style', 'background:linear-gradient(135deg,' + s.bg_gradient_from + ',' + mid + ',' + to + ');');
-    }
-
-    // Title & subtitle
-    const title = document.querySelector('.portal-tagline');
-    if (title && s.subtitle) title.textContent = s.subtitle;
-
-    const mainTitle = document.querySelector('.world-title');
-    if (mainTitle && s.title) mainTitle.textContent = s.title;
-
-    // Title color
-    if (s.title_color && mainTitle) mainTitle.style.color = s.title_color;
-    if (s.subtitle_color && title) title.style.color = s.subtitle_color;
-
-    // Footer
-    const footer = document.querySelector('.footer');
-    if (footer && s.footer_text) footer.textContent = s.footer_text;
-
-    // Portal card labels
-    const cards = document.querySelectorAll('.portal-card');
-    const labels = [
-      { label: s.card_staff_label, desc: s.card_staff_desc },
-      { label: s.card_brand_label, desc: s.card_brand_desc },
-      { label: s.card_influencer_label, desc: s.card_influencer_desc }
-    ];
-    cards.forEach(function(card, i) {
-      if (!labels[i]) return;
-      const h2 = card.querySelector('h2');
-      const p = card.querySelector('p');
-      if (h2 && labels[i].label) h2.textContent = labels[i].label;
-      if (p && labels[i].desc) p.textContent = labels[i].desc;
-    });
-
-    // Logos
-    const logo5s = document.querySelector('.logo-5senses-img');
-    const logoSx = document.querySelector('.logo-simplexity');
-    if (logo5s && s.logo_5senses_url && s.logo_5senses_url.trim() !== '') {
-      logo5s.src = s.logo_5senses_url;
-    }
-    if (logoSx && s.logo_simplexity_url && s.logo_simplexity_url.trim() !== '') {
-      logoSx.src = s.logo_simplexity_url;
-    }
-
-  } catch(e) { console.warn('CMS load error:', e); }
-});
-</script>
 
 </body>
 </html>
