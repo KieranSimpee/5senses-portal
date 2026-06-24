@@ -228,6 +228,62 @@
     <!-- FOOTER -->
     <div class="section-title">Footer</div>
     <div class="field"><label>Footer Text</label><input type="text" id="footer_text" value="5SENSESBEAUTY LIMITED · SIMPLEX-ITY · PORTAL v2.0"></div>
+
+    <!-- LOGIN STYLE -->
+    <div class="section-title">Login Page Style</div>
+
+    <div class="field">
+      <label>Login Style</label>
+      <select id="login_style">
+        <option value="classic">Classic — Card on colored background</option>
+        <option value="minimal">Minimal — Clean white, no heavy card</option>
+        <option value="dark">Dark — Dark card on dark background</option>
+        <option value="split">Split — Image left, form right</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Login Background Color / Gradient</label>
+      <input type="text" id="login_bg_color" placeholder="e.g. #f0f0ff or linear-gradient(135deg,#5e50fb,#8c82fc)">
+    </div>
+
+    <div class="field">
+      <label>Login Background Image — Upload</label>
+      <div class="logo-upload-box" onclick="document.getElementById('file-login-bg').click()">
+        <input type="file" id="file-login-bg" accept="image/*" onchange="handleLoginBgUpload(this)">
+        <img id="preview-login-bg" class="logo-preview" src="" alt="Login BG">
+        <div class="logo-upload-hint"><strong>Click to upload</strong><br>Replaces background color on login page</div>
+      </div>
+      <input type="text" id="login_bg_image_url" placeholder="Or paste image URL">
+    </div>
+
+    <div class="field">
+      <label>Login Card Background Color</label>
+      <div class="color-row">
+        <input type="color" id="cp-login-card" value="#ffffff" oninput="syncColor('login_card_color',this.value)">
+        <input type="text" id="login_card_color" class="color-hex" value="#ffffff" oninput="syncPicker('cp-login-card',this.value)">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Login Button / Accent Color</label>
+      <div class="color-row">
+        <input type="color" id="cp-login-accent" value="#5e50fb" oninput="syncColor('login_accent_color',this.value)">
+        <input type="text" id="login_accent_color" class="color-hex" value="#5e50fb" oninput="syncPicker('cp-login-accent',this.value)">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Login Page Logo — Upload</label>
+      <div class="logo-upload-box" onclick="document.getElementById('file-login-logo').click()">
+        <input type="file" id="file-login-logo" accept="image/*" onchange="handleLogoUpload(this,'login_logo_url','preview-login-logo')">
+        <img id="preview-login-logo" class="logo-preview" src="" alt="Login Logo">
+        <div class="logo-upload-hint"><strong>Click to upload</strong><br>Shows above the login form</div>
+      </div>
+      <input type="text" id="login_logo_url" placeholder="Or paste image URL">
+      <button class="logo-clear-btn" onclick="clearLogo('login_logo_url','preview-login-logo')">✕ Remove</button>
+    </div>
+
     <div style="height:20px;"></div>
   </div>
 
@@ -326,6 +382,13 @@ async function loadSettings() {
     set('card_influencer_label',s.card_influencer_label); set('card_influencer_desc',s.card_influencer_desc);
     set('show_5senses_logo',s.show_5senses_logo); set('show_simplexity_logo',s.show_simplexity_logo);
     set('footer_text',s.footer_text);
+    set('login_style',s.login_style);
+    set('login_bg_color',s.login_bg_color);
+    set('login_bg_image_url',s.login_bg_image_url);
+    const lcard=document.getElementById('cp-login-card');if(lcard&&s.login_card_color)lcard.value=s.login_card_color;set('login_card_color',s.login_card_color);
+    const lacc=document.getElementById('cp-login-accent');if(lacc&&s.login_accent_color)lacc.value=s.login_accent_color;set('login_accent_color',s.login_accent_color);
+    if(s.login_logo_url){set('login_logo_url',s.login_logo_url);previewLogoFromUrl('login_logo_url','preview-login-logo');}
+    if(s.login_bg_image_url){set('login_bg_image_url',s.login_bg_image_url);const p=document.getElementById('preview-login-bg');if(p&&s.login_bg_image_url.trim()!=''){p.src=s.login_bg_image_url;p.classList.add('show');}}
 
     // Load logo URLs and show previews
     if(s.logo_5senses_url){set('logo_5senses_url',s.logo_5senses_url);previewLogoFromUrl('logo_5senses_url','preview-5senses');}
@@ -351,6 +414,12 @@ async function saveSettings() {
       card_influencer_label:g('card_influencer_label'), card_influencer_desc:g('card_influencer_desc'),
       show_5senses_logo:g('show_5senses_logo'), show_simplexity_logo:g('show_simplexity_logo'),
       footer_text:g('footer_text'),
+      login_style:g('login_style'),
+      login_bg_color:g('login_bg_color'),
+      login_bg_image_url:g('login_bg_image_url'),
+      login_card_color:g('login_card_color'),
+      login_accent_color:g('login_accent_color'),
+      login_logo_url:g('login_logo_url'),
     };
     const res = await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({settings})});
     const data = await res.json();
@@ -360,6 +429,7 @@ async function saveSettings() {
 }
 
 function refreshPreview() { const f=document.getElementById('preview'); f.src=f.src; }
+function handleLoginBgUpload(input){const file=input.files[0];if(!file)return;const reader=new FileReader();reader.onload=(e)=>{document.getElementById('login_bg_image_url').value=e.target.result;const p=document.getElementById('preview-login-bg');p.src=e.target.result;p.classList.add('show');setStatus('Login BG loaded — Save to apply','success');};reader.readAsDataURL(file);}
 function handleBgUpload(input){const file=input.files[0];if(!file)return;const reader=new FileReader();reader.onload=(e)=>{document.getElementById('bg_image_url').value=e.target.result;setStatus('Image loaded — Save to apply','success');};reader.readAsDataURL(file);}
 </script>
 </body>

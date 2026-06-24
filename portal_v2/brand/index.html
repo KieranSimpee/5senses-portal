@@ -319,5 +319,95 @@
   const savedUser = sessionStorage.getItem('brand_user');
   if (savedUser) showDashboard(JSON.parse(savedUser));
 </script>
+
+  // ── LOAD LOGIN THEME FROM ADMIN SETTINGS ──
+  (async function applyLoginTheme() {
+    try {
+      const res = await fetch('https://api.base44.app/api/apps/69ddc914cfcf229762ac123d/functions/portalSettings');
+      const data = await res.json();
+      if (!data.success) return;
+      const s = data.settings;
+
+      const screen = document.getElementById('loginScreen');
+      const card = screen ? screen.querySelector('.login-card') : null;
+      const style = s.login_style || 'classic';
+      const bgColor = s.login_bg_color || '';
+      const cardColor = s.login_card_color || '';
+      const accentColor = s.login_accent_color || '#5e50fb';
+      const bgImageUrl = s.login_bg_image_url || '';
+      const loginLogoUrl = s.login_logo_url || '';
+
+      if (screen) {
+        // Apply background
+        if (bgImageUrl && bgImageUrl.trim() !== '') {
+          screen.style.backgroundImage = 'url(' + bgImageUrl + ')';
+          screen.style.backgroundSize = 'cover';
+          screen.style.backgroundPosition = 'center';
+        } else if (bgColor && bgColor.trim() !== '') {
+          screen.style.background = bgColor;
+        }
+
+        // Apply style variants
+        if (style === 'minimal') {
+          screen.style.background = bgColor || '#ffffff';
+          if (card) {
+            card.style.boxShadow = 'none';
+            card.style.border = '1px solid #eee';
+            card.style.borderRadius = '8px';
+            card.style.background = cardColor || '#ffffff';
+          }
+        } else if (style === 'dark') {
+          screen.style.background = bgColor || '#0f0e1a';
+          if (card) {
+            card.style.background = cardColor || '#1a1830';
+            card.style.color = '#e0deff';
+            card.style.border = '1px solid rgba(140,130,252,0.2)';
+          }
+        } else if (style === 'split') {
+          screen.style.display = 'flex';
+          screen.style.padding = '0';
+          if (card) {
+            card.style.borderRadius = '0';
+            card.style.maxWidth = '50%';
+            card.style.minHeight = '100vh';
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
+            card.style.justifyContent = 'center';
+            card.style.background = cardColor || '#fff';
+          }
+          // Add left panel
+          const leftPanel = document.createElement('div');
+          leftPanel.style.cssText = 'flex:1;background:' + (bgColor || 'linear-gradient(135deg,#5e50fb,#8c82fc)') + ';display:flex;align-items:center;justify-content:center;min-height:100vh;';
+          if (bgImageUrl && bgImageUrl.trim() !== '') {
+            leftPanel.style.backgroundImage = 'url(' + bgImageUrl + ')';
+            leftPanel.style.backgroundSize = 'cover';
+            leftPanel.style.backgroundPosition = 'center';
+          }
+          screen.insertBefore(leftPanel, screen.firstChild);
+          screen.style.background = '';
+        }
+      }
+
+      // Logo
+      if (loginLogoUrl && loginLogoUrl.trim() !== '') {
+        const existing = document.getElementById('login-logo-img');
+        if (!existing && card) {
+          const img = document.createElement('img');
+          img.id = 'login-logo-img';
+          img.src = loginLogoUrl;
+          img.style.cssText = 'max-height:52px;max-width:160px;object-fit:contain;margin-bottom:18px;display:block;';
+          card.insertBefore(img, card.firstChild);
+        }
+      }
+
+      // Accent color on button
+      if (accentColor) {
+        const btn = document.querySelector('.btn-login');
+        if (btn) btn.style.background = accentColor;
+      }
+
+    } catch(e) { /* silent fail */ }
+  })();
+
 </body>
 </html>
