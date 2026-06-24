@@ -118,31 +118,11 @@
 <div class="container">
   <div class="brand-header">
     <div class="brand-5senses" id="brand-5senses-wrap">
-      <div class="cloud-blob"></div>
-      <img id="img-5senses" src="" alt="5SENSES" style="max-height:80px;max-width:180px;object-fit:contain;display:none;">
-      <div id="text-5senses-wrap">
-        <div class="logo-5s-row">
-          <span id="logo-korean">정</span>
-          <span id="logo-five">5</span>
-        </div>
-        <div id="logo-senses">SENSES</div>
-      </div>
+      <img src="https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/52ec08d36_5senses_logo_final.svg" alt="5SENSES" style="height:72px;width:auto;object-fit:contain;display:block;">
     </div>
     <div class="brand-divider"></div>
     <div class="brand-simplexity" id="brand-simplexity-wrap">
-      <img id="img-simplexity" src="" alt="SIMPLEX-ITY" style="max-height:80px;max-width:200px;object-fit:contain;display:none;">
-      <div id="text-simplexity-wrap" style="display:flex;align-items:center;gap:16px;">
-        <svg class="simplex-tree" viewBox="0 0 80 80" fill="none">
-          <circle cx="40" cy="40" r="36" stroke="#8c82fc" stroke-width="1.5"/>
-          <line x1="40" y1="64" x2="40" y2="18" stroke="#8c82fc" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="40" y1="36" x2="26" y2="27" stroke="#8c82fc" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="40" y1="46" x2="54" y2="37" stroke="#8c82fc" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <div class="simplex-texts">
-          <div id="simplex-name">SIMPLEX-ITY</div>
-          <div id="simplex-tagline">ONE STOP ASIAN BEAUTY · SIMPLIFY TO AMPLIFY</div>
-        </div>
-      </div>
+      <img src="https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/a4bc6ee15_simplex_ity_logo_white_bg.jpg" alt="SIMPLEX-ITY" style="height:72px;width:auto;object-fit:contain;display:block;">
     </div>
   </div>
 
@@ -228,21 +208,7 @@ async function loadSettings() {
     // Footer
     if (s.footer_text) document.getElementById('footer-text').innerHTML = s.footer_text + '<br>Powered by Simpee';
 
-    // Logo images — swap text for real image if URL set
-    if (s.logo_5senses_url && s.logo_5senses_url.trim() !== '') {
-      const img = document.getElementById('img-5senses');
-      img.src = s.logo_5senses_url; img.style.display = 'block';
-      document.getElementById('text-5senses-wrap').style.display = 'none';
-    }
-    if (s.logo_simplexity_url && s.logo_simplexity_url.trim() !== '') {
-      const img = document.getElementById('img-simplexity');
-      img.src = s.logo_simplexity_url; img.style.display = 'block';
-      document.getElementById('text-simplexity-wrap').style.display = 'none';
-    }
-
-    // Logo visibility
-    if (s.show_5senses_logo === 'false') document.getElementById('brand-5senses-wrap').style.display = 'none';
-    if (s.show_simplexity_logo === 'false') document.getElementById('brand-simplexity-wrap').style.display = 'none';
+    // Logos are hardcoded — not overridable by CMS
 
   } catch(e) {
     console.log('Settings load skipped:', e.message);
