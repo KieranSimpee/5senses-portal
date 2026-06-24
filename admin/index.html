@@ -19,7 +19,7 @@
   .btn-secondary:hover { background:rgba(140,130,252,0.22); }
   .topbar-actions { display:flex; gap:10px; }
   .workspace { display:flex; flex:1; overflow:hidden; height:calc(100vh - 65px); }
-  .panel { width:340px; flex-shrink:0; background:#131224; border-right:1px solid rgba(140,130,252,0.12); overflow-y:auto; padding:24px 20px; display:flex; flex-direction:column; gap:6px; }
+  .panel { width:280px; flex-shrink:0; background:#131224; border-right:1px solid rgba(140,130,252,0.12); overflow-y:auto; padding:24px 20px; display:flex; flex-direction:column; gap:6px; }
   .panel::-webkit-scrollbar { width:4px; }
   .panel::-webkit-scrollbar-thumb { background:rgba(140,130,252,0.25); border-radius:4px; }
   .section-title { font-family:'Exo 2',sans-serif; font-size:9px; font-weight:600; color:#8c82fc; letter-spacing:3px; text-transform:uppercase; padding:18px 4px 8px; border-bottom:1px solid rgba(140,130,252,0.10); margin-bottom:4px; }
@@ -139,12 +139,8 @@
     </div>
 
     <div class="toggle-row">
-      <label>Show 5SENSES Logo</label>
-      <label class="toggle"><input type="checkbox" id="show_5senses_logo" checked><span class="toggle-slider"></span></label>
     </div>
     <div class="toggle-row">
-      <label>Show SIMPLEX-ITY Logo</label>
-      <label class="toggle"><input type="checkbox" id="show_simplexity_logo" checked><span class="toggle-slider"></span></label>
     </div>
 
     <!-- BACKGROUND -->
@@ -379,7 +375,7 @@ async function loadSettings() {
     set('card_staff_label',s.card_staff_label); set('card_staff_desc',s.card_staff_desc);
     set('card_brand_label',s.card_brand_label); set('card_brand_desc',s.card_brand_desc);
     set('card_influencer_label',s.card_influencer_label); set('card_influencer_desc',s.card_influencer_desc);
-    set('show_5senses_logo',s.show_5senses_logo); set('show_simplexity_logo',s.show_simplexity_logo);
+    
     set('footer_text',s.footer_text);
     set('login_style',s.login_style);
     set('login_bg_color',s.login_bg_color);
@@ -411,7 +407,7 @@ async function saveSettings() {
       card_staff_label:g('card_staff_label'), card_staff_desc:g('card_staff_desc'),
       card_brand_label:g('card_brand_label'), card_brand_desc:g('card_brand_desc'),
       card_influencer_label:g('card_influencer_label'), card_influencer_desc:g('card_influencer_desc'),
-      show_5senses_logo:g('show_5senses_logo'), show_simplexity_logo:g('show_simplexity_logo'),
+      
       footer_text:g('footer_text'),
       login_style:g('login_style'),
       login_bg_color:g('login_bg_color'),
