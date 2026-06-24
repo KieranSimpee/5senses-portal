@@ -1,412 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Staff Portal — 5Senses</title>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Staff Portal · 5SENSES</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet"/>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Montserrat', sans-serif; background: #e8e6fe; min-height: 100vh; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Montserrat',sans-serif;min-height:100vh;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
 
-    /* LOGIN SCREEN */
-    .login-screen {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-    .login-card {
-      background: #fff;
-      border-radius: 24px;
-      padding: 40px 36px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 4px 32px rgba(94,80,251,0.12);
-    }
-    .back-link {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: #8c82fc;
-      text-decoration: none;
-      margin-bottom: 28px;
-      cursor: pointer;
-    }
-    .login-badge {
-      display: inline-block;
-      background: #ede9ff;
-      color: #5e50fb;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 20px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .login-card h1 {
-      font-family: 'Exo 2', sans-serif;
-      font-size: 26px;
-      font-weight: 800;
-      color: #1a1a1f;
-      margin-bottom: 6px;
-    }
-    .login-card p {
-      font-size: 13px;
-      color: #8888a0;
-      margin-bottom: 32px;
-    }
-    .form-group { margin-bottom: 20px; }
-    .form-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: #5e50fb;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1.5px solid #e0dcff;
-      border-radius: 12px;
-      font-size: 14px;
-      font-family: 'Montserrat', sans-serif;
-      color: #1a1a1f;
-      outline: none;
-      transition: border-color 0.2s;
-      background: #fafafe;
-    }
-    .form-group input:focus { border-color: #5e50fb; background: #fff; }
-    .btn-login {
-      width: 100%;
-      padding: 15px;
-      background: linear-gradient(135deg, #5e50fb, #8c82fc);
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 700;
-      font-family: 'Exo 2', sans-serif;
-      cursor: pointer;
-      letter-spacing: 1px;
-      transition: opacity 0.2s;
-    }
-    .btn-login:hover { opacity: 0.9; }
-    .error-msg {
-      color: #e53e3e;
-      font-size: 13px;
-      margin-top: 12px;
-      display: none;
-      text-align: center;
-    }
+    /* ── ORGANIC SHAPES ── */
+    .shape{position:fixed;border-radius:50%;opacity:0.55;}
+    .s1{width:220px;height:220px;top:-60px;left:30%;background:linear-gradient(135deg,#c8c2ff,#a09bff);border-radius:50% 50% 50% 50%;}
+    .s2{width:180px;height:180px;top:-40px;left:55%;background:#f0a898;border-radius:50%;}
+    .s3{width:140px;height:140px;top:-20px;right:-20px;background:#d4b8ff;border-radius:50%;}
+    .s4{width:160px;height:100px;bottom:20px;left:-20px;background:linear-gradient(135deg,#ffb3c6,#ff8fab);border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;}
+    .s5{width:130px;height:130px;bottom:30px;left:35%;background:#7dd4f0;border-radius:50% 0 50% 50%;}
+    .s6{width:110px;height:110px;bottom:10px;right:5%;background:#b8aaff;border-radius:50% 50% 0 50%;}
+    .dots{position:fixed;bottom:160px;right:8%;width:90px;height:90px;background-image:radial-gradient(#d0c8ff 1.5px,transparent 1.5px);background-size:10px 10px;opacity:0.5;}
 
-    /* DASHBOARD */
-    .dashboard { display: none; }
-    .topbar {
-      background: #fff;
-      padding: 16px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 1px 8px rgba(94,80,251,0.07);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .topbar-brand {
-      font-family: 'Exo 2', sans-serif;
-      font-size: 18px;
-      font-weight: 800;
-      color: #5e50fb;
-    }
-    .topbar-user {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .user-avatar {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, #5e50fb, #8c82fc);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: 700;
-      font-size: 14px;
-    }
-    .user-name { font-size: 13px; font-weight: 600; color: #1a1a1f; }
-    .logout-btn {
-      font-size: 12px;
-      color: #aaa;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 6px;
-    }
-    .logout-btn:hover { background: #f5f5f5; }
-
-    .main-content { padding: 28px 24px; max-width: 1100px; margin: 0 auto; }
-    .welcome-banner {
-      background: linear-gradient(135deg, #5e50fb 0%, #8c82fc 100%);
-      border-radius: 18px;
-      padding: 28px 32px;
-      margin-bottom: 28px;
-      color: #fff;
-    }
-    .welcome-banner h2 {
-      font-family: 'Exo 2', sans-serif;
-      font-size: 22px;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-    .welcome-banner p { font-size: 13px; opacity: 0.85; }
-
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      margin-bottom: 28px;
-    }
-    .kpi-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 20px 22px;
-      box-shadow: 0 2px 12px rgba(94,80,251,0.06);
-    }
-    .kpi-label { font-size: 12px; color: #8888a0; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-    .kpi-value { font-family: 'Exo 2', sans-serif; font-size: 28px; font-weight: 800; color: #5e50fb; }
-    .kpi-sub { font-size: 12px; color: #aaa; margin-top: 4px; }
-
-    .section-title {
-      font-family: 'Exo 2', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      color: #1a1a1f;
-      margin-bottom: 16px;
-      margin-top: 8px;
-    }
-    .nav-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 14px;
-      margin-bottom: 28px;
-    }
-    .nav-tile {
-      background: #fff;
-      border-radius: 16px;
-      padding: 22px 18px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 10px rgba(94,80,251,0.06);
-      text-decoration: none;
-    }
-    .nav-tile:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(94,80,251,0.14); }
-    .nav-tile-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: #ede9ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .nav-tile-icon svg { width: 20px; height: 20px; }
-    .nav-tile-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #1a1a1f;
-    }
-
-    .notice-list { display: flex; flex-direction: column; gap: 12px; }
-    .notice-item {
-      background: #fff;
-      border-radius: 14px;
-      padding: 16px 20px;
-      border-left: 4px solid #8c82fc;
-      box-shadow: 0 1px 8px rgba(94,80,251,0.05);
-    }
-    .notice-item h4 { font-size: 14px; font-weight: 600; color: #1a1a1f; margin-bottom: 4px; }
-    .notice-item p { font-size: 13px; color: #6b6b80; }
-    .notice-meta { font-size: 11px; color: #bbb; margin-top: 6px; }
-
-    .coming-soon {
-      text-align: center;
-      padding: 40px 20px;
-      color: #aaa;
-      font-size: 14px;
-    }
+    /* ── LOGIN CARD ── */
+    .card{position:relative;z-index:10;width:100%;max-width:400px;padding:48px 40px;background:#fff;border-radius:24px;box-shadow:0 8px 48px rgba(140,130,200,0.12);}
+    .portal-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a090c0;text-decoration:none;margin-bottom:28px;letter-spacing:1px;}
+    .portal-back:hover{color:#5e50fb;}
+    .brand-mark{margin-bottom:24px;}
+    .brand-mark .bm-korean{font-family:'Exo 2',sans-serif;font-size:28px;font-weight:300;color:#2a2040;}
+    .brand-mark .bm-5{font-family:'Exo 2',sans-serif;font-size:26px;font-weight:600;color:#5e50fb;}
+    .brand-mark .bm-senses{font-family:'Exo 2',sans-serif;font-size:11px;font-weight:300;color:#2a2040;letter-spacing:3px;}
+    h2{font-size:22px;font-weight:600;color:#1a1030;margin-bottom:6px;}
+    .subtitle{font-size:12px;color:#9080b0;margin-bottom:32px;}
+    .field{margin-bottom:16px;}
+    .field label{display:block;font-size:11px;font-weight:600;color:#7060a0;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+    .field input{width:100%;padding:14px 16px;border:1.5px solid #e8e2f8;border-radius:12px;font-size:14px;font-family:'Montserrat',sans-serif;outline:none;transition:border 0.2s,box-shadow 0.2s;background:#faf9ff;color:#1a1030;}
+    .field input:focus{border-color:#8c82fc;box-shadow:0 0 0 3px rgba(140,130,252,0.12);}
+    .field input::placeholder{color:#c0b8d8;}
+    .row-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+    .remember{display:flex;align-items:center;gap:8px;font-size:12px;color:#7060a0;cursor:pointer;}
+    .remember input[type=checkbox]{accent-color:#8c82fc;width:15px;height:15px;}
+    .forgot{font-size:12px;color:#8c82fc;text-decoration:none;}
+    .forgot:hover{color:#5e50fb;}
+    .btn-login{width:100%;padding:15px;background:linear-gradient(135deg,#8c82fc,#5e50fb);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;font-family:'Montserrat',sans-serif;cursor:pointer;transition:opacity 0.2s,transform 0.15s;letter-spacing:0.5px;}
+    .btn-login:hover{opacity:0.90;transform:translateY(-1px);}
+    .portal-tag{text-align:center;margin-top:20px;font-size:11px;color:#b0a0d0;letter-spacing:2px;text-transform:uppercase;}
   </style>
 </head>
 <body>
+  <div class="shape s1"></div>
+  <div class="shape s2"></div>
+  <div class="shape s3"></div>
+  <div class="shape s4"></div>
+  <div class="shape s5"></div>
+  <div class="shape s6"></div>
+  <div class="dots"></div>
 
-<!-- LOGIN SCREEN -->
-<div class="login-screen" id="loginScreen">
-  <div class="login-card">
-    <a class="back-link" onclick="window.location.href='../index.html'">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-      Back to Portal Selection
-    </a>
-    <span class="login-badge">Staff Portal</span>
-    <h1>Welcome Back</h1>
-    <p>Sign in with your 5Senses staff credentials</p>
-    <div class="form-group">
-      <label>Email Address</label>
-      <input type="email" id="emailInput" placeholder="you@5senses.global" />
+  <div class="card">
+    <a href="/" class="portal-back">← All Portals</a>
+    <div class="brand-mark">
+      <span class="bm-korean">정</span><span class="bm-5">5</span><span class="bm-senses">SENSES</span>
     </div>
-    <div class="form-group">
+    <h2>Staff Login</h2>
+    <p class="subtitle">Internal team access</p>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" placeholder="your@5senses.global"/>
+    </div>
+    <div class="field">
       <label>Password</label>
-      <input type="password" id="passwordInput" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()" />
+      <input type="password" placeholder="Enter password"/>
     </div>
-    <button class="btn-login" onclick="doLogin()">SIGN IN</button>
-    <div class="error-msg" id="errorMsg">Invalid credentials. Please try again.</div>
+    <div class="row-meta">
+      <label class="remember"><input type="checkbox" checked/> Keep me logged in</label>
+      <a href="#" class="forgot">Forgot password?</a>
+    </div>
+    <button class="btn-login">Login</button>
+    <p class="portal-tag">Staff Portal · 5SENSESBEAUTY</p>
   </div>
-</div>
-
-<!-- DASHBOARD -->
-<div class="dashboard" id="dashboard">
-  <div class="topbar">
-    <div class="topbar-brand">5SENSES Staff</div>
-    <div class="topbar-user">
-      <div class="user-avatar" id="userAvatar">K</div>
-      <div class="user-name" id="userName">Kieran</div>
-      <button class="logout-btn" onclick="doLogout()">Sign out</button>
-    </div>
-  </div>
-  <div class="main-content">
-    <div class="welcome-banner">
-      <h2 id="welcomeText">Good morning, Kieran 👋</h2>
-      <p id="welcomeDate">Wednesday, 24 June 2026</p>
-    </div>
-
-    <div class="kpi-grid" id="kpiGrid">
-      <div class="kpi-card">
-        <div class="kpi-label">Active Projects</div>
-        <div class="kpi-value" id="kpiProjects">—</div>
-        <div class="kpi-sub">In progress</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Compliance Items</div>
-        <div class="kpi-value" id="kpiCompliance">—</div>
-        <div class="kpi-sub">Tracked</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Expenses (Month)</div>
-        <div class="kpi-value" id="kpiExpenses">—</div>
-        <div class="kpi-sub">HKD</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Team Members</div>
-        <div class="kpi-value" id="kpiTeam">—</div>
-        <div class="kpi-sub">Active</div>
-      </div>
-    </div>
-
-    <div class="section-title">Quick Access</div>
-    <div class="nav-grid">
-      <a class="nav-tile" href="#">
-        <div class="nav-tile-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5e50fb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        </div>
-        <span class="nav-tile-label">Dashboard</span>
-      </a>
-      <a class="nav-tile" href="#">
-        <div class="nav-tile-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5e50fb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        </div>
-        <span class="nav-tile-label">Finance</span>
-      </a>
-      <a class="nav-tile" href="#">
-        <div class="nav-tile-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5e50fb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        </div>
-        <span class="nav-tile-label">Compliance</span>
-      </a>
-      <a class="nav-tile" href="#">
-        <div class="nav-tile-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5e50fb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <span class="nav-tile-label">HR</span>
-      </a>
-      <a class="nav-tile" href="#">
-        <div class="nav-tile-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5e50fb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
-        </div>
-        <span class="nav-tile-label">Projects</span>
-      </a>
-      <a class="nav-tile" href="#">
-        <div class="nav-tile-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5e50fb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        </div>
-        <span class="nav-tile-label">Documents</span>
-      </a>
-    </div>
-
-    <div class="section-title">Notices</div>
-    <div class="notice-list" id="noticeList">
-      <div class="notice-item">
-        <h4>Portal is live</h4>
-        <p>Welcome to the new 5Senses Staff Portal. This independent portal is now hosted at portal.5senses.global.</p>
-        <div class="notice-meta">Posted by Simpee · 24 Jun 2026</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  // Simple auth (demo — replace with real API call)
-  const STAFF_USERS = [
-    { email: 'kieran@5senses.global', password: 'Kieran2026!', name: 'Kieran', initials: 'K' },
-    { email: 'loreen@5senses.global', password: 'Loreen2026!', name: 'Loreen', initials: 'L' },
-    { email: 'ally@5senses.global', password: 'Ally2026!', name: 'Ally', initials: 'A' },
-  ];
-
-  function doLogin() {
-    const email = document.getElementById('emailInput').value.trim().toLowerCase();
-    const password = document.getElementById('passwordInput').value;
-    const user = STAFF_USERS.find(u => u.email === email && u.password === password);
-    if (user) {
-      sessionStorage.setItem('staff_user', JSON.stringify(user));
-      showDashboard(user);
-    } else {
-      document.getElementById('errorMsg').style.display = 'block';
-    }
-  }
-
-  function showDashboard(user) {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    document.getElementById('userAvatar').textContent = user.initials;
-    document.getElementById('userName').textContent = user.name;
-    const hour = new Date().getHours();
-    const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
-    document.getElementById('welcomeText').textContent = greet + ', ' + user.name + ' 👋';
-    const now = new Date();
-    document.getElementById('welcomeDate').textContent = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  }
-
-  function doLogout() {
-    sessionStorage.removeItem('staff_user');
-    document.getElementById('loginScreen').style.display = 'flex';
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('emailInput').value = '';
-    document.getElementById('passwordInput').value = '';
-  }
-
-  // Auto-login if session exists
-  const savedUser = sessionStorage.getItem('staff_user');
-  if (savedUser) showDashboard(JSON.parse(savedUser));
-</script>
 </body>
 </html>

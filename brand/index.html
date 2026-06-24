@@ -1,323 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brand Portal — SIMPLEX-ITY</title>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Brand Portal · SIMPLEX-ITY</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet"/>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Montserrat', sans-serif; background: #e8e6fe; min-height: 100vh; }
-
-    .login-screen {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-    .login-card {
-      background: #fff;
-      border-radius: 24px;
-      padding: 40px 36px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 4px 32px rgba(59,124,246,0.12);
-    }
-    .back-link {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: #3b7cf6;
-      text-decoration: none;
-      margin-bottom: 28px;
-      cursor: pointer;
-    }
-    .login-badge {
-      display: inline-block;
-      background: #e9f0ff;
-      color: #3b7cf6;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 20px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .login-card h1 {
-      font-family: 'Exo 2', sans-serif;
-      font-size: 26px;
-      font-weight: 800;
-      color: #1a1a1f;
-      margin-bottom: 6px;
-    }
-    .login-card p { font-size: 13px; color: #8888a0; margin-bottom: 32px; }
-    .form-group { margin-bottom: 20px; }
-    .form-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: #3b7cf6;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1.5px solid #d0e0ff;
-      border-radius: 12px;
-      font-size: 14px;
-      font-family: 'Montserrat', sans-serif;
-      color: #1a1a1f;
-      outline: none;
-      transition: border-color 0.2s;
-      background: #fafafe;
-    }
-    .form-group input:focus { border-color: #3b7cf6; background: #fff; }
-    .btn-login {
-      width: 100%;
-      padding: 15px;
-      background: linear-gradient(135deg, #3b7cf6, #6ba3ff);
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 700;
-      font-family: 'Exo 2', sans-serif;
-      cursor: pointer;
-      letter-spacing: 1px;
-      transition: opacity 0.2s;
-    }
-    .btn-login:hover { opacity: 0.9; }
-    .error-msg { color: #e53e3e; font-size: 13px; margin-top: 12px; display: none; text-align: center; }
-
-    /* DASHBOARD */
-    .dashboard { display: none; }
-    .topbar {
-      background: #fff;
-      padding: 16px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 1px 8px rgba(59,124,246,0.07);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .topbar-brand { font-family: 'Exo 2', sans-serif; font-size: 18px; font-weight: 800; color: #3b7cf6; }
-    .topbar-user { display: flex; align-items: center; gap: 10px; }
-    .user-avatar {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, #3b7cf6, #6ba3ff);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: 700;
-      font-size: 14px;
-    }
-    .user-name { font-size: 13px; font-weight: 600; color: #1a1a1f; }
-    .logout-btn { font-size: 12px; color: #aaa; background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
-    .logout-btn:hover { background: #f5f5f5; }
-
-    .main-content { padding: 28px 24px; max-width: 1000px; margin: 0 auto; }
-    .welcome-banner {
-      background: linear-gradient(135deg, #3b7cf6 0%, #6ba3ff 100%);
-      border-radius: 18px;
-      padding: 28px 32px;
-      margin-bottom: 28px;
-      color: #fff;
-    }
-    .welcome-banner h2 { font-family: 'Exo 2', sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 4px; }
-    .welcome-banner p { font-size: 13px; opacity: 0.85; }
-
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 16px;
-      margin-bottom: 28px;
-    }
-    .kpi-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 20px 22px;
-      box-shadow: 0 2px 12px rgba(59,124,246,0.06);
-    }
-    .kpi-label { font-size: 12px; color: #8888a0; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-    .kpi-value { font-family: 'Exo 2', sans-serif; font-size: 28px; font-weight: 800; color: #3b7cf6; }
-    .kpi-sub { font-size: 12px; color: #aaa; margin-top: 4px; }
-
-    .section-title { font-family: 'Exo 2', sans-serif; font-size: 16px; font-weight: 700; color: #1a1a1f; margin-bottom: 16px; margin-top: 8px; }
-
-    .campaign-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
-    .campaign-card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 18px 22px;
-      box-shadow: 0 1px 8px rgba(59,124,246,0.05);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-    .campaign-info h4 { font-size: 14px; font-weight: 600; color: #1a1a1f; margin-bottom: 3px; }
-    .campaign-info p { font-size: 12px; color: #8888a0; }
-    .campaign-status {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 20px;
-      white-space: nowrap;
-    }
-    .status-active { background: #e6f9f0; color: #16a34a; }
-    .status-pending { background: #fff8e6; color: #d97706; }
-    .status-complete { background: #ede9ff; color: #5e50fb; }
-
-    .notice-list { display: flex; flex-direction: column; gap: 12px; }
-    .notice-item {
-      background: #fff;
-      border-radius: 14px;
-      padding: 16px 20px;
-      border-left: 4px solid #3b7cf6;
-      box-shadow: 0 1px 8px rgba(59,124,246,0.05);
-    }
-    .notice-item h4 { font-size: 14px; font-weight: 600; color: #1a1a1f; margin-bottom: 4px; }
-    .notice-item p { font-size: 13px; color: #6b6b80; }
-    .notice-meta { font-size: 11px; color: #bbb; margin-top: 6px; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Montserrat',sans-serif;min-height:100vh;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+    .shape{position:fixed;opacity:0.50;}
+    .s1{width:200px;height:200px;top:-50px;left:28%;background:linear-gradient(135deg,#b8d8ff,#8abcff);border-radius:50%;}
+    .s2{width:170px;height:170px;top:-30px;left:52%;background:#f0c8a0;border-radius:50%;}
+    .s3{width:130px;height:130px;top:-10px;right:-15px;background:#c0d8ff;border-radius:50%;}
+    .s4{width:150px;height:90px;bottom:25px;left:-15px;background:linear-gradient(135deg,#a0d8ff,#70c0ff);border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;}
+    .s5{width:120px;height:120px;bottom:40px;left:33%;background:#f0e0a0;border-radius:50% 0 50% 50%;}
+    .s6{width:100px;height:100px;bottom:15px;right:6%;background:#a0c8ff;border-radius:50% 50% 0 50%;}
+    .dots{position:fixed;bottom:170px;right:9%;width:80px;height:80px;background-image:radial-gradient(#c0d8ff 1.5px,transparent 1.5px);background-size:10px 10px;opacity:0.5;}
+    .card{position:relative;z-index:10;width:100%;max-width:400px;padding:48px 40px;background:#fff;border-radius:24px;box-shadow:0 8px 48px rgba(100,130,200,0.12);}
+    .portal-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#90a0c0;text-decoration:none;margin-bottom:28px;letter-spacing:1px;}
+    .portal-back:hover{color:#3a6edc;}
+    .brand-mark{margin-bottom:24px;font-family:'Exo 2',sans-serif;}
+    .bm-sx{font-size:18px;font-weight:300;letter-spacing:5px;color:#2a2040;}
+    .bm-dash{color:#5e7afb;}
+    h2{font-size:22px;font-weight:600;color:#1a2040;margin-bottom:6px;}
+    .subtitle{font-size:12px;color:#8090b0;margin-bottom:32px;}
+    .field{margin-bottom:16px;}
+    .field label{display:block;font-size:11px;font-weight:600;color:#6070a0;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+    .field input{width:100%;padding:14px 16px;border:1.5px solid #e2e8f8;border-radius:12px;font-size:14px;font-family:'Montserrat',sans-serif;outline:none;transition:border 0.2s,box-shadow 0.2s;background:#f8faff;color:#1a2040;}
+    .field input:focus{border-color:#5e7afb;box-shadow:0 0 0 3px rgba(94,122,251,0.10);}
+    .field input::placeholder{color:#b8c8d8;}
+    .row-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+    .remember{display:flex;align-items:center;gap:8px;font-size:12px;color:#6070a0;cursor:pointer;}
+    .remember input[type=checkbox]{accent-color:#5e7afb;width:15px;height:15px;}
+    .forgot{font-size:12px;color:#5e7afb;text-decoration:none;}
+    .btn-login{width:100%;padding:15px;background:linear-gradient(135deg,#5e7afb,#3a56e8);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;font-family:'Montserrat',sans-serif;cursor:pointer;transition:opacity 0.2s,transform 0.15s;letter-spacing:0.5px;}
+    .btn-login:hover{opacity:0.90;transform:translateY(-1px);}
+    .portal-tag{text-align:center;margin-top:20px;font-size:11px;color:#a0b0d0;letter-spacing:2px;text-transform:uppercase;}
   </style>
 </head>
 <body>
-
-<!-- LOGIN -->
-<div class="login-screen" id="loginScreen">
-  <div class="login-card">
-    <a class="back-link" onclick="window.location.href='../index.html'">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-      Back to Portal Selection
-    </a>
-    <span class="login-badge">Brand Portal</span>
-    <h1>Brand Partner Login</h1>
-    <p>Sign in with your SIMPLEX-ITY brand credentials</p>
-    <div class="form-group">
-      <label>Brand Email</label>
-      <input type="email" id="emailInput" placeholder="brand@company.com" />
+  <div class="shape s1"></div><div class="shape s2"></div><div class="shape s3"></div>
+  <div class="shape s4"></div><div class="shape s5"></div><div class="shape s6"></div>
+  <div class="dots"></div>
+  <div class="card">
+    <a href="/" class="portal-back">← All Portals</a>
+    <div class="brand-mark"><span class="bm-sx">SIMPLEX<span class="bm-dash">-</span>ITY</span></div>
+    <h2>Brand Login</h2>
+    <p class="subtitle">Brand partner access</p>
+    <div class="field"><label>Email</label><input type="email" placeholder="brand@company.com"/></div>
+    <div class="field"><label>Password</label><input type="password" placeholder="Enter password"/></div>
+    <div class="row-meta">
+      <label class="remember"><input type="checkbox" checked/> Keep me logged in</label>
+      <a href="#" class="forgot">Forgot password?</a>
     </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="passwordInput" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()" />
-    </div>
-    <button class="btn-login" onclick="doLogin()">SIGN IN</button>
-    <div class="error-msg" id="errorMsg">Invalid credentials. Please contact SIMPLEX-ITY support.</div>
+    <button class="btn-login">Login</button>
+    <p class="portal-tag">Brand Portal · SIMPLEX-ITY</p>
   </div>
-</div>
-
-<!-- DASHBOARD -->
-<div class="dashboard" id="dashboard">
-  <div class="topbar">
-    <div class="topbar-brand">SIMPLEX-ITY Brand</div>
-    <div class="topbar-user">
-      <div class="user-avatar" id="userAvatar">B</div>
-      <div class="user-name" id="userName">Brand Partner</div>
-      <button class="logout-btn" onclick="doLogout()">Sign out</button>
-    </div>
-  </div>
-  <div class="main-content">
-    <div class="welcome-banner">
-      <h2 id="welcomeText">Welcome back 👋</h2>
-      <p>Your campaign performance dashboard</p>
-    </div>
-
-    <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-label">Active Campaigns</div>
-        <div class="kpi-value" id="kpiCampaigns">—</div>
-        <div class="kpi-sub">Running now</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Total GMV</div>
-        <div class="kpi-value" id="kpiGMV">—</div>
-        <div class="kpi-sub">USD this month</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Influencers</div>
-        <div class="kpi-value" id="kpiInfluencers">—</div>
-        <div class="kpi-sub">Assigned</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Satisfaction</div>
-        <div class="kpi-value" id="kpiSat">—</div>
-        <div class="kpi-sub">Out of 5.0</div>
-      </div>
-    </div>
-
-    <div class="section-title">My Campaigns</div>
-    <div class="campaign-list" id="campaignList">
-      <div class="campaign-card">
-        <div class="campaign-info">
-          <h4>Loading campaigns...</h4>
-          <p>Please wait</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-title">Updates from SIMPLEX-ITY</div>
-    <div class="notice-list">
-      <div class="notice-item">
-        <h4>Brand Portal is now live</h4>
-        <p>Welcome to your dedicated Brand Partner portal. Track your campaigns, performance, and payouts all in one place.</p>
-        <div class="notice-meta">SIMPLEX-ITY Team · 24 Jun 2026</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  // Demo brand users — will be replaced with real API auth
-  const BRAND_USERS = [
-    { email: 'demo@brand.com', password: 'Brand2026!', name: 'Demo Brand', initials: 'DB', brand_code: 'DEMO001' },
-  ];
-
-  function doLogin() {
-    const email = document.getElementById('emailInput').value.trim().toLowerCase();
-    const password = document.getElementById('passwordInput').value;
-    const user = BRAND_USERS.find(u => u.email === email && u.password === password);
-    if (user) {
-      sessionStorage.setItem('brand_user', JSON.stringify(user));
-      showDashboard(user);
-    } else {
-      document.getElementById('errorMsg').style.display = 'block';
-    }
-  }
-
-  function showDashboard(user) {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    document.getElementById('userAvatar').textContent = user.initials;
-    document.getElementById('userName').textContent = user.name;
-    const hour = new Date().getHours();
-    const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
-    document.getElementById('welcomeText').textContent = greet + ', ' + user.name + ' 👋';
-    // KPIs would load from API here
-    document.getElementById('kpiCampaigns').textContent = '0';
-    document.getElementById('kpiGMV').textContent = '$0';
-    document.getElementById('kpiInfluencers').textContent = '0';
-    document.getElementById('kpiSat').textContent = 'N/A';
-    document.getElementById('campaignList').innerHTML = '<div class="campaign-card"><div class="campaign-info"><h4>No active campaigns yet</h4><p>Your campaigns will appear here once activated</p></div></div>';
-  }
-
-  function doLogout() {
-    sessionStorage.removeItem('brand_user');
-    document.getElementById('loginScreen').style.display = 'flex';
-    document.getElementById('dashboard').style.display = 'none';
-  }
-
-  const savedUser = sessionStorage.getItem('brand_user');
-  if (savedUser) showDashboard(JSON.parse(savedUser));
-</script>
 </body>
 </html>
