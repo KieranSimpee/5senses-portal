@@ -113,24 +113,14 @@
       gap: 20px;
       margin-bottom: 8px;
     }
-    .logo-5senses {
-      height: 72px;
-      width: auto;
-      object-fit: contain;
-      mix-blend-mode: multiply;
-    }
+
     .logo-divider {
       width: 1px;
       height: 52px;
       background: rgba(160,140,200,0.35);
       flex-shrink: 0;
     }
-    .logo-simplexity {
-      height: 60px;
-      width: auto;
-      object-fit: contain;
-      mix-blend-mode: multiply;
-    }
+
 
     /* ── TAGLINE ── */
     .portal-tagline {
@@ -199,6 +189,33 @@
       text-transform: uppercase;
       text-align: center;
     }
+  
+    /* ── SVG TEXT LOGOS (always transparent) ── */
+    .logo-5senses-text {
+      display: flex; align-items: baseline; gap: 2px;
+      font-family: 'Exo 2', sans-serif;
+    }
+    .logo-korean {
+      font-size: 38px; font-weight: 300;
+      color: #2a2040; line-height: 1;
+    }
+    .logo-5 {
+      font-size: 32px; font-weight: 600;
+      color: #5e50fb; line-height: 1;
+    }
+    .logo-senses {
+      font-size: 13px; font-weight: 300;
+      color: #2a2040; letter-spacing: 3px;
+      align-self: flex-end; padding-bottom: 3px;
+    }
+    .logo-simplexity-text {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 18px; font-weight: 300;
+      letter-spacing: 5px; color: #2a2040;
+      text-transform: uppercase;
+    }
+    .logo-dash { color: #8c82fc; }
+
   </style>
 </head>
 <body>
@@ -216,9 +233,11 @@
 
     <!-- LOGOS -->
     <div class="logo-row">
-      <img src="/assets/5senses_logo.png" alt="정5SENSES" class="logo-5senses" />
+      <div class="logo-5senses-text">
+        <span class="logo-korean">정</span><span class="logo-5">5</span><span class="logo-senses">SENSES</span>
+      </div>
       <div class="logo-divider"></div>
-      <img src="/assets/simplex_ity_logo.png" alt="SIMPLEX-ITY" class="logo-simplexity" />
+      <div class="logo-simplexity-text">SIMPLEX<span class="logo-dash">-</span>ITY</div>
     </div>
 
     <!-- TAGLINE -->
@@ -235,7 +254,7 @@
         </div>
         <div class="portal-info">
           <div class="portal-name">Staff Portal</div>
-          <div class="portal-desc">Internal team access for operations &amp; daily management</div>
+          <div class="portal-desc">Internal team access</div>
         </div>
         <span class="portal-arrow">›</span>
       </a>
@@ -248,7 +267,7 @@
         </div>
         <div class="portal-info">
           <div class="portal-name">Brand Portal</div>
-          <div class="portal-desc">Brand partner dashboard for campaigns &amp; reports</div>
+          <div class="portal-desc">Brand partner access</div>
         </div>
         <span class="portal-arrow">›</span>
       </a>
@@ -261,7 +280,7 @@
         </div>
         <div class="portal-info">
           <div class="portal-name">Influencer Portal</div>
-          <div class="portal-desc">Creator hub for campaigns &amp; performance tracking</div>
+          <div class="portal-desc">Creator &amp; KOL access</div>
         </div>
         <span class="portal-arrow">›</span>
       </a>
