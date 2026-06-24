@@ -1,305 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>5SENSES · SIMPLEX-ITY Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>정5SENSES × SIMPLEX-ITY Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600&family=Exo+2:wght@200;300;600&display=swap" rel="stylesheet"/>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      min-height: 100vh;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
+  body {
+    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    background: #fdf8f5;
+    overflow-x: hidden;
+  }
 
-    /* ── WATERCOLOUR BACKGROUND ── */
-    .wc-canvas {
-      position: fixed; inset: 0; z-index: 0;
-      overflow: hidden; pointer-events: none;
-      background: #ffffff;
-    }
-    .wc-blob {
-      position: absolute;
-      border-radius: 60% 40% 55% 45% / 50% 60% 40% 55%;
-      filter: blur(50px);
-      animation-timing-function: ease-in-out;
-      animation-iteration-count: infinite;
-    }
-    .wc-blob-1 {
-      width: 55vw; height: 45vw;
-      top: 5%; left: -5%;
-      background: radial-gradient(ellipse at 40% 50%,
-        rgba(255,190,160,0.70) 0%, rgba(255,170,140,0.40) 45%, transparent 100%);
-      border-radius: 62% 38% 55% 45% / 48% 62% 38% 52%;
-      animation: wc-drift-1 20s ease-in-out infinite;
-    }
-    .wc-blob-2 {
-      width: 50vw; height: 42vw;
-      top: 15%; left: 25%;
-      background: radial-gradient(ellipse at 50% 50%,
-        rgba(210,140,170,0.60) 0%, rgba(200,130,165,0.32) 48%, transparent 100%);
-      border-radius: 55% 45% 60% 40% / 52% 48% 55% 45%;
-      animation: wc-drift-2 25s ease-in-out infinite;
-    }
-    .wc-blob-3 {
-      width: 52vw; height: 44vw;
-      top: 5%; right: -8%;
-      background: radial-gradient(ellipse at 60% 45%,
-        rgba(180,175,230,0.65) 0%, rgba(165,160,220,0.35) 45%, transparent 100%);
-      border-radius: 45% 55% 42% 58% / 55% 45% 58% 42%;
-      animation: wc-drift-3 22s ease-in-out infinite;
-    }
-    .wc-blob-4 {
-      width: 6vw; height: 6vw;
-      top: 40%; left: 42%;
-      background: radial-gradient(circle, rgba(200,130,165,0.50) 0%, transparent 70%);
-      border-radius: 50%; filter: blur(14px);
-      animation: wc-dot 18s ease-in-out infinite;
-    }
-    .wc-blob-5 {
-      width: 4vw; height: 4vw;
-      top: 20%; left: 62%;
-      background: radial-gradient(circle, rgba(180,175,230,0.55) 0%, transparent 70%);
-      border-radius: 50%; filter: blur(9px);
-      animation: wc-dot 14s ease-in-out infinite reverse;
-    }
-    @keyframes wc-drift-1 {
-      0%   { transform: translate(0,0) scale(1) rotate(0deg); opacity:.80; }
-      25%  { transform: translate(3%,-4%) scale(1.06) rotate(2deg); opacity:.90; }
-      50%  { transform: translate(-2%,5%) scale(.96) rotate(-1deg); opacity:.72; }
-      75%  { transform: translate(4%,2%) scale(1.03) rotate(1deg); opacity:.85; }
-      100% { transform: translate(0,0) scale(1) rotate(0deg); opacity:.80; }
-    }
-    @keyframes wc-drift-2 {
-      0%   { transform: translate(0,0) scale(1) rotate(0deg); opacity:.72; }
-      33%  { transform: translate(-4%,3%) scale(1.08) rotate(-2deg); opacity:.82; }
-      66%  { transform: translate(3%,-5%) scale(.94) rotate(2deg); opacity:.62; }
-      100% { transform: translate(0,0) scale(1) rotate(0deg); opacity:.72; }
-    }
-    @keyframes wc-drift-3 {
-      0%   { transform: translate(0,0) scale(1) rotate(0deg); opacity:.75; }
-      35%  { transform: translate(-3%,-3%) scale(1.05) rotate(1deg); opacity:.85; }
-      70%  { transform: translate(4%,4%) scale(.97) rotate(-2deg); opacity:.65; }
-      100% { transform: translate(0,0) scale(1) rotate(0deg); opacity:.75; }
-    }
-    @keyframes wc-dot {
-      0%   { opacity:.55; transform: translate(0,0) scale(1); }
-      50%  { opacity:.75; transform: translate(8px,-10px) scale(1.2); }
-      100% { opacity:.55; transform: translate(0,0) scale(1); }
-    }
+  /* === WATERCOLOUR BACKGROUND === */
+  .bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(135deg,
+      rgba(255,210,190,0.55) 0%,
+      rgba(240,185,210,0.45) 30%,
+      rgba(200,185,235,0.50) 65%,
+      rgba(185,210,245,0.40) 100%);
+    animation: driftBg 12s ease-in-out infinite alternate;
+  }
+  @keyframes driftBg {
+    0%   { filter: hue-rotate(0deg) brightness(1); }
+    100% { filter: hue-rotate(15deg) brightness(1.05); }
+  }
 
-    /* ── MAIN CONTAINER ── */
-    .container {
-      position: relative; z-index: 1;
-      width: 100%; max-width: 480px;
-      padding: 48px 32px 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-    }
+  /* watercolour blob accents */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatBlob 14s ease-in-out infinite alternate;
+  }
+  .blob-1 { width:420px; height:420px; background:#f7b8cc; top:-80px; left:-100px; animation-delay:0s; }
+  .blob-2 { width:350px; height:350px; background:#c4b0f0; top:30%; right:-80px; animation-delay:-4s; }
+  .blob-3 { width:300px; height:300px; background:#a8c8f8; bottom:-60px; left:30%; animation-delay:-8s; }
+  @keyframes floatBlob {
+    0%   { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-30px) scale(1.08); }
+  }
 
-    /* ── LOGO AREA ── */
-    .logo-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 8px;
-    }
+  /* === MAIN LAYOUT === */
+  .page {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    padding: 40px 20px;
+  }
 
-    .logo-divider {
-      width: 1px;
-      height: 52px;
-      background: rgba(160,140,200,0.35);
-      flex-shrink: 0;
-    }
+  /* === LOGO ROW === */
+  .logo-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .logo-img-5senses {
+    height: 72px;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 2px 8px rgba(139,118,118,0.15));
+  }
+  .logo-divider {
+    width: 1px;
+    height: 50px;
+    background: rgba(139,118,118,0.25);
+  }
+  .logo-img-simplexity {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 2px 8px rgba(140,130,252,0.15));
+  }
 
+  /* === TAGLINE === */
+  .tagline {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    color: rgba(100,90,110,0.7);
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: -30px;
+  }
 
-    /* ── TAGLINE ── */
-    .portal-tagline {
-      font-size: 10px;
-      color: #a090b8;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      text-align: center;
-      margin-top: 16px;
-      margin-bottom: 36px;
-      font-weight: 400;
-    }
+  /* === PORTAL CARDS === */
+  .portal-row {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
 
-    /* ── PORTAL CARDS ── */
-    .portal-list {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 36px;
-    }
-    .portal-card {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 18px 20px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid rgba(180,160,220,0.25);
-      border-radius: 16px;
-      backdrop-filter: blur(12px);
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-    }
-    .portal-card:hover {
-      background: rgba(255,255,255,0.90);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(140,130,252,0.15);
-    }
-    .portal-icon {
-      width: 44px; height: 44px;
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .staff-icon  { background: rgba(237,233,255,0.90); }
-    .brand-icon  { background: rgba(233,240,255,0.90); }
-    .inf-icon    { background: rgba(252,233,255,0.90); }
-    .portal-icon svg { width: 22px; height: 22px; }
-    .portal-info { flex: 1; }
-    .portal-name {
-      font-size: 15px; font-weight: 600;
-      color: #2a2040; line-height: 1.2;
-    }
-    .portal-desc {
-      font-size: 12px; color: #8878a8;
-      margin-top: 2px; font-weight: 400;
-    }
-    .portal-arrow { color: #c0b0e0; font-size: 18px; }
+  /* Each card is a hover zone */
+  .portal-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    /* ── FOOTER ── */
-    .footer {
-      font-size: 10px;
-      color: #b8aad0;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      text-align: center;
-    }
-  
-    /* ── SVG TEXT LOGOS (always transparent) ── */
-    .logo-5senses-text {
-      display: flex; align-items: baseline; gap: 2px;
-      font-family: 'Exo 2', sans-serif;
-    }
-    .logo-korean {
-      font-size: 38px; font-weight: 300;
-      color: #2a2040; line-height: 1;
-    }
-    .logo-5 {
-      font-size: 32px; font-weight: 600;
-      color: #5e50fb; line-height: 1;
-    }
-    .logo-senses {
-      font-size: 13px; font-weight: 300;
-      color: #2a2040; letter-spacing: 3px;
-      align-self: flex-end; padding-bottom: 3px;
-    }
-    .logo-simplexity-text {
-      font-family: 'Exo 2', sans-serif;
-      font-size: 18px; font-weight: 300;
-      letter-spacing: 5px; color: #2a2040;
-      text-transform: uppercase;
-    }
-    .logo-dash { color: #8c82fc; }
+  /* The label button */
+  .portal-label {
+    padding: 14px 36px;
+    border: 1px solid rgba(139,118,118,0.3);
+    border-radius: 40px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(80,70,80,0.75);
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .portal-label:hover,
+  .portal-card:hover .portal-label {
+    background: rgba(255,255,255,0.75);
+    border-color: rgba(139,118,118,0.5);
+    color: #5a4a5a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(139,118,118,0.18);
+  }
 
-  
-    .logo-img-5senses {
-      height: 60px;
-      width: auto;
-      object-fit: contain;
-      mix-blend-mode: multiply;
-    }
-    .logo-img-simplexity {
-      height: 55px;
-      width: auto;
-      object-fit: contain;
-      mix-blend-mode: multiply;
-    }
+  /* The login panel — hidden by default, appears on hover */
+  .login-panel {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    width: 300px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 28px 28px 24px;
+    box-shadow: 0 20px 60px rgba(100,80,120,0.18);
+    border: 1px solid rgba(255,255,255,0.8);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 100;
+  }
+  .portal-card:hover .login-panel {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(-50%) translateY(0);
+  }
 
-  </style>
+  .login-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #5a4a6a;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .login-sub {
+    font-size: 10px;
+    color: rgba(120,100,130,0.6);
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+  .login-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid rgba(200,190,220,0.6);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: #4a3a5a;
+    background: rgba(255,255,255,0.8);
+    outline: none;
+    margin-bottom: 10px;
+    transition: border 0.2s;
+  }
+  .login-input:focus { border-color: #8c82fc; }
+  .login-input::placeholder { color: rgba(160,140,170,0.7); }
+
+  /* colour per portal */
+  .btn-internal { background: linear-gradient(135deg, #8c82fc, #5e50fb); }
+  .btn-brand    { background: linear-gradient(135deg, #f0a0b8, #e07898); }
+  .btn-influencer { background: linear-gradient(135deg, #a0c8f0, #6098d0); }
+
+  .login-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .login-btn:hover { opacity:0.88; transform: translateY(-1px); }
+
+  /* footer */
+  .footer {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(120,100,130,0.45);
+    text-transform: uppercase;
+    text-align: center;
+  }
+</style>
 </head>
 <body>
 
-  <!-- WATERCOLOUR LAYER -->
-  <div class="wc-canvas">
-    <div class="wc-blob wc-blob-1"></div>
-    <div class="wc-blob wc-blob-2"></div>
-    <div class="wc-blob wc-blob-3"></div>
-    <div class="wc-blob wc-blob-4"></div>
-    <div class="wc-blob wc-blob-5"></div>
+<div class="bg-canvas"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="page">
+
+  <!-- LOGOS -->
+  <div class="logo-row">
+    <img src="assets/5senses_logo.png" alt="정5SENSES" class="logo-img-5senses"/>
+    <div class="logo-divider"></div>
+    <img src="assets/simplexity_logo.png" alt="SIMPLEX-ITY" class="logo-img-simplexity"/>
   </div>
 
-  <div class="container">
+  <p class="tagline">The World of Equilibrium · Feel Beauty, Live Fully</p>
 
-    <!-- LOGOS -->
-    <div class="logo-row">
-      <img src="assets/5senses_logo.png" alt="정5SENSES" class="logo-img-5senses"/>
-      <div class="logo-divider"></div>
-      <img src="assets/simplexity_logo.png" alt="SIMPLEX-ITY" class="logo-img-simplexity"/>
+  <!-- PORTAL CARDS — hover to reveal login -->
+  <div class="portal-row">
+
+    <!-- INTERNAL -->
+    <div class="portal-card">
+      <div class="portal-label">Internal</div>
+      <div class="login-panel">
+        <div class="login-title">Staff Portal</div>
+        <div class="login-sub">Internal team access only</div>
+        <input class="login-input" type="email" placeholder="Email address"/>
+        <input class="login-input" type="password" placeholder="Password"/>
+        <button class="login-btn btn-internal" onclick="window.location.href='staff/index.html'">Enter →</button>
+      </div>
     </div>
 
-    <!-- TAGLINE -->
-    <p class="portal-tagline">Portal — Select Your Access</p>
-
-    <!-- PORTAL CARDS -->
-    <div class="portal-list">
-      <a href="/staff/" class="portal-card">
-        <div class="portal-icon staff-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#7c6fcd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-        </div>
-        <div class="portal-info">
-          <div class="portal-name">Staff Portal</div>
-          <div class="portal-desc">Internal team access</div>
-        </div>
-        <span class="portal-arrow">›</span>
-      </a>
-
-      <a href="/brand/" class="portal-card">
-        <div class="portal-icon brand-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5b7fcd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-          </svg>
-        </div>
-        <div class="portal-info">
-          <div class="portal-name">Brand Portal</div>
-          <div class="portal-desc">Brand partner access</div>
-        </div>
-        <span class="portal-arrow">›</span>
-      </a>
-
-      <a href="/influencer/" class="portal-card">
-        <div class="portal-icon inf-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#a05fcd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/>
-          </svg>
-        </div>
-        <div class="portal-info">
-          <div class="portal-name">Influencer Portal</div>
-          <div class="portal-desc">Creator &amp; KOL access</div>
-        </div>
-        <span class="portal-arrow">›</span>
-      </a>
+    <!-- BRAND -->
+    <div class="portal-card">
+      <div class="portal-label">Brand</div>
+      <div class="login-panel">
+        <div class="login-title">Brand Portal</div>
+        <div class="login-sub">Authorised brand partners</div>
+        <input class="login-input" type="email" placeholder="Brand email"/>
+        <input class="login-input" type="password" placeholder="Password"/>
+        <button class="login-btn btn-brand" onclick="window.location.href='brand/index.html'">Enter →</button>
+      </div>
     </div>
 
-    <div class="footer">5SENSESBEAUTY LIMITED · SIMPLEX-ITY · Powered by Simpee</div>
+    <!-- INFLUENCER -->
+    <div class="portal-card">
+      <div class="portal-label">Influencer</div>
+      <div class="login-panel">
+        <div class="login-title">Creator Portal</div>
+        <div class="login-sub">Registered influencers & creators</div>
+        <input class="login-input" type="email" placeholder="Creator email"/>
+        <input class="login-input" type="password" placeholder="Password"/>
+        <button class="login-btn btn-influencer" onclick="window.location.href='influencer/index.html'">Enter →</button>
+      </div>
+    </div>
+
   </div>
 
+  <div class="footer">portal.5senses.global · secure access · 2026</div>
+
+</div>
 </body>
 </html>
