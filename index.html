@@ -184,5 +184,69 @@
       5SENSESBEAUTY LIMITED · SIMPLEX-ITY · Powered by Simpee
     </div>
   </div>
+
+<script>
+(function() {
+  const STORAGE_KEY = 'portal_5senses_settings';
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) return;
+  try {
+    const s = JSON.parse(stored);
+
+    // Background
+    if (s.bg_image_url && s.bg_image_url.trim() !== '') {
+      document.body.style.backgroundImage = 'url(' + s.bg_image_url + ')';
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundPosition = 'center';
+    } else if (s.bg_gradient_from) {
+      const mid = s.bg_gradient_mid || s.bg_gradient_from;
+      const to = s.bg_gradient_to || s.bg_gradient_from;
+      document.body.style.background = 'linear-gradient(135deg,' + s.bg_gradient_from + ',' + mid + ',' + to + ')';
+    }
+
+    // Title & subtitle
+    const title = document.querySelector('.portal-tagline');
+    if (title && s.subtitle) title.textContent = s.subtitle;
+
+    const mainTitle = document.querySelector('.world-title');
+    if (mainTitle && s.title) mainTitle.textContent = s.title;
+
+    // Title color
+    if (s.title_color && mainTitle) mainTitle.style.color = s.title_color;
+    if (s.subtitle_color && title) title.style.color = s.subtitle_color;
+
+    // Footer
+    const footer = document.querySelector('.footer');
+    if (footer && s.footer_text) footer.textContent = s.footer_text;
+
+    // Portal card labels
+    const cards = document.querySelectorAll('.portal-card');
+    const labels = [
+      { label: s.card_staff_label, desc: s.card_staff_desc },
+      { label: s.card_brand_label, desc: s.card_brand_desc },
+      { label: s.card_influencer_label, desc: s.card_influencer_desc }
+    ];
+    cards.forEach(function(card, i) {
+      if (!labels[i]) return;
+      const h2 = card.querySelector('h2');
+      const p = card.querySelector('p');
+      if (h2 && labels[i].label) h2.textContent = labels[i].label;
+      if (p && labels[i].desc) p.textContent = labels[i].desc;
+    });
+
+    // Logos
+    const logo5s = document.querySelector('.logo-5senses-img');
+    const logoSx = document.querySelector('.logo-simplexity');
+    if (logo5s && s.logo_5senses_url && s.logo_5senses_url.trim() !== '') {
+      logo5s.src = s.logo_5senses_url;
+    }
+    if (logoSx && s.logo_simplexity_url && s.logo_simplexity_url.trim() !== '') {
+      logoSx.src = s.logo_simplexity_url;
+    }
+
+  } catch(e) { console.warn('CMS load error:', e); }
+})();
+</script>
+
 </body>
 </html>
