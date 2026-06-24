@@ -1,430 +1,422 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portal Admin — Homepage Editor</title>
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Montserrat',sans-serif; background:#0f0e1a; color:#e0deff; min-height:100vh; display:flex; flex-direction:column; }
-  .topbar { display:flex; align-items:center; justify-content:space-between; padding:16px 28px; background:#1a1830; border-bottom:1px solid rgba(140,130,252,0.15); flex-shrink:0; }
-  .topbar-left { display:flex; align-items:center; gap:14px; }
-  .topbar-logo { font-family:'Exo 2',sans-serif; font-size:14px; font-weight:600; color:#8c82fc; letter-spacing:3px; }
-  .topbar-badge { font-size:9px; background:rgba(140,130,252,0.18); color:#8c82fc; padding:3px 10px; border-radius:20px; letter-spacing:2px; font-weight:600; }
-  .btn { display:inline-flex; align-items:center; gap:8px; padding:10px 22px; border-radius:10px; font-size:12px; font-weight:600; letter-spacing:2px; cursor:pointer; transition:all 0.22s ease; border:none; font-family:'Exo 2',sans-serif; }
-  .btn-primary { background:#8c82fc; color:#fff; }
-  .btn-primary:hover { background:#7a6feb; transform:translateY(-1px); }
-  .btn-secondary { background:rgba(140,130,252,0.12); color:#8c82fc; border:1px solid rgba(140,130,252,0.25); }
-  .btn-secondary:hover { background:rgba(140,130,252,0.22); }
-  .topbar-actions { display:flex; gap:10px; }
-  .workspace { display:flex; flex:1; overflow:hidden; height:calc(100vh - 65px); }
-  .panel { width:280px; flex-shrink:0; background:#131224; border-right:1px solid rgba(140,130,252,0.12); overflow-y:auto; padding:24px 20px; display:flex; flex-direction:column; gap:6px; }
-  .panel::-webkit-scrollbar { width:4px; }
-  .panel::-webkit-scrollbar-thumb { background:rgba(140,130,252,0.25); border-radius:4px; }
-  .section-title { font-family:'Exo 2',sans-serif; font-size:9px; font-weight:600; color:#8c82fc; letter-spacing:3px; text-transform:uppercase; padding:18px 4px 8px; border-bottom:1px solid rgba(140,130,252,0.10); margin-bottom:4px; }
-  .field { display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
-  .field label { font-size:11px; font-weight:500; color:#b0a8d8; letter-spacing:1px; }
-  .field input[type=text], .field textarea, .field select { background:rgba(255,255,255,0.05); border:1px solid rgba(140,130,252,0.18); border-radius:8px; padding:10px 12px; color:#e0deff; font-size:12px; font-family:'Montserrat',sans-serif; transition:border 0.2s; outline:none; resize:vertical; }
-  .field input[type=text]:focus, .field textarea:focus, .field select:focus { border-color:rgba(140,130,252,0.50); background:rgba(140,130,252,0.06); }
-  .field select option { background:#1a1830; }
-  .color-row { display:flex; align-items:center; gap:10px; }
-  .field input[type=color] { width:40px; height:36px; padding:2px; border:1px solid rgba(140,130,252,0.20); border-radius:8px; background:rgba(255,255,255,0.05); cursor:pointer; }
-  .color-hex { flex:1; }
-  .toggle-row { display:flex; align-items:center; justify-content:space-between; padding:10px 0; }
-  .toggle-row label { font-size:12px; color:#b0a8d8; }
-  .toggle { position:relative; width:42px; height:24px; }
-  .toggle input { opacity:0; width:0; height:0; }
-  .toggle-slider { position:absolute; inset:0; background:#2a2848; border-radius:24px; cursor:pointer; transition:0.3s; }
-  .toggle-slider::before { content:''; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#6a6090; border-radius:50%; transition:0.3s; }
-  .toggle input:checked + .toggle-slider { background:rgba(140,130,252,0.35); }
-  .toggle input:checked + .toggle-slider::before { transform:translateX(18px); background:#8c82fc; }
-  .bg-tabs { display:flex; gap:4px; margin-bottom:12px; }
-  .bg-tab { flex:1; padding:8px; text-align:center; font-size:10px; font-weight:600; letter-spacing:1.5px; border-radius:8px; cursor:pointer; transition:all 0.2s; border:1px solid rgba(140,130,252,0.18); color:#8070b8; font-family:'Exo 2',sans-serif; }
-  .bg-tab.active { background:rgba(140,130,252,0.18); color:#8c82fc; border-color:rgba(140,130,252,0.40); }
-  #bg-gradient-section, #bg-image-section { display:none; }
-  #bg-gradient-section.show, #bg-image-section.show { display:block; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal Admin · 5SENSES</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Montserrat', sans-serif; background: #f4f2fb; min-height: 100vh; }
 
-  /* LOGO UPLOAD */
-  .logo-upload-box {
-    border:1.5px dashed rgba(140,130,252,0.28); border-radius:12px;
-    padding:16px; text-align:center; cursor:pointer; transition:all 0.2s;
-    margin-bottom:10px; position:relative;
-  }
-  .logo-upload-box:hover { border-color:rgba(140,130,252,0.55); }
-  .logo-upload-box input[type=file] { display:none; }
-  .logo-preview { max-height:60px; max-width:200px; object-fit:contain; margin:0 auto 8px; display:none; border-radius:6px; }
-  .logo-preview.show { display:block; }
-  .logo-upload-hint { font-size:10px; color:#6a6090; line-height:1.7; }
-  .logo-upload-hint strong { color:#8c82fc; font-size:11px; }
-  .logo-clear-btn { margin-top:6px; font-size:10px; color:#e07070; cursor:pointer; background:none; border:none; padding:3px 8px; border-radius:4px; }
-  .logo-clear-btn:hover { background:rgba(220,80,80,0.1); }
+    /* ── AUTH SCREEN ── */
+    #auth-screen {
+      position: fixed; inset: 0; z-index: 999;
+      background: #f4f2fb;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .auth-box {
+      background: #fff; border-radius: 16px; padding: 40px 32px;
+      box-shadow: 0 4px 32px rgba(140,130,200,0.12);
+      text-align: center; width: 320px;
+    }
+    .auth-box h2 { font-size: 18px; color: #2a2040; margin-bottom: 8px; }
+    .auth-box p  { font-size: 12px; color: #9080b0; margin-bottom: 24px; }
+    .auth-box input {
+      width: 100%; padding: 12px 16px; border: 1px solid #ddd8f0;
+      border-radius: 10px; font-size: 14px; margin-bottom: 12px; outline: none;
+    }
+    .auth-box input:focus { border-color: #8c82fc; }
+    .btn-primary {
+      width: 100%; padding: 12px; background: #8c82fc; color: #fff;
+      border: none; border-radius: 10px; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #5e50fb; }
+    .auth-error { font-size: 12px; color: #e05; margin-top: 8px; display: none; }
 
-  .upload-area { border:1.5px dashed rgba(140,130,252,0.28); border-radius:10px; padding:24px; text-align:center; cursor:pointer; transition:all 0.2s; color:#6a6090; font-size:11px; line-height:1.8; }
-  .upload-area:hover { border-color:rgba(140,130,252,0.55); color:#8c82fc; }
-  .upload-area input { display:none; }
-  .status-bar { padding:10px 16px; font-size:11px; letter-spacing:1px; border-radius:8px; margin-top:4px; display:none; }
-  .status-bar.success { display:block; background:rgba(80,200,120,0.12); color:#70d090; border:1px solid rgba(80,200,120,0.2); }
-  .status-bar.error { display:block; background:rgba(220,80,80,0.12); color:#e07070; border:1px solid rgba(220,80,80,0.2); }
-  .status-bar.loading { display:block; background:rgba(140,130,252,0.10); color:#8c82fc; border:1px solid rgba(140,130,252,0.2); }
-  .preview-wrap { flex:1; display:flex; flex-direction:column; overflow:hidden; }
-  .preview-topbar { padding:12px 20px; background:#1a1830; border-bottom:1px solid rgba(140,130,252,0.10); display:flex; align-items:center; gap:12px; flex-shrink:0; }
-  .preview-url { flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(140,130,252,0.12); border-radius:8px; padding:7px 14px; font-size:11px; color:#8070a8; font-family:monospace; }
-  .preview-refresh { font-size:14px; cursor:pointer; color:#8c82fc; padding:6px 10px; border-radius:6px; transition:all 0.2s; }
-  .preview-refresh:hover { background:rgba(140,130,252,0.15); }
-  iframe#preview { flex:1; border:none; background:#fff; width:100%; height:100%; }
-  .login-overlay { position:fixed; inset:0; z-index:999; background:linear-gradient(135deg, #0f0e1a, #1a1535); display:flex; align-items:center; justify-content:center; }
-  .login-card { background:#1a1830; border:1px solid rgba(140,130,252,0.20); border-radius:20px; padding:48px 40px; width:100%; max-width:380px; text-align:center; display:flex; flex-direction:column; gap:20px; }
-  .login-logo { font-family:'Exo 2',sans-serif; font-size:22px; font-weight:300; color:#8c82fc; letter-spacing:5px; }
-  .login-title { font-size:13px; color:#8070a8; letter-spacing:2px; }
-  .login-card input { background:rgba(255,255,255,0.05); border:1px solid rgba(140,130,252,0.20); border-radius:10px; padding:14px 16px; color:#e0deff; font-size:13px; font-family:'Montserrat',sans-serif; outline:none; width:100%; text-align:center; letter-spacing:3px; transition:border 0.2s; }
-  .login-card input:focus { border-color:rgba(140,130,252,0.50); }
-  .login-error { font-size:11px; color:#e07070; display:none; }
-  @media(max-width:900px) { .workspace { flex-direction:column; height:auto; } .panel { width:100%; height:auto; border-right:none; border-bottom:1px solid rgba(140,130,252,0.12); } .preview-wrap { height:500px; } }
-</style>
+    /* ── ADMIN SHELL ── */
+    #admin-shell { display: none; flex-direction: column; height: 100vh; }
+
+    /* TOP BAR */
+    .top-bar {
+      background: #fff;
+      border-bottom: 1px solid #e8e4f8;
+      padding: 0 24px;
+      display: flex; align-items: center; gap: 8px;
+      height: 48px; flex-shrink: 0;
+    }
+    .top-bar-title { font-size: 13px; font-weight: 600; color: #5e50fb; letter-spacing: 1px; }
+    .top-bar-sub   { font-size: 11px; color: #b0a0d0; }
+
+    /* ── 3-COLUMN CONTROL PANEL ── */
+    .control-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-bottom: 2px solid #e8e4f8;
+      background: #fff;
+      flex-shrink: 0;
+    }
+    .cp-col {
+      padding: 20px 22px;
+      border-right: 1px solid #e8e4f8;
+    }
+    .cp-col:last-child { border-right: none; }
+    .cp-col-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: #8c82fc;
+      margin-bottom: 14px;
+    }
+
+    /* form elements */
+    label { font-size: 11px; color: #7060a0; display: block; margin-bottom: 4px; margin-top: 10px; }
+    label:first-of-type { margin-top: 0; }
+    input[type=text], input[type=url], input[type=color], select {
+      width: 100%; padding: 8px 10px; border: 1px solid #ddd8f0;
+      border-radius: 8px; font-size: 12px; font-family: 'Montserrat', sans-serif;
+      outline: none; transition: border 0.2s;
+    }
+    input[type=text]:focus, input[type=url]:focus, select:focus { border-color: #8c82fc; }
+    input[type=color] { height: 36px; padding: 2px 4px; cursor: pointer; }
+
+    .color-row { display: flex; gap: 8px; align-items: center; }
+    .color-row input[type=color] { width: 36px; flex-shrink: 0; }
+    .color-row input[type=text]  { flex: 1; }
+
+    /* save / ok buttons */
+    .btn-row { display: flex; gap: 8px; margin-top: 14px; }
+    .btn-save {
+      flex: 1; padding: 10px; background: #8c82fc; color: #fff;
+      border: none; border-radius: 9px; font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-save:hover { background: #5e50fb; }
+    .btn-ok {
+      padding: 10px 16px; background: #f0eeff; color: #5e50fb;
+      border: 1px solid #c8c0f8; border-radius: 9px; font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-ok:hover { background: #e0d8ff; }
+    .save-status { font-size: 11px; color: #5e50fb; margin-top: 6px; display: none; text-align: center; }
+
+    /* logo upload preview */
+    .logo-preview-row { display: flex; gap: 12px; margin-top: 10px; }
+    .logo-thumb {
+      width: 80px; height: 48px; border: 1px dashed #c8c0f8;
+      border-radius: 8px; object-fit: contain; background: #faf9ff;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .logo-thumb img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+
+    /* ── PREVIEW AREA ── */
+    .preview-area {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .preview-label {
+      position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      font-size: 10px; letter-spacing: 2px; color: rgba(120,100,180,0.5);
+      text-transform: uppercase; pointer-events: none; z-index: 10;
+    }
+
+    /* watercolour blobs inside preview */
+    .wc-canvas {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+    }
+    .wc-blob { position: absolute; border-radius: 60% 40% 55% 45% / 50% 60% 40% 55%; filter: blur(50px); animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+    .wc-blob-1 { width: 55%; height: 55%; top: 5%; left: -5%; background: radial-gradient(ellipse at 40% 50%, rgba(255,190,160,0.70) 0%, rgba(255,170,140,0.40) 45%, transparent 100%); animation: wc1 20s ease-in-out infinite; }
+    .wc-blob-2 { width: 50%; height: 50%; top: 15%; left: 25%; background: radial-gradient(ellipse at 50% 50%, rgba(210,140,170,0.60) 0%, rgba(200,130,165,0.32) 48%, transparent 100%); border-radius: 55% 45% 60% 40% / 52% 48% 55% 45%; animation: wc2 25s ease-in-out infinite; }
+    .wc-blob-3 { width: 52%; height: 52%; top: 5%; right: -8%; background: radial-gradient(ellipse at 60% 45%, rgba(180,175,230,0.65) 0%, rgba(165,160,220,0.35) 45%, transparent 100%); border-radius: 45% 55% 42% 58% / 55% 45% 58% 42%; animation: wc3 22s ease-in-out infinite; }
+    @keyframes wc1 { 0%{transform:translate(0,0) scale(1);opacity:.80} 25%{transform:translate(3%,-4%) scale(1.06);opacity:.90} 50%{transform:translate(-2%,5%) scale(.96);opacity:.72} 75%{transform:translate(4%,2%) scale(1.03);opacity:.85} 100%{transform:translate(0,0) scale(1);opacity:.80} }
+    @keyframes wc2 { 0%{transform:translate(0,0) scale(1);opacity:.72} 33%{transform:translate(-4%,3%) scale(1.08);opacity:.82} 66%{transform:translate(3%,-5%) scale(.94);opacity:.62} 100%{transform:translate(0,0) scale(1);opacity:.72} }
+    @keyframes wc3 { 0%{transform:translate(0,0) scale(1);opacity:.75} 35%{transform:translate(-3%,-3%) scale(1.05);opacity:.85} 70%{transform:translate(4%,4%) scale(.97);opacity:.65} 100%{transform:translate(0,0) scale(1);opacity:.75} }
+
+    /* mini portal card inside preview */
+    .preview-card {
+      position: relative; z-index: 2;
+      background: rgba(255,255,255,0.80);
+      border: 1px solid rgba(180,160,220,0.25);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      padding: 32px 40px;
+      text-align: center;
+      min-width: 280px;
+    }
+    .preview-logo-row {
+      display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 12px;
+    }
+    .preview-logo-row img { height: 44px; object-fit: contain; mix-blend-mode: multiply; }
+    .preview-divider { width: 1px; height: 36px; background: rgba(160,140,200,0.30); }
+    .preview-tagline { font-size: 9px; letter-spacing: 3px; color: #a090b8; text-transform: uppercase; margin-bottom: 20px; }
+    .preview-btn {
+      display: block; width: 100%; padding: 12px;
+      background: rgba(255,255,255,0.70); border: 1px solid rgba(180,160,220,0.25);
+      border-radius: 12px; font-size: 12px; font-weight: 500; color: #2a2040;
+      margin-bottom: 8px; text-align: left; padding-left: 16px;
+    }
+    .preview-btn:last-child { margin-bottom: 0; }
+  </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div class="login-overlay" id="login-overlay">
-  <div class="login-card">
-    <div class="login-logo">PORTAL ADMIN</div>
-    <div class="login-title">Homepage Editor — Enter Access Code</div>
-    <input type="password" id="admin-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkPass()">
-    <button class="btn btn-primary" onclick="checkPass()" style="width:100%;justify-content:center;">ENTER</button>
-    <div class="login-error" id="login-error">Incorrect access code. Try again.</div>
+<!-- AUTH -->
+<div id="auth-screen">
+  <div class="auth-box">
+    <h2>Portal Admin</h2>
+    <p>Enter your admin password to continue</p>
+    <input type="password" id="auth-input" placeholder="Password" onkeydown="if(event.key==='Enter')checkAuth()" />
+    <button class="btn-primary" onclick="checkAuth()">Enter</button>
+    <div class="auth-error" id="auth-error">Incorrect password</div>
   </div>
 </div>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="topbar-left">
-    <div class="topbar-logo">SIMPLEX-ITY</div>
-    <div class="topbar-badge">HOMEPAGE EDITOR</div>
+<!-- ADMIN SHELL -->
+<div id="admin-shell">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <span class="top-bar-title">PORTAL ADMIN</span>
+    <span class="top-bar-sub">· portal.5senses.global</span>
   </div>
-  <div class="topbar-actions">
-    <button class="btn btn-secondary" onclick="loadSettings()">↺ RELOAD</button>
-    <button class="btn btn-primary" onclick="saveSettings()">SAVE CHANGES</button>
-    <a class="btn btn-secondary" href="/" target="_blank" style="text-decoration:none;">VIEW LIVE ↗</a>
-  </div>
-</div>
 
-<div class="workspace">
-  <div class="panel">
-    <div id="status-bar" class="status-bar"></div>
+  <!-- 3-COLUMN CONTROL PANEL (Kieran's sketch) -->
+  <div class="control-panel">
 
-    <!-- LOGOS -->
-    <div class="section-title">Brand Logos</div>
+    <!-- COL 1: BRAND -->
+    <div class="cp-col">
+      <div class="cp-col-title">Brand</div>
 
-    <div class="field">
-      <label>5SENSES Logo — Upload Image</label>
-      <div class="logo-upload-box" onclick="document.getElementById('file-5senses').click()">
-        <input type="file" id="file-5senses" accept="image/*" onchange="handleLogoUpload(this,'logo_5senses_url','preview-5senses')">
-        <img id="preview-5senses" class="logo-preview" src="" alt="5SENSES Logo">
-        <div class="logo-upload-hint"><strong>Click to upload</strong><br>PNG, JPG, SVG · Recommended: transparent PNG</div>
+      <label>5SENSES Logo URL</label>
+      <input type="url" id="logo5s" placeholder="https://..." oninput="updatePreview()" />
+
+      <label>SIMPLEX-ITY Logo URL</label>
+      <input type="url" id="logoSx" placeholder="https://..." oninput="updatePreview()" />
+
+      <label>Preview</label>
+      <div class="logo-preview-row">
+        <div class="logo-thumb"><img id="prev-logo5s" src="/assets/5senses_logo.png" /></div>
+        <div class="logo-thumb"><img id="prev-logoSx" src="/assets/simplex_ity_logo.png" /></div>
       </div>
-      <input type="text" id="logo_5senses_url" placeholder="Or paste image URL directly">
-      <button class="logo-clear-btn" onclick="clearLogo('logo_5senses_url','preview-5senses')">✕ Remove logo</button>
+
+      <label>Tagline Text</label>
+      <input type="text" id="tagline" value="Portal — Select Your Access" oninput="updatePreview()" />
     </div>
 
-    <div class="field">
-      <label>SIMPLEX-ITY Logo — Upload Image</label>
-      <div class="logo-upload-box" onclick="document.getElementById('file-simplexity').click()">
-        <input type="file" id="file-simplexity" accept="image/*" onchange="handleLogoUpload(this,'logo_simplexity_url','preview-simplexity')">
-        <img id="preview-simplexity" class="logo-preview" src="" alt="SIMPLEX-ITY Logo">
-        <div class="logo-upload-hint"><strong>Click to upload</strong><br>PNG, JPG, SVG · Recommended: transparent PNG</div>
+    <!-- COL 2: CONTENT / STYLE -->
+    <div class="cp-col">
+      <div class="cp-col-title">Content · Style</div>
+
+      <label>Font</label>
+      <select id="font-choice" onchange="updatePreview()">
+        <option value="Montserrat">Montserrat</option>
+        <option value="Exo 2">Exo 2</option>
+        <option value="Playfair Display">Playfair Display</option>
+        <option value="Raleway">Raleway</option>
+        <option value="Lato">Lato</option>
+      </select>
+
+      <label>Accent Colour</label>
+      <div class="color-row">
+        <input type="color" id="accent-color" value="#8c82fc" oninput="syncColor('accent-color','accent-hex')" />
+        <input type="text"  id="accent-hex"   value="#8c82fc" oninput="syncHex('accent-hex','accent-color')" maxlength="7" />
       </div>
-      <input type="text" id="logo_simplexity_url" placeholder="Or paste image URL directly">
-      <button class="logo-clear-btn" onclick="clearLogo('logo_simplexity_url','preview-simplexity')">✕ Remove logo</button>
+
+      <label>Card Text Colour</label>
+      <div class="color-row">
+        <input type="color" id="text-color" value="#2a2040" oninput="syncColor('text-color','text-hex')" />
+        <input type="text"  id="text-hex"   value="#2a2040" oninput="syncHex('text-hex','text-color')" maxlength="7" />
+      </div>
+
+      <label>Footer Text</label>
+      <input type="text" id="footer-text" value="5SENSESBEAUTY LIMITED · SIMPLEX-ITY · Powered by Simpee" oninput="updatePreview()" />
     </div>
 
-    <div class="toggle-row">
-    </div>
-    <div class="toggle-row">
-    </div>
+    <!-- COL 3: BACKGROUND + SAVE -->
+    <div class="cp-col">
+      <div class="cp-col-title">Background</div>
 
-    <!-- BACKGROUND -->
-    <div class="section-title">Background</div>
-    <div class="bg-tabs">
-      <div class="bg-tab active" id="tab-gradient" onclick="switchBgTab('gradient')">GRADIENT</div>
-      <div class="bg-tab" id="tab-image" onclick="switchBgTab('image')">IMAGE URL</div>
-    </div>
-    <div id="bg-gradient-section" class="show">
-      <div class="field">
-        <label>Warm Start Color</label>
+      <label>Style</label>
+      <select id="bg-style" onchange="updatePreview()">
+        <option value="watercolour">Watercolour Animation</option>
+        <option value="gradient">Gradient</option>
+        <option value="solid">Solid Colour</option>
+        <option value="image">Image URL</option>
+      </select>
+
+      <div id="bg-gradient-opts">
+        <label>From Colour</label>
         <div class="color-row">
-          <input type="color" id="cp-from" value="#fff9f7" oninput="syncColor('bg_gradient_from',this.value)">
-          <input type="text" id="bg_gradient_from" class="color-hex" value="#fff9f7" oninput="syncPicker('cp-from',this.value)">
+          <input type="color" id="bg-from" value="#f0eeff" oninput="syncColor('bg-from','bg-from-hex')" />
+          <input type="text"  id="bg-from-hex" value="#f0eeff" oninput="syncHex('bg-from-hex','bg-from')" maxlength="7" />
+        </div>
+        <label>To Colour</label>
+        <div class="color-row">
+          <input type="color" id="bg-to" value="#fce8ff" oninput="syncColor('bg-to','bg-to-hex')" />
+          <input type="text"  id="bg-to-hex" value="#fce8ff" oninput="syncHex('bg-to-hex','bg-to')" maxlength="7" />
         </div>
       </div>
-      <div class="field">
-        <label>Middle Color</label>
-        <div class="color-row">
-          <input type="color" id="cp-mid" value="#f6f0ff" oninput="syncColor('bg_gradient_mid',this.value)">
-          <input type="text" id="bg_gradient_mid" class="color-hex" value="#f6f0ff" oninput="syncPicker('cp-mid',this.value)">
-        </div>
-      </div>
-      <div class="field">
-        <label>Cool End Color</label>
-        <div class="color-row">
-          <input type="color" id="cp-to" value="#f0f1ff" oninput="syncColor('bg_gradient_to',this.value)">
-          <input type="text" id="bg_gradient_to" class="color-hex" value="#f0f1ff" oninput="syncPicker('cp-to',this.value)">
-        </div>
-      </div>
-    </div>
-    <div id="bg-image-section">
-      <div class="field">
+
+      <div id="bg-image-opt" style="display:none">
         <label>Image URL</label>
-        <input type="text" id="bg_image_url" placeholder="https://... paste image URL here">
+        <input type="url" id="bg-image-url" placeholder="https://..." oninput="updatePreview()" />
       </div>
-      <div class="upload-area" onclick="document.getElementById('bg-file').click()">
-        <input type="file" id="bg-file" accept="image/*" onchange="handleBgUpload(this)">
-        Click to upload a background image<br>
-        <span style="font-size:10px;opacity:0.6;">PNG, JPG, WebP supported</span>
+
+      <div id="bg-solid-opt" style="display:none">
+        <label>Colour</label>
+        <div class="color-row">
+          <input type="color" id="bg-solid" value="#f0eeff" oninput="syncColor('bg-solid','bg-solid-hex')" />
+          <input type="text"  id="bg-solid-hex" value="#f0eeff" oninput="syncHex('bg-solid-hex','bg-solid')" maxlength="7" />
+        </div>
       </div>
-    </div>
 
-    <!-- TYPOGRAPHY -->
-    <div class="section-title">Title & Text</div>
-    <div class="field"><label>Main Title</label><input type="text" id="title" value="The World of Equilibrium"></div>
-    <div class="field"><label>Subtitle</label><input type="text" id="subtitle" value="Where awareness meets simplicity."></div>
-    <div class="field">
-      <label>Title Font</label>
-      <select id="title_font">
-        <option value="Exo 2">Exo 2 (Current)</option>
-        <option value="Playfair Display">Playfair Display (Elegant)</option>
-        <option value="Montserrat">Montserrat (Modern)</option>
-        <option value="Georgia">Georgia (Classic)</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>Title Color</label>
-      <div class="color-row">
-        <input type="color" id="cp-title" value="#4a3d58" oninput="syncColor('title_color',this.value)">
-        <input type="text" id="title_color" class="color-hex" value="#4a3d58" oninput="syncPicker('cp-title',this.value)">
+      <div class="btn-row">
+        <button class="btn-save" onclick="saveSettings()">Save</button>
+        <button class="btn-ok" onclick="window.open('/', '_blank')">OK</button>
       </div>
+      <div class="save-status" id="save-status">✓ Saved! Changes live on portal.</div>
     </div>
-    <div class="field">
-      <label>Subtitle Color</label>
-      <div class="color-row">
-        <input type="color" id="cp-sub" value="#9085a5" oninput="syncColor('subtitle_color',this.value)">
-        <input type="text" id="subtitle_color" class="color-hex" value="#9085a5" oninput="syncPicker('cp-sub',this.value)">
+
+  </div><!-- end control-panel -->
+
+  <!-- LIVE PREVIEW -->
+  <div class="preview-area" id="preview-area">
+    <div class="wc-canvas" id="preview-wc">
+      <div class="wc-blob wc-blob-1"></div>
+      <div class="wc-blob wc-blob-2"></div>
+      <div class="wc-blob wc-blob-3"></div>
+    </div>
+    <span class="preview-label">Live Preview</span>
+    <div class="preview-card" id="preview-card">
+      <div class="preview-logo-row">
+        <img id="preview-card-logo5s" src="/assets/5senses_logo.png" alt="5SENSES" />
+        <div class="preview-divider"></div>
+        <img id="preview-card-logoSx" src="/assets/simplex_ity_logo.png" alt="SIMPLEX-ITY" />
       </div>
+      <div class="preview-tagline" id="preview-tagline-text">PORTAL — SELECT YOUR ACCESS</div>
+      <div class="preview-btn">Staff Portal ›</div>
+      <div class="preview-btn">Brand Portal ›</div>
+      <div class="preview-btn">Influencer Portal ›</div>
     </div>
-
-    <!-- PORTAL CARDS -->
-    <div class="section-title">Portal Cards</div>
-    <div class="field"><label>Staff Card — Label</label><input type="text" id="card_staff_label" value="Staff Portal"></div>
-    <div class="field"><label>Staff Card — Description</label><textarea id="card_staff_desc" rows="2">Internal team access for operations, compliance and daily management</textarea></div>
-    <div class="field"><label>Brand Card — Label</label><input type="text" id="card_brand_label" value="Brand Portal"></div>
-    <div class="field"><label>Brand Card — Description</label><textarea id="card_brand_desc" rows="2">Brand partner dashboard for campaigns, reports and collaboration</textarea></div>
-    <div class="field"><label>Influencer Card — Label</label><input type="text" id="card_influencer_label" value="Influencer Portal"></div>
-    <div class="field"><label>Influencer Card — Description</label><textarea id="card_influencer_desc" rows="2">Creator hub for campaigns, commissions and performance tracking</textarea></div>
-
-    <!-- FOOTER -->
-    <div class="section-title">Footer</div>
-    <div class="field"><label>Footer Text</label><input type="text" id="footer_text" value="5SENSESBEAUTY LIMITED · SIMPLEX-ITY · PORTAL v2.0"></div>
-
-    <!-- LOGIN STYLE -->
-    <div class="section-title">Login Page Style</div>
-
-    <div class="field">
-      <label>Login Style</label>
-      <select id="login_style">
-        <option value="classic">Classic — Card on colored background</option>
-        <option value="minimal">Minimal — Clean white, no heavy card</option>
-        <option value="dark">Dark — Dark card on dark background</option>
-        <option value="split">Split — Image left, form right</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label>Login Background Color / Gradient</label>
-      <input type="text" id="login_bg_color" placeholder="e.g. #f0f0ff or linear-gradient(135deg,#5e50fb,#8c82fc)">
-    </div>
-
-    <div class="field">
-      <label>Login Background Image — Upload</label>
-      <div class="logo-upload-box" onclick="document.getElementById('file-login-bg').click()">
-        <input type="file" id="file-login-bg" accept="image/*" onchange="handleLoginBgUpload(this)">
-        <img id="preview-login-bg" class="logo-preview" src="" alt="Login BG">
-        <div class="logo-upload-hint"><strong>Click to upload</strong><br>Replaces background color on login page</div>
-      </div>
-      <input type="text" id="login_bg_image_url" placeholder="Or paste image URL">
-    </div>
-
-    <div class="field">
-      <label>Login Card Background Color</label>
-      <div class="color-row">
-        <input type="color" id="cp-login-card" value="#ffffff" oninput="syncColor('login_card_color',this.value)">
-        <input type="text" id="login_card_color" class="color-hex" value="#ffffff" oninput="syncPicker('cp-login-card',this.value)">
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Login Button / Accent Color</label>
-      <div class="color-row">
-        <input type="color" id="cp-login-accent" value="#5e50fb" oninput="syncColor('login_accent_color',this.value)">
-        <input type="text" id="login_accent_color" class="color-hex" value="#5e50fb" oninput="syncPicker('cp-login-accent',this.value)">
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Login Page Logo — Upload</label>
-      <div class="logo-upload-box" onclick="document.getElementById('file-login-logo').click()">
-        <input type="file" id="file-login-logo" accept="image/*" onchange="handleLogoUpload(this,'login_logo_url','preview-login-logo')">
-        <img id="preview-login-logo" class="logo-preview" src="" alt="Login Logo">
-        <div class="logo-upload-hint"><strong>Click to upload</strong><br>Shows above the login form</div>
-      </div>
-      <input type="text" id="login_logo_url" placeholder="Or paste image URL">
-      <button class="logo-clear-btn" onclick="clearLogo('login_logo_url','preview-login-logo')">✕ Remove</button>
-    </div>
-
-    <div style="height:20px;"></div>
   </div>
 
-  <!-- PREVIEW -->
-  <div class="preview-wrap">
-    <div class="preview-topbar">
-      <div class="preview-url">portal.5senses.global</div>
-      <div class="preview-refresh" onclick="refreshPreview()" title="Refresh">⟳</div>
-    </div>
-    <iframe id="preview" src="/"></iframe>
-  </div>
-</div>
+</div><!-- end admin-shell -->
 
 <script>
 const STORAGE_KEY = 'portal_5senses_settings';
-const ADMIN_CODE = 'simpee2026';
+const PASS = 'simpee2026';
 
-function checkPass() {
-  if (document.getElementById('admin-pass').value === ADMIN_CODE) {
-    document.getElementById('login-overlay').style.display = 'none';
+function checkAuth() {
+  if (document.getElementById('auth-input').value === PASS) {
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('admin-shell').style.display = 'flex';
     loadSettings();
   } else {
-    document.getElementById('login-error').style.display = 'block';
-    document.getElementById('admin-pass').value = '';
+    document.getElementById('auth-error').style.display = 'block';
   }
 }
 
-function switchBgTab(tab) {
-  document.getElementById('tab-gradient').classList.toggle('active', tab==='gradient');
-  document.getElementById('tab-image').classList.toggle('active', tab==='image');
-  document.getElementById('bg-gradient-section').classList.toggle('show', tab==='gradient');
-  document.getElementById('bg-image-section').classList.toggle('show', tab==='image');
-  if (tab==='gradient') document.getElementById('bg_image_url').value='';
+function syncColor(colorId, hexId) {
+  document.getElementById(hexId).value = document.getElementById(colorId).value;
+  updatePreview();
+}
+function syncHex(hexId, colorId) {
+  const v = document.getElementById(hexId).value;
+  if (/^#[0-9a-fA-F]{6}$/.test(v)) {
+    document.getElementById(colorId).value = v;
+    updatePreview();
+  }
 }
 
-function syncColor(id,val) { const el=document.getElementById(id); if(el) el.value=val; }
-function syncPicker(id,val) { if(/^#[0-9A-Fa-f]{6}$/.test(val)){const el=document.getElementById(id);if(el)el.value=val;} }
+document.getElementById('bg-style').addEventListener('change', function() {
+  const v = this.value;
+  document.getElementById('bg-gradient-opts').style.display = (v === 'gradient') ? 'block' : 'none';
+  document.getElementById('bg-image-opt').style.display    = (v === 'image')    ? 'block' : 'none';
+  document.getElementById('bg-solid-opt').style.display   = (v === 'solid')    ? 'block' : 'none';
+  updatePreview();
+});
 
-function setStatus(msg,type) {
-  const el=document.getElementById('status-bar');
-  el.textContent=msg; el.className='status-bar '+type;
-  if(type==='success') setTimeout(()=>el.className='status-bar',3000);
+function updatePreview() {
+  const bgStyle = document.getElementById('bg-style').value;
+  const pa = document.getElementById('preview-area');
+  const wc = document.getElementById('preview-wc');
+
+  // background
+  if (bgStyle === 'watercolour') {
+    pa.style.background = '#ffffff';
+    wc.style.display = 'block';
+  } else if (bgStyle === 'gradient') {
+    const f = document.getElementById('bg-from').value;
+    const t = document.getElementById('bg-to').value;
+    pa.style.background = `linear-gradient(135deg, ${f}, ${t})`;
+    wc.style.display = 'none';
+  } else if (bgStyle === 'solid') {
+    pa.style.background = document.getElementById('bg-solid').value;
+    wc.style.display = 'none';
+  } else if (bgStyle === 'image') {
+    const url = document.getElementById('bg-image-url').value;
+    pa.style.background = url ? `url(${url}) center/cover` : '#ffffff';
+    wc.style.display = 'none';
+  }
+
+  // logos
+  const l5 = document.getElementById('logo5s').value;
+  const lx = document.getElementById('logoSx').value;
+  if (l5) { document.getElementById('prev-logo5s').src = l5; document.getElementById('preview-card-logo5s').src = l5; }
+  if (lx) { document.getElementById('prev-logoSx').src = lx; document.getElementById('preview-card-logoSx').src = lx; }
+
+  // tagline
+  const tl = document.getElementById('tagline').value;
+  document.getElementById('preview-tagline-text').textContent = tl.toUpperCase();
+
+  // accent colour on preview buttons
+  const acc = document.getElementById('accent-color').value;
+  document.querySelectorAll('.preview-btn').forEach(b => b.style.borderColor = acc + '55');
 }
 
-// LOGO UPLOAD — convert to base64 data URL
-function handleLogoUpload(input, urlFieldId, previewId) {
-  const file = input.files[0];
-  if (!file) return;
-  setStatus('Reading logo...', 'loading');
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const dataUrl = e.target.result;
-    document.getElementById(urlFieldId).value = dataUrl;
-    const prev = document.getElementById(previewId);
-    prev.src = dataUrl;
-    prev.classList.add('show');
-    setStatus('Logo loaded — click Save Changes to apply ✓', 'success');
+function saveSettings() {
+  const s = {
+    logo5s_url:      document.getElementById('logo5s').value,
+    logoSx_url:      document.getElementById('logoSx').value,
+    tagline:         document.getElementById('tagline').value,
+    font:            document.getElementById('font-choice').value,
+    accent_color:    document.getElementById('accent-color').value,
+    text_color:      document.getElementById('text-color').value,
+    footer_text:     document.getElementById('footer-text').value,
+    bg_style:        document.getElementById('bg-style').value,
+    bg_gradient_from: document.getElementById('bg-from').value,
+    bg_gradient_to:  document.getElementById('bg-to').value,
+    bg_image_url:    document.getElementById('bg-image-url').value,
+    bg_solid:        document.getElementById('bg-solid').value,
   };
-  reader.readAsDataURL(file);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+  const st = document.getElementById('save-status');
+  st.style.display = 'block';
+  setTimeout(() => st.style.display = 'none', 3000);
 }
 
-function clearLogo(urlFieldId, previewId) {
-  document.getElementById(urlFieldId).value = '';
-  const prev = document.getElementById(previewId);
-  prev.src = ''; prev.classList.remove('show');
-}
-
-// Show preview if URL already set
-function previewLogoFromUrl(urlFieldId, previewId) {
-  const val = document.getElementById(urlFieldId).value;
-  if (val && val.trim() !== '') {
-    const prev = document.getElementById(previewId);
-    prev.src = val; prev.classList.add('show');
-  }
-}
-
-async function loadSettings() {
-  setStatus('Loading settings...','loading');
+function loadSettings() {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) return;
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) { setStatus('No saved settings yet','success'); return; }
     const s = JSON.parse(stored);
-    const set=(id,val)=>{const el=document.getElementById(id);if(el&&val!==undefined){if(el.type==='checkbox')el.checked=val==='true';else el.value=val;}};
-    const setColor=(id,cpId,val)=>{if(!val)return;set(id,val);const cp=document.getElementById(cpId);if(cp)cp.value=val;};
-
-    set('title',s.title); set('subtitle',s.subtitle); set('title_font',s.title_font);
-    setColor('title_color','cp-title',s.title_color);
-    setColor('subtitle_color','cp-sub',s.subtitle_color);
-    setColor('bg_gradient_from','cp-from',s.bg_gradient_from);
-    setColor('bg_gradient_mid','cp-mid',s.bg_gradient_mid);
-    setColor('bg_gradient_to','cp-to',s.bg_gradient_to);
-    if(s.bg_image_url&&s.bg_image_url.trim()!==''){set('bg_image_url',s.bg_image_url);switchBgTab('image');}
-    set('card_staff_label',s.card_staff_label); set('card_staff_desc',s.card_staff_desc);
-    set('card_brand_label',s.card_brand_label); set('card_brand_desc',s.card_brand_desc);
-    set('card_influencer_label',s.card_influencer_label); set('card_influencer_desc',s.card_influencer_desc);
-    
-    set('footer_text',s.footer_text);
-    set('login_style',s.login_style);
-    set('login_bg_color',s.login_bg_color);
-    set('login_bg_image_url',s.login_bg_image_url);
-    const lcard=document.getElementById('cp-login-card');if(lcard&&s.login_card_color)lcard.value=s.login_card_color;set('login_card_color',s.login_card_color);
-    const lacc=document.getElementById('cp-login-accent');if(lacc&&s.login_accent_color)lacc.value=s.login_accent_color;set('login_accent_color',s.login_accent_color);
-    if(s.login_logo_url){set('login_logo_url',s.login_logo_url);previewLogoFromUrl('login_logo_url','preview-login-logo');}
-    if(s.login_bg_image_url){set('login_bg_image_url',s.login_bg_image_url);const p=document.getElementById('preview-login-bg');if(p&&s.login_bg_image_url.trim()!=''){p.src=s.login_bg_image_url;p.classList.add('show');}}
-
-    // Load logo URLs and show previews
-    if(s.logo_5senses_url){set('logo_5senses_url',s.logo_5senses_url);previewLogoFromUrl('logo_5senses_url','preview-5senses');}
-    if(s.logo_simplexity_url){set('logo_simplexity_url',s.logo_simplexity_url);previewLogoFromUrl('logo_simplexity_url','preview-simplexity');}
-
-    setStatus('Settings loaded ✓','success');
-  } catch(e) { setStatus('Error: '+e.message,'error'); }
+    if (s.logo5s_url)        document.getElementById('logo5s').value = s.logo5s_url;
+    if (s.logoSx_url)        document.getElementById('logoSx').value = s.logoSx_url;
+    if (s.tagline)           document.getElementById('tagline').value = s.tagline;
+    if (s.font)              document.getElementById('font-choice').value = s.font;
+    if (s.accent_color)      { document.getElementById('accent-color').value = s.accent_color; document.getElementById('accent-hex').value = s.accent_color; }
+    if (s.text_color)        { document.getElementById('text-color').value  = s.text_color;   document.getElementById('text-hex').value  = s.text_color;   }
+    if (s.footer_text)       document.getElementById('footer-text').value = s.footer_text;
+    if (s.bg_style)          { document.getElementById('bg-style').value = s.bg_style; document.getElementById('bg-style').dispatchEvent(new Event('change')); }
+    if (s.bg_gradient_from)  { document.getElementById('bg-from').value = s.bg_gradient_from; document.getElementById('bg-from-hex').value = s.bg_gradient_from; }
+    if (s.bg_gradient_to)    { document.getElementById('bg-to').value   = s.bg_gradient_to;   document.getElementById('bg-to-hex').value   = s.bg_gradient_to;   }
+    if (s.bg_image_url)      document.getElementById('bg-image-url').value = s.bg_image_url;
+    if (s.bg_solid)          { document.getElementById('bg-solid').value = s.bg_solid; document.getElementById('bg-solid-hex').value = s.bg_solid; }
+    updatePreview();
+  } catch(e) {}
 }
-
-async function saveSettings() {
-  setStatus('Saving...','loading');
-  try {
-    const g=(id)=>{const el=document.getElementById(id);if(!el)return'';return el.type==='checkbox'?String(el.checked):el.value;};
-    const settings = {
-      title:g('title'), subtitle:g('subtitle'), title_font:g('title_font'),
-      title_color:g('title_color'), subtitle_color:g('subtitle_color'),
-      bg_gradient_from:g('bg_gradient_from'), bg_gradient_mid:g('bg_gradient_mid'), bg_gradient_to:g('bg_gradient_to'),
-      bg_image_url:g('bg_image_url'),
-      logo_5senses_url:g('logo_5senses_url'),
-      logo_simplexity_url:g('logo_simplexity_url'),
-      card_staff_label:g('card_staff_label'), card_staff_desc:g('card_staff_desc'),
-      card_brand_label:g('card_brand_label'), card_brand_desc:g('card_brand_desc'),
-      card_influencer_label:g('card_influencer_label'), card_influencer_desc:g('card_influencer_desc'),
-      
-      footer_text:g('footer_text'),
-      login_style:g('login_style'),
-      login_bg_color:g('login_bg_color'),
-      login_bg_image_url:g('login_bg_image_url'),
-      login_card_color:g('login_card_color'),
-      login_accent_color:g('login_accent_color'),
-      login_logo_url:g('login_logo_url'),
-    };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-    setStatus('Saved! ✓','success');
-    setTimeout(refreshPreview,800);
-  } catch(e){setStatus('Error: '+e.message,'error');}
-}
-
-function refreshPreview() { const f=document.getElementById('preview'); f.src=f.src; }
-function handleLoginBgUpload(input){const file=input.files[0];if(!file)return;const reader=new FileReader();reader.onload=(e)=>{document.getElementById('login_bg_image_url').value=e.target.result;const p=document.getElementById('preview-login-bg');p.src=e.target.result;p.classList.add('show');setStatus('Login BG loaded — Save to apply','success');};reader.readAsDataURL(file);}
-function handleBgUpload(input){const file=input.files[0];if(!file)return;const reader=new FileReader();reader.onload=(e)=>{document.getElementById('bg_image_url').value=e.target.result;setStatus('Image loaded — Save to apply','success');};reader.readAsDataURL(file);}
 </script>
 </body>
 </html>
