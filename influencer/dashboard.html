@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Creator Dashboard · shortkey</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Roboto',sans-serif;background:#fafaf8;color:#0a0a0a;min-height:100vh;}
+
+  .grain{position:fixed;inset:0;z-index:0;opacity:0.4;background-image:repeating-linear-gradient(45deg,rgba(10,10,10,0.015) 0px,rgba(10,10,10,0.015) 1px,transparent 1px,transparent 46px);pointer-events:none;}
+
+  .topbar{position:relative;z-index:5;background:#fff;border-bottom:1.5px solid #0a0a0a;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
+  .topbar-brand{font-family:'Archivo Black',sans-serif;font-size:15px;color:#0a0a0a;letter-spacing:-0.5px;}
+  .topbar-right{display:flex;align-items:center;gap:16px;}
+  .welcome-txt{font-size:12px;color:#8a8a8a;letter-spacing:0.5px;}
+  .logout-btn{font-size:11px;color:#8a8a8a;background:none;border:1px solid #d8d8d4;padding:7px 16px;border-radius:20px;cursor:pointer;text-decoration:none;text-transform:uppercase;letter-spacing:1px;}
+  .logout-btn:hover{background:#0a0a0a;color:#fff;border-color:#0a0a0a;}
+
+  .wrap{position:relative;z-index:5;max-width:960px;margin:0 auto;padding:28px 20px 60px;}
+
+  .greet{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+  .greet h1{font-family:'Archivo Black',sans-serif;font-size:22px;font-weight:400;color:#0a0a0a;margin-bottom:4px;letter-spacing:-0.5px;}
+  .greet p{font-size:12px;color:#8a8a8a;}
+  .tier-badge{background:#0a0a0a;color:#fff;font-size:10px;font-weight:700;padding:6px 16px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+  @media(max-width:720px){.kpi-grid{grid-template-columns:repeat(2,1fr);}}
+  .kpi{background:#fff;border:1.5px solid #0a0a0a;border-radius:4px;padding:20px 18px;box-shadow:4px 4px 0 rgba(10,10,10,0.9);}
+  .kpi-label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8a8a;margin-bottom:8px;}
+  .kpi-value{font-family:'Archivo Black',sans-serif;font-size:24px;color:#0a0a0a;}
+  .kpi-sub{font-size:10px;color:#a8a8a4;margin-top:4px;}
+
+  .card{background:#fff;border:1.5px solid #0a0a0a;border-radius:4px;padding:22px 24px;box-shadow:6px 6px 0 rgba(10,10,10,0.9);margin-bottom:20px;}
+  .card-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0a0a0a;margin-bottom:14px;border-bottom:1px solid #eee;padding-bottom:10px;}
+
+  .campaign-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;flex-wrap:wrap;gap:8px;}
+  .campaign-name{font-size:15px;font-weight:700;color:#0a0a0a;}
+  .campaign-brand{font-size:10px;font-weight:700;background:#f0f0ec;color:#0a0a0a;padding:4px 12px;border-radius:12px;text-transform:uppercase;letter-spacing:0.5px;}
+  .progress-track{width:100%;height:8px;background:#f0f0ec;border-radius:6px;margin-top:14px;overflow:hidden;}
+  .progress-fill{height:100%;background:#0a0a0a;border-radius:6px;}
+  .progress-label{font-size:11px;color:#8a8a8a;margin-top:6px;}
+
+  .payout-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0ec;}
+  .payout-row:last-child{border-bottom:none;}
+  .payout-label{font-size:12px;color:#8a8a8a;}
+  .payout-value{font-size:14px;font-weight:700;color:#0a0a0a;}
+
+  .reliability-ring{display:flex;align-items:center;gap:16px;}
+  .ring-num{font-family:'Archivo Black',sans-serif;font-size:34px;color:#0a0a0a;}
+  .ring-txt{font-size:11px;color:#8a8a8a;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="topbar">
+  <div class="topbar-brand">shortkey Creator</div>
+  <div class="topbar-right">
+    <span class="welcome-txt">Creator Account</span>
+    <a href="index.html" class="logout-btn">Sign out</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="greet">
+    <div>
+      <h1>Welcome back</h1>
+      <p>TikTok · Beauty niche creator</p>
+    </div>
+    <span class="tier-badge">Trial Tier</span>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">Reliability Score</div>
+      <div class="kpi-value">100</div>
+      <div class="kpi-sub">Perfect record</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Lives Done</div>
+      <div class="kpi-value">0 / 2</div>
+      <div class="kpi-sub">This month</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Commission Earned</div>
+      <div class="kpi-value">$0</div>
+      <div class="kpi-sub">Trial campaign not live yet</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Follower Count</div>
+      <div class="kpi-value">—</div>
+      <div class="kpi-sub">Pending verification</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Your Assigned Campaign</div>
+    <div class="campaign-row">
+      <div class="campaign-name">Korean Beauty — Live Stream Trial</div>
+      <span class="campaign-brand">TikTok</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" style="width:0%;"></div></div>
+    <div class="progress-label">0 of 2 lives completed this month</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Reliability</div>
+    <div class="reliability-ring">
+      <div class="ring-num">100</div>
+      <div class="ring-txt">No missed lives or cancellations on record.<br/>Keep it up — high reliability unlocks premium brand campaigns.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Payout Summary</div>
+    <div class="payout-row"><span class="payout-label">Pending commission</span><span class="payout-value">$0.00</span></div>
+    <div class="payout-row"><span class="payout-label">Paid to date</span><span class="payout-value">$0.00</span></div>
+    <div class="payout-row"><span class="payout-label">Next payout date</span><span class="payout-value">—</span></div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Staff Dashboard · 5SENSES</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Montserrat',sans-serif;background:#f7f6fc;color:#1a1a1f;min-height:100vh;}
+
+  /* top bar */
+  .topbar{background:#fff;border-bottom:1px solid #eee9fb;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+  .topbar-brand{font-family:'Exo 2',sans-serif;font-size:16px;font-weight:700;color:#5e50fb;letter-spacing:0.5px;}
+  .topbar-right{display:flex;align-items:center;gap:16px;}
+  .welcome-txt{font-size:13px;color:#8888a0;}
+  .logout-btn{font-size:12px;color:#a090c0;background:none;border:1px solid #e8e2f8;padding:7px 16px;border-radius:20px;cursor:pointer;text-decoration:none;}
+  .logout-btn:hover{background:#f5f2ff;color:#5e50fb;}
+
+  .wrap{max-width:960px;margin:0 auto;padding:28px 20px 60px;}
+
+  .greet{margin-bottom:24px;}
+  .greet h1{font-family:'Exo 2',sans-serif;font-size:24px;font-weight:600;color:#1a1030;margin-bottom:4px;}
+  .greet p{font-size:13px;color:#8888a0;}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
+  @media(max-width:720px){.grid{grid-template-columns:1fr;}}
+
+  .card{background:#fff;border-radius:18px;padding:22px 24px;box-shadow:0 4px 24px rgba(140,130,200,0.08);}
+  .card-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#8c82fc;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+
+  /* notices */
+  .notice-item{padding:12px 0;border-bottom:1px solid #f2effc;}
+  .notice-item:last-child{border-bottom:none;}
+  .notice-title{font-size:13px;font-weight:600;color:#1a1030;margin-bottom:3px;}
+  .notice-meta{font-size:11px;color:#a090c0;}
+  .badge-pin{display:inline-block;background:#fff0e0;color:#d88a30;font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:6px;letter-spacing:0.5px;}
+
+  /* compliance */
+  .comp-item{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #f2effc;}
+  .comp-item:last-child{border-bottom:none;}
+  .comp-name{font-size:13px;font-weight:500;color:#1a1030;}
+  .comp-cat{font-size:10px;color:#a090c0;text-transform:uppercase;letter-spacing:0.5px;}
+  .comp-days{font-size:11px;font-weight:700;padding:4px 10px;border-radius:12px;white-space:nowrap;}
+  .days-soon{background:#ffe8e8;color:#d84040;}
+  .days-ok{background:#e8f4ff;color:#3a7ad8;}
+
+  /* projects */
+  .proj-item{padding:13px 0;border-bottom:1px solid #f2effc;}
+  .proj-item:last-child{border-bottom:none;}
+  .proj-name{font-size:13px;font-weight:600;color:#1a1030;margin-bottom:5px;}
+  .proj-tags{display:flex;gap:6px;flex-wrap:wrap;}
+  .tag{font-size:9px;background:#f0edff;color:#5e50fb;padding:3px 9px;border-radius:10px;letter-spacing:0.5px;text-transform:uppercase;}
+  .proj-status{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-left:6px;}
+  .status-progress{color:#3a9d5f;}
+  .status-planning{color:#c88a20;}
+
+  .quick-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .quick-link{flex:1;min-width:130px;background:#faf9ff;border:1px solid #ece6ff;border-radius:14px;padding:16px;text-align:center;font-size:12px;font-weight:600;color:#5e50fb;text-decoration:none;transition:all 0.2s;}
+  .quick-link:hover{background:#f0edff;transform:translateY(-2px);}
+
+  .full-card{grid-column:1/-1;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">정5 SENSES · Staff</div>
+  <div class="topbar-right">
+    <span class="welcome-txt">Kieran Li</span>
+    <a href="index.html" class="logout-btn">Sign out</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="greet">
+    <h1>Welcome back</h1>
+    <p>Here's what needs your attention today.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Pinned Notices</div>
+      <div class="notice-item">
+        <div class="notice-title">Builder Instructions — Connection Panel<span class="badge-pin">PINNED</span></div>
+        <div class="notice-meta">Simpee · Tech · 30 May 2026</div>
+      </div>
+      <div class="notice-item">
+        <div class="notice-title">Simpee Connected — Live Test<span class="badge-pin">PINNED</span></div>
+        <div class="notice-meta">Simpee · General · 25 May 2026</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Compliance Due Soon</div>
+      <div class="comp-item">
+        <div><div class="comp-name">Employer's Return (BIR56A)</div><div class="comp-cat">IRD Filing</div></div>
+        <div class="comp-days days-soon">1 May</div>
+      </div>
+      <div class="comp-item">
+        <div><div class="comp-name">MPF Monthly Contribution</div><div class="comp-cat">MPF</div></div>
+        <div class="comp-days days-ok">10 May</div>
+      </div>
+      <div class="comp-item">
+        <div><div class="comp-name">MPF Enrollment</div><div class="comp-cat">MPF</div></div>
+        <div class="comp-days days-ok">12 May</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Business Registration</div>
+      <div style="text-align:center;padding:10px 0;">
+        <div style="font-size:28px;font-weight:700;color:#d84040;margin-bottom:4px;">12</div>
+        <div style="font-size:11px;color:#8888a0;">days to BR renewal (14 Jul 2026)</div>
+      </div>
+    </div>
+
+    <div class="card full-card">
+      <div class="card-title">Active Projects</div>
+      <div class="proj-item">
+        <div class="proj-name">HK Compliance &amp; BR Renewal <span class="proj-status status-progress">In Progress</span></div>
+        <div class="proj-tags"><span class="tag">compliance</span><span class="tag">br-renewal</span><span class="tag">urgent</span></div>
+      </div>
+      <div class="proj-item">
+        <div class="proj-name">5S Portal Build &amp; Data Migration <span class="proj-status status-progress">In Progress</span></div>
+        <div class="proj-tags"><span class="tag">5s-portal</span><span class="tag">internal</span></div>
+      </div>
+      <div class="proj-item">
+        <div class="proj-name">SIMPLEX-ITY Platform Build (Wilson x FundFluent) <span class="proj-status status-progress">In Progress</span></div>
+        <div class="proj-tags"><span class="tag">platform</span><span class="tag">wilson</span><span class="tag">priority</span></div>
+      </div>
+      <div class="proj-item">
+        <div class="proj-name">Banuba TINT Integration <span class="proj-status status-planning">Planning</span></div>
+        <div class="proj-tags"><span class="tag">banuba</span><span class="tag">tint</span><span class="tag">ar</span></div>
+      </div>
+    </div>
+
+    <div class="card full-card">
+      <div class="card-title">Quick Links</div>
+      <div class="quick-row">
+        <a href="#" class="quick-link">Compliance</a>
+        <a href="#" class="quick-link">Expenses</a>
+        <a href="#" class="quick-link">Documents</a>
+        <a href="#" class="quick-link">Vault</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
