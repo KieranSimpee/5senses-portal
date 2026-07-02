@@ -223,6 +223,46 @@
   }
   .login-btn:hover { opacity:0.88; transform: translateY(-1px); }
 
+
+  /* === OUR BRANDS STRIP === */
+  .brands-strip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-top: -12px;
+  }
+  .brands-strip-label {
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    color: rgba(100,90,110,0.55);
+    text-transform: uppercase;
+  }
+  .brands-strip-logos {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 14px 28px;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 40px;
+    border: 1px solid rgba(139,118,118,0.15);
+  }
+  .brands-strip-logos img {
+    height: 26px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.85;
+  }
+  .brands-strip-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(139,118,118,0.25);
+  }
+
   /* footer */
   .footer {
     font-size: 9px;
@@ -251,6 +291,18 @@
 
   <p class="tagline">The World of Equilibrium · Feel Beauty, Live Fully</p>
 
+  <!-- OUR BRANDS -->
+  <div class="brands-strip">
+    <div class="brands-strip-label">5SENSESBEAUTY LIMITED · Home to a Few Brands</div>
+    <div class="brands-strip-logos">
+      <img src="assets/5senses_logo.png" alt="정5SENSES" style="mix-blend-mode:multiply;"/>
+      <div class="brands-strip-divider"></div>
+      <img src="assets/simplexity_logo.png" alt="SIMPLEX-ITY" style="mix-blend-mode:multiply;"/>
+      <div class="brands-strip-divider"></div>
+      <img src="assets/shortkey_logo_black.png" alt="shortkey" style="mix-blend-mode:multiply;"/>
+    </div>
+  </div>
+
   <!-- PORTAL CARDS — hover to reveal login -->
   <div class="portal-row">
 
@@ -271,10 +323,8 @@
       <div class="portal-label">Brand</div>
       <div class="login-panel">
         <div class="login-title">Brand Portal</div>
-        <div class="login-sub">Authorised brand partners</div>
-        <input class="login-input" type="email" placeholder="Brand email"/>
-        <input class="login-input" type="password" placeholder="Password"/>
-        <button class="login-btn btn-brand" onclick="window.location.href='brand/index.html'">Enter →</button>
+        <div class="login-sub">We operate a few brands — pick yours</div>
+        <button class="login-btn btn-brand" onclick="window.location.href='brand/index.html'" style="margin-top:6px;">View Our Brands →</button>
       </div>
     </div>
 

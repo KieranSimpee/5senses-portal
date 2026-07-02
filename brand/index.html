@@ -1,60 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Brand Portal · SIMPLEX-ITY</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet"/>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Montserrat',sans-serif;min-height:100vh;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
-    .shape{position:fixed;opacity:0.50;}
-    .s1{width:200px;height:200px;top:-50px;left:28%;background:linear-gradient(135deg,#b8d8ff,#8abcff);border-radius:50%;}
-    .s2{width:170px;height:170px;top:-30px;left:52%;background:#f0c8a0;border-radius:50%;}
-    .s3{width:130px;height:130px;top:-10px;right:-15px;background:#c0d8ff;border-radius:50%;}
-    .s4{width:150px;height:90px;bottom:25px;left:-15px;background:linear-gradient(135deg,#a0d8ff,#70c0ff);border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;}
-    .s5{width:120px;height:120px;bottom:40px;left:33%;background:#f0e0a0;border-radius:50% 0 50% 50%;}
-    .s6{width:100px;height:100px;bottom:15px;right:6%;background:#a0c8ff;border-radius:50% 50% 0 50%;}
-    .dots{position:fixed;bottom:170px;right:9%;width:80px;height:80px;background-image:radial-gradient(#c0d8ff 1.5px,transparent 1.5px);background-size:10px 10px;opacity:0.5;}
-    .card{position:relative;z-index:10;width:100%;max-width:400px;padding:48px 40px;background:#fff;border-radius:24px;box-shadow:0 8px 48px rgba(100,130,200,0.12);}
-    .portal-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#90a0c0;text-decoration:none;margin-bottom:28px;letter-spacing:1px;}
-    .portal-back:hover{color:#3a6edc;}
-    .brand-mark{margin-bottom:24px;font-family:'Exo 2',sans-serif;}
-    .bm-sx{font-size:18px;font-weight:300;letter-spacing:5px;color:#2a2040;}
-    .bm-dash{color:#5e7afb;}
-    h2{font-size:22px;font-weight:600;color:#1a2040;margin-bottom:6px;}
-    .subtitle{font-size:12px;color:#8090b0;margin-bottom:32px;}
-    .field{margin-bottom:16px;}
-    .field label{display:block;font-size:11px;font-weight:600;color:#6070a0;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
-    .field input{width:100%;padding:14px 16px;border:1.5px solid #e2e8f8;border-radius:12px;font-size:14px;font-family:'Montserrat',sans-serif;outline:none;transition:border 0.2s,box-shadow 0.2s;background:#f8faff;color:#1a2040;}
-    .field input:focus{border-color:#5e7afb;box-shadow:0 0 0 3px rgba(94,122,251,0.10);}
-    .field input::placeholder{color:#b8c8d8;}
-    .row-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
-    .remember{display:flex;align-items:center;gap:8px;font-size:12px;color:#6070a0;cursor:pointer;}
-    .remember input[type=checkbox]{accent-color:#5e7afb;width:15px;height:15px;}
-    .forgot{font-size:12px;color:#5e7afb;text-decoration:none;}
-    .btn-login{width:100%;padding:15px;background:linear-gradient(135deg,#5e7afb,#3a56e8);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;font-family:'Montserrat',sans-serif;cursor:pointer;transition:opacity 0.2s,transform 0.15s;letter-spacing:0.5px;}
-    .btn-login:hover{opacity:0.90;transform:translateY(-1px);}
-    .portal-tag{text-align:center;margin-top:20px;font-size:11px;color:#a0b0d0;letter-spacing:2px;text-transform:uppercase;}
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Our Brands · 5SENSESBEAUTY LIMITED</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600&family=Exo+2:wght@200;300;600&family=Archivo+Black&display=swap" rel="stylesheet"/>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    background: #fdf8f5;
+    overflow-x: hidden;
+  }
+  .bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(135deg,
+      rgba(255,210,190,0.45) 0%,
+      rgba(240,185,210,0.35) 30%,
+      rgba(200,185,235,0.40) 65%,
+      rgba(185,210,245,0.35) 100%);
+  }
+  .page {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 48px 20px;
+  }
+  .portal-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: rgba(100,90,110,0.7);
+    text-decoration: none;
+    letter-spacing: 1px;
+  }
+  .portal-back:hover { color: #5a4a5a; }
+  .hub-title { text-align: center; }
+  .hub-title h1 {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: #2a2040;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .hub-title p {
+    font-size: 12px;
+    color: rgba(100,90,110,0.7);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .brand-grid {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 780px;
+  }
+  .brand-card {
+    width: 320px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(14px);
+    border-radius: 20px;
+    padding: 36px 28px;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(100,80,120,0.14);
+    border: 1px solid rgba(255,255,255,0.8);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+    display: block;
+  }
+  .brand-card:hover { transform: translateY(-4px); box-shadow: 0 20px 56px rgba(100,80,120,0.2); }
+  .brand-card img { height: 46px; width: auto; object-fit: contain; margin-bottom: 18px; }
+  .brand-card.simplexity img { filter: drop-shadow(0 2px 8px rgba(140,130,252,0.2)); }
+  .brand-card.shortkey { background: #fff; border: 1.5px solid #0a0a0a; box-shadow: 6px 6px 0 rgba(10,10,10,0.85); }
+  .brand-card.shortkey:hover { transform: translateY(-4px); box-shadow: 10px 10px 0 rgba(10,10,10,0.85); }
+  .brand-card-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .brand-card.simplexity .brand-card-tag { background: rgba(140,130,252,0.15); color: #5e50fb; }
+  .brand-card.shortkey .brand-card-tag { background: #0a0a0a; color: #fff; }
+  .brand-card h3 {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1f;
+    margin-bottom: 8px;
+  }
+  .brand-card.shortkey h3 { font-family: 'Archivo Black', sans-serif; font-weight: 400; }
+  .brand-card p.desc {
+    font-size: 12px;
+    color: #8888a0;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+  .brand-card-cta {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #5e50fb;
+  }
+  .brand-card.shortkey .brand-card-cta { color: #0a0a0a; }
+  .footer {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(120,100,130,0.45);
+    text-transform: uppercase;
+    text-align: center;
+  }
+</style>
 </head>
 <body>
-  <div class="shape s1"></div><div class="shape s2"></div><div class="shape s3"></div>
-  <div class="shape s4"></div><div class="shape s5"></div><div class="shape s6"></div>
-  <div class="dots"></div>
-  <div class="card">
-    <a href="/" class="portal-back">← All Portals</a>
-    <div class="brand-mark"><span class="bm-sx">SIMPLEX<span class="bm-dash">-</span>ITY</span></div>
-    <h2>Brand Login</h2>
-    <p class="subtitle">Brand partner access</p>
-    <div class="field"><label>Email</label><input type="email" placeholder="brand@company.com"/></div>
-    <div class="field"><label>Password</label><input type="password" placeholder="Enter password"/></div>
-    <div class="row-meta">
-      <label class="remember"><input type="checkbox" checked/> Keep me logged in</label>
-      <a href="#" class="forgot">Forgot password?</a>
-    </div>
-    <button class="btn-login">Login</button>
-    <p class="portal-tag">Brand Portal · SIMPLEX-ITY</p>
+
+<div class="bg-canvas"></div>
+
+<div class="page">
+  <a href="/" class="portal-back">← All Portals</a>
+
+  <div class="hub-title">
+    <h1>5SENSESBEAUTY LIMITED</h1>
+    <p>Home to a few brands</p>
   </div>
+
+  <div class="brand-grid">
+    <a href="simplexity.html" class="brand-card simplexity">
+      <img src="../assets/simplexity_logo.png" alt="SIMPLEX-ITY"/>
+      <span class="brand-card-tag">B2B · Platform</span>
+      <h3>Simplex-ity</h3>
+      <p class="desc">One-stop Asian beauty platform connecting brand partners with global retail &amp; influencer networks.</p>
+      <span class="brand-card-cta">Brand Partner Login →</span>
+    </a>
+
+    <a href="shortkey.html" class="brand-card shortkey">
+      <img src="../assets/shortkey_logo_black.png" alt="shortkey"/>
+      <span class="brand-card-tag">B2C · Style</span>
+      <h3>shortkey</h3>
+      <p class="desc">AI try-on platform powered by authentic influencers and real style sharing. Your style shortcut.</p>
+      <span class="brand-card-cta">Retail &amp; Creator Network →</span>
+    </a>
+  </div>
+
+  <div class="footer">portal.5senses.global · powered by simplex-ity · 2026</div>
+</div>
+
 </body>
 </html>
