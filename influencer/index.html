@@ -3,48 +3,50 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Influencer Portal · SIMPLEX-ITY</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <title>Influencer Portal · shortkey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Montserrat',sans-serif;min-height:100vh;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
-    .shape{position:fixed;opacity:0.52;}
-    .s1{width:210px;height:210px;top:-55px;left:26%;background:linear-gradient(135deg,#e8b8d8,#d890c0);border-radius:50%;}
-    .s2{width:175px;height:175px;top:-35px;left:50%;background:#ffc8a0;border-radius:50%;}
-    .s3{width:140px;height:140px;top:-15px;right:-18px;background:#d8b0f0;border-radius:50%;}
-    .s4{width:155px;height:95px;bottom:22px;left:-18px;background:linear-gradient(135deg,#ffb0d0,#ff8ab8);border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;}
-    .s5{width:125px;height:125px;bottom:35px;left:34%;background:#b0e8d8;border-radius:50% 0 50% 50%;}
-    .s6{width:105px;height:105px;bottom:12px;right:5%;background:#c8a8f0;border-radius:50% 50% 0 50%;}
-    .dots{position:fixed;bottom:165px;right:8%;width:85px;height:85px;background-image:radial-gradient(#e0c0f8 1.5px,transparent 1.5px);background-size:10px 10px;opacity:0.5;}
-    .card{position:relative;z-index:10;width:100%;max-width:400px;padding:48px 40px;background:#fff;border-radius:24px;box-shadow:0 8px 48px rgba(180,120,200,0.12);}
-    .portal-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a080b0;text-decoration:none;margin-bottom:28px;letter-spacing:1px;}
-    .portal-back:hover{color:#a040c0;}
-    .brand-mark{margin-bottom:24px;font-family:'Exo 2',sans-serif;}
-    .bm-sx{font-size:18px;font-weight:300;letter-spacing:5px;color:#2a2040;}
-    .bm-dash{color:#b060d0;}
-    h2{font-size:22px;font-weight:600;color:#1a1030;margin-bottom:6px;}
-    .subtitle{font-size:12px;color:#9070a0;margin-bottom:32px;}
+    body{font-family:'Roboto',sans-serif;min-height:100vh;background:#fafaf8;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+
+    /* subtle grain texture instead of pastel blobs */
+    .grain{position:fixed;inset:0;z-index:0;opacity:0.5;background-image:repeating-linear-gradient(45deg,rgba(10,10,10,0.02) 0px,rgba(10,10,10,0.02) 1px,transparent 1px,transparent 46px);pointer-events:none;}
+    .corner-tape{position:fixed;width:70px;height:26px;background:#eceae4;opacity:0.85;z-index:0;}
+    .ct1{top:6%;left:8%;transform:rotate(-8deg);}
+    .ct2{bottom:8%;right:9%;transform:rotate(6deg);}
+
+    .card{position:relative;z-index:10;width:100%;max-width:400px;padding:48px 40px;background:#fff;border:1.5px solid #0a0a0a;border-radius:4px;box-shadow:8px 8px 0 rgba(10,10,10,0.9);}
+    .portal-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#8a8a8a;text-decoration:none;margin-bottom:26px;letter-spacing:1px;}
+    .portal-back:hover{color:#0a0a0a;}
+    .brand-mark{margin-bottom:22px;}
+    .brand-mark img{height:42px;width:auto;object-fit:contain;}
+    .login-badge{display:inline-block;background:#0a0a0a;color:#fff;font-size:10px;font-weight:700;padding:5px 13px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;}
+    h2{font-family:'Archivo Black',sans-serif;font-size:22px;font-weight:400;color:#0a0a0a;margin-bottom:6px;letter-spacing:-0.5px;}
+    .subtitle{font-size:12px;color:#8a8a8a;margin-bottom:30px;}
     .field{margin-bottom:16px;}
-    .field label{display:block;font-size:11px;font-weight:600;color:#7050a0;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
-    .field input{width:100%;padding:14px 16px;border:1.5px solid #f0e0f8;border-radius:12px;font-size:14px;font-family:'Montserrat',sans-serif;outline:none;transition:border 0.2s,box-shadow 0.2s;background:#fdf8ff;color:#1a1030;}
-    .field input:focus{border-color:#b060d0;box-shadow:0 0 0 3px rgba(176,96,208,0.10);}
-    .field input::placeholder{color:#c8b0d8;}
+    .field label{display:block;font-size:10px;font-weight:700;color:#0a0a0a;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+    .field input{width:100%;padding:14px 16px;border:1.5px solid #d8d8d4;border-radius:4px;font-size:14px;font-family:'Roboto',sans-serif;outline:none;transition:border 0.2s;background:#f5f4f1;color:#0a0a0a;}
+    .field input:focus{border-color:#0a0a0a;background:#fff;}
+    .field input::placeholder{color:#b8b8b4;}
     .row-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
-    .remember{display:flex;align-items:center;gap:8px;font-size:12px;color:#7050a0;cursor:pointer;}
-    .remember input[type=checkbox]{accent-color:#b060d0;width:15px;height:15px;}
-    .forgot{font-size:12px;color:#b060d0;text-decoration:none;}
-    .btn-login{width:100%;padding:15px;background:linear-gradient(135deg,#c070e0,#9040c0);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;font-family:'Montserrat',sans-serif;cursor:pointer;transition:opacity 0.2s,transform 0.15s;letter-spacing:0.5px;}
-    .btn-login:hover{opacity:0.90;transform:translateY(-1px);}
-    .portal-tag{text-align:center;margin-top:20px;font-size:11px;color:#b090c0;letter-spacing:2px;text-transform:uppercase;}
+    .remember{display:flex;align-items:center;gap:8px;font-size:12px;color:#8a8a8a;cursor:pointer;}
+    .remember input[type=checkbox]{accent-color:#0a0a0a;width:15px;height:15px;}
+    .forgot{font-size:12px;color:#7c3aed;text-decoration:none;}
+    .btn-login{width:100%;padding:16px;background:#0a0a0a;color:#fff;border:none;border-radius:4px;font-size:14px;font-weight:700;font-family:'Archivo Black',sans-serif;cursor:pointer;transition:opacity 0.2s;letter-spacing:1.5px;}
+    .btn-login:hover{opacity:0.82;}
+    .portal-tag{text-align:center;margin-top:18px;font-size:10px;color:#b8b8b4;letter-spacing:2px;text-transform:uppercase;}
+    .powered{text-align:center;margin-top:10px;font-size:10px;color:#8a8a8a;letter-spacing:1px;text-transform:uppercase;}
+    .powered b{color:#0a0a0a;}
   </style>
 </head>
 <body>
-  <div class="shape s1"></div><div class="shape s2"></div><div class="shape s3"></div>
-  <div class="shape s4"></div><div class="shape s5"></div><div class="shape s6"></div>
-  <div class="dots"></div>
+  <div class="grain"></div>
+  <div class="corner-tape ct1"></div>
+  <div class="corner-tape ct2"></div>
   <div class="card">
     <a href="/" class="portal-back">← All Portals</a>
-    <div class="brand-mark"><span class="bm-sx">SIMPLEX<span class="bm-dash">-</span>ITY</span></div>
+    <div class="brand-mark"><img src="https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/f2ad4ed89_shortkey_logo_transparent.png" alt="shortkey"/></div>
+    <span class="login-badge">Influencer Portal</span>
     <h2>Creator Login</h2>
     <p class="subtitle">Creator & KOL access</p>
     <div class="field"><label>Email</label><input type="email" placeholder="creator@email.com"/></div>
@@ -53,8 +55,9 @@
       <label class="remember"><input type="checkbox" checked/> Keep me logged in</label>
       <a href="#" class="forgot">Forgot password?</a>
     </div>
-    <button class="btn-login">Login</button>
-    <p class="portal-tag">Influencer Portal · SIMPLEX-ITY</p>
+    <button class="btn-login">SIGN IN</button>
+    <p class="portal-tag">Influencer Portal · shortkey</p>
+    <p class="powered">Powered by <b>Simplex-ity</b></p>
   </div>
 </body>
 </html>
