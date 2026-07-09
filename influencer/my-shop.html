@@ -41,6 +41,7 @@
   .p-card{background:#fff;border:1.5px solid #0a0a0a;border-radius:4px;overflow:hidden;box-shadow:5px 5px 0 rgba(10,10,10,0.9);display:flex;flex-direction:column;}
   .p-img{width:100%;aspect-ratio:1/1;background:#f0f0ec;display:flex;align-items:center;justify-content:center;color:#c8c8c2;font-size:11px;letter-spacing:1px;text-transform:uppercase;position:relative;overflow:hidden;}
   .p-img img{width:100%;height:100%;object-fit:cover;}
+  .p-img img.p-placeholder-logo{width:40%;height:40%;object-fit:contain;opacity:0.25;}
   .p-featured{position:absolute;top:8px;left:8px;background:#0a0a0a;color:#fff;font-size:9px;font-weight:700;padding:4px 10px;border-radius:12px;letter-spacing:1px;text-transform:uppercase;}
   .p-body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column;gap:6px;}
   .p-brand{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8a8a;}
@@ -79,7 +80,7 @@
 <div class="grain"></div>
 
 <div class="topbar">
-  <div class="topbar-brand">shortkey Creator</div>
+  <div class="topbar-brand" style="display:flex;align-items:center;gap:8px;"><img src="https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/c4fa5572a_shortkey_logo_FINAL_darkink_transparent.png" alt="shortkey" style="height:20px;width:auto;"/>Creator</div>
   <div class="topbar-right">
     <a href="dashboard.html" class="nav-link">← Dashboard</a>
     <span class="welcome-txt" id="creatorLabel">Creator Account</span>
@@ -180,7 +181,7 @@
       <div class="p-card">
         <div class="p-img">
           ${p.featured ? '<span class="p-featured">Featured</span>' : ''}
-          ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}"/>` : 'No image yet'}
+          ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}"/>` : '<img class="p-placeholder-logo" src="https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/c4fa5572a_shortkey_logo_FINAL_darkink_transparent.png" alt="shortkey"/>'}
         </div>
         <div class="p-body">
           <div class="p-brand">${p.brand_name || 'shortkey pick'}</div>
