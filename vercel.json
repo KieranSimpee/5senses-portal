@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/", "has": [{ "type": "host", "value": "shortkey.wtf" }], "destination": "/shortkey-home.html" },
+    { "source": "/", "has": [{ "type": "host", "value": "www.shortkey.wtf" }], "destination": "/shortkey-home.html" },
     { "source": "/staff", "destination": "/staff/index.html" },
     { "source": "/brand", "destination": "/brand/index.html" },
     { "source": "/influencer", "destination": "/influencer/index.html" },
