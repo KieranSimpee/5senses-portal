@@ -39,10 +39,13 @@
   .card{background:#fff;border-radius:18px;padding:22px 24px;box-shadow:0 4px 24px rgba(60,100,200,0.06);margin-bottom:16px;}
   .card-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#3b7cf6;margin-bottom:14px;}
 
-  .campaign-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;flex-wrap:wrap;gap:8px;}
+  .campaign-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;flex-wrap:wrap;gap:8px;border-bottom:1px solid #f0f3fc;}
+  .campaign-row:last-child{border-bottom:none;}
   .campaign-name{font-size:15px;font-weight:600;color:#1a2040;}
-  .campaign-phase{font-size:10px;font-weight:700;background:#fff3e0;color:#c88a20;padding:4px 12px;border-radius:12px;text-transform:uppercase;letter-spacing:0.5px;}
-  .campaign-meta{display:flex;gap:22px;margin-top:14px;flex-wrap:wrap;}
+  .campaign-phase{font-size:10px;font-weight:700;background:#fff3e0;color:#c88a20;padding:4px 12px;border-radius:12px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;}
+  .campaign-phase.active{background:#e6f7ec;color:#1e9e4f;}
+  .campaign-phase.completed{background:#eef3ff;color:#3b7cf6;}
+  .campaign-meta{display:flex;gap:22px;margin-top:6px;flex-wrap:wrap;width:100%;}
   .cm-item{font-size:12px;color:#8890a8;}
   .cm-item b{display:block;font-size:15px;color:#1a2040;margin-top:2px;}
 
@@ -50,6 +53,9 @@
   .notice-item:last-child{border-bottom:none;}
   .notice-title{font-size:13px;font-weight:600;color:#1a2040;margin-bottom:3px;}
   .notice-meta{font-size:11px;color:#a0a8c0;}
+
+  .empty-state{font-size:13px;color:#a0a8c0;padding:8px 0;}
+  .skeleton{opacity:0.4;}
 </style>
 </head>
 <body>
@@ -57,76 +63,132 @@
 <div class="topbar">
   <div class="topbar-brand">SIMPLEX-ITY Brand</div>
   <div class="topbar-right">
-    <span class="welcome-txt">TIRTIR</span>
-    <a href="index.html" class="logout-btn">Sign out</a>
+    <span class="welcome-txt" id="topbarName">Loading…</span>
+    <a href="index.html" class="logout-btn" onclick="localStorage.removeItem('sk_brand_identifier')">Sign out</a>
   </div>
 </div>
 
-<div class="wrap">
+<div class="wrap" id="dashWrap">
   <div class="greet">
     <div>
-      <h1>Welcome, TIRTIR</h1>
-      <p>Skincare — Setting Spray / Cushion · Korea</p>
+      <h1 id="greetName">Welcome…</h1>
+      <p id="greetSub">Loading your dashboard…</p>
     </div>
-    <span class="tier-badge">Trial Tier</span>
+    <span class="tier-badge" id="tierBadge">—</span>
   </div>
 
-  <div class="trial-banner">
-    <div class="trial-banner-txt">Your <b>Month 1 Trial</b> is in progress. Full performance reporting unlocks once your campaign goes live.</div>
-    <div style="text-align:center;">
-      <div class="trial-days">Month 1</div>
-      <div class="trial-days-label">of 3-month trial</div>
-    </div>
-  </div>
+  <div class="trial-banner" id="statusBanner" style="display:none;"></div>
 
   <div class="kpi-grid">
     <div class="kpi">
       <div class="kpi-label">GMV Tracked</div>
-      <div class="kpi-value">$0</div>
-      <div class="kpi-sub">Campaign not yet live</div>
+      <div class="kpi-value" id="kpiGmv">$0</div>
+      <div class="kpi-sub" id="kpiGmvSub">—</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">Orders</div>
-      <div class="kpi-value">0</div>
-      <div class="kpi-sub">Awaiting launch</div>
+      <div class="kpi-label">Orders (est.)</div>
+      <div class="kpi-value" id="kpiOrders">0</div>
+      <div class="kpi-sub">Based on trial price</div>
     </div>
     <div class="kpi">
       <div class="kpi-label">Commission Captured</div>
-      <div class="kpi-value">$0</div>
-      <div class="kpi-sub">15% via Shopify attribution</div>
+      <div class="kpi-value" id="kpiCommission">$0</div>
+      <div class="kpi-sub" id="kpiCommissionSub">via Shopify attribution</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">Report Status</div>
-      <div class="kpi-value" style="font-size:16px;">Draft</div>
-      <div class="kpi-sub">Basic tier — free</div>
+      <div class="kpi-label">Active Campaigns</div>
+      <div class="kpi-value" id="kpiActive">0</div>
+      <div class="kpi-sub">Currently running</div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">Your Campaign</div>
-    <div class="campaign-row">
-      <div class="campaign-name">TIRTIR × Trial Campaign — Month 1-3</div>
-      <span class="campaign-phase">Phase 1 · Trial</span>
-    </div>
-    <div class="campaign-meta">
-      <div class="cm-item">Target Influencers<b>1</b></div>
-      <div class="cm-item">Discount Offered<b>30%</b></div>
-      <div class="cm-item">Status<b>Planning</b></div>
-    </div>
+    <div class="card-title">Your Campaigns</div>
+    <div id="campaignList"><div class="empty-state">Loading…</div></div>
   </div>
 
   <div class="card">
     <div class="card-title">Updates from SIMPLEX-ITY</div>
     <div class="notice-item">
-      <div class="notice-title">Mask Fit cushion identified as priority — already viral on TikTok US</div>
-      <div class="notice-meta">SIMPLEX-ITY Team · Internal note</div>
-    </div>
-    <div class="notice-item">
-      <div class="notice-title">Influencer matching in progress for your trial campaign</div>
+      <div class="notice-title">Your dashboard is now wired to live campaign data</div>
       <div class="notice-meta">SIMPLEX-ITY Team</div>
     </div>
   </div>
 </div>
 
+<script>
+  const FUNCTIONS_BASE = 'https://simpee-62ac123d.base44.app/functions';
+  const params = new URLSearchParams(window.location.search);
+  const identifier = params.get('brand') || localStorage.getItem('sk_brand_identifier') || '';
+  if (identifier) localStorage.setItem('sk_brand_identifier', identifier);
+
+  function fmtMoney(n){ return '$' + Number(n||0).toLocaleString('en-US', {maximumFractionDigits:0}); }
+  function phaseClass(status){
+    if (status === 'Active') return 'active';
+    if (status === 'Completed') return 'completed';
+    return '';
+  }
+
+  async function loadDashboard(){
+    try{
+      const res = await fetch(`${FUNCTIONS_BASE}/getBrandDashboardData`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ identifier })
+      });
+      const data = await res.json();
+      if (data.error){
+        document.getElementById('greetName').textContent = 'Could not load dashboard';
+        document.getElementById('greetSub').textContent = data.error;
+        return;
+      }
+      const b = data.brand, s = data.summary, campaigns = data.campaigns || [];
+
+      document.getElementById('topbarName').textContent = b.name;
+      document.getElementById('greetName').textContent = 'Welcome, ' + b.name;
+      document.getElementById('greetSub').textContent = [b.category, b.country].filter(Boolean).join(' · ');
+      document.getElementById('tierBadge').textContent = (b.tier || 'Trial') + ' Tier';
+
+      document.getElementById('kpiGmv').textContent = fmtMoney(s.total_revenue);
+      document.getElementById('kpiGmvSub').textContent = s.total_revenue > 0 ? 'Across all campaigns' : 'No campaigns live yet';
+      document.getElementById('kpiOrders').textContent = s.orders_estimate || 0;
+      document.getElementById('kpiCommission').textContent = fmtMoney(s.total_commission);
+      document.getElementById('kpiActive').textContent = s.active_campaign_count || 0;
+
+      const banner = document.getElementById('statusBanner');
+      if (b.status === 'Pending') {
+        banner.style.display = 'flex';
+        banner.innerHTML = `<div class="trial-banner-txt">Your partnership is <b>pending confirmation</b>. Our team will reach out once your campaign is ready to launch.</div>`;
+      } else if (campaigns.some(c => c.status === 'Planning')) {
+        banner.style.display = 'flex';
+        banner.innerHTML = `<div class="trial-banner-txt">Your <b>trial campaign</b> is being set up. Full performance reporting unlocks once it goes live.</div>`;
+      }
+
+      const list = document.getElementById('campaignList');
+      if (campaigns.length === 0){
+        list.innerHTML = '<div class="empty-state">No campaigns yet — your account manager will set one up soon.</div>';
+      } else {
+        list.innerHTML = campaigns.map(c => `
+          <div class="campaign-row">
+            <div style="display:flex;align-items:center;justify-content:space-between;width:100%;gap:8px;flex-wrap:wrap;">
+              <div class="campaign-name">${c.title}</div>
+              <span class="campaign-phase ${phaseClass(c.status)}">${c.phase || c.status}</span>
+            </div>
+            <div class="campaign-meta">
+              <div class="cm-item">Target Influencers<b>${c.target_influencers ?? '—'}</b></div>
+              <div class="cm-item">Discount Offered<b>${c.discount_pct ? c.discount_pct + '%' : '—'}</b></div>
+              <div class="cm-item">Revenue<b>${fmtMoney(c.total_revenue)}</b></div>
+              <div class="cm-item">Status<b>${c.status}</b></div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }catch(e){
+      document.getElementById('greetName').textContent = 'Connection error';
+      document.getElementById('greetSub').textContent = 'Please refresh and try again.';
+    }
+  }
+
+  loadDashboard();
+</script>
 </body>
 </html>
