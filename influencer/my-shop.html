@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>My Shop · shortkey</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Roboto',sans-serif;background:#fafaf8;color:#0a0a0a;min-height:100vh;}
+
+  .grain{position:fixed;inset:0;z-index:0;opacity:0.4;background-image:repeating-linear-gradient(45deg,rgba(10,10,10,0.015) 0px,rgba(10,10,10,0.015) 1px,transparent 1px,transparent 46px);pointer-events:none;}
+
+  .topbar{position:relative;z-index:5;background:#fff;border-bottom:1.5px solid #0a0a0a;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
+  .topbar-brand{font-family:'Archivo Black',sans-serif;font-size:15px;color:#0a0a0a;letter-spacing:-0.5px;}
+  .topbar-right{display:flex;align-items:center;gap:16px;}
+  .welcome-txt{font-size:12px;color:#8a8a8a;letter-spacing:0.5px;}
+  .nav-link{font-size:11px;color:#8a8a8a;text-decoration:none;letter-spacing:0.5px;}
+  .nav-link:hover{color:#0a0a0a;}
+  .logout-btn{font-size:11px;color:#8a8a8a;background:none;border:1px solid #d8d8d4;padding:7px 16px;border-radius:20px;cursor:pointer;text-decoration:none;text-transform:uppercase;letter-spacing:1px;}
+  .logout-btn:hover{background:#0a0a0a;color:#fff;border-color:#0a0a0a;}
+
+  .wrap{position:relative;z-index:5;max-width:960px;margin:0 auto;padding:28px 20px 60px;}
+
+  .greet{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+  .greet h1{font-family:'Archivo Black',sans-serif;font-size:22px;font-weight:400;color:#0a0a0a;margin-bottom:4px;letter-spacing:-0.5px;}
+  .greet p{font-size:12px;color:#8a8a8a;}
+  .tier-badge{background:#0a0a0a;color:#fff;font-size:10px;font-weight:700;padding:6px 16px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;}
+
+  .toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;}
+  .filter-btn{font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:#fff;border:1.5px solid #0a0a0a;border-radius:20px;padding:8px 16px;cursor:pointer;color:#0a0a0a;}
+  .filter-btn.active{background:#0a0a0a;color:#fff;}
+  .btn-add{font-family:'Archivo Black',sans-serif;font-size:12px;background:#0a0a0a;color:#fff;border:none;border-radius:4px;padding:12px 20px;cursor:pointer;letter-spacing:0.5px;box-shadow:4px 4px 0 rgba(10,10,10,0.9);}
+  .btn-add:hover{opacity:0.85;}
+
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  @media(max-width:820px){.product-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:540px){.product-grid{grid-template-columns:1fr;}}
+
+  .p-card{background:#fff;border:1.5px solid #0a0a0a;border-radius:4px;overflow:hidden;box-shadow:5px 5px 0 rgba(10,10,10,0.9);display:flex;flex-direction:column;}
+  .p-img{width:100%;aspect-ratio:1/1;background:#f0f0ec;display:flex;align-items:center;justify-content:center;color:#c8c8c2;font-size:11px;letter-spacing:1px;text-transform:uppercase;position:relative;overflow:hidden;}
+  .p-img img{width:100%;height:100%;object-fit:cover;}
+  .p-featured{position:absolute;top:8px;left:8px;background:#0a0a0a;color:#fff;font-size:9px;font-weight:700;padding:4px 10px;border-radius:12px;letter-spacing:1px;text-transform:uppercase;}
+  .p-body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column;gap:6px;}
+  .p-brand{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8a8a;}
+  .p-name{font-size:14px;font-weight:700;color:#0a0a0a;line-height:1.3;}
+  .p-desc{font-size:11px;color:#8a8a8a;line-height:1.5;flex:1;}
+  .p-footer{display:flex;align-items:center;justify-content:space-between;margin-top:6px;}
+  .p-price{font-family:'Archivo Black',sans-serif;font-size:16px;color:#0a0a0a;}
+  .p-stock{font-size:9px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:3px 10px;border-radius:10px;background:#f0f0ec;color:#0a0a0a;}
+  .p-stock.low{background:#fff3d6;color:#8a6d00;}
+  .p-stock.out{background:#fde8e8;color:#a80000;}
+
+  .empty-state{background:#fff;border:1.5px dashed #d8d8d4;border-radius:4px;padding:48px 24px;text-align:center;color:#8a8a8a;font-size:13px;}
+  .empty-state b{display:block;font-family:'Archivo Black',sans-serif;font-size:16px;color:#0a0a0a;margin-bottom:8px;font-weight:400;}
+
+  .modal-overlay{position:fixed;inset:0;background:rgba(10,10,10,0.55);z-index:50;display:none;align-items:center;justify-content:center;padding:20px;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:#fff;border:1.5px solid #0a0a0a;border-radius:4px;box-shadow:8px 8px 0 rgba(10,10,10,0.9);max-width:420px;width:100%;padding:28px 26px;max-height:90vh;overflow-y:auto;}
+  .modal h3{font-family:'Archivo Black',sans-serif;font-size:18px;font-weight:400;margin-bottom:4px;}
+  .modal p.sub{font-size:11px;color:#8a8a8a;margin-bottom:18px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:10px;font-weight:700;color:#0a0a0a;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+  .field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1.5px solid #d8d8d4;border-radius:4px;font-size:13px;font-family:'Roboto',sans-serif;outline:none;background:#f5f4f1;color:#0a0a0a;}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:#0a0a0a;background:#fff;}
+  .field textarea{resize:vertical;min-height:60px;}
+  .modal-actions{display:flex;gap:10px;margin-top:18px;}
+  .btn-cancel{flex:1;padding:12px;background:#fff;border:1.5px solid #d8d8d4;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;color:#8a8a8a;}
+  .btn-submit{flex:1;padding:12px;background:#0a0a0a;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;}
+  .btn-submit:hover{opacity:0.85;}
+  .note{font-size:10px;color:#8a8a8a;margin-top:12px;line-height:1.5;}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0a0a0a;color:#fff;padding:12px 22px;border-radius:24px;font-size:12px;font-weight:700;letter-spacing:0.5px;z-index:60;display:none;}
+  .toast.show{display:block;}
+  .loading{text-align:center;padding:60px 0;color:#8a8a8a;font-size:12px;letter-spacing:1px;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="topbar">
+  <div class="topbar-brand">shortkey Creator</div>
+  <div class="topbar-right">
+    <a href="dashboard.html" class="nav-link">← Dashboard</a>
+    <span class="welcome-txt" id="creatorLabel">Creator Account</span>
+    <a href="index.html" class="logout-btn">Sign out</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="greet">
+    <div>
+      <h1>My Shop</h1>
+      <p>Your curated product picks, live for your audience</p>
+    </div>
+    <span class="tier-badge" id="tierBadge">—</span>
+  </div>
+
+  <div class="toolbar">
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="Skincare">Skincare</button>
+      <button class="filter-btn" data-filter="Makeup">Makeup</button>
+      <button class="filter-btn" data-filter="Haircare">Haircare</button>
+      <button class="filter-btn" data-filter="Other">Other</button>
+    </div>
+    <button class="btn-add" id="btnAdd">+ Add Product</button>
+  </div>
+
+  <div id="shopContent" class="loading">Loading your shop…</div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>Add a Product</h3>
+    <p class="sub">Submit a pick for your shop. New products go to Draft and get reviewed before going live.</p>
+    <div class="field"><label>Product Name</label><input type="text" id="fName" placeholder="e.g. Glass Skin Glow Serum"/></div>
+    <div class="field"><label>Brand</label><input type="text" id="fBrand" placeholder="e.g. Anua"/></div>
+    <div class="field"><label>Category</label>
+      <select id="fCategory">
+        <option>Skincare</option><option>Makeup</option><option>Haircare</option>
+        <option>Body</option><option>Fragrance</option><option>Tools</option>
+        <option>Bundle</option><option>Other</option>
+      </select>
+    </div>
+    <div class="field"><label>Price (USD)</label><input type="number" id="fPrice" placeholder="32"/></div>
+    <div class="field"><label>Description</label><textarea id="fDesc" placeholder="Why you love it, how you use it…"></textarea></div>
+    <div class="field"><label>Image URL (optional)</label><input type="text" id="fImage" placeholder="https://…"/></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="btnCancel">Cancel</button>
+      <button class="btn-submit" id="btnSubmit">Submit for Review</button>
+    </div>
+    <p class="note">Submitted products are reviewed by the Simplex-ity team before appearing live on your public shop.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const FUNCTIONS_BASE = 'https://simpee-62ac123d.base44.app/functions';
+  const params = new URLSearchParams(window.location.search);
+  const handle = params.get('handle') || localStorage.getItem('sk_creator_handle') || 'miacheungbeauty';
+  localStorage.setItem('sk_creator_handle', handle);
+
+  let allProducts = [];
+  let currentFilter = 'all';
+  let influencerId = null;
+
+  async function loadShop(){
+    try{
+      const res = await fetch(`${FUNCTIONS_BASE}/getInfluencerShopData`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ handle })
+      });
+      const data = await res.json();
+      if(data.error){
+        document.getElementById('shopContent').innerHTML = `<div class="empty-state"><b>Couldn't load shop</b>${data.error}</div>`;
+        return;
+      }
+      influencerId = data.influencer.id;
+      document.getElementById('creatorLabel').textContent = data.influencer.name + ' · ' + data.influencer.platform;
+      document.getElementById('tierBadge').textContent = data.influencer.tier + ' Tier';
+      allProducts = data.products || [];
+      renderProducts();
+    }catch(e){
+      document.getElementById('shopContent').innerHTML = `<div class="empty-state"><b>Connection error</b>Please refresh and try again.</div>`;
+    }
+  }
+
+  function renderProducts(){
+    const filtered = currentFilter === 'all' ? allProducts : allProducts.filter(p => p.category === currentFilter);
+    const el = document.getElementById('shopContent');
+    if(filtered.length === 0){
+      el.innerHTML = `<div class="empty-state"><b>No products yet</b>Tap "+ Add Product" to start building your shop.</div>`;
+      el.className = '';
+      return;
+    }
+    el.className = 'product-grid';
+    el.innerHTML = filtered.map(p => `
+      <div class="p-card">
+        <div class="p-img">
+          ${p.featured ? '<span class="p-featured">Featured</span>' : ''}
+          ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}"/>` : 'No image yet'}
+        </div>
+        <div class="p-body">
+          <div class="p-brand">${p.brand_name || 'shortkey pick'}</div>
+          <div class="p-name">${p.name}</div>
+          <div class="p-desc">${p.description || ''}</div>
+          <div class="p-footer">
+            <span class="p-price">$${(p.price_usd||0).toFixed(0)}</span>
+            <span class="p-stock ${p.stock_status==='Low Stock'?'low':p.stock_status==='Out of Stock'?'out':''}">${p.stock_status||'In Stock'}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      renderProducts();
+    });
+  });
+
+  const modal = document.getElementById('modalOverlay');
+  document.getElementById('btnAdd').addEventListener('click', ()=> modal.classList.add('open'));
+  document.getElementById('btnCancel').addEventListener('click', ()=> modal.classList.remove('open'));
+  modal.addEventListener('click', (e)=>{ if(e.target === modal) modal.classList.remove('open'); });
+
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(()=> t.classList.remove('show'), 3000);
+  }
+
+  document.getElementById('btnSubmit').addEventListener('click', async ()=>{
+    const name = document.getElementById('fName').value.trim();
+    if(!name){ showToast('Product name is required'); return; }
+    const payload = {
+      handle, influencer_id: influencerId,
+      name,
+      brand_name: document.getElementById('fBrand').value.trim(),
+      category: document.getElementById('fCategory').value,
+      price_usd: parseFloat(document.getElementById('fPrice').value) || 0,
+      description: document.getElementById('fDesc').value.trim(),
+      image_url: document.getElementById('fImage').value.trim()
+    };
+    try{
+      const res = await fetch(`${FUNCTIONS_BASE}/addInfluencerProduct`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if(data.error){ showToast('Error: ' + data.error); return; }
+      modal.classList.remove('open');
+      showToast('Submitted! Pending review before it goes live.');
+      ['fName','fBrand','fPrice','fDesc','fImage'].forEach(id => document.getElementById(id).value='');
+    }catch(e){
+      showToast('Connection error, try again.');
+    }
+  });
+
+  loadShop();
+</script>
+</body>
+</html>
