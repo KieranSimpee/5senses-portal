@@ -6,5 +6,19 @@
     { "source": "/brand", "destination": "/brand/index.html" },
     { "source": "/influencer", "destination": "/influencer/index.html" },
     { "source": "/admin", "destination": "/admin/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/shortkey-home.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, must-revalidate" }
+      ]
+    }
   ]
 }
