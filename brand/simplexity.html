@@ -47,15 +47,23 @@
     <div class="brand-mark"><span class="bm-sx">SIMPLEX<span class="bm-dash">-</span>ITY</span></div>
     <h2>Brand Login</h2>
     <p class="subtitle">Brand partner access</p>
-    <div class="field"><label>Email</label><input type="email" placeholder="brand@company.com"/></div>
+    <div class="field"><label>Email</label><input type="email" id="loginEmail" placeholder="brand@company.com"/></div>
     <div class="field"><label>Password</label><input type="password" placeholder="Enter password"/></div>
     <div class="row-meta">
       <label class="remember"><input type="checkbox" checked/> Keep me logged in</label>
       <a href="#" class="forgot">Forgot password?</a>
     </div>
-    <button class="btn-login" onclick="window.location.href='dashboard.html'">Login</button>
+    <button class="btn-login" onclick="handleLogin()">Login</button>
     <p class="portal-tag">Brand Portal · SIMPLEX-ITY</p>
     <p style="text-align:center;margin-top:8px;font-size:10px;color:#c0c8d8;letter-spacing:1px;">Beauty brand partner network</p>
   </div>
+<script>
+    function handleLogin(){
+      const email = document.getElementById('loginEmail').value.trim();
+      if (email) localStorage.setItem('sk_brand_identifier', email);
+      window.location.href = 'dashboard.html';
+    }
+  </script>
 </body>
 </html>
+
