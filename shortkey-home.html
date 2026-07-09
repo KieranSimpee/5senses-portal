@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>shortkey — Your Style. Your Ctrl.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Roboto',sans-serif;min-height:100vh;background:#fafaf8;position:relative;color:#0a0a0a;}
+    .grain{position:fixed;inset:0;z-index:0;opacity:0.5;background-image:repeating-linear-gradient(45deg,rgba(10,10,10,0.02) 0px,rgba(10,10,10,0.02) 1px,transparent 1px,transparent 46px);pointer-events:none;}
+    .corner-tape{position:fixed;width:70px;height:26px;background:#eceae4;opacity:0.85;z-index:0;}
+    .ct1{top:6%;left:6%;transform:rotate(-8deg);}
+    .ct2{bottom:8%;right:7%;transform:rotate(6deg);}
+
+    .wrap{position:relative;z-index:10;max-width:960px;margin:0 auto;padding:70px 24px 60px;text-align:center;}
+
+    .logo img{height:56px;width:auto;object-fit:contain;margin-bottom:34px;}
+
+    .tagline{font-family:'Archivo Black',sans-serif;font-size:clamp(28px,5vw,46px);font-weight:400;letter-spacing:-1px;line-height:1.15;margin-bottom:18px;}
+
+    .desc{max-width:560px;margin:0 auto 46px;font-size:15px;line-height:1.7;color:#5c5c5c;}
+    .desc b{color:#0a0a0a;}
+
+    .cards{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-bottom:56px;}
+    .card{width:280px;padding:38px 30px;background:#fff;border:1.5px solid #0a0a0a;border-radius:4px;box-shadow:8px 8px 0 rgba(10,10,10,0.9);text-align:left;text-decoration:none;color:inherit;transition:transform 0.15s ease;display:block;}
+    .card:hover{transform:translate(-3px,-3px);box-shadow:11px 11px 0 rgba(10,10,10,0.9);}
+    .card-badge{display:inline-block;background:#0a0a0a;color:#fff;font-size:10px;font-weight:700;padding:5px 13px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;}
+    .card h3{font-family:'Archivo Black',sans-serif;font-size:20px;font-weight:400;margin-bottom:8px;letter-spacing:-0.5px;}
+    .card p{font-size:12.5px;color:#8a8a8a;line-height:1.6;margin-bottom:18px;}
+    .card .cta{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;}
+
+    .footer-tag{font-size:10px;color:#b8b8b4;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+    .powered{font-size:10px;color:#8a8a8a;letter-spacing:1px;text-transform:uppercase;}
+    .powered b{color:#0a0a0a;}
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="corner-tape ct1"></div>
+  <div class="corner-tape ct2"></div>
+
+  <div class="wrap">
+    <div class="logo">
+      <img src="https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/c4fa5572a_shortkey_logo_FINAL_darkink_transparent.png" alt="shortkey"/>
+    </div>
+
+    <h1 class="tagline">YOUR STYLE.<br/>YOUR CTRL.</h1>
+
+    <p class="desc">shortkey is a curation platform connecting real K-beauty brands with creators who set the trends. <b>No noise, no guesswork</b> — just the products worth your attention, picked by people who actually use them.</p>
+
+    <div class="cards">
+      <a href="/influencer/" class="card">
+        <span class="card-badge">Creators</span>
+        <h3>Creator Login</h3>
+        <p>Manage your shop, track commissions, and go live with brand partners.</p>
+        <span class="cta">Sign in →</span>
+      </a>
+      <a href="/brand/shortkey.html" class="card">
+        <span class="card-badge">Brands</span>
+        <h3>Brand Partners</h3>
+        <p>Retail and style partnerships for the US &amp; Canada market.</p>
+        <span class="cta">Learn more →</span>
+      </a>
+    </div>
+
+    <p class="footer-tag">shortkey™ · your style. your ctrl.</p>
+    <p class="powered">Powered by <b>Simplex-ity</b></p>
+  </div>
+</body>
+</html>
