@@ -1,1196 +1,814 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shortkey.wtf — what are you actually fighting for?</title>
-    <style>
-        :root {
-            --ink:    #0A0A0A;
-            --ink-2:  #2B2B2B;
-            --mid:    #6E6E6E;
-            --soft:   #9A9A9A;
-            --rule:   #D7D7D7;
-            --near-w: #F4F4F4;
-            --white:  #FFFFFF;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--ink);
-            color: var(--white);
-            font-family: Arial, Helvetica, sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* ── SCANLINE GRAIN ── */
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(255,255,255,0.015) 2px,
-                rgba(255,255,255,0.015) 4px
-            );
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        /* ── NAV ── */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 48px;
-            background: rgba(10,10,10,0.92);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.07);
-        }
-
-        .nav-logo img {
-            height: 30px;
-            filter: brightness(0) invert(1);
-            display: block;
-        }
-
-        .nav-logo-fb {
-            font-size: 1.1rem;
-            font-weight: 900;
-            letter-spacing: -1px;
-        }
-
-        .nav-right {
-            font-size: 0.68rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--soft);
-        }
-
-        /* ── HERO ── */
-        /* [DIV: wtf-hero] */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 120px 24px 60px;
-        }
-
-        .hero-eyebrow {
-            font-size: 0.65rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--soft);
-            margin-bottom: 40px;
-        }
-
-        /* [DIV: wtf-typewriter] */
-        .typewriter-wrap {
-            margin-bottom: 20px;
-        }
-
-        .hero-line {
-            display: block;
-            font-size: clamp(48px, 10vw, 108px);
-            font-weight: 900;
-            line-height: 0.88;
-            letter-spacing: -3px;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-
-        .hero-line.solid  { color: var(--white); }
-        .hero-line.hollow {
-            color: transparent;
-            -webkit-text-stroke: 1.5px rgba(255,255,255,0.35);
-        }
-
-        .cursor-blink {
-            display: inline-block;
-            width: 3px;
-            height: 0.85em;
-            background: var(--white);
-            vertical-align: middle;
-            margin-left: 4px;
-            animation: blink 0.8s step-end infinite;
-        }
-
-        @keyframes blink { 50% { opacity: 0; } }
-
-        .hero-sub {
-            font-size: 1rem;
-            color: var(--mid);
-            max-width: 480px;
-            line-height: 1.65;
-            margin-bottom: 48px;
-        }
-
-        /* [DIV: wtf-prompt-btn] */
-        .prompt-spark-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 24px;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: transparent;
-            color: var(--soft);
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 0.72rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 16px;
-        }
-
-        .prompt-spark-btn:hover {
-            border-color: var(--white);
-            color: var(--white);
-        }
-
-        .spark-icon { font-size: 1rem; animation: spin 3s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* [DIV: wtf-spark-line] */
-        .spark-line {
-            font-size: 0.85rem;
-            color: var(--rule);
-            font-style: italic;
-            min-height: 24px;
-            transition: opacity 0.3s;
-            margin-bottom: 40px;
-            max-width: 500px;
-            text-align: center;
-        }
-
-        /* ── FORM CARD ── */
-        /* [DIV: wtf-form-card] */
-        .form-card {
-            width: 100%;
-            max-width: 580px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 40px;
-            text-align: left;
-        }
-
-        .form-step-label {
-            font-size: 0.62rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--soft);
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        /* [DIV: wtf-cause-pills] */
-        .cause-pills {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 28px;
-        }
-
-        .cpill {
-            padding: 9px 18px;
-            border: 1px solid var(--ink-2);
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 0.68rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            cursor: pointer;
-            color: var(--soft);
-            background: transparent;
-            transition: all 0.15s;
-        }
-
-        .cpill:hover  { border-color: var(--rule); color: var(--white); }
-        .cpill.active { border-color: var(--white); background: var(--white); color: var(--ink); }
-
-        /* [DIV: wtf-textarea] */
-        .wtf-textarea {
-            width: 100%;
-            min-height: 110px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: var(--white);
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 1rem;
-            line-height: 1.6;
-            padding: 16px;
-            resize: none;
-            transition: border-color 0.15s;
-            margin-bottom: 6px;
-        }
-
-        .wtf-textarea:focus { outline: none; border-color: rgba(255,255,255,0.4); }
-        .wtf-textarea::placeholder { color: var(--mid); }
-
-        .char-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 24px;
-        }
-
-        .char-hint {
-            font-size: 0.65rem;
-            color: var(--soft);
-            font-style: italic;
-        }
-
-        .char-count {
-            font-size: 0.65rem;
-            color: var(--soft);
-        }
-
-        .char-count.warn { color: var(--rule); }
-
-        /* [DIV: wtf-energy-dots] */
-        .energy-row {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 24px;
-        }
-
-        .energy-label {
-            font-size: 0.62rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--soft);
-            min-width: 96px;
-        }
-
-        .edot {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: transform 0.15s, border-color 0.15s;
-            position: relative;
-        }
-
-        .edot:hover { transform: scale(1.2); }
-        .edot.active { border-color: var(--white); }
-
-        .edot-tip {
-            position: absolute;
-            bottom: 130%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.55rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            white-space: nowrap;
-            color: var(--soft);
-            opacity: 0;
-            transition: opacity 0.15s;
-            pointer-events: none;
-        }
-
-        .edot:hover .edot-tip { opacity: 1; }
-
-        /* [DIV: wtf-email-input] */
-        .wtf-email {
-            width: 100%;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: var(--white);
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 0.95rem;
-            padding: 14px 16px;
-            margin-bottom: 24px;
-            transition: border-color 0.15s;
-        }
-
-        .wtf-email:focus { outline: none; border-color: rgba(255,255,255,0.4); }
-        .wtf-email::placeholder { color: var(--mid); }
-
-        /* [DIV: wtf-submit] */
-        .submit-btn {
-            width: 100%;
-            padding: 18px;
-            background: var(--white);
-            color: var(--ink);
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 0.72rem;
-            font-weight: 900;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            transition: background 0.15s, letter-spacing 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .submit-btn:hover:not(:disabled) {
-            background: var(--near-w);
-            letter-spacing: 8px;
-        }
-
-        .submit-btn:disabled {
-            background: var(--ink-2);
-            color: var(--mid);
-            cursor: not-allowed;
-            letter-spacing: 5px;
-        }
-
-        .form-fine {
-            font-size: 0.62rem;
-            color: var(--soft);
-            text-align: center;
-            margin-top: 14px;
-            letter-spacing: 0.5px;
-        }
-
-        /* ── SUCCESS ── */
-        /* [DIV: wtf-success] */
-        .success-view {
-            display: none;
-            text-align: center;
-            padding: 24px 0;
-        }
-
-        .success-keys {
-            font-size: 2rem;
-            letter-spacing: 8px;
-            margin-bottom: 16px;
-            animation: keypress 1s ease;
-        }
-
-        @keyframes keypress {
-            0%   { transform: scale(1.4); }
-            100% { transform: scale(1); }
-        }
-
-        .success-hed {
-            font-size: 1.8rem;
-            font-weight: 900;
-            letter-spacing: -1px;
-            margin-bottom: 10px;
-        }
-
-        .success-sub {
-            font-size: 0.85rem;
-            color: var(--soft);
-            line-height: 1.7;
-        }
-
-        /* ── STATS BAR ── */
-        /* [DIV: wtf-stats] */
-        .stats-bar {
-            display: flex;
-            border-top: 1px solid rgba(255,255,255,0.07);
-            border-bottom: 1px solid rgba(255,255,255,0.07);
-            max-width: 100%;
-        }
-
-        .stat-cell {
-            flex: 1;
-            padding: 28px 32px;
-            border-right: 1px solid rgba(255,255,255,0.07);
-            text-align: center;
-        }
-
-        .stat-cell:last-child { border-right: none; }
-
-        .stat-num {
-            font-size: 2.2rem;
-            font-weight: 900;
-            letter-spacing: -2px;
-            line-height: 1;
-        }
-
-        .stat-lbl {
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--soft);
-            margin-top: 6px;
-        }
-
-        /* ── POLAROID WALL ── */
-        /* [DIV: wtf-wall] */
-        .wall-section {
-            padding: 72px 24px;
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        .wall-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 40px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.07);
-        }
-
-        .wall-label {
-            font-size: 0.62rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--soft);
-        }
-
-        .wall-live {
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--mid);
-        }
-
-        /* [DIV: wtf-polaroid-grid] */
-        .polaroid-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: flex-start;
-        }
-
-        /* [DIV: wtf-polaroid-card] */
-        .polaroid {
-            width: 220px;
-            background: var(--near-w);
-            padding: 16px 16px 40px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 1px 4px rgba(0,0,0,0.3);
-            transform: rotate(var(--rot));
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: default;
-            flex-shrink: 0;
-        }
-
-        .polaroid:hover {
-            transform: rotate(0deg) scale(1.05);
-            box-shadow: 0 8px 40px rgba(0,0,0,0.8);
-            z-index: 10;
-            position: relative;
-        }
-
-        /* Washi tape strips */
-        .polaroid::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%) rotate(var(--tape-rot, -2deg));
-            width: 52px;
-            height: 20px;
-            background: rgba(255,255,255,0.55);
-            border-top: 1px solid rgba(0,0,0,0.08);
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-        }
-
-        .polaroid { position: relative; }
-
-        .polaroid-photo {
-            width: 100%;
-            aspect-ratio: 1;
-            background: var(--ink);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
-            overflow: hidden;
-        }
-
-        .polaroid-photo-text {
-            font-size: 0.65rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--mid);
-            padding: 8px;
-            text-align: center;
-        }
-
-        .polaroid-caption {
-            font-size: 0.72rem;
-            color: var(--ink);
-            line-height: 1.45;
-            font-style: italic;
-            margin-bottom: 8px;
-        }
-
-        .polaroid-tag {
-            font-size: 0.55rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--mid);
-            font-style: normal;
-        }
-
-        /* Sticker dots on photos */
-        .sticker {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--ink-2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.55rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--near-w);
-            text-align: center;
-            line-height: 1.1;
-            padding: 4px;
-        }
-
-        .wall-empty {
-            width: 100%;
-            padding: 60px;
-            text-align: center;
-            border: 1px dashed rgba(255,255,255,0.1);
-            color: var(--mid);
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* ── PRIZE ── */
-        /* [DIV: wtf-prize] */
-        .prize-section {
-            padding: 72px 24px;
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        .prize-inner {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2px;
-            background: rgba(255,255,255,0.07);
-        }
-
-        .prize-block {
-            background: var(--ink);
-            padding: 40px;
-        }
-
-        .prize-big {
-            font-size: 3.5rem;
-            font-weight: 900;
-            letter-spacing: -3px;
-            line-height: 1;
-            margin-bottom: 12px;
-        }
-
-        .prize-desc {
-            font-size: 0.88rem;
-            color: var(--soft);
-            line-height: 1.7;
-        }
-
-        .prize-rules {
-            list-style: none;
-            padding: 0;
-        }
-
-        .prize-rules li {
-            font-size: 0.82rem;
-            color: var(--mid);
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            line-height: 1.5;
-        }
-
-        .prize-rules li::before {
-            content: '→  ';
-            color: var(--soft);
-        }
-
-        /* ── FOOTER ── */
-        /* [DIV: wtf-footer] */
-        footer {
-            padding: 32px 48px;
-            border-top: 1px solid rgba(255,255,255,0.07);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        footer img {
-            height: 20px;
-            filter: brightness(0) invert(1);
-            opacity: 0.35;
-        }
-
-        .footer-fb { font-weight: 900; font-size: 0.9rem; opacity: 0.35; }
-
-        .footer-mid {
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--mid);
-        }
-
-        .footer-right {
-            font-size: 0.6rem;
-            color: var(--mid);
-            letter-spacing: 1px;
-        }
-
-        /* ── TOAST ── */
-        .toast {
-            position: fixed;
-            bottom: 28px;
-            left: 50%;
-            transform: translateX(-50%) translateY(60px);
-            background: var(--white);
-            color: var(--ink);
-            font-size: 0.65rem;
-            font-weight: 900;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            padding: 12px 28px;
-            opacity: 0;
-            transition: all 0.25s;
-            z-index: 500;
-            white-space: nowrap;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 600px) {
-            nav { padding: 16px 20px; }
-            .form-card { padding: 24px 20px; }
-            .prize-inner { grid-template-columns: 1fr; }
-            footer { flex-direction: column; gap: 12px; text-align: center; }
-            .hero-line { white-space: normal; letter-spacing: -1px; }
-            .stat-cell { padding: 20px 16px; }
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>shortkey.wtf — what are you actually fighting for?</title>
+  <style>
+    :root {
+      --ink:    #0A0A0A;
+      --ink-2:  #2B2B2B;
+      --mid:    #6E6E6E;
+      --soft:   #9A9A9A;
+      --rule:   #D7D7D7;
+      --near-w: #F4F4F4;
+      --white:  #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* scanline grain */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px,
+        rgba(255,255,255,0.012) 2px, rgba(255,255,255,0.012) 4px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 48px;
+      background: rgba(10,10,10,0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .nav-logo img { height: 28px; filter: brightness(0) invert(1); display: block; }
+    .nav-logo-fb  { font-size: 1rem; font-weight: 900; letter-spacing: -1px; }
+    .nav-right    { font-size: 0.62rem; letter-spacing: 4px; text-transform: uppercase; color: var(--soft); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 120px 24px 60px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.62rem; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--soft); margin-bottom: 44px;
+    }
+
+    /* typewriter headline */
+    .hero-headline { margin-bottom: 24px; }
+    .hero-line {
+      display: block; font-weight: 900;
+      font-size: clamp(46px, 10vw, 106px);
+      line-height: 0.87; letter-spacing: -3px; text-transform: uppercase;
+    }
+    .hero-line.solid  { color: var(--white); }
+    .hero-line.hollow { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.3); }
+    .cursor-blink {
+      display: inline-block; width: 4px; height: 0.8em;
+      background: var(--white); vertical-align: middle; margin-left: 4px;
+      animation: blink 0.75s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-sub {
+      font-size: 0.95rem; color: var(--mid); max-width: 440px;
+      line-height: 1.7; margin-bottom: 44px;
+    }
+
+    /* spark prompt */
+    .spark-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 11px 22px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: transparent;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--soft); cursor: pointer; margin-bottom: 14px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .spark-btn:hover { border-color: var(--white); color: var(--white); }
+    .spark-icon { animation: spin 4s linear infinite; font-size: 0.9rem; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    .spark-line {
+      font-size: 0.82rem; color: var(--rule); font-style: italic;
+      min-height: 22px; max-width: 480px; text-align: center;
+      transition: opacity 0.3s; margin-bottom: 40px;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      width: 100%; max-width: 560px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 40px; text-align: left;
+    }
+
+    .step-lbl {
+      display: block; font-size: 0.58rem; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--soft); margin-bottom: 12px;
+    }
+
+    /* cause pills */
+    .cause-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; }
+    .cpill {
+      padding: 9px 17px; border: 1px solid var(--ink-2);
+      font-family: Arial, Helvetica, sans-serif; font-size: 0.65rem;
+      letter-spacing: 3px; text-transform: uppercase;
+      cursor: pointer; color: var(--soft); background: transparent;
+      transition: all 0.15s;
+    }
+    .cpill:hover  { border-color: var(--rule); color: var(--white); }
+    .cpill.active { border-color: var(--white); background: var(--white); color: var(--ink); }
+
+    /* textarea */
+    .wtf-ta {
+      width: 100%; min-height: 108px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white); font-family: Arial, Helvetica, sans-serif;
+      font-size: 1rem; line-height: 1.6; padding: 14px 16px;
+      resize: none; transition: border-color 0.15s; margin-bottom: 6px;
+    }
+    .wtf-ta:focus { outline: none; border-color: rgba(255,255,255,0.38); }
+    .wtf-ta::placeholder { color: var(--mid); }
+
+    .char-row {
+      display: flex; justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .char-hint  { font-size: 0.62rem; color: var(--soft); font-style: italic; }
+    .char-count { font-size: 0.62rem; color: var(--soft); }
+    .char-count.warn { color: var(--rule); }
+
+    /* ── COLOUR PICKER ── */
+    .colour-picker-wrap { margin-bottom: 30px; }
+
+    .colour-picker-label {
+      font-size: 0.58rem; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--soft); margin-bottom: 6px; display: block;
+    }
+
+    .colour-sub {
+      font-size: 0.62rem; color: var(--mid); margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .colour-swatches {
+      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    }
+
+    .cswatch {
+      width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.15s, border-color 0.15s;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .cswatch:hover { transform: scale(1.18); }
+    .cswatch.active { border-color: var(--white); transform: scale(1.15); }
+
+    /* White swatch needs a visible border even when inactive */
+    .cswatch[data-shade="#FFFFFF"] { border-color: rgba(255,255,255,0.25); }
+    .cswatch[data-shade="#FFFFFF"].active { border-color: var(--white); }
+
+    .cswatch-tip {
+      position: absolute; bottom: 120%; left: 50%;
+      transform: translateX(-50%);
+      background: var(--ink-2); color: var(--rule);
+      font-size: 0.52rem; letter-spacing: 1.5px; text-transform: uppercase;
+      white-space: nowrap; padding: 3px 7px;
+      opacity: 0; pointer-events: none; transition: opacity 0.15s;
+    }
+    .cswatch:hover .cswatch-tip { opacity: 1; }
+
+    /* Selected colour preview */
+    .colour-preview {
+      display: flex; align-items: center; gap: 12px; margin-top: 14px;
+    }
+    .preview-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+    .preview-txt {
+      font-size: 0.65rem; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--soft);
+    }
+
+    /* email */
+    .wtf-email {
+      width: 100%; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white); font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.95rem; padding: 14px 16px; margin-bottom: 24px;
+      transition: border-color 0.15s;
+    }
+    .wtf-email:focus { outline: none; border-color: rgba(255,255,255,0.38); }
+    .wtf-email::placeholder { color: var(--mid); }
+
+    /* submit */
+    .submit-btn {
+      width: 100%; padding: 17px;
+      background: var(--white); color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.68rem; font-weight: 900;
+      letter-spacing: 5px; text-transform: uppercase;
+      border: none; cursor: pointer;
+      transition: background 0.15s, letter-spacing 0.2s;
+    }
+    .submit-btn:hover:not(:disabled)  { background: var(--near-w); letter-spacing: 8px; }
+    .submit-btn:disabled { background: var(--ink-2); color: var(--mid); cursor: not-allowed; letter-spacing: 5px; }
+
+    .form-fine {
+      font-size: 0.6rem; color: var(--soft); text-align: center;
+      margin-top: 14px; letter-spacing: 0.4px; line-height: 1.6;
+    }
+
+    /* success */
+    .success-view { display: none; text-align: center; padding: 28px 0; }
+    .success-keys { font-size: 2rem; letter-spacing: 8px; margin-bottom: 16px; animation: pop 0.5s ease; }
+    @keyframes pop { 0% { transform: scale(1.5); } 100% { transform: scale(1); } }
+    .success-hed { font-size: 1.7rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
+    .success-sub { font-size: 0.85rem; color: var(--soft); line-height: 1.75; }
+    .success-colour {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin: 16px auto 0; padding: 8px 18px;
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: var(--soft);
+    }
+    .success-dot { width: 14px; height: 14px; border-radius: 50%; }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: flex;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .stat-cell {
+      flex: 1; padding: 28px 24px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-size: 2rem; font-weight: 900; letter-spacing: -2px; line-height: 1; }
+    .stat-lbl { font-size: 0.58rem; letter-spacing: 3px; text-transform: uppercase; color: var(--soft); margin-top: 6px; }
+
+    /* ── POLAROID WALL ── */
+    .wall-section { padding: 72px 24px; max-width: 960px; margin: 0 auto; }
+    .wall-header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 40px; padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .wall-label { font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; color: var(--soft); }
+    .wall-live  { font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); }
+
+    .polaroid-grid { display: flex; flex-wrap: wrap; gap: 20px; }
+
+    .polaroid {
+      width: 200px; background: var(--near-w);
+      padding: 14px 14px 44px; position: relative;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.65), 0 1px 4px rgba(0,0,0,0.3);
+      transform: rotate(var(--rot));
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: default; flex-shrink: 0;
+    }
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.06);
+      box-shadow: 0 10px 48px rgba(0,0,0,0.85);
+      z-index: 20; position: relative;
+    }
+    /* washi tape */
+    .polaroid::before {
+      content: ''; position: absolute; top: -10px; left: 50%;
+      transform: translateX(-50%) rotate(var(--tape-rot));
+      width: 52px; height: 18px;
+      background: rgba(255,255,255,0.52);
+      border-top: 1px solid rgba(0,0,0,0.07);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .polaroid-photo {
+      width: 100%; aspect-ratio: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      margin-bottom: 12px; overflow: hidden;
+    }
+    .polaroid-sticker {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.52rem; letter-spacing: 1px; text-transform: uppercase;
+      line-height: 1.1; text-align: center; padding: 4px;
+      font-weight: 700;
+    }
+    /* sticker text is opposite of bg for contrast */
+    .polaroid-caption {
+      font-size: 0.7rem; color: var(--ink); line-height: 1.45;
+      font-style: italic; margin-bottom: 8px;
+    }
+    .polaroid-tag {
+      font-size: 0.52rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--mid); font-style: normal;
+    }
+    .polaroid-colname {
+      font-size: 0.5rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--mid); margin-top: 3px;
+    }
+
+    /* XXX flagged card */
+    .polaroid.flagged .polaroid-caption { color: var(--soft); font-style: normal; letter-spacing: 2px; }
+
+    .wall-empty {
+      width: 100%; padding: 56px; text-align: center;
+      border: 1px dashed rgba(255,255,255,0.1);
+      color: var(--mid); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    }
+
+    /* ── PRIZE ── */
+    .prize-section { padding: 72px 24px; max-width: 960px; margin: 0 auto; }
+    .prize-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; background: rgba(255,255,255,0.07);
+    }
+    .prize-block { background: var(--ink); padding: 40px; }
+    .prize-big {
+      font-size: 3.2rem; font-weight: 900; letter-spacing: -3px; line-height: 1; margin-bottom: 12px;
+    }
+    .prize-desc { font-size: 0.88rem; color: var(--soft); line-height: 1.75; }
+    .prize-rules { list-style: none; padding: 0; }
+    .prize-rules li {
+      font-size: 0.82rem; color: var(--mid); padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06); line-height: 1.5;
+    }
+    .prize-rules li::before { content: '→  '; color: var(--soft); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 30px 48px; border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer img { height: 18px; filter: brightness(0) invert(1); opacity: 0.32; }
+    .footer-fb  { font-weight: 900; font-size: 0.85rem; opacity: 0.32; }
+    .footer-mid { font-size: 0.58rem; letter-spacing: 3px; text-transform: uppercase; color: var(--mid); }
+    .footer-right { font-size: 0.58rem; color: var(--mid); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 26px; left: 50%;
+      transform: translateX(-50%) translateY(56px);
+      background: var(--white); color: var(--ink);
+      font-size: 0.62rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase;
+      padding: 11px 28px; opacity: 0; transition: all 0.25s;
+      z-index: 500; white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .form-card { padding: 24px 18px; }
+      .prize-inner { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .hero-line { letter-spacing: -1px; }
+      .stat-cell { padding: 20px 12px; }
+      .polaroid { width: 160px; }
+    }
+  </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-    <div class="nav-logo">
-        <img src="https://raw.githubusercontent.com/KieranSimpee/5senses-portal/main/assets/shortkey_logo_white.png"
-             alt="shortkey"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-        <div class="nav-logo-fb" style="display:none;">shortkey.</div>
-    </div>
-    <div class="nav-right">shortkey.wtf · pre-launch</div>
+  <div class="nav-logo">
+    <img src="https://raw.githubusercontent.com/KieranSimpee/5senses-portal/main/assets/shortkey_logo_white.png"
+         alt="shortkey"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div class="nav-logo-fb" style="display:none">shortkey.</div>
+  </div>
+  <div class="nav-right">shortkey.wtf · pre-launch</div>
 </nav>
 
 <!-- HERO -->
-<!-- [DIV: wtf-hero] -->
 <section class="hero">
-    <p class="hero-eyebrow">digital sanctuary · keymember registration</p>
+  <p class="hero-eyebrow">digital sanctuary · keymember registration 2026</p>
 
-    <!-- [DIV: wtf-typewriter] -->
-    <div class="typewriter-wrap">
-        <span class="hero-line solid"   id="line1"></span>
-        <span class="hero-line hollow"  id="line2"></span>
-        <span class="hero-line solid"   id="line3"><span class="cursor-blink" id="cursor"></span></span>
+  <div class="hero-headline">
+    <span class="hero-line solid"  id="line1"></span>
+    <span class="hero-line hollow" id="line2"></span>
+    <span class="hero-line solid"  id="line3"><span class="cursor-blink" id="cursor"></span></span>
+  </div>
+
+  <p class="hero-sub">
+    Life is too short to lose passion.<br>
+    We're building a community of unapologetic voices.<br>
+    Your words. Your colour. Your cause.
+  </p>
+
+  <button class="spark-btn" onclick="shufflePrompt()">
+    <span class="spark-icon">◈</span>
+    not sure what you're fighting for?
+  </button>
+  <div class="spark-line" id="spark-line">&nbsp;</div>
+
+  <!-- FORM -->
+  <div class="form-card">
+    <div id="form-view">
+
+      <!-- 01 Cause -->
+      <span class="step-lbl">01 — what are you genuinely fighting for?</span>
+      <div class="cause-pills">
+        <button class="cpill" data-cat="BEAUTY">beauty</button>
+        <button class="cpill" data-cat="IDENTITY">identity</button>
+        <button class="cpill" data-cat="STYLE">style</button>
+        <button class="cpill" data-cat="CONFIDENCE">confidence</button>
+      </div>
+
+      <!-- 02 Manifesto -->
+      <span class="step-lbl">02 — your manifesto (max 280 chars)</span>
+      <textarea class="wtf-ta" id="wtf-text" maxlength="280"
+        placeholder="I am fighting for..."></textarea>
+      <div class="char-row">
+        <span class="char-hint" id="char-hint">&nbsp;</span>
+        <span class="char-count" id="char-count">0 / 280</span>
+      </div>
+
+      <!-- 03 Colour — from brand guide palette -->
+      <div class="colour-picker-wrap">
+        <span class="colour-picker-label">03 — choose your colour · from the shortkey palette</span>
+        <p class="colour-sub">
+          Each shade from our brand guide carries a different energy.<br>
+          Pick the one that matches your fight.
+        </p>
+        <div class="colour-swatches" id="swatches">
+          <div class="cswatch active" data-shade="#0A0A0A" data-name="Jet Black"    style="background:#0A0A0A;border-color:var(--white)"><span class="cswatch-tip">Jet Black</span></div>
+          <div class="cswatch"        data-shade="#2B2B2B" data-name="Deep Charcoal" style="background:#2B2B2B"><span class="cswatch-tip">Deep Charcoal</span></div>
+          <div class="cswatch"        data-shade="#6E6E6E" data-name="Mid Grey"      style="background:#6E6E6E"><span class="cswatch-tip">Mid Grey</span></div>
+          <div class="cswatch"        data-shade="#9A9A9A" data-name="Cool Grey"     style="background:#9A9A9A"><span class="cswatch-tip">Cool Grey</span></div>
+          <div class="cswatch"        data-shade="#D7D7D7" data-name="Light Grey"    style="background:#D7D7D7"><span class="cswatch-tip">Light Grey</span></div>
+          <div class="cswatch"        data-shade="#F4F4F4" data-name="Off White"     style="background:#F4F4F4"><span class="cswatch-tip">Off White</span></div>
+          <div class="cswatch"        data-shade="#FFFFFF" data-name="Pure White"    style="background:#FFFFFF"><span class="cswatch-tip">Pure White</span></div>
+        </div>
+        <div class="colour-preview">
+          <div class="preview-dot" id="preview-dot" style="background:#0A0A0A"></div>
+          <div class="preview-txt" id="preview-txt">Jet Black — pure intensity</div>
+        </div>
+      </div>
+
+      <!-- 04 Email -->
+      <span class="step-lbl">04 — become a keymember</span>
+      <input class="wtf-email" type="email" id="wtf-email"
+        placeholder="your@email.com — we'll reach out if you win"/>
+
+      <!-- Submit -->
+      <button class="submit-btn" id="submit-btn" disabled>ctrl + alt + WTF</button>
+      <p class="form-fine">
+        no spam · keymembers get early access + a chance at $100 platform credit<br>
+        inappropriate entries are recorded as XXX and reviewed by our team
+      </p>
+
+    </div><!-- /form-view -->
+
+    <!-- SUCCESS -->
+    <div class="success-view" id="success-view">
+      <div class="success-keys">⌨ ✓</div>
+      <div class="success-hed">YOUR VOICE IS IN.</div>
+      <p class="success-sub">
+        you're a founding keymember.<br>
+        we read every single one.<br>
+        we'll be in touch if yours wins.
+      </p>
+      <div class="success-colour">
+        <div class="success-dot" id="success-dot"></div>
+        <span id="success-col-name">—</span>
+      </div>
     </div>
 
-    <p class="hero-sub">
-        We're building a community of unapologetic voices.<br>
-        Your words are the asset. Define your truth, claim your space.
-    </p>
-
-    <!-- [DIV: wtf-prompt-btn] -->
-    <button class="prompt-spark-btn" onclick="shufflePrompt()">
-        <span class="spark-icon">◈</span>
-        not sure what you're fighting for?
-    </button>
-
-    <!-- [DIV: wtf-spark-line] -->
-    <div class="spark-line" id="spark-line">&nbsp;</div>
-
-    <!-- FORM CARD -->
-    <!-- [DIV: wtf-form-card] -->
-    <div class="form-card" id="form-area">
-
-        <div id="form-view">
-            <span class="form-step-label">01 — your cause</span>
-            <!-- [DIV: wtf-cause-pills] -->
-            <div class="cause-pills">
-                <button class="cpill" data-cat="BEAUTY">beauty</button>
-                <button class="cpill" data-cat="IDENTITY">identity</button>
-                <button class="cpill" data-cat="STYLE">style</button>
-                <button class="cpill" data-cat="CONFIDENCE">confidence</button>
-            </div>
-
-            <span class="form-step-label">02 — your manifesto</span>
-            <!-- [DIV: wtf-textarea] -->
-            <textarea class="wtf-textarea" id="wtf-text" maxlength="280"
-                placeholder="I am fighting for..."></textarea>
-            <div class="char-row">
-                <span class="char-hint" id="char-hint">&nbsp;</span>
-                <span class="char-count" id="char-count">0 / 280</span>
-            </div>
-
-            <span class="form-step-label">03 — your energy</span>
-            <!-- [DIV: wtf-energy-dots] -->
-            <div class="energy-row">
-                <div class="energy-label">tone of voice</div>
-                <div class="edot active" data-shade="#0A0A0A" style="background:#0A0A0A; border-color:var(--white);">
-                    <span class="edot-tip">jet black</span>
-                </div>
-                <div class="edot" data-shade="#6E6E6E" style="background:#6E6E6E;">
-                    <span class="edot-tip">mid grey</span>
-                </div>
-                <div class="edot" data-shade="#D7D7D7" style="background:#D7D7D7;">
-                    <span class="edot-tip">soft white</span>
-                </div>
-            </div>
-
-            <span class="form-step-label">04 — become a keymember</span>
-            <!-- [DIV: wtf-email-input] -->
-            <input class="wtf-email" type="email" id="wtf-email"
-                placeholder="your@email.com — we'll reach out if you win">
-
-            <!-- [DIV: wtf-submit] -->
-            <button class="submit-btn" id="submit-btn" disabled>
-                ctrl + alt + WTF
-            </button>
-
-            <p class="form-fine">no spam. keymembers get early access + a shot at $100 credit.</p>
-        </div>
-
-        <!-- [DIV: wtf-success] -->
-        <div class="success-view" id="success-view">
-            <div class="success-keys">⌨ ✓</div>
-            <div class="success-hed">YOUR VOICE IS IN.</div>
-            <p class="success-sub">
-                you're a founding keymember.<br>
-                we're watching every single one.<br>
-                we'll be in touch if yours wins.
-            </p>
-        </div>
-
-    </div>
+  </div><!-- /form-card -->
 </section>
 
 <!-- STATS -->
-<!-- [DIV: wtf-stats] -->
 <div class="stats-bar">
-    <div class="stat-cell">
-        <div class="stat-num" id="stat-entries">—</div>
-        <div class="stat-lbl">voices in</div>
-    </div>
-    <div class="stat-cell">
-        <div class="stat-num">10</div>
-        <div class="stat-lbl">winners chosen</div>
-    </div>
-    <div class="stat-cell">
-        <div class="stat-num">$100</div>
-        <div class="stat-lbl">credit each</div>
-    </div>
-    <div class="stat-cell">
-        <div class="stat-num">1</div>
-        <div class="stat-lbl">only rule: be honest</div>
-    </div>
+  <div class="stat-cell"><div class="stat-num" id="stat-entries">—</div><div class="stat-lbl">voices in</div></div>
+  <div class="stat-cell"><div class="stat-num">10</div><div class="stat-lbl">winners chosen</div></div>
+  <div class="stat-cell"><div class="stat-num">$100</div><div class="stat-lbl">credit each</div></div>
+  <div class="stat-cell"><div class="stat-num">1</div><div class="stat-lbl">only rule: be honest</div></div>
 </div>
 
 <!-- POLAROID WALL -->
-<!-- [DIV: wtf-wall] -->
 <section class="wall-section">
-    <div class="wall-header">
-        <div class="wall-label">the community</div>
-        <div class="wall-live">↻ live · approved entries only</div>
-    </div>
-    <!-- [DIV: wtf-polaroid-grid] -->
-    <div class="polaroid-grid" id="polaroid-grid">
-        <div class="wall-empty">be the first voice on the wall.</div>
-    </div>
+  <div class="wall-header">
+    <div class="wall-label">the community wall</div>
+    <div class="wall-live">↻ live · approved entries only</div>
+  </div>
+  <div class="polaroid-grid" id="polaroid-grid">
+    <div class="wall-empty">be the first voice on the wall.</div>
+  </div>
 </section>
 
 <!-- PRIZE -->
-<!-- [DIV: wtf-prize] -->
 <section class="prize-section">
-    <div class="prize-inner">
-        <div class="prize-block">
-            <div class="prize-big">$1,000</div>
-            <p class="prize-desc">
-                Ten winners. $100 each.<br><br>
-                Not for the prettiest words.<br>
-                For the most honest ones.<br><br>
-                No algorithm. Human curation only.
-            </p>
-        </div>
-        <div class="prize-block">
-            <ul class="prize-rules">
-                <li>one entry per person</li>
-                <li>we read every single one</li>
-                <li>winners selected by the shortkey team</li>
-                <li>entries moderated for community standards</li>
-                <li>credit applied to your keymember account at launch</li>
-                <li>shortkey.wtf · your style. your ctrl.</li>
-            </ul>
-        </div>
+  <div class="prize-inner">
+    <div class="prize-block">
+      <div class="prize-big">$1,000</div>
+      <p class="prize-desc">
+        Ten winners. $100 each.<br><br>
+        Not for the prettiest words.<br>
+        For the most honest ones.<br><br>
+        No algorithm. Human eyes only.
+      </p>
     </div>
+    <div class="prize-block">
+      <ul class="prize-rules">
+        <li>one entry per person</li>
+        <li>we read every single one</li>
+        <li>your colour is recorded alongside your entry</li>
+        <li>winners selected by the shortkey team</li>
+        <li>inappropriate entries flagged XXX and reviewed</li>
+        <li>credit applied at platform launch</li>
+        <li>shortkey.wtf · your style. your ctrl.</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
 <!-- FOOTER -->
-<!-- [DIV: wtf-footer] -->
 <footer>
-    <div>
-        <img src="https://raw.githubusercontent.com/KieranSimpee/5senses-portal/main/assets/shortkey_logo_white.png"
-             alt="shortkey"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-        <div class="footer-fb" style="display:none;">shortkey.</div>
-    </div>
-    <div class="footer-mid">YOUR STYLE. YOUR CTRL.</div>
-    <div class="footer-right">shortkey.wtf</div>
+  <div>
+    <img src="https://raw.githubusercontent.com/KieranSimpee/5senses-portal/main/assets/shortkey_logo_white.png"
+         alt="shortkey"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div class="footer-fb" style="display:none">shortkey.</div>
+  </div>
+  <div class="footer-mid">YOUR STYLE. YOUR CTRL.</div>
+  <div class="footer-right">shortkey.wtf</div>
 </footer>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-/* =============================================
-   KEYBOARD AUDIO ENGINE (Web Audio API)
-   No external files — pure synthesis
-   ============================================= */
-const AudioCtx = window.AudioContext || window.webkitAudioContext;
+/* ── AUDIO ENGINE ── */
 let audioCtx = null;
-
-function initAudio() {
-    if (!audioCtx) audioCtx = new AudioCtx();
-}
+function initAudio() { if (!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }
 
 function playKey() {
-    if (!audioCtx) return;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    const filter = audioCtx.createBiquadFilter();
-
-    filter.type = 'bandpass';
-    filter.frequency.value = 800 + Math.random() * 400;
-    filter.Q.value = 0.8;
-
-    osc.type = 'square';
-    osc.frequency.value = 180 + Math.random() * 60;
-
-    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.06);
-
-    osc.connect(filter);
-    filter.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.06);
+  if (!audioCtx) return;
+  const o = audioCtx.createOscillator(), g = audioCtx.createGain(), f = audioCtx.createBiquadFilter();
+  f.type = 'bandpass'; f.frequency.value = 800 + Math.random()*400; f.Q.value = 0.8;
+  o.type = 'square'; o.frequency.value = 180 + Math.random()*60;
+  g.gain.setValueAtTime(0.07, audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.065);
+  o.connect(f); f.connect(g); g.connect(audioCtx.destination);
+  o.start(); o.stop(audioCtx.currentTime + 0.065);
 }
 
 function playSubmit() {
-    if (!audioCtx) return;
-    [0, 0.08, 0.16].forEach(t => {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'square';
-        osc.frequency.value = 220 + t * 500;
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime + t);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + t + 0.12);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(audioCtx.currentTime + t);
-        osc.stop(audioCtx.currentTime + t + 0.12);
-    });
+  if (!audioCtx) return;
+  [0, 0.09, 0.18].forEach(t => {
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = 'square'; o.frequency.value = 200 + t*600;
+    g.gain.setValueAtTime(0.09, audioCtx.currentTime+t);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+t+0.13);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(audioCtx.currentTime+t); o.stop(audioCtx.currentTime+t+0.13);
+  });
 }
 
-/* =============================================
-   TYPEWRITER HEADLINE
-   ============================================= */
-const lines = [
-    { el: 'line1', text: "WHAT'S" },
-    { el: 'line2', text: "TRULY"  },
-    { el: 'line3', text: "FIGHTING FOR." }
+/* ── TYPEWRITER ── */
+const TW = [
+  { id:'line1', text:"WHAT'S"         },
+  { id:'line2', text:"TRULY"          },
+  { id:'line3', text:"FIGHTING FOR."  },
 ];
-
-let li = 0, ci = 0;
-const cursor = document.getElementById('cursor');
-
+let tli=0, tci=0;
 function type() {
-    if (li >= lines.length) {
-        // Done — pulse cursor then hide
-        setTimeout(() => cursor.style.display = 'none', 2000);
-        return;
-    }
-    const { el, text } = lines[li];
-    const elem = document.getElementById(el);
-
-    if (el === 'line3') {
-        // Insert cursor before typing last line
-        elem.innerHTML = '<span class="cursor-blink" id="cursor"></span>';
-    }
-
-    if (ci < text.length) {
-        if (el === 'line3') {
-            elem.innerHTML = text.slice(0, ci + 1) + '<span class="cursor-blink" id="cursor"></span>';
-        } else {
-            elem.textContent = text.slice(0, ci + 1);
-        }
-        ci++;
-        // Vary speed for realism
-        const delay = text[ci - 1] === ' ' ? 80 : 45 + Math.random() * 55;
-        setTimeout(type, delay);
-    } else {
-        li++; ci = 0;
-        const gap = li === lines.length ? 0 : 180;
-        setTimeout(type, gap);
-    }
+  if (tli >= TW.length) { setTimeout(()=>{ const c=document.getElementById('cursor'); if(c) c.style.display='none'; }, 2000); return; }
+  const {id,text} = TW[tli], el = document.getElementById(id);
+  if (id==='line3') el.innerHTML = text.slice(0,tci) + '<span class="cursor-blink" id="cursor"></span>';
+  else el.textContent = text.slice(0,tci);
+  tci++;
+  if (tci > text.length) { tli++; tci=0; setTimeout(type, tli<TW.length?200:0); return; }
+  setTimeout(type, text[tci-1]===' ' ? 85 : 44+Math.random()*54);
 }
+setTimeout(type, 700);
 
-setTimeout(type, 600);
-
-/* =============================================
-   PROMPT SPARK GENERATOR
-   ============================================= */
-const sparks = [
-    '"fighting for the right to skip the skincare routine on a Tuesday."',
-    '"fighting for the version of myself that actually wears sunscreen."',
-    '"fighting for the confidence to leave the house without makeup — and not care."',
-    '"fighting for beauty standards that don\'t require a filter."',
-    '"fighting to stop apologising for taking up space."',
-    '"fighting for the girl who couldn\'t afford the brand but knew her worth."',
-    '"fighting against the algorithm deciding what beauty looks like."',
-    '"fighting to feel good in my skin before I fix my skin."',
-    '"fighting for the comeback that nobody expected."',
-    '"fighting for my mum\'s definition of beauty, not Instagram\'s."',
-    '"fighting to unlearn everything a magazine told me at 14."',
-    '"fighting for slow mornings, honest mirrors, and nothing that hurts."',
-    '"fighting for authenticity in an industry built on illusion."',
-    '"fighting for the right to try something new without being judged."',
-    '"fighting to be the role model I never had."',
+/* ── SPARK PROMPTS ── */
+const SPARKS = [
+  '"fighting for the right to skip the skincare routine on a Tuesday."',
+  '"fighting for the version of me that actually wears sunscreen."',
+  '"fighting for beauty standards that don\'t need a filter."',
+  '"fighting to stop apologising for taking up space."',
+  '"fighting for the girl who couldn\'t afford the brand but knew her worth."',
+  '"fighting against the algorithm deciding what beauty looks like."',
+  '"fighting to feel good in my skin before I fix my skin."',
+  '"fighting for my mum\'s definition of beauty, not Instagram\'s."',
+  '"fighting to unlearn everything a magazine told me at 14."',
+  '"fighting for slow mornings, honest mirrors, and nothing that hurts."',
+  '"fighting for authenticity in an industry built on illusion."',
+  '"fighting for the confidence to walk out without makeup — and not care."',
+  '"fighting to be the role model I never had."',
+  '"fighting for the comeback nobody expected."',
+  '"fighting for every version of me that almost gave up."',
 ];
-
 let lastSpark = -1;
 
 function shufflePrompt() {
-    initAudio();
-    playKey();
-    let idx;
-    do { idx = Math.floor(Math.random() * sparks.length); } while (idx === lastSpark);
-    lastSpark = idx;
-
-    const el = document.getElementById('spark-line');
-    el.style.opacity = '0';
-    setTimeout(() => {
-        el.textContent = sparks[idx];
-        el.style.opacity = '1';
-
-        // Optionally inject into textarea if empty
-        const ta = document.getElementById('wtf-text');
-        if (!ta.value.trim()) {
-            const raw = sparks[idx].replace(/"/g, '');
-            ta.value = 'I am ' + raw;
-            updateChar();
-        }
-    }, 250);
+  initAudio(); playKey();
+  let idx; do { idx = Math.floor(Math.random()*SPARKS.length); } while(idx===lastSpark);
+  lastSpark = idx;
+  const el = document.getElementById('spark-line');
+  el.style.opacity = '0';
+  setTimeout(() => {
+    el.textContent = SPARKS[idx];
+    el.style.opacity = '1';
+    const ta = document.getElementById('wtf-text');
+    if (!ta.value.trim()) {
+      ta.value = 'I am ' + SPARKS[idx].replace(/"/g,'');
+      updateChar();
+    }
+  }, 250);
 }
 
-/* =============================================
-   KEYBOARD SOUND ON TEXTAREA
-   ============================================= */
-const wtfText = document.getElementById('wtf-text');
-let lastLen = 0;
-
-wtfText.addEventListener('focus', initAudio);
-wtfText.addEventListener('keydown', (e) => {
-    if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Enter') playKey();
+/* ── CAUSE PILLS ── */
+let selectedCat = null;
+document.querySelectorAll('.cpill').forEach(p => {
+  p.addEventListener('click', () => {
+    initAudio(); playKey();
+    document.querySelectorAll('.cpill').forEach(x=>x.classList.remove('active'));
+    p.classList.add('active');
+    selectedCat = p.dataset.cat;
+    checkReady();
+  });
 });
+
+/* ── COLOUR PICKER ── */
+let selectedShade = '#0A0A0A', selectedShadeName = 'Jet Black';
+
+const SHADE_VIBES = {
+  '#0A0A0A': 'pure intensity',
+  '#2B2B2B': 'deep conviction',
+  '#6E6E6E': 'quiet strength',
+  '#9A9A9A': 'calm resolve',
+  '#D7D7D7': 'soft defiance',
+  '#F4F4F4': 'gentle courage',
+  '#FFFFFF': 'open honesty',
+};
+
+document.querySelectorAll('.cswatch').forEach(d => {
+  d.addEventListener('click', () => {
+    initAudio(); playKey();
+    document.querySelectorAll('.cswatch').forEach(x => {
+      x.classList.remove('active');
+      const orig = x.dataset.shade;
+      x.style.borderColor = orig==='#FFFFFF' ? 'rgba(255,255,255,0.25)' : 'transparent';
+    });
+    d.classList.add('active');
+    d.style.borderColor = '#ffffff';
+    selectedShade     = d.dataset.shade;
+    selectedShadeName = d.dataset.name;
+    document.getElementById('preview-dot').style.background = selectedShade;
+    document.getElementById('preview-txt').textContent =
+      selectedShadeName + ' — ' + (SHADE_VIBES[selectedShade] || '');
+  });
+});
+
+/* ── TEXTAREA ── */
+const taEl = document.getElementById('wtf-text');
+taEl.addEventListener('focus', initAudio);
+taEl.addEventListener('keydown', e => { if(e.key.length===1||e.key==='Backspace'||e.key==='Enter') playKey(); });
+taEl.addEventListener('input', updateChar);
 
 function updateChar() {
-    const len = wtfText.value.length;
-    const countEl = document.getElementById('char-count');
-    const hintEl  = document.getElementById('char-hint');
-
-    countEl.textContent = len + ' / 280';
-    countEl.classList.toggle('warn', len > 240);
-
-    if (len > 0 && len < 20) {
-        hintEl.textContent = 'keep going...';
-    } else if (len >= 20 && len < 60) {
-        hintEl.textContent = 'getting there.';
-    } else if (len >= 60) {
-        hintEl.textContent = 'that\'s a real take.';
-    } else {
-        hintEl.textContent = '';
-    }
-
-    checkReady();
+  const len = taEl.value.length;
+  const cc = document.getElementById('char-count');
+  cc.textContent = len + ' / 280';
+  cc.classList.toggle('warn', len > 240);
+  const hints = [
+    [0,   ''],
+    [1,   'keep going...'],
+    [20,  'getting there.'],
+    [60,  "that's a real take."],
+    [120, 'that\'s the one.'],
+  ];
+  let hint = '';
+  for (const [min, h] of hints) { if (len >= min) hint = h; }
+  document.getElementById('char-hint').textContent = hint;
+  checkReady();
 }
-wtfText.addEventListener('input', updateChar);
 
-/* =============================================
-   CAUSE PILLS
-   ============================================= */
-let selectedCat = null;
+/* ── EMAIL ── */
+const emailEl = document.getElementById('wtf-email');
+emailEl.addEventListener('focus', initAudio);
+emailEl.addEventListener('input', () => { playKey(); checkReady(); });
 
-document.querySelectorAll('.cpill').forEach(p => {
-    p.addEventListener('click', () => {
-        initAudio(); playKey();
-        document.querySelectorAll('.cpill').forEach(x => x.classList.remove('active'));
-        p.classList.add('active');
-        selectedCat = p.dataset.cat;
-        checkReady();
-    });
-});
-
-/* =============================================
-   ENERGY DOTS (monochrome shades only)
-   ============================================= */
-let selectedShade = '#0A0A0A';
-
-document.querySelectorAll('.edot').forEach(d => {
-    d.addEventListener('click', () => {
-        initAudio(); playKey();
-        document.querySelectorAll('.edot').forEach(x => {
-            x.classList.remove('active');
-            x.style.borderColor = 'transparent';
-        });
-        d.classList.add('active');
-        d.style.borderColor = '#ffffff';
-        selectedShade = d.dataset.shade;
-    });
-});
-
-/* =============================================
-   EMAIL VALIDATION & SUBMIT READY
-   ============================================= */
-const emailInput = document.getElementById('wtf-email');
-emailInput.addEventListener('focus', initAudio);
-emailInput.addEventListener('input', () => { playKey(); checkReady(); });
-
+/* ── READY CHECK ── */
 function checkReady() {
-    const ready = selectedCat &&
-                  wtfText.value.trim().length >= 10 &&
-                  emailInput.value.includes('@') &&
-                  emailInput.value.includes('.');
-    const btn = document.getElementById('submit-btn');
-    btn.disabled = !ready;
-    if (ready) btn.textContent = 'ctrl + alt + WTF';
+  const ok = selectedCat &&
+             taEl.value.trim().length >= 10 &&
+             emailEl.value.includes('@') &&
+             emailEl.value.includes('.');
+  document.getElementById('submit-btn').disabled = !ok;
 }
 
-/* =============================================
-   SUBMIT
-   ============================================= */
+/* ── SUBMIT ── */
 const SUBMIT_URL = 'https://base44.app/api/apps/69ddc914cfcf229762ac123d/functions/submitWTF';
 const FEED_URL   = 'https://base44.app/api/apps/69ddc914cfcf229762ac123d/functions/getWTFFeed';
 
 document.getElementById('submit-btn').addEventListener('click', async () => {
-    const btn   = document.getElementById('submit-btn');
-    const text  = wtfText.value.trim();
-    const email = emailInput.value.trim();
+  initAudio();
+  const btn   = document.getElementById('submit-btn');
+  const text  = taEl.value.trim();
+  const email = emailEl.value.trim();
+  btn.disabled = true; btn.textContent = 'locking in...';
+  playSubmit();
 
-    btn.disabled = true;
-    btn.textContent = 'locking in...';
-    playSubmit();
-
-    try {
-        const res = await fetch(SUBMIT_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, wtf_text: text, cause_category: selectedCat })
-        });
-        const data = await res.json();
-
-        if (data.success) {
-            document.getElementById('form-view').style.display = 'none';
-            document.getElementById('success-view').style.display = 'block';
-            showToast('voice locked in ✓');
-            setTimeout(loadWall, 1200);
-        } else {
-            throw new Error(data.error || 'error');
-        }
-    } catch (e) {
-        btn.disabled = false;
-        btn.textContent = 'ctrl + alt + WTF';
-        showToast('something went wrong — try again');
-    }
+  try {
+    const res  = await fetch(SUBMIT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, wtf_text: text, cause_category: selectedCat, colour_shade: selectedShade })
+    });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('form-view').style.display = 'none';
+      const sv = document.getElementById('success-view');
+      sv.style.display = 'block';
+      document.getElementById('success-dot').style.background = selectedShade;
+      document.getElementById('success-col-name').textContent =
+        selectedShadeName + ' · ' + (SHADE_VIBES[selectedShade]||'');
+      showToast('voice locked in ✓');
+      setTimeout(loadWall, 1200);
+    } else { throw new Error(data.error||'error'); }
+  } catch(e) {
+    btn.disabled = false; btn.textContent = 'ctrl + alt + WTF';
+    showToast('something went wrong — try again');
+  }
 });
 
-/* =============================================
-   POLAROID WALL
-   ============================================= */
-const ROTS    = [-3.2, -1.8, -0.5, 1.2, 2.8, -2.4, 0.8, -1.1, 2.1, -3.0];
-const TAPE    = [-3, -1, 1, 2, -2, 3, -1, 2, -3, 1];
+/* ── POLAROID WALL ── */
+const ROTS  = [-3.2,-1.8,-0.5,1.2,2.8,-2.4,0.8,-1.1,2.1,-3.0,1.6,-0.9,2.5,-2.0,0.4];
+const TAPES = [-3,-1,1,2,-2,3,-1,2,-3,1,-2,3,1,-1,2];
+
+function contrastText(hex) {
+  // Return dark or light text depending on shade brightness
+  const bright = ['#D7D7D7','#F4F4F4','#FFFFFF','#9A9A9A'];
+  return bright.includes(hex) ? '#0A0A0A' : '#F4F4F4';
+}
 
 function makePolaroid(entry, idx) {
-    const rot      = ROTS[idx % ROTS.length];
-    const tapeRot  = TAPE[idx % TAPE.length];
-    const abbrev   = entry.cause_category ? entry.cause_category.slice(0, 2) : 'WTF';
-    const safe     = escHtml(entry.wtf_text);
+  const rot      = ROTS[idx % ROTS.length];
+  const tapeRot  = TAPES[idx % TAPES.length];
+  const shade    = entry.colour_shade || '#2B2B2B';
+  const colName  = entry.colour_name  || '';
+  const abbrev   = (entry.cause_category||'WTF').slice(0,2);
+  const txtColor = contrastText(shade);
 
-    const div = document.createElement('div');
-    div.className = 'polaroid';
-    div.style.setProperty('--rot', rot + 'deg');
-    div.style.setProperty('--tape-rot', tapeRot + 'deg');
-    div.innerHTML = `
-        <div class="polaroid-photo">
-            <div class="sticker">${abbrev}</div>
-        </div>
-        <div class="polaroid-caption">${safe}</div>
-        <div class="polaroid-tag">${entry.cause_category || ''}</div>
-    `;
-    return div;
+  const div = document.createElement('div');
+  div.className = 'polaroid';
+  div.style.setProperty('--rot',      rot + 'deg');
+  div.style.setProperty('--tape-rot', tapeRot + 'deg');
+  div.innerHTML = `
+    <div class="polaroid-photo" style="background:${shade}">
+      <div class="polaroid-sticker" style="background:${txtColor==='#0A0A0A'?'rgba(0,0,0,0.15)':'rgba(255,255,255,0.15)'};color:${txtColor}">${abbrev}</div>
+    </div>
+    <div class="polaroid-caption">${escHtml(entry.wtf_text)}</div>
+    <div class="polaroid-tag">${escHtml(entry.cause_category||'')}</div>
+    <div class="polaroid-colname">${escHtml(colName)}</div>
+  `;
+  return div;
 }
 
 async function loadWall() {
-    try {
-        const res  = await fetch(FEED_URL);
-        const data = await res.json();
-        const grid = document.getElementById('polaroid-grid');
-        const entries = data.entries || [];
-
-        const statEl = document.getElementById('stat-entries');
-        if (entries.length > 0) statEl.textContent = entries.length + '+';
-
-        if (entries.length === 0) {
-            grid.innerHTML = '<div class="wall-empty">be the first voice on the wall.</div>';
-            return;
-        }
-
-        grid.innerHTML = '';
-        entries.forEach((e, i) => grid.appendChild(makePolaroid(e, i)));
-    } catch (e) {
-        console.warn('Wall load failed', e);
+  try {
+    const res  = await fetch(FEED_URL);
+    const data = await res.json();
+    const grid = document.getElementById('polaroid-grid');
+    const entries = data.entries || [];
+    if (entries.length > 0) document.getElementById('stat-entries').textContent = entries.length + '+';
+    if (!entries.length) {
+      grid.innerHTML = '<div class="wall-empty">be the first voice on the wall.</div>';
+      return;
     }
+    grid.innerHTML = '';
+    entries.forEach((e, i) => grid.appendChild(makePolaroid(e, i)));
+  } catch(e) { console.warn('Wall load failed', e); }
 }
 
-/* =============================================
-   UTILS
-   ============================================= */
+/* ── UTILS ── */
 function escHtml(s) {
-    return String(s)
-        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
 function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-/* =============================================
-   INIT
-   ============================================= */
 loadWall();
 </script>
 </body>
