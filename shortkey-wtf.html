@@ -1,671 +1,697 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>shortkey.wtf — what are you fighting for?</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShortKey | What's Truly Fighting-for</title>
+    <style>
+        :root {
+            --c-black:   #0A0A0A;
+            --c-900:     #2B2B2B;
+            --c-600:     #6E6E6E;
+            --c-400:     #9A9A9A;
+            --c-200:     #D7D7D7;
+            --c-100:     #F4F4F4;
+            --c-white:   #FFFFFF;
+        }
 
-    :root {
-      --ink:    #0A0A0A;
-      --ink-2:  #2B2B2B;
-      --mid:    #6E6E6E;
-      --soft:   #9A9A9A;
-      --rule:   #D7D7D7;
-      --near-w: #F4F4F4;
-      --white:  #FFFFFF;
-    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html, body {
-      background: var(--ink);
-      color: var(--white);
-      font-family: Arial, Helvetica, sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+        body {
+            background: var(--c-black);
+            color: var(--c-white);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+        }
 
-    /* ─── NOISE GRAIN ─── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.5;
-    }
+        /* ── NAV ── */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 28px 48px;
+            border-bottom: 1px solid var(--c-900);
+        }
 
-    /* ─── NAV ─── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      z-index: 100;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      background: rgba(10,10,10,0.85);
-      backdrop-filter: blur(8px);
-    }
-    .nav-logo img {
-      height: 28px;
-      width: auto;
-      filter: brightness(0) invert(1);
-    }
-    .nav-tag {
-      font-size: 10px;
-      letter-spacing: 3px;
-      color: var(--soft);
-      text-transform: uppercase;
-    }
+        .logo-wrap img {
+            height: 36px;
+            display: block;
+        }
 
-    /* ─── HERO ─── */
-    /* [DIV: wtf-hero] */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 24px 80px;
-      position: relative;
-      z-index: 1;
-    }
+        .logo-fallback {
+            font-weight: 900;
+            font-size: 1.3rem;
+            letter-spacing: -1px;
+            color: var(--c-white);
+        }
 
-    .hero-eyebrow {
-      font-size: 10px;
-      letter-spacing: 5px;
-      color: var(--soft);
-      text-transform: uppercase;
-      margin-bottom: 32px;
-    }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--c-400);
+        }
 
-    /* [DIV: wtf-headline] */
-    .hero-headline {
-      font-size: clamp(52px, 10vw, 110px);
-      font-weight: 900;
-      line-height: 0.9;
-      letter-spacing: -3px;
-      color: var(--white);
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .hero-headline .accent-line {
-      display: block;
-      color: var(--white);
-      -webkit-text-stroke: 1px var(--white);
-    }
-    .hero-headline .hollow-line {
-      display: block;
-      color: transparent;
-      -webkit-text-stroke: 1.5px var(--rule);
-    }
+        .nav-links a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
 
-    /* [DIV: wtf-subhead] */
-    .hero-sub {
-      font-size: 13px;
-      letter-spacing: 2px;
-      color: var(--mid);
-      text-transform: uppercase;
-      margin-bottom: 60px;
-    }
+        .nav-links a:hover { color: var(--c-white); }
 
-    /* ─── FORM CARD ─── */
-    /* [DIV: wtf-form-card] */
-    .form-card {
-      width: 100%;
-      max-width: 560px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 2px;
-      padding: 40px;
-      text-align: left;
-    }
+        /* ── HERO ── */
+        .hero {
+            padding: 96px 48px 64px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
 
-    .form-label {
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--soft);
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      display: block;
-    }
+        .hero-eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--c-400);
+            margin-bottom: 28px;
+        }
 
-    /* [DIV: wtf-category-pills] */
-    .category-pills {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 24px;
-    }
-    .pill {
-      padding: 8px 18px;
-      font-size: 10px;
-      letter-spacing: 3px;
-      font-weight: 700;
-      text-transform: uppercase;
-      cursor: pointer;
-      border: 1px solid var(--ink-2);
-      background: transparent;
-      color: var(--soft);
-      transition: all 0.15s;
-      border-radius: 1px;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    .pill:hover   { border-color: var(--rule); color: var(--white); }
-    .pill.active  { border-color: var(--white); color: var(--white); background: rgba(255,255,255,0.06); }
+        h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.0;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+        }
 
-    /* [DIV: wtf-textarea] */
-    .wtf-input {
-      width: 100%;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: var(--white);
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 15px;
-      line-height: 1.6;
-      padding: 16px;
-      resize: none;
-      border-radius: 1px;
-      margin-bottom: 8px;
-      min-height: 100px;
-    }
-    .wtf-input::placeholder { color: var(--mid); }
-    .wtf-input:focus { outline: none; border-color: rgba(255,255,255,0.35); }
+        h1 span {
+            display: block;
+            -webkit-text-stroke: 1.5px var(--c-white);
+            color: transparent;
+        }
 
-    .char-count {
-      font-size: 10px;
-      color: var(--soft);
-      text-align: right;
-      margin-bottom: 20px;
-    }
+        .hero-sub {
+            font-size: 1.05rem;
+            color: var(--c-400);
+            max-width: 480px;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
 
-    /* [DIV: wtf-email-field] */
-    .email-input {
-      width: 100%;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: var(--white);
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 14px;
-      padding: 14px 16px;
-      border-radius: 1px;
-      margin-bottom: 24px;
-    }
-    .email-input::placeholder { color: var(--mid); }
-    .email-input:focus { outline: none; border-color: rgba(255,255,255,0.35); }
+        /* ── STATS ROW ── */
+        .stats-row {
+            display: flex;
+            gap: 0;
+            border-top: 1px solid var(--c-900);
+            border-bottom: 1px solid var(--c-900);
+            max-width: 960px;
+            margin: 0 auto 64px;
+        }
 
-    /* [DIV: wtf-submit-btn] */
-    .submit-btn {
-      width: 100%;
-      padding: 16px;
-      background: var(--white);
-      color: var(--ink);
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      border: none;
-      cursor: pointer;
-      border-radius: 1px;
-      transition: opacity 0.15s;
-    }
-    .submit-btn:hover    { opacity: 0.88; }
-    .submit-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .stat {
+            flex: 1;
+            padding: 28px 48px;
+            border-right: 1px solid var(--c-900);
+        }
 
-    .form-note {
-      font-size: 10px;
-      color: var(--soft);
-      margin-top: 16px;
-      text-align: center;
-      letter-spacing: 0.5px;
-    }
+        .stat:last-child { border-right: none; }
 
-    /* ─── LIVE FEED ─── */
-    /* [DIV: wtf-feed-section] */
-    .feed-section {
-      padding: 80px 24px;
-      max-width: 720px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-    .section-label {
-      font-size: 9px;
-      letter-spacing: 5px;
-      color: var(--soft);
-      text-transform: uppercase;
-      margin-bottom: 40px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      padding-bottom: 16px;
-    }
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+        }
 
-    /* [DIV: wtf-feed-grid] */
-    .feed-grid {
-      display: grid;
-      gap: 2px;
-    }
-    .feed-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      padding: 20px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
-      transition: background 0.15s;
-    }
-    .feed-card:hover { background: rgba(255,255,255,0.055); }
-    .feed-card-text {
-      font-size: 14px;
-      color: var(--near-w);
-      line-height: 1.5;
-      flex: 1;
-    }
-    .feed-card-tag {
-      font-size: 8px;
-      letter-spacing: 3px;
-      color: var(--soft);
-      text-transform: uppercase;
-      white-space: nowrap;
-      padding: 4px 8px;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 1px;
-      flex-shrink: 0;
-    }
-    .feed-empty {
-      font-size: 13px;
-      color: var(--mid);
-      text-align: center;
-      padding: 60px 0;
-      letter-spacing: 1px;
-    }
+        .stat-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--c-600);
+            margin-top: 4px;
+        }
 
-    /* ─── STATS ROW ─── */
-    /* [DIV: wtf-stats-row] */
-    .stats-row {
-      display: flex;
-      justify-content: center;
-      gap: 48px;
-      padding: 60px 24px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
-    }
-    .stat-block { text-align: center; }
-    .stat-num {
-      font-size: 42px;
-      font-weight: 900;
-      letter-spacing: -2px;
-      color: var(--white);
-      line-height: 1;
-    }
-    .stat-label {
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--soft);
-      text-transform: uppercase;
-      margin-top: 6px;
-    }
+        /* ── FORM CARD ── */
+        .form-outer {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 48px 96px;
+        }
 
-    /* ─── PRIZE SECTION ─── */
-    /* [DIV: wtf-prize-section] */
-    .prize-section {
-      padding: 80px 24px;
-      max-width: 720px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-    .prize-card {
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 48px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 20px;
-    }
-    .prize-eyebrow {
-      font-size: 9px;
-      letter-spacing: 5px;
-      color: var(--soft);
-      text-transform: uppercase;
-    }
-    .prize-amount {
-      font-size: 72px;
-      font-weight: 900;
-      letter-spacing: -3px;
-      line-height: 1;
-    }
-    .prize-desc {
-      font-size: 14px;
-      color: var(--soft);
-      line-height: 1.7;
-      max-width: 400px;
-    }
-    .prize-rules {
-      font-size: 10px;
-      color: var(--mid);
-      letter-spacing: 0.5px;
-      line-height: 1.8;
-    }
+        .form-card {
+            border: 1px solid var(--c-900);
+            padding: 48px;
+        }
 
-    /* ─── TOAST ─── */
-    .toast {
-      position: fixed;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: var(--white);
-      color: var(--ink);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 14px 32px;
-      border-radius: 1px;
-      opacity: 0;
-      transition: all 0.3s ease;
-      z-index: 200;
-      white-space: nowrap;
-    }
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
+        .form-card h3 {
+            font-size: 0.72rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--c-400);
+            margin-bottom: 36px;
+        }
 
-    /* ─── FOOTER ─── */
-    /* [DIV: wtf-footer] */
-    .site-footer {
-      padding: 40px 24px;
-      text-align: center;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      position: relative;
-      z-index: 1;
-    }
-    .footer-logo img {
-      height: 20px;
-      filter: brightness(0) invert(1);
-      opacity: 0.4;
-      margin-bottom: 16px;
-    }
-    .footer-copy {
-      font-size: 10px;
-      color: var(--mid);
-      letter-spacing: 2px;
-    }
+        /* Step indicators */
+        .steps {
+            display: flex;
+            gap: 0;
+            margin-bottom: 40px;
+            border: 1px solid var(--c-900);
+        }
 
-    /* ─── SUCCESS STATE ─── */
-    .success-state {
-      display: none;
-      text-align: center;
-      padding: 20px 0;
-    }
-    .success-state.show { display: block; }
-    .success-headline {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: -1px;
-      margin-bottom: 12px;
-    }
-    .success-sub {
-      font-size: 12px;
-      color: var(--soft);
-      letter-spacing: 2px;
-    }
+        .step {
+            flex: 1;
+            padding: 14px 20px;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--c-600);
+            border-right: 1px solid var(--c-900);
+            transition: all 0.2s;
+        }
 
-    @media (max-width: 480px) {
-      nav { padding: 16px 20px; }
-      .form-card { padding: 28px 20px; }
-      .prize-card { padding: 32px 24px; }
-      .hero-headline { letter-spacing: -1px; }
-      .stats-row { gap: 32px; }
-    }
-  </style>
+        .step:last-child { border-right: none; }
+        .step.active { color: var(--c-white); background: var(--c-900); }
+        .step-num { font-weight: 900; margin-right: 8px; }
+
+        /* Cause pills */
+        .cause-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 36px;
+        }
+
+        .cause-pill {
+            padding: 10px 22px;
+            border: 1px solid var(--c-600);
+            font-size: 0.72rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            cursor: pointer;
+            color: var(--c-400);
+            background: transparent;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .cause-pill:hover,
+        .cause-pill.selected {
+            border-color: var(--c-white);
+            color: var(--c-black);
+            background: var(--c-white);
+        }
+
+        /* Colour energy dots — MONOCHROME ONLY */
+        .colour-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+
+        .colour-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--c-600);
+            min-width: 100px;
+        }
+
+        .colour-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s, transform 0.15s;
+        }
+
+        .colour-dot:hover { transform: scale(1.15); }
+        .colour-dot.selected { border-color: var(--c-white); }
+
+        /* Inputs */
+        textarea, input[type="email"] {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--c-900);
+            color: var(--c-white);
+            padding: 14px 0;
+            margin-bottom: 28px;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            resize: none;
+            transition: border-color 0.2s;
+        }
+
+        textarea { height: 100px; }
+        textarea:focus, input[type="email"]:focus { border-color: var(--c-white); }
+        textarea::placeholder, input[type="email"]::placeholder { color: var(--c-600); }
+
+        .char-count {
+            font-size: 0.68rem;
+            color: var(--c-600);
+            text-align: right;
+            margin-top: -20px;
+            margin-bottom: 24px;
+            letter-spacing: 0.08em;
+        }
+
+        /* Submit button */
+        .btn-submit {
+            background: var(--c-white);
+            color: var(--c-black);
+            padding: 18px 40px;
+            border: none;
+            font-weight: 900;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s, color 0.2s;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background: var(--c-200);
+        }
+
+        .btn-submit:disabled {
+            background: var(--c-900);
+            color: var(--c-600);
+            cursor: not-allowed;
+        }
+
+        /* ── SUCCESS STATE ── */
+        .success-state {
+            display: none;
+            text-align: center;
+            padding: 48px 0;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .success-state h2 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+        }
+
+        .success-state p {
+            color: var(--c-400);
+            font-size: 0.95rem;
+        }
+
+        /* ── FEED ── */
+        .feed-outer {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 48px 96px;
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--c-900);
+            padding-bottom: 16px;
+        }
+
+        .feed-header h2 {
+            font-size: 0.72rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--c-400);
+        }
+
+        .feed-live {
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--c-600);
+        }
+
+        .feed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1px;
+            background: var(--c-900);
+        }
+
+        .feed-entry {
+            background: var(--c-black);
+            padding: 28px;
+        }
+
+        .feed-category {
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--c-600);
+            margin-bottom: 12px;
+        }
+
+        .feed-text {
+            font-size: 0.95rem;
+            line-height: 1.55;
+            color: var(--c-200);
+        }
+
+        .feed-empty {
+            padding: 48px;
+            text-align: center;
+            color: var(--c-600);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: 1px solid var(--c-900);
+        }
+
+        /* ── PRIZE ── */
+        .prize-outer {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 48px 96px;
+        }
+
+        .prize-card {
+            background: var(--c-900);
+            padding: 48px;
+            display: flex;
+            gap: 48px;
+            align-items: flex-start;
+        }
+
+        .prize-amount {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            white-space: nowrap;
+        }
+
+        .prize-detail h4 {
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--c-400);
+            margin-bottom: 16px;
+        }
+
+        .prize-detail p {
+            font-size: 0.9rem;
+            line-height: 1.65;
+            color: var(--c-200);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--c-900);
+            padding: 32px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 100%;
+        }
+
+        .footer-logo {
+            font-weight: 900;
+            font-size: 1rem;
+            letter-spacing: -0.03em;
+        }
+
+        .footer-tagline {
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--c-600);
+        }
+
+        .footer-domain {
+            font-size: 0.72rem;
+            color: var(--c-600);
+            letter-spacing: 0.06em;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            nav, .hero, .form-outer, .feed-outer, .prize-outer { padding-left: 20px; padding-right: 20px; }
+            h1 { font-size: 2.8rem; }
+            .stats-row { flex-direction: column; }
+            .stat { border-right: none; border-bottom: 1px solid var(--c-900); }
+            .prize-card { flex-direction: column; gap: 24px; }
+            .form-card { padding: 24px; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">
-      <img src="https://raw.githubusercontent.com/KieranSimpee/5senses-portal/main/assets/shortkey_logo_white.png" alt="shortkey"/>
+<!-- NAV -->
+<nav>
+    <div class="logo-wrap">
+        <img src="https://raw.githubusercontent.com/KieranSimpee/5senses-portal/main/assets/shortkey_logo_white.png"
+             alt="shortkey"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div class="logo-fallback" style="display:none;">shortkey.</div>
     </div>
-    <div class="nav-tag">shortkey.wtf · pre-launch</div>
-  </nav>
+    <div class="nav-links">
+        <a href="#about">Overview</a>
+        <a href="#form">WTF</a>
+        <a href="#form">Join</a>
+    </div>
+</nav>
 
-  <!-- HERO -->
-  <!-- [DIV: wtf-hero] -->
-  <section class="hero">
-    <p class="hero-eyebrow">pre-launch · keymember access</p>
-
-    <!-- [DIV: wtf-headline] -->
-    <h1 class="hero-headline">
-      <span class="accent-line">What's</span>
-      <span class="hollow-line">Truly</span>
-      <span class="accent-line">Fighting-for.</span>
+<!-- HERO -->
+<section class="hero" id="about">
+    <p class="hero-eyebrow">shortkey.wtf — Pre-Launch Campaign 2026</p>
+    <h1>
+        WHAT'S<br>
+        <span>TRULY</span>
+        FIGHTING-FOR.
     </h1>
+    <p class="hero-sub">Your cause. Your ctrl. Define what you're fighting for and become a founding Keymember of the ShortKey community.</p>
+</section>
 
-    <!-- [DIV: wtf-subhead] -->
-    <p class="hero-sub">your cause. your ctrl. your shortkey.</p>
+<!-- STATS -->
+<div class="stats-row">
+    <div class="stat">
+        <div class="stat-num" id="stat-entries">—</div>
+        <div class="stat-label">Manifestos Submitted</div>
+    </div>
+    <div class="stat">
+        <div class="stat-num">10</div>
+        <div class="stat-label">Winners Selected</div>
+    </div>
+    <div class="stat">
+        <div class="stat-num">$100</div>
+        <div class="stat-label">Credit Per Winner</div>
+    </div>
+    <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Rule: Be Authentic</div>
+    </div>
+</div>
 
-    <!-- FORM CARD -->
-    <!-- [DIV: wtf-form-card] -->
+<!-- FORM -->
+<section class="form-outer" id="form">
     <div class="form-card">
 
-      <div id="formView">
-        <label class="form-label">01 — choose your cause</label>
-        <!-- [DIV: wtf-category-pills] -->
-        <div class="category-pills" id="pills">
-          <button class="pill" data-cat="BEAUTY">beauty</button>
-          <button class="pill" data-cat="IDENTITY">identity</button>
-          <button class="pill" data-cat="STYLE">style</button>
-          <button class="pill" data-cat="CONFIDENCE">confidence</button>
+        <!-- Step nav -->
+        <div class="steps">
+            <div class="step active"><span class="step-num">01</span> Cause</div>
+            <div class="step"><span class="step-num">02</span> Manifesto</div>
+            <div class="step"><span class="step-num">03</span> Identity</div>
+            <div class="step"><span class="step-num">04</span> Lock It In</div>
         </div>
 
-        <label class="form-label">02 — define your wtf</label>
-        <!-- [DIV: wtf-textarea] -->
-        <textarea class="wtf-input" id="wtfInput" maxlength="280"
-          placeholder="I'm fighting for..."></textarea>
-        <div class="char-count"><span id="charCount">0</span> / 280</div>
+        <h3>My WTF Manifesto</h3>
 
-        <label class="form-label">03 — become a keymember</label>
-        <!-- [DIV: wtf-email-field] -->
-        <input class="email-input" type="email" id="emailInput"
-          placeholder="your@email.com"/>
+        <!-- Step 1: Cause category -->
+        <p style="font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--c-600);margin-bottom:14px;">What are you fighting for?</p>
+        <div class="cause-row" id="cause-row">
+            <button class="cause-pill" data-cause="BEAUTY">Beauty</button>
+            <button class="cause-pill" data-cause="IDENTITY">Identity</button>
+            <button class="cause-pill" data-cause="STYLE">Style</button>
+            <button class="cause-pill" data-cause="CONFIDENCE">Confidence</button>
+        </div>
 
-        <!-- [DIV: wtf-submit-btn] -->
-        <button class="submit-btn" id="submitBtn" disabled>
-          lock it in &rarr;
-        </button>
+        <!-- Step 2: Manifesto text -->
+        <textarea id="wtf-text" placeholder="I'm fighting for…" maxlength="280" oninput="updateChar()"></textarea>
+        <div class="char-count"><span id="char-count">0</span> / 280</div>
 
-        <p class="form-note">
-          No spam. Keymembers get early access + a chance at $100 in credit.
-        </p>
-      </div>
+        <!-- Step 3: Colour energy (monochrome only) -->
+        <div class="colour-row">
+            <div class="colour-label">Your energy</div>
+            <div class="colour-dot selected"  data-colour="#0A0A0A" style="background:#0A0A0A; border-color:var(--c-white);"></div>
+            <div class="colour-dot" data-colour="#6E6E6E" style="background:#6E6E6E;"></div>
+            <div class="colour-dot" data-colour="#D7D7D7" style="background:#D7D7D7;"></div>
+        </div>
 
-      <div class="success-state" id="successView">
-        <div class="success-headline">you're in. ✓</div>
-        <p class="success-sub">keymember registered · we'll be in touch</p>
-      </div>
+        <!-- Step 4: Email -->
+        <input type="email" id="wtf-email" placeholder="Email Address — your key to the community">
+
+        <!-- Submit -->
+        <button class="btn-submit" id="btn-submit" onclick="submitManifesto()">Lock It In →</button>
+
+        <!-- Success -->
+        <div class="success-state" id="success-state">
+            <div class="success-icon">⌨</div>
+            <h2>Manifesto Locked.</h2>
+            <p>You're in the system, Keymember.<br>We'll reach out if you win.</p>
+        </div>
 
     </div>
-  </section>
+</section>
 
-  <!-- STATS -->
-  <!-- [DIV: wtf-stats-row] -->
-  <div class="stats-row">
-    <div class="stat-block">
-      <div class="stat-num" id="statEntries">—</div>
-      <div class="stat-label">WTF entries</div>
+<!-- LIVE FEED -->
+<section class="feed-outer">
+    <div class="feed-header">
+        <h2>Live Manifestos</h2>
+        <div class="feed-live">Updated in real time</div>
     </div>
-    <div class="stat-block">
-      <div class="stat-num">10</div>
-      <div class="stat-label">winners chosen</div>
+    <div id="feed-container">
+        <div class="feed-empty">Manifestos appear here once approved — be the first.</div>
     </div>
-    <div class="stat-block">
-      <div class="stat-num">$100</div>
-      <div class="stat-label">credit per winner</div>
-    </div>
-  </div>
+</section>
 
-  <!-- LIVE FEED -->
-  <!-- [DIV: wtf-feed-section] -->
-  <section class="feed-section">
-    <div class="section-label">keymember manifestos · approved entries</div>
-    <!-- [DIV: wtf-feed-grid] -->
-    <div class="feed-grid" id="feedGrid">
-      <div class="feed-empty">no entries yet — be first.</div>
-    </div>
-  </section>
-
-  <!-- PRIZE -->
-  <!-- [DIV: wtf-prize-section] -->
-  <section class="prize-section">
-    <div class="section-label">the reward</div>
+<!-- PRIZE -->
+<section class="prize-outer">
     <div class="prize-card">
-      <div class="prize-eyebrow">10 winners · shortkey credit</div>
-      <div class="prize-amount">$100</div>
-      <div class="prize-desc">
-        The most innovative, authentic, and unfiltered WTF entries
-        win $100 in shortkey credit — redeemable when we launch.
-        We're looking for real. Not polished.
-      </div>
-      <div class="prize-rules">
-        — one entry per person<br/>
-        — winners selected by the shortkey team<br/>
-        — entries moderated for community standards<br/>
-        — credit applied to your keymember account at launch
-      </div>
+        <div class="prize-amount">$1,000</div>
+        <div class="prize-detail">
+            <h4>The Prize</h4>
+            <p>Ten winning Keymembers each receive a $100 ShortKey credit — redeemable at launch. Winners are selected for innovation, authenticity, and impact. No algorithm. Human curation only.</p>
+        </div>
     </div>
-  </section>
+</section>
 
-  <!-- FOOTER -->
-  <!-- [DIV: wtf-footer] -->
-  <footer class="site-footer">
-    <div class="footer-logo">
-      <img src="https://raw.githubusercontent.com/KieranSimpee/5senses-portal/main/assets/shortkey_logo_white.png" alt="shortkey"/>
-    </div>
-    <div class="footer-copy">shortkey™ · your style. your ctrl. · shortkey.wtf</div>
-  </footer>
+<!-- FOOTER -->
+<footer>
+    <div class="footer-logo">shortkey.</div>
+    <div class="footer-tagline">YOUR STYLE. YOUR CTRL.</div>
+    <div class="footer-domain">shortkey.wtf</div>
+</footer>
 
-  <!-- TOAST -->
-  <div class="toast" id="toast">locked in ✓</div>
+<script>
+    const SUBMIT_URL = 'https://base44.app/api/apps/69ddc914cfcf229762ac123d/functions/submitWTF';
+    const FEED_URL   = 'https://base44.app/api/apps/69ddc914cfcf229762ac123d/functions/getWTFFeed';
 
-  <script>
-    const SUBMIT_URL = 'https://app.base44.com/api/apps/69ddc914cfcf229762ac123d/functions/submitWTF';
-    const FEED_URL   = 'https://app.base44.com/api/apps/69ddc914cfcf229762ac123d/functions/getWTFFeed';
+    let selectedCause  = null;
+    let selectedColour = '#0A0A0A';
 
-    let selectedCat = null;
+    // Cause pills
+    document.querySelectorAll('.cause-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+            document.querySelectorAll('.cause-pill').forEach(p => p.classList.remove('selected'));
+            pill.classList.add('selected');
+            selectedCause = pill.dataset.cause;
 
-    // ── Pill selection
-    document.querySelectorAll('.pill').forEach(p => {
-      p.addEventListener('click', () => {
-        document.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
-        p.classList.add('active');
-        selectedCat = p.dataset.cat;
-        checkReady();
-      });
-    });
-
-    // ── Char count
-    const wtfInput   = document.getElementById('wtfInput');
-    const charCount  = document.getElementById('charCount');
-    const emailInput = document.getElementById('emailInput');
-    const submitBtn  = document.getElementById('submitBtn');
-
-    function checkReady() {
-      const ready = selectedCat &&
-                    wtfInput.value.trim().length > 10 &&
-                    emailInput.value.includes('@');
-      submitBtn.disabled = !ready;
-    }
-
-    wtfInput.addEventListener('input', () => {
-      charCount.textContent = wtfInput.value.length;
-      checkReady();
-    });
-    emailInput.addEventListener('input', checkReady);
-
-    // ── Submit
-    submitBtn.addEventListener('click', async () => {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'locking in...';
-
-      try {
-        const res = await fetch(SUBMIT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: emailInput.value.trim(),
-            wtf_text: wtfInput.value.trim(),
-            cause_category: selectedCat
-          })
+            // Progress step highlight
+            document.querySelectorAll('.step')[0].classList.remove('active');
+            document.querySelectorAll('.step')[1].classList.add('active');
         });
-        const data = await res.json();
-
-        if (data.success) {
-          document.getElementById('formView').style.display = 'none';
-          document.getElementById('successView').classList.add('show');
-          showToast('locked in ✓');
-          loadFeed();
-        } else {
-          throw new Error(data.error || 'error');
-        }
-      } catch(e) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'lock it in →';
-        showToast('something went wrong — try again');
-      }
     });
 
-    // ── Feed
-    async function loadFeed() {
-      try {
-        const res = await fetch(FEED_URL);
-        const data = await res.json();
-        const grid = document.getElementById('feedGrid');
-        const entries = data.entries || [];
+    // Colour dots
+    document.querySelectorAll('.colour-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+            document.querySelectorAll('.colour-dot').forEach(d => {
+                d.classList.remove('selected');
+                d.style.borderColor = 'transparent';
+            });
+            dot.classList.add('selected');
+            dot.style.borderColor = '#ffffff';
+            selectedColour = dot.dataset.colour;
+        });
+    });
 
-        document.getElementById('statEntries').textContent =
-          entries.length > 0 ? entries.length : '—';
+    // Textarea input → progress step
+    document.getElementById('wtf-text').addEventListener('input', () => {
+        const steps = document.querySelectorAll('.step');
+        steps.forEach(s => s.classList.remove('active'));
+        if (document.getElementById('wtf-text').value.length > 0) steps[2].classList.add('active');
+    });
 
-        if (entries.length === 0) {
-          grid.innerHTML = '<div class="feed-empty">no entries yet — be first.</div>';
-          return;
+    function updateChar() {
+        document.getElementById('char-count').textContent = document.getElementById('wtf-text').value.length;
+    }
+
+    async function submitManifesto() {
+        const text  = document.getElementById('wtf-text').value.trim();
+        const email = document.getElementById('wtf-email').value.trim();
+        const btn   = document.getElementById('btn-submit');
+
+        if (!selectedCause) { alert('Pick your cause first.'); return; }
+        if (!text)           { alert('Write your manifesto.'); return; }
+        if (!email)          { alert('Add your email.'); return; }
+
+        btn.disabled = true;
+        btn.textContent = 'Submitting…';
+
+        try {
+            const res = await fetch(SUBMIT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, wtf_text: text, cause_category: selectedCause })
+            });
+
+            if (res.ok) {
+                document.querySelector('.steps').style.display = 'none';
+                document.querySelector('h3').style.display = 'none';
+                document.querySelector('.cause-row').style.display = 'none';
+                document.getElementById('wtf-text').style.display = 'none';
+                document.querySelector('.char-count').style.display = 'none';
+                document.querySelector('.colour-row').style.display = 'none';
+                document.getElementById('wtf-email').style.display = 'none';
+                btn.style.display = 'none';
+                document.getElementById('success-state').style.display = 'block';
+                loadFeed();
+            } else {
+                btn.disabled = false;
+                btn.textContent = 'Lock It In →';
+                alert('Something went wrong. Try again.');
+            }
+        } catch (e) {
+            btn.disabled = false;
+            btn.textContent = 'Lock It In →';
+            alert('Network error. Try again.');
         }
-
-        grid.innerHTML = entries.map(e => `
-          <div class="feed-card">
-            <div class="feed-card-text">${escHtml(e.wtf_text)}</div>
-            <div class="feed-card-tag">${escHtml(e.cause_category)}</div>
-          </div>
-        `).join('');
-      } catch(e) {
-        console.warn('Feed load failed', e);
-      }
     }
 
-    function escHtml(s) {
-      return String(s)
-        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    async function loadFeed() {
+        try {
+            const res  = await fetch(FEED_URL);
+            const data = await res.json();
+            const container = document.getElementById('feed-container');
+
+            if (!data.entries || data.entries.length === 0) return;
+
+            container.innerHTML = '<div class="feed-grid">' +
+                data.entries.map(e => `
+                    <div class="feed-entry">
+                        <div class="feed-category">${e.cause_category}</div>
+                        <div class="feed-text">${escHtml(e.wtf_text)}</div>
+                    </div>`).join('') +
+                '</div>';
+
+            document.getElementById('stat-entries').textContent = data.entries.length + '+';
+        } catch (e) { /* silent fail — feed is cosmetic */ }
     }
 
-    // ── Toast
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 3000);
+    function escHtml(str) {
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
+    // Load feed on page load
     loadFeed();
-  </script>
+</script>
 </body>
 </html>
