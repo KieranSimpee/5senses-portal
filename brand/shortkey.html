@@ -1,34 +1,359 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>shortkey Brand Network</title>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Roboto',sans-serif;min-height:100vh;background:#fafaf8;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
-    .grain{position:fixed;inset:0;z-index:0;opacity:0.5;background-image:repeating-linear-gradient(45deg,rgba(10,10,10,0.02) 0px,rgba(10,10,10,0.02) 1px,transparent 1px,transparent 46px);pointer-events:none;}
-    .card{position:relative;z-index:10;width:100%;max-width:400px;padding:48px 40px;background:#fff;border:1.5px solid #0a0a0a;border-radius:4px;box-shadow:8px 8px 0 rgba(10,10,10,0.9);text-align:center;}
-    .portal-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#8a8a8a;text-decoration:none;margin-bottom:26px;letter-spacing:1px;}
-    .portal-back:hover{color:#0a0a0a;}
-    .brand-mark img{height:42px;width:auto;object-fit:contain;margin-bottom:20px;}
-    .login-badge{display:inline-block;background:#0a0a0a;color:#fff;font-size:10px;font-weight:700;padding:5px 13px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;}
-    h2{font-family:'Archivo Black',sans-serif;font-size:22px;font-weight:400;color:#0a0a0a;margin-bottom:10px;letter-spacing:-0.5px;}
-    .subtitle{font-size:13px;color:#8a8a8a;margin-bottom:26px;line-height:1.6;}
-    .powered{text-align:center;margin-top:22px;font-size:10px;color:#8a8a8a;letter-spacing:1px;text-transform:uppercase;}
-    .powered b{color:#0a0a0a;}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>shortkey — Brand Partner Programme</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Roboto',sans-serif;background:#FFFFFF;color:#0A0A0A;font-size:14px;line-height:1.5;}
+
+/* NAV */
+nav{background:#FFFFFF;border-bottom:1px solid #E8E8E8;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:center;gap:6px;}
+.key{background:#F2F2F2;border:1px solid #D0D0D0;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;color:#0A0A0A;box-shadow:0 2px 0 #B8B8B8;letter-spacing:0.5px;font-family:'Roboto',sans-serif;}
+.key-plus{color:#B0B0B0;font-size:11px;margin:0 2px;}
+.wordmark{font-family:'Archivo Black',sans-serif;font-size:16px;font-weight:400;color:#0A0A0A;margin-left:4px;letter-spacing:-0.3px;}
+.nav-mid{font-size:10px;color:#B0B0B0;letter-spacing:2px;}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-back{font-size:11px;color:#9A9A9A;text-decoration:none;letter-spacing:0.5px;}
+.nav-back:hover{color:#0A0A0A;}
+.nav-btn{background:#0A0A0A;color:#FFFFFF;border:none;border-radius:5px;padding:8px 18px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:0.5px;font-family:'Roboto',sans-serif;}
+
+/* HERO */
+.hero{padding:56px 40px 48px;background:#FAFAFA;border-bottom:1px solid #E8E8E8;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;background:#F0F0F0;border:1px solid #E0E0E0;border-radius:20px;padding:4px 12px;font-size:9px;font-weight:700;color:#6E6E6E;letter-spacing:1.5px;margin-bottom:20px;}
+.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:#0A0A0A;}
+.hero-h1{font-family:'Archivo Black',sans-serif;font-size:40px;font-weight:400;line-height:1.1;margin-bottom:14px;letter-spacing:-1px;}
+.hero-h1 .grey{color:#C0C0C0;}
+.hero-p{font-size:13px;color:#6E6E6E;line-height:1.7;margin-bottom:28px;max-width:420px;}
+.hero-btns{display:flex;gap:10px;margin-bottom:20px;}
+.btn-primary{background:#0A0A0A;color:#FFFFFF;border:none;border-radius:5px;padding:12px 24px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:0.5px;font-family:'Roboto',sans-serif;}
+.btn-secondary{background:#FFFFFF;color:#0A0A0A;border:1.5px solid #D0D0D0;border-radius:5px;padding:12px 24px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Roboto',sans-serif;}
+.hero-note{font-size:10px;color:#B0B0B0;}
+.hero-note strong{color:#0A0A0A;}
+.hero-poster{border-radius:10px;overflow:hidden;border:1px solid #E8E8E8;box-shadow:0 8px 32px rgba(0,0,0,0.08);}
+.hero-poster img{width:100%;height:440px;object-fit:cover;object-position:center top;display:block;}
+
+/* TRUST */
+.trust-strip{background:#FFFFFF;border-bottom:1px solid #E8E8E8;padding:14px 40px;display:flex;align-items:center;gap:10px;overflow-x:auto;}
+.trust-label{font-size:9px;color:#B0B0B0;letter-spacing:2px;white-space:nowrap;margin-right:6px;font-weight:700;}
+.trust-pill{background:#F5F5F5;border:1px solid #E0E0E0;border-radius:4px;padding:5px 12px;font-size:11px;font-weight:700;color:#2B2B2B;white-space:nowrap;}
+.trust-note{margin-left:auto;font-size:10px;color:#B0B0B0;white-space:nowrap;font-style:italic;}
+
+/* LAYOUT */
+.container{max-width:1060px;margin:0 auto;padding:0 40px;}
+.section{padding:52px 0;border-bottom:1px solid #F0F0F0;}
+.sec-eyebrow{font-size:9px;color:#B0B0B0;letter-spacing:2.5px;font-weight:700;margin-bottom:8px;}
+.sec-title{font-family:'Archivo Black',sans-serif;font-size:24px;font-weight:400;margin-bottom:8px;line-height:1.2;letter-spacing:-0.5px;}
+.sec-sub{font-size:13px;color:#6E6E6E;line-height:1.6;max-width:560px;margin-bottom:28px;}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #E8E8E8;border-radius:8px;overflow:hidden;margin-bottom:36px;}
+.stat-cell{background:#FFFFFF;padding:22px 18px;text-align:center;border-right:1px solid #E8E8E8;}
+.stat-cell:last-child{border-right:none;}
+.stat-n{font-family:'Archivo Black',sans-serif;font-size:28px;font-weight:400;}
+.stat-l{font-size:9px;color:#B0B0B0;letter-spacing:1px;margin-top:3px;}
+
+/* POSTER ROW */
+.poster-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:36px;}
+.poster-card{border-radius:8px;overflow:hidden;border:1px solid #E8E8E8;box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.poster-card img{width:100%;height:300px;object-fit:cover;object-position:center top;display:block;}
+.poster-cap{padding:12px 14px;background:#FAFAFA;border-top:1px solid #E8E8E8;display:flex;align-items:center;justify-content:space-between;}
+.poster-cap-title{font-size:12px;font-weight:700;}
+.poster-cap-sub{font-size:10px;color:#9A9A9A;margin-top:1px;}
+.cmd-tag{background:#0A0A0A;color:#FFFFFF;border-radius:3px;padding:3px 8px;font-size:9px;font-weight:700;letter-spacing:1px;}
+
+/* FOMO */
+.fomo-card{background:#FFFFFF;border:1px solid #E8E8E8;border-radius:8px;padding:26px;margin-bottom:0;}
+.fomo-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.fomo-title{font-size:14px;font-weight:700;}
+.fomo-badge{background:#0A0A0A;color:#FFFFFF;border-radius:20px;padding:4px 12px;font-size:9px;font-weight:700;letter-spacing:1px;}
+.fomo-desc{font-size:11px;color:#9A9A9A;margin-bottom:18px;}
+.slot{display:flex;align-items:center;gap:12px;padding:11px 13px;border:1px solid #EFEFEF;border-radius:6px;margin-bottom:6px;background:#FAFAFA;}
+.slot-n{width:24px;height:24px;border-radius:50%;background:#0A0A0A;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;}
+.slot-n.empty{background:#F0F0F0;color:#C0C0C0;border:1px dashed #D0D0D0;}
+.slot-info{flex:1;}
+.slot-name{font-size:12px;font-weight:700;}
+.slot-cat{font-size:10px;color:#9A9A9A;}
+.slot-bar{height:2px;background:#EFEFEF;border-radius:1px;margin-top:5px;}
+.slot-fill{height:100%;background:#0A0A0A;border-radius:1px;}
+.slot-tag{font-size:9px;font-weight:700;letter-spacing:1px;color:#6E6E6E;}
+.slot-tag.open{color:#C8C8C8;}
+
+/* TINT */
+.tint-card{background:#FFFFFF;border:1px solid #E8E8E8;border-radius:8px;overflow:hidden;margin-bottom:0;}
+.tint-header{background:#F8F8F8;border-bottom:1px solid #E8E8E8;padding:18px 26px;display:flex;align-items:center;justify-content:space-between;}
+.tint-h-title{font-size:13px;font-weight:700;}
+.tint-h-sub{font-size:11px;color:#9A9A9A;margin-top:2px;}
+.ai-pill{background:#0A0A0A;color:#FFFFFF;border-radius:4px;padding:4px 10px;font-size:9px;font-weight:700;letter-spacing:1px;}
+.tint-body{padding:26px;}
+.tint-statement{border-left:3px solid #0A0A0A;padding:12px 16px;background:#F8F8F8;border-radius:0 6px 6px 0;font-size:12px;color:#2B2B2B;line-height:1.7;margin-bottom:20px;}
+.tint-statement strong{display:block;font-size:13px;margin-bottom:4px;}
+.try-box{background:#F8F8F8;border:1px dashed #D8D8D8;border-radius:7px;padding:28px;text-align:center;margin-bottom:18px;}
+.try-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+.try-sub{font-size:11px;color:#9A9A9A;line-height:1.5;margin-bottom:14px;}
+.try-btns{display:flex;gap:8px;justify-content:center;}
+.adv-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.adv-box{background:#F8F8F8;border:1px solid #EFEFEF;border-radius:6px;padding:14px;}
+.adv-n{font-family:'Archivo Black',sans-serif;font-size:20px;font-weight:400;margin-bottom:2px;}
+.adv-l{font-size:11px;font-weight:700;margin-bottom:2px;}
+.adv-d{font-size:10px;color:#9A9A9A;line-height:1.4;}
+.clients-bar{background:#F5F5F5;border:1px solid #EBEBEB;border-radius:6px;padding:11px 16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.cl-label{font-size:9px;color:#B0B0B0;letter-spacing:2px;margin-right:4px;font-weight:700;}
+.cl-pill{background:#FFFFFF;border:1px solid #E0E0E0;border-radius:20px;padding:3px 10px;font-size:10px;font-weight:700;color:#2B2B2B;}
+
+/* SKIN */
+.skin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px;}
+.skin-box{background:#F8F8F8;border:1px solid #EFEFEF;border-radius:7px;padding:18px;}
+.skin-box-title{font-size:12px;font-weight:700;margin-bottom:3px;}
+.skin-box-desc{font-size:10px;color:#9A9A9A;line-height:1.5;margin-bottom:12px;}
+.m-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.m-label{font-size:9px;color:#9A9A9A;letter-spacing:1px;width:74px;flex-shrink:0;}
+.m-bar{flex:1;height:2px;background:#E8E8E8;border-radius:1px;}
+.m-fill{height:100%;background:#0A0A0A;border-radius:1px;}
+.m-val{font-size:9px;font-weight:700;width:26px;text-align:right;}
+.reco-list{background:#FFFFFF;border:1px solid #E8E8E8;border-radius:5px;padding:10px 12px;font-size:10px;color:#6E6E6E;line-height:1.8;}
+.reco-list strong{display:block;color:#0A0A0A;font-size:11px;margin-bottom:4px;}
+
+/* FLOW */
+.flow-row{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:22px;}
+.flow-step{text-align:center;position:relative;padding:0 4px;}
+.flow-step::after{content:'→';position:absolute;right:-8px;top:12px;color:#D8D8D8;font-size:12px;}
+.flow-step:last-child::after{display:none;}
+.flow-c{width:36px;height:36px;border-radius:50%;background:#0A0A0A;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin:0 auto 8px;}
+.flow-t{font-size:11px;font-weight:700;margin-bottom:3px;}
+.flow-d{font-size:9px;color:#9A9A9A;line-height:1.4;}
+
+/* PRICING */
+.pricing-card{background:#0A0A0A;border-radius:10px;padding:38px;color:#FFFFFF;display:grid;grid-template-columns:1fr 1fr;gap:38px;margin-bottom:0;}
+.price-big{font-family:'Archivo Black',sans-serif;font-size:44px;font-weight:400;margin-bottom:6px;}
+.price-desc{font-size:11px;color:#9A9A9A;line-height:1.6;margin-bottom:16px;}
+.p-line{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1A1A1A;font-size:11px;}
+.p-line:last-child{border:none;}
+.p-l{color:#9A9A9A;}
+.p-v{font-weight:700;}
+.perks-title{font-size:12px;font-weight:700;margin-bottom:12px;}
+.perk{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;}
+.perk-c{width:16px;height:16px;border-radius:50%;background:#FFFFFF;color:#0A0A0A;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.perk-t{font-size:11px;color:#D7D7D7;line-height:1.5;}
+.perk-t strong{color:#FFFFFF;display:block;}
+
+/* CTA */
+.cta-section{background:#F8F8F8;border-top:1px solid #E8E8E8;padding:52px 40px;text-align:center;}
+.cta-eyebrow{font-size:9px;color:#B0B0B0;letter-spacing:2.5px;font-weight:700;margin-bottom:12px;}
+.cta-title{font-family:'Archivo Black',sans-serif;font-size:28px;font-weight:400;line-height:1.2;margin-bottom:10px;letter-spacing:-0.5px;}
+.cta-sub{font-size:13px;color:#6E6E6E;line-height:1.6;margin-bottom:26px;}
+.cta-btns{display:flex;gap:10px;justify-content:center;margin-bottom:14px;}
+.cta-note{font-size:10px;color:#B0B0B0;}
+.cta-note strong{color:#0A0A0A;}
+
+/* FOOTER */
+footer{background:#0A0A0A;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;}
+.f-logo-row{display:flex;align-items:center;gap:5px;}
+.f-key{background:#1A1A1A;border:1px solid #333;border-radius:4px;padding:3px 7px;font-size:10px;font-weight:700;color:#D0D0D0;box-shadow:0 1px 0 #000;font-family:'Roboto',sans-serif;}
+.f-plus{color:#444;font-size:10px;margin:0 2px;}
+.f-wordmark{font-family:'Archivo Black',sans-serif;font-size:13px;color:#FFFFFF;margin-left:3px;}
+.f-sub{font-size:9px;color:#555;margin-top:3px;letter-spacing:1px;}
+.f-right{font-size:10px;color:#555;text-align:right;line-height:1.6;}
+</style>
 </head>
 <body>
-  <div class="grain"></div>
-  <div class="card">
-    <a href="/brand/" class="portal-back">← Our Brands</a>
-    <div class="brand-mark"><img src="https://base44.app/api/apps/69ddc914cfcf229762ac123d/files/mp/public/69ddc914cfcf229762ac123d/c4fa5572a_shortkey_logo_FINAL_darkink_transparent.png" alt="shortkey"/></div>
-    <span class="login-badge">Coming Soon</span>
-    <h2>Retail &amp; Style Partners</h2>
-    <p class="subtitle">shortkey's consumer style-sharing network is launching soon. Retail and creator partnerships will open here first.</p>
-    <p class="powered">Powered by <b>Simplex-ity</b></p>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <span class="key">ctrl</span>
+    <span class="key-plus">+</span>
+    <span class="key">alt</span>
+    <span class="wordmark">shortkey</span>
   </div>
+  <span class="nav-mid">YOUR STYLE. YOUR CTRL.</span>
+  <div class="nav-right">
+    <a href="/shortkey-home.html" class="nav-back">← Back to Home</a>
+    <button class="nav-btn">Join as Founding Brand</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-eyebrow"><div class="eyebrow-dot"></div>FOUNDING BRAND PROGRAMME · AUG 2026</div>
+    <h1 class="hero-h1">Beauty.<br><span class="grey">On Shortcut.</span></h1>
+    <p class="hero-p">The only platform that sells your cosmetics the way they deserve — AI virtual try-on, real influencers, and 5% commission only. Nothing else.</p>
+    <div class="hero-btns">
+      <button class="btn-primary">Join as Founding Brand →</button>
+      <button class="btn-secondary">See How It Works</button>
+    </div>
+    <p class="hero-note"><strong>7 of 10 slots remaining.</strong> Closes August 13, 2026.</p>
+  </div>
+  <div class="hero-poster">
+    <img src="https://media.base44.com/images/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/9988810d9_whatsapp_image_2910389256020318.jpg" alt="ShortKey CTRL+B Brighten" />
+  </div>
+</div>
+
+<!-- TRUST -->
+<div class="trust-strip">
+  <span class="trust-label">POWERED BY</span>
+  <span class="trust-pill">TINT by Banuba</span>
+  <span class="trust-pill">Shopify</span>
+  <span class="trust-pill">Stripe</span>
+  <span class="trust-pill">Airwallex</span>
+  <span class="trust-pill">Vimeo</span>
+  <span class="trust-note">Same AI technology as Lancôme · Gucci · Samsung</span>
+</div>
+
+<div class="container">
+
+  <!-- STATS -->
+  <div class="section">
+    <div class="sec-eyebrow">WHY SHORTKEY</div>
+    <div class="sec-title">The platform beauty brands have been waiting for.</div>
+    <div class="sec-sub">TikTok charges 8–15%. Agencies charge 15–30% retainer. We charge 5%. One entry fee. Zero markup on your retail price. Locked forever.</div>
+    <div class="stats-grid">
+      <div class="stat-cell"><div class="stat-n">5%</div><div class="stat-l">COMMISSION ONLY</div></div>
+      <div class="stat-cell"><div class="stat-n">USD 25K</div><div class="stat-l">COLLECTIVE AD FUND</div></div>
+      <div class="stat-cell"><div class="stat-n">+32%</div><div class="stat-l">ADD-TO-CART LIFT</div></div>
+      <div class="stat-cell"><div class="stat-n">7</div><div class="stat-l">SLOTS REMAINING</div></div>
+    </div>
+    <div class="poster-row">
+      <div class="poster-card">
+        <img src="https://media.base44.com/images/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/5fb98ebaf_whatsapp_image_1395215545881060.jpg" alt="CTRL+G Glow" />
+        <div class="poster-cap">
+          <div><div class="poster-cap-title">CTRL + G — Glow</div><div class="poster-cap-sub">Glass Skin OS · K-Beauty Essentials</div></div>
+          <div class="cmd-tag">CTRL+G</div>
+        </div>
+      </div>
+      <div class="poster-card">
+        <img src="https://media.base44.com/images/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/67b3a713a_whatsapp_image_1412419984072048.jpg" alt="CTRL+B Brighten" />
+        <div class="poster-cap">
+          <div><div class="poster-cap-title">CTRL + B — Brighten</div><div class="poster-cap-sub">Delete Dullness · Activate Glow</div></div>
+          <div class="cmd-tag">CTRL+B</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOMO -->
+  <div class="section">
+    <div class="sec-eyebrow">FOUNDING BRAND SLOTS</div>
+    <div class="sec-title">10 brands. 10 slots. First come, first locked.</div>
+    <div class="sec-sub">Your competitors are already uploading their products. Once all 10 are in, this rate closes forever.</div>
+    <div class="fomo-card">
+      <div class="fomo-top"><div class="fomo-title">Founding Brand Counter</div><div class="fomo-badge">7 OPEN · CLOSES AUG 13</div></div>
+      <div class="fomo-desc">3 brands confirmed · uploading products now</div>
+      <div class="slot"><div class="slot-n">01</div><div class="slot-info"><div class="slot-name">Korean Skincare Brand</div><div class="slot-cat">K-Beauty · Serum & Essence</div><div class="slot-bar"><div class="slot-fill" style="width:83%"></div></div></div><div class="slot-tag">UPLOADING...</div></div>
+      <div class="slot"><div class="slot-n">02</div><div class="slot-info"><div class="slot-name">Japanese Cosmetics Brand</div><div class="slot-cat">J-Beauty · Foundation & Lip</div><div class="slot-bar"><div class="slot-fill" style="width:67%"></div></div></div><div class="slot-tag">UPLOADING...</div></div>
+      <div class="slot"><div class="slot-n">03</div><div class="slot-info"><div class="slot-name">Hong Kong Beauty Brand</div><div class="slot-cat">C-Beauty · Eye & Skincare</div><div class="slot-bar"><div class="slot-fill" style="width:51%"></div></div></div><div class="slot-tag">UPLOADING...</div></div>
+      <div class="slot" style="border:1px dashed #E0E0E0;background:#FDFDFD;"><div class="slot-n empty">04</div><div class="slot-info"><div class="slot-name" style="color:#C8C8C8;">Your Brand Here</div><div class="slot-cat">Available · August 13 Deadline</div></div><div class="slot-tag open">OPEN</div></div>
+      <div class="slot" style="border:1px dashed #E0E0E0;background:#FDFDFD;"><div class="slot-n empty">05</div><div class="slot-info"><div class="slot-name" style="color:#C8C8C8;">Your Brand Here</div><div class="slot-cat">Available · August 13 Deadline</div></div><div class="slot-tag open">OPEN</div></div>
+    </div>
+  </div>
+
+  <!-- TINT -->
+  <div class="section">
+    <div class="sec-eyebrow">AI TECHNOLOGY PARTNER</div>
+    <div class="sec-title">Try before you buy. Powered by TINT.</div>
+    <div class="sec-sub">The same AI trusted by Lancôme, Gucci, and Samsung. Available for your brand from Day 1 — no engineering required.</div>
+    <div class="tint-card">
+      <div class="tint-header"><div><div class="tint-h-title">TINT Virtual Try-On + AI Skin Analysis</div><div class="tint-h-sub">by Banuba · 500+ global beauty brands</div></div><div class="ai-pill">AI POWERED</div></div>
+      <div class="tint-body">
+        <div class="tint-statement"><strong>There is no other way to sell cosmetics online without letting customers try first.</strong>We secured partnership with TINT — the world's leading virtual try-on platform. Lancôme built their own. You don't have to. ShortKey brings you the same technology from Day 1.</div>
+        <div class="try-box">
+          <div class="try-title">Experience It Yourself — Before You Decide</div>
+          <div class="try-sub">Virtual makeup try-on · AI skin analysis · Personalised product match<br>This is exactly what your customers will see on your ShortKey brand page.</div>
+          <div class="try-btns"><button class="btn-primary">Try Virtual Makeup →</button><button class="btn-secondary">Try Skin Analysis →</button></div>
+        </div>
+        <div class="adv-row">
+          <div class="adv-box"><div class="adv-n">+32%</div><div class="adv-l">Add-to-Cart Rate</div><div class="adv-d">Océane Brazil: record 32% add-to-cart after TINT. Industry average: 8%.</div></div>
+          <div class="adv-box"><div class="adv-n">3×</div><div class="adv-l">Online Sales Lift</div><div class="adv-d">Brands using TINT report up to 3× increase in conversions vs standard photos.</div></div>
+          <div class="adv-box"><div class="adv-n">↓ Returns</div><div class="adv-l">Lower Return Rate</div><div class="adv-d">Try before buy = right shade, fewer returns, higher repeat purchase rate.</div></div>
+        </div>
+        <div class="clients-bar"><span class="cl-label">TINT TRUSTED BY</span><span class="cl-pill">Lancôme</span><span class="cl-pill">Gucci</span><span class="cl-pill">Samsung</span><span class="cl-pill">L'Oréal Paris</span><span class="cl-pill">Maybelline</span><span class="cl-pill">MAC Cosmetics</span><span class="cl-pill">500+ Brands</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKIN ANALYSIS -->
+  <div class="section">
+    <div class="sec-eyebrow">AI SKIN ANALYSIS</div>
+    <div class="sec-title">One selfie. Your customer's full skin profile.</div>
+    <div class="sec-sub">TINT analyses 200+ facial data points and recommends exactly which products they need. Browsers become buyers.</div>
+    <div style="background:#FFFFFF;border:1px solid #E8E8E8;border-radius:8px;padding:26px;">
+      <div class="skin-grid">
+        <div class="skin-box"><div class="skin-box-title">Skin Analysis Result</div><div class="skin-box-desc">What your customer sees after one selfie. Instant, personalised, science-backed.</div><div class="m-row"><span class="m-label">HYDRATION</span><div class="m-bar"><div class="m-fill" style="width:62%"></div></div><span class="m-val">62%</span></div><div class="m-row"><span class="m-label">RADIANCE</span><div class="m-bar"><div class="m-fill" style="width:78%"></div></div><span class="m-val">78%</span></div><div class="m-row"><span class="m-label">SMOOTHNESS</span><div class="m-bar"><div class="m-fill" style="width:55%"></div></div><span class="m-val">55%</span></div><div class="m-row"><span class="m-label">FIRMNESS</span><div class="m-bar"><div class="m-fill" style="width:70%"></div></div><span class="m-val">70%</span></div></div>
+        <div class="skin-box"><div class="skin-box-title">Personalised Product Match</div><div class="skin-box-desc">TINT recommends exact products from your catalogue. Direct path to purchase.</div><div class="reco-list"><strong>Recommended for this skin profile:</strong>✓ Hydrating Serum — addresses 62% hydration<br>✓ Brightening Essence — boosts radiance to 90%+<br>✓ Barrier Repair Cream — smoothness recovery</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section">
+    <div class="sec-eyebrow">HOW IT WORKS</div>
+    <div class="sec-title">Sign up to first sale — 5 steps.</div>
+    <div class="sec-sub">No engineers. No complex setup. Your Shopify connects in minutes. Unlimited products. All payment methods accepted.</div>
+    <div class="flow-row">
+      <div class="flow-step"><div class="flow-c">01</div><div class="flow-t">Sign Up</div><div class="flow-d">USD 5,000. Founding Brand slot locked forever.</div></div>
+      <div class="flow-step"><div class="flow-c">02</div><div class="flow-t">TINT Activates</div><div class="flow-d">Try-on + skin analysis live. Day 1.</div></div>
+      <div class="flow-step"><div class="flow-c">03</div><div class="flow-t">Influencer Live</div><div class="flow-d">Joint Makeover Campaign on Vimeo.</div></div>
+      <div class="flow-step"><div class="flow-c">04</div><div class="flow-t">Customer Orders</div><div class="flow-d">TINT → Stripe/Airwallex → your Shopify.</div></div>
+      <div class="flow-step"><div class="flow-c">05</div><div class="flow-t">5% Settled</div><div class="flow-d">Monthly. Transparent. Only fee. Forever.</div></div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="section">
+    <div class="sec-eyebrow">PRICING</div>
+    <div class="sec-title">One fee. Everything included.</div>
+    <div class="sec-sub">No monthly retainer. No hidden fees. No minimum spend. Unlimited products.</div>
+    <div class="pricing-card">
+      <div>
+        <div class="price-big">USD 5,000</div>
+        <div class="price-desc">One-time Founding Brand entry. Locked forever. No surprises.</div>
+        <div class="p-line"><span class="p-l">TINT Service Activation</span><span class="p-v">USD 2,500</span></div>
+        <div class="p-line"><span class="p-l">Collective Advertising Fund</span><span class="p-v">USD 2,500</span></div>
+        <div class="p-line"><span class="p-l">Platform Commission</span><span class="p-v">5% of sales only</span></div>
+        <div class="p-line"><span class="p-l">Product Styles</span><span class="p-v">Unlimited</span></div>
+        <div class="p-line"><span class="p-l">Payment Methods</span><span class="p-v">All accepted</span></div>
+      </div>
+      <div>
+        <div class="perks-title">Founding Brand Exclusive — First 10 Only</div>
+        <div class="perk"><div class="perk-c">✓</div><div class="perk-t"><strong>Joint Influencer Makeover Campaign</strong>Featured in ShortKey's launch on Vimeo. Real buyers. Real reach.</div></div>
+        <div class="perk"><div class="perk-c">✓</div><div class="perk-t"><strong>TINT Virtual Try-On + Skin Analysis</strong>Both features. Day 1. Same tech as Lancôme.</div></div>
+        <div class="perk"><div class="perk-c">✓</div><div class="perk-t"><strong>Collective Ad Fund Access</strong>USD 25,000 combined reach. 10× leverage on your USD 2,500.</div></div>
+        <div class="perk"><div class="perk-c">✓</div><div class="perk-t"><strong>5% Commission — Locked Forever</strong>Market charges 8–30%. Yours stays at 5%.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-eyebrow">CLOSING AUGUST 13, 2026 · 7 SLOTS REMAINING</div>
+  <h2 class="cta-title">Your competitors are already<br>uploading their products.</h2>
+  <p class="cta-sub">After August 13, the Founding Brand rate closes and the collective ad fund locks.<br>This offer exists exactly once.</p>
+  <div class="cta-btns">
+    <button class="btn-primary" style="padding:14px 32px;font-size:13px;">Join as Founding Brand →</button>
+    <button class="btn-secondary" style="padding:14px 32px;font-size:13px;">Contact Kieran</button>
+  </div>
+  <p class="cta-note"><strong>7 of 10 slots remaining</strong> · USD 5,000 · 5% commission forever · shortkey.beauty</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="f-logo-row">
+      <span class="f-key">ctrl</span>
+      <span class="f-plus">+</span>
+      <span class="f-key">alt</span>
+      <span class="f-wordmark">shortkey</span>
+    </div>
+    <div class="f-sub">YOUR STYLE. YOUR CTRL. · shortkey.beauty</div>
+  </div>
+  <div class="f-right">kieran@simplex-ity.com<br>shortkey.beauty · by Simplex-ity</div>
+</footer>
+
 </body>
 </html>
