@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShortKey — Founding Brand Programme</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --black: #1A1A2E;
+    --white: #FFFFFF;
+    --grey1: #EDE8F8;
+    --grey2: #9B8CC4;
+    --grey3: #7B6B9B;
+    --grey4: #4A3A6B;
+    --grey5: #F8F5FF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #FFFFFF;
+    color: #1A1A2E;
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* LANGUAGE SWITCHER */
+  .lang-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.97);
+    border-bottom: 1px solid #EDE8F8;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--grey1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 56px;
+  }
+
+  .lang-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: #1A1A2E;
+  }
+
+  .lang-logo span { color: var(--grey3); }
+
+  .lang-btns { display: flex; gap: 8px; }
+
+  .lang-btn {
+    background: transparent;
+    border: 1px solid #DDD0F0;
+    color: #7B6B9B;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .lang-btn:hover { border-color: #9B8CC4; color: #1A1A2E; }
+  .lang-btn.active { background: #8B6FBE; color: #FFFFFF; border-color: #8B6FBE; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(139,111,190,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .keycap-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .keycap {
+    background: var(--grey1);
+    border: 1px solid var(--grey2);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    color: var(--grey4);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+    letter-spacing: 0.05em;
+  }
+
+  .keycap-plus {
+    color: var(--grey3);
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  .hero-wordmark {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--grey3);
+    text-transform: lowercase;
+    margin-bottom: 48px;
+  }
+
+  .hero-headline {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    max-width: 900px;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: #7B6B9B;
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 56px;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: #8B6FBE;
+    color: #FFFFFF;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .hero-cta:hover { background: #7A5FAE; }
+
+  .hero-slots {
+    margin-top: 48px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: #9B8CC4;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-slots strong { color: #1A1A2E; }
+
+  /* SECTIONS */
+  .section {
+    padding: 100px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: #9B8CC4;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 60px;
+  }
+
+  /* STATS GRID */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 80px;
+  }
+
+  .stat-cell {
+    background: #F3EEFF;
+    padding: 40px 32px;
+  }
+
+  .stat-num {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: #7B6B9B;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* FEE TABLE */
+  .fee-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 60px;
+  }
+
+  .fee-cell {
+    background: #F3EEFF;
+    padding: 40px 32px;
+  }
+
+  .fee-cell.highlight {
+    background: #8B6FBE;
+    color: #FFFFFF;
+  }
+
+  .fee-amount {
+    font-family: 'Space Mono', monospace;
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+
+  .fee-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #7B6B9B;
+    opacity: 0.9;
+  }
+
+  .fee-cell.highlight .fee-desc { opacity: 0.85; color: #FFFFFF; }
+
+  /* COMPARISON */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 60px;
+  }
+
+  .compare-table th {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: #9B8CC4;
+    padding: 16px 24px;
+    text-align: left;
+    border-bottom: 1px solid #EDE8F8;
+    font-weight: 400;
+  }
+
+  .compare-table td {
+    padding: 20px 24px;
+    border-bottom: 1px solid #EDE8F8;
+    font-size: 15px;
+  }
+
+  .compare-table tr.shortkey-row td {
+    background: #EDE8F8;
+    font-weight: 600;
+  }
+
+  .compare-table td:first-child { color: #7B6B9B; }
+  .compare-table tr.shortkey-row td:first-child { color: #1A1A2E; }
+
+  .check { color: #5A3A9B; }
+  .cross { color: #C0B0D8; }
+
+  /* PERKS */
+  .perks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-bottom: 60px;
+  }
+
+  .perk-cell {
+    background: #F3EEFF;
+    padding: 36px 32px;
+  }
+
+  .perk-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #9B8CC4;
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+
+  .perk-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .perk-desc {
+    font-size: 14px;
+    color: #7B6B9B;
+    line-height: 1.6;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 60px;
+  }
+
+  .timeline-item {
+    background: #F3EEFF;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .timeline-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: #9B8CC4;
+    letter-spacing: 0.1em;
+    min-width: 120px;
+  }
+
+  .timeline-text {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .timeline-item.launch {
+    background: #8B6FBE;
+    color: #FFFFFF;
+  }
+
+  .timeline-item.launch .timeline-date { color: #DDD0F0; }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid #EDE8F8;
+    margin: 0;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 60px 40px;
+    text-align: center;
+    border-top: 1px solid #EDE8F8;
+  }
+
+  .footer-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--grey3);
+    margin-bottom: 12px;
+  }
+
+  .footer-tagline {
+    font-size: 13px;
+    color: #9B8CC4;
+  }
+
+  .keycap-wordmark {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: 0.05em;
+    text-transform: lowercase;
+  }
+
+  /* LANG HIDDEN */
+  .lang-content { display: none; }
+  .lang-content.active { display: block; }
+
+  @media (max-width: 768px) {
+    .lang-bar { padding: 0 20px; }
+    .section { padding: 60px 20px; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .fee-block { grid-template-columns: 1fr; }
+    .perks-grid { grid-template-columns: 1fr; }
+    .hero { padding: 100px 24px 60px; }
+    .keycap-row { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LANG BAR -->
+<nav class="lang-bar">
+  <div class="lang-logo" style="display:flex;align-items:center;gap:10px;">
+    <img src="https://media.base44.com/images/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/8185e8845_whatsapp_image_1993501394625504.jpg" alt="shortkey logo" style="height:32px;width:auto;border-radius:4px;">
+  </div>
+  <div class="lang-btns">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('zh')">繁中</button>
+    <button class="lang-btn" onclick="setLang('ja')">日本語</button>
+    <button class="lang-btn" onclick="setLang('ko')">한국어</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════ ENGLISH ══════════════════════════════ -->
+<div id="lang-en" class="lang-content active">
+
+  <section class="hero">
+    <div class="keycap-row" style="justify-content:center;">
+      <img src="https://media.base44.com/images/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/8185e8845_whatsapp_image_1993501394625504.jpg" alt="shortkey — ctrl + alt + shortkey — YOUR STYLE. YOUR CTRL." style="width:280px;max-width:80vw;height:auto;">
+    </div>
+    <div class="hero-wordmark">YOUR STYLE. YOUR CTRL.</div>
+    <h1 class="hero-headline">Founding Brand<br>Programme</h1>
+    <p class="hero-sub">The lowest commission in beauty commerce. The highest-converting tech in the market. Built for brands that mean business.</p>
+    <a href="#en-fees" class="hero-cta">See the Numbers</a>
+    <div class="hero-slots">Only <strong>10 slots</strong> available — First signed. First served.</div>
+  </section>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">Platform Performance</div>
+    <h2 class="section-title">Why brands switch<br>to ShortKey</h2>
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div class="stat-num">5%</div>
+        <div class="stat-label">Commission only. TikTok charges 8%. Amazon charges 15-30%.</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">+600%</div>
+        <div class="stat-label">Conversion lift from TINT AR virtual try-on technology.</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">−60%</div>
+        <div class="stat-label">Return rate reduction. Customers try before they buy.</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">+1000%</div>
+        <div class="stat-label">Add-to-cart rate increase with AR product demos.</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">$25K</div>
+        <div class="stat-label">Collective Ad Fund from 10 Founding Brands. Shared reach.</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">Aug 14</div>
+        <div class="stat-label">Platform launch date. Founding rate locked forever.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section" id="en-fees">
+    <div class="section-label">Fee Structure</div>
+    <h2 class="section-title">One entry fee.<br>Split with purpose.</h2>
+    <div class="fee-block">
+      <div class="fee-cell highlight">
+        <div class="fee-amount">$5,000</div>
+        <div class="fee-desc">Total Founding Brand entry fee. One time. Locked forever at this rate.</div>
+      </div>
+      <div class="fee-cell">
+        <div class="fee-amount">$2,500</div>
+        <div class="fee-desc">TINT AR Technology activation. Virtual try-on + Skin Analysis on your storefront. Immediate.</div>
+      </div>
+      <div class="fee-cell">
+        <div class="fee-amount">$2,500</div>
+        <div class="fee-desc">Collective Ad Fund. 10 brands × $2,500 = $25,000 in shared influencer reach.</div>
+      </div>
+      <div class="fee-cell">
+        <div class="fee-amount">5%</div>
+        <div class="fee-desc">Commission on all sales. Flat. No tiers. No hidden fees. Locked forever for Founding Brands.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">Market Comparison</div>
+    <h2 class="section-title">Where we stand<br>against the market.</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Platform</th>
+          <th>Commission</th>
+          <th>AR Try-On</th>
+          <th>Ad Fund</th>
+          <th>Rate Locked</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="shortkey-row">
+          <td>ShortKey (Founding)</td>
+          <td>5% ✦</td>
+          <td class="check">✓ Included</td>
+          <td class="check">✓ $25K Pool</td>
+          <td class="check">✓ Forever</td>
+        </tr>
+        <tr>
+          <td>TikTok Shop</td>
+          <td>8%</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Amazon Beauty</td>
+          <td>15–30%</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Shopify Standalone</td>
+          <td>0% + fees</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">Founding Perks</div>
+    <h2 class="section-title">What you get<br>as a Founding Brand.</h2>
+    <div class="perks-grid">
+      <div class="perk-cell">
+        <div class="perk-num">01</div>
+        <div class="perk-title">Rate Locked Forever</div>
+        <div class="perk-desc">5% commission. Never increases. Future brands pay more. You never do.</div>
+      </div>
+      <div class="perk-cell">
+        <div class="perk-num">02</div>
+        <div class="perk-title">TINT AR Activation</div>
+        <div class="perk-desc">Virtual try-on + Skin Analysis. Live on your storefront from day one.</div>
+      </div>
+      <div class="perk-cell">
+        <div class="perk-num">03</div>
+        <div class="perk-title">Collective Ad Fund</div>
+        <div class="perk-desc">Your $2,500 joins a $25K pool. Shared influencer campaigns. Maximum reach.</div>
+      </div>
+      <div class="perk-cell">
+        <div class="perk-num">04</div>
+        <div class="perk-title">Influencer Makeover Campaign</div>
+        <div class="perk-desc">Brands 1–10: joint influencer-led makeover campaign using TINT. Premium exposure at launch.</div>
+      </div>
+      <div class="perk-cell">
+        <div class="perk-num">05</div>
+        <div class="perk-title">Hero Banner Placement</div>
+        <div class="perk-desc">Brands 11–20: two weeks of hero banner exposure on the platform homepage.</div>
+      </div>
+      <div class="perk-cell">
+        <div class="perk-num">06</div>
+        <div class="perk-title">Founding Brand Badge</div>
+        <div class="perk-desc">Permanent "Founding Brand" status. Displayed on your storefront. Trust signal forever.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">Timeline</div>
+    <h2 class="section-title">The road to<br>August 14.</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">NOW</div>
+        <div class="timeline-text">Founding Brand sign-up open. 10 slots only.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">AUG 1</div>
+        <div class="timeline-text">TINT AR activation complete. Storefront ready for all Founding Brands.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">AUG 13</div>
+        <div class="timeline-text">Founding Brand intake closes. Rate locked.</div>
+      </div>
+      <div class="timeline-item launch">
+        <div class="timeline-date">AUG 14</div>
+        <div class="timeline-text">🚀 ShortKey Platform Launch. Founding Brands go live to the world.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- END ENGLISH -->
+
+
+<!-- ══════════════════════════════ TRADITIONAL CHINESE ══════════════════════════════ -->
+<div id="lang-zh" class="lang-content">
+
+  <section class="hero">
+    <div class="keycap-row" style="justify-content:center;">
+      <img src="https://media.base44.com/images/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/8185e8845_whatsapp_image_1993501394625504.jpg" alt="shortkey — ctrl + alt + shortkey — YOUR STYLE. YOUR CTRL." style="width:280px;max-width:80vw;height:auto;">
+    </div>
+    <div class="hero-wordmark">你的風格。你的掌控。</div>
+    <h1 class="hero-headline">創始品牌<br>合作計劃</h1>
+    <p class="hero-sub">美妝電商最低佣金。市場上轉化率最高的技術。為認真做生意的品牌而設。</p>
+    <a href="#zh-fees" class="hero-cta">查看方案細節</a>
+    <div class="hero-slots">只有 <strong>10 個名額</strong> — 先簽先得</div>
+  </section>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">平台表現</div>
+    <h2 class="section-title">為何品牌選擇<br>ShortKey</h2>
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div class="stat-num">5%</div>
+        <div class="stat-label">僅此佣金。TikTok 收 8%。Amazon 收 15-30%。</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">+600%</div>
+        <div class="stat-label">TINT AR 虛擬試妝技術帶動的轉化率提升。</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">-60%</div>
+        <div class="stat-label">退貨率下降。顧客先試後買，購買更有信心。</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">+1000%</div>
+        <div class="stat-label">AR 產品示範帶動加入購物車比率大幅提升。</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">$25K</div>
+        <div class="stat-label">10 個創始品牌共同組成廣告基金。共享曝光。</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">8月14日</div>
+        <div class="stat-label">平台正式上線。創始價格永久鎖定。</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section" id="zh-fees">
+    <div class="section-label">費用結構</div>
+    <h2 class="section-title">一次入會費。<br>分兩部分用途。</h2>
+    <div class="fee-block">
+      <div class="fee-cell highlight">
+        <div class="fee-amount">$5,000</div>
+        <div class="fee-desc">創始品牌總入會費。一次性收取。此價格永久鎖定。</div>
+      </div>
+      <div class="fee-cell">
+        <div class="fee-amount">$2,500</div>
+        <div class="fee-desc">TINT AR 技術啟動費用。虛擬試妝 + 皮膚分析即時上線。</div>
+      </div>
+      <div class="fee-cell">
+        <div class="fee-amount">$2,500</div>
+        <div class="fee-desc">集體廣告基金。10 個品牌 × $2,500 = $25,000 共享網紅推廣資源。</div>
+      </div>
+      <div class="fee-cell">
+        <div class="fee-amount">5%</div>
+        <div class="fee-desc">所有銷售佣金。統一費率。無隱藏費用。創始品牌永久鎖定。</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">市場對比</div>
+    <h2 class="section-title">我們與市場的<br>對比優勢</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>平台</th>
+          <th>佣金</th>
+          <th>AR 試妝</th>
+          <th>廣告基金</th>
+          <th>費率鎖定</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="shortkey-row">
+          <td>ShortKey（創始）</td>
+          <td>5% ✦</td>
+          <td class="check">✓ 已包含</td>
+          <td class="check">✓ $25K 基金</td>
+          <td class="check">✓ 永久</td>
+        </tr>
+        <tr>
+          <td>TikTok Shop</td>
+          <td>8%</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Amazon Beauty</td>
+          <td>15–30%</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Shopify 獨立站</td>
+          <td>0% + 費用</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">創始品牌專屬福利</div>
+    <h2 class="section-title">成為創始品牌<br>你能獲得什麼</h2>
+    <div class="perks-grid">
+      <div class="perk-cell">
+        <div class="perk-num">01</div>
+        <div class="perk-title">費率永久鎖定</div>
+        <div class="perk-desc">5% 佣金永遠不變。未來品牌需付更高費率，你不需要。</div>
+      </div>
+      <div class="perk-cell">
+        <div class="perk-num">02</div>
+        <div class="perk-title">TINT AR 技術啟動</div>
+        <div class="perk-desc">虛擬試妝 + 皮膚分析。從第一天起在你的店鋪上線。</div>
+      </div>
+      <div class="perk-cell">
+        <div class="perk-num">03</div>
+        <div class="perk-title">集體廣告基金</div>
+        <div class="perk-desc">你的 $2,500 加入 $25K 資金池。共享網紅推廣活動，最大化曝光。</div>
+      </div>
+      <div class="perk-cell">
+        <div class="perk-num">04</div>
+        <div class="perk-title">網紅改造推廣活動</div>
+        <div class="perk-desc">第 1-10 號品牌：TINT 聯合網紅改造推廣活動。上線即享頂級曝光。</div>
+      </div>
+      <div class="perk-cell">
+        <div class="perk-num">05</div>
+        <div class="perk-title">主頁橫幅展示</div>
+        <div class="perk-desc">第 11-20 號品牌：平台主頁兩週英雄橫幅曝光位置。</div>
+      </div>
+      <div class="perk-cell">
+        <div class="perk-num">06</div>
+        <div class="perk-title">創始品牌徽章</div>
+        <div class="perk-desc">永久「創始品牌」身份。展示於你的店鋪。永久信任標誌。</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">時間表</div>
+    <h2 class="section-title">通往<br>8月14日的路</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">現在</div>
+        <div class="timeline-text">創始品牌報名開放。僅 10 個名額。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">8月1日</div>
+        <div class="timeline-text">TINT AR 技術啟動完成。所有創始品牌店鋪就緒。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">8月13日</div>
+        <div class="timeline-text">創始品牌報名截止。費率鎖定。</div>
+      </div>
+      <div class="timeline-item launch">
+        <div class="timeline-date">8月14日</div>
+        <div class="timeline-text">🚀 ShortKey 平台正式上線。創始品牌向全球亮相。</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- END CHINESE -->
+
+
+<!-- ══════════════════════════════ JAPANESE ══════════════════════════════ -->
+<div id="lang-ja" class="lang-content">
+
+  <section class="hero">
+    <div class="keycap-row" style="justify-content:center;">
+      <img src="https://media.base44.com/images/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/8185e8845_whatsapp_image_1993501394625504.jpg" alt="shortkey — ctrl + alt + shortkey — YOUR STYLE. YOUR CTRL." style="width:280px;max-width:80vw;height:auto;">
+    </div>
+    <div class="hero-wordmark">あなたのスタイル。あなたのコントロール。</div>
+    <h1 class="hero-headline">ファウンディング<br>ブランドプログラム</h1>
+    <p class="hero-sub">ビューティーコマース最低水準の手数料。市場最高の転換率テクノロジー。本気で事業を行うブランドのために。</p>
+    <a href="#ja-fees" class="hero-cta">詳細を見る</a>
+    <div class="hero-slots">残り <strong>10枠</strong> のみ — 先着順</div>
+  </section>
+
+  <hr class="divider">
+
+  <div class="section" id="ja-fees">
+    <div class="section-label">料金体系</div>
+    <h2 class="section-title">一度の参加費。<br>明確な用途。</h2>
+    <div class="fee-block">
+      <div class="fee-cell highlight">
+        <div class="fee-amount">$5,000</div>
+        <div class="fee-desc">ファウンディングブランド参加費。一回限り。永久にこの料金が適用されます。</div>
+      </div>
+      <div class="fee-cell">
+        <div class="fee-amount">$2,500</div>
+        <div class="fee-desc">TINT AR技術の有効化。バーチャル試着＋スキン分析。即日開始。</div>
+      </div>
+      <div class="fee-cell">
+        <div class="fee-amount">$2,500</div>
+        <div class="fee-desc">共同広告基金。10ブランド × $2,500 = インフルエンサー活用で$25,000の共有リーチ。</div>
+      </div>
+      <div class="fee-cell">
+        <div class="fee-amount">5%</div>
+        <div class="fee-desc">全売上の手数料。一律。隠れた費用なし。ファウンディングブランドは永久固定。</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">市場比較</div>
+    <h2 class="section-title">市場との<br>比較優位性</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>プラットフォーム</th>
+          <th>手数料</th>
+          <th>ARバーチャル試着</th>
+          <th>広告基金</th>
+          <th>料金固定</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="shortkey-row">
+          <td>ShortKey（創設）</td>
+          <td>5% ✦</td>
+          <td class="check">✓ 含む</td>
+          <td class="check">✓ $25K</td>
+          <td class="check">✓ 永久</td>
+        </tr>
+        <tr>
+          <td>TikTok Shop</td>
+          <td>8%</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Amazon Beauty</td>
+          <td>15–30%</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Shopify単独</td>
+          <td>0% + 費用</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">タイムライン</div>
+    <h2 class="section-title">8月14日への<br>ロードマップ</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">今すぐ</div>
+        <div class="timeline-text">ファウンディングブランド募集開始。残り10枠のみ。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">8月1日</div>
+        <div class="timeline-text">TINT AR有効化完了。全ファウンディングブランドのストアフロント準備完了。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">8月13日</div>
+        <div class="timeline-text">募集締め切り。料金永久固定。</div>
+      </div>
+      <div class="timeline-item launch">
+        <div class="timeline-date">8月14日</div>
+        <div class="timeline-text">🚀 ShortKeyプラットフォーム正式ローンチ。世界に向けて公開。</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- END JAPANESE -->
+
+
+<!-- ══════════════════════════════ KOREAN ══════════════════════════════ -->
+<div id="lang-ko" class="lang-content">
+
+  <section class="hero">
+    <div class="keycap-row" style="justify-content:center;">
+      <img src="https://media.base44.com/images/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/8185e8845_whatsapp_image_1993501394625504.jpg" alt="shortkey — ctrl + alt + shortkey — YOUR STYLE. YOUR CTRL." style="width:280px;max-width:80vw;height:auto;">
+    </div>
+    <div class="hero-wordmark">나만의 스타일. 나만의 컨트롤.</div>
+    <h1 class="hero-headline">파운딩 브랜드<br>프로그램</h1>
+    <p class="hero-sub">뷰티 커머스 최저 수수료. 시장 최고 전환율 기술. 진지한 비즈니스를 위한 플랫폼.</p>
+    <a href="#ko-fees" class="hero-cta">세부 내용 보기</a>
+    <div class="hero-slots">단 <strong>10개 슬롯</strong> — 선착순 마감</div>
+  </section>
+
+  <hr class="divider">
+
+  <div class="section" id="ko-fees">
+    <div class="section-label">수수료 구조</div>
+    <h2 class="section-title">단 한 번의 참가비.<br>명확한 용도.</h2>
+    <div class="fee-block">
+      <div class="fee-cell highlight">
+        <div class="fee-amount">$5,000</div>
+        <div class="fee-desc">파운딩 브랜드 참가비. 일회성. 영구 고정 요금.</div>
+      </div>
+      <div class="fee-cell">
+        <div class="fee-amount">$2,500</div>
+        <div class="fee-desc">TINT AR 기술 활성화. 가상 피팅 + 피부 분석 즉시 적용.</div>
+      </div>
+      <div class="fee-cell">
+        <div class="fee-amount">$2,500</div>
+        <div class="fee-desc">공동 광고 펀드. 10개 브랜드 × $2,500 = $25,000 인플루언서 공유 도달.</div>
+      </div>
+      <div class="fee-cell">
+        <div class="fee-amount">5%</div>
+        <div class="fee-desc">모든 판매 수수료. 단일 요율. 숨겨진 비용 없음. 파운딩 브랜드 영구 고정.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">시장 비교</div>
+    <h2 class="section-title">시장과의<br>비교 우위</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>플랫폼</th>
+          <th>수수료</th>
+          <th>AR 가상 피팅</th>
+          <th>광고 펀드</th>
+          <th>요금 고정</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="shortkey-row">
+          <td>ShortKey (파운딩)</td>
+          <td>5% ✦</td>
+          <td class="check">✓ 포함</td>
+          <td class="check">✓ $25K</td>
+          <td class="check">✓ 영구</td>
+        </tr>
+        <tr>
+          <td>TikTok Shop</td>
+          <td>8%</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Amazon Beauty</td>
+          <td>15–30%</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Shopify 단독</td>
+          <td>0% + 수수료</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">일정</div>
+    <h2 class="section-title">8월 14일을 향한<br>로드맵</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">지금</div>
+        <div class="timeline-text">파운딩 브랜드 신청 오픈. 단 10개 슬롯.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">8월 1일</div>
+        <div class="timeline-text">TINT AR 활성화 완료. 모든 파운딩 브랜드 스토어프론트 준비.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">8월 13일</div>
+        <div class="timeline-text">파운딩 브랜드 신청 마감. 요금 영구 고정.</div>
+      </div>
+      <div class="timeline-item launch">
+        <div class="timeline-date">8월 14일</div>
+        <div class="timeline-text">🚀 ShortKey 플랫폼 공식 런칭. 파운딩 브랜드 전 세계 공개.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- END KOREAN -->
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <img src="https://media.base44.com/images/public/whatsapp/69ddc914cfcf229762ac123d/your_agent/69ddc914cfcf229762ac123f/8185e8845_whatsapp_image_1993501394625504.jpg" alt="shortkey" style="height:60px;width:auto;margin-bottom:16px;opacity:0.85;">
+  <div class="footer-tagline">shortkey.beauty</div>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('lang-' + lang).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>
